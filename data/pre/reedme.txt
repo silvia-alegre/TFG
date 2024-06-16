@@ -1,6 +1,0 @@
-* merged_data_EMPTY_es: dataset after merging both datasources (only spanish phrases)
-* training_test_data_EMPTY_es: spanish training/test data still with EMPTY rows
-* training_test_data_notEMPTY_es: spanish training/test data after writing EMPTY rows
-* validation_data_columns_es: spanish validation data with 2 columns: [phrase, lemmas]
-* validation_data_textFormat_es: spanish validation data with prompt format: 1 column (text)
-with format "Lemmas: **************** \n Phrase: ****************"
