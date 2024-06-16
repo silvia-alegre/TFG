@@ -105,7 +105,7 @@
 \newcommand{\appendicesname}{Ap\`endixs}
 
 \addto\captionscatalan{%
-     \renewcommand{\titulacioname}{Grau en Enginyeria Inform\`atica}
+     \renewcommand{\titulacioname}{Grau en CiÃ¨ncia de Dades}
      \renewcommand{\tfgname}{Treball fi de grau}
      \renewcommand{\authorname}{Autor}
      \renewcommand{\tutorname}{Tutor}
@@ -119,7 +119,7 @@
      
 
 \addto\captionsspanish{%
-     \renewcommand{\titulacioname}{Grado en Ingenier\'\i a Inform\'atica}
+     \renewcommand{\titulacioname}{Grado en Ciencia de Datos}
      \renewcommand{\tfgname}{Trabajo fin de grado}
      \renewcommand{\authorname}{Autor}
      \renewcommand{\tutorname}{Tutor}
@@ -134,7 +134,7 @@
      \renewcommand{\appendicesname}{Ap\'endices}}
      
 \addto\captionsenglish{%
-     \renewcommand{\titulacioname}{Degree in Computer Engineering}
+     \renewcommand{\titulacioname}{Degree in Data Science}
      \renewcommand{\tfgname}{Degree final work}
      \renewcommand{\authorname}{Author}
      \renewcommand{\tutorname}{Tutor}
@@ -316,9 +316,9 @@
 \begin{titlepage}
 \AddToShipoutPicture*{\AtPageUpperLeft{%
     % Marges: dalt=esquerra=dreta=2cm 
-    \raisebox{-4cm}{\hspace{2cm}\includegraphics[height=2cm]{logo-upv}% grandÃ ria 116mmx37mm escalada a 62.7mmx20mm
+    \raisebox{-4cm}{\hspace{2cm}\includegraphics[height=2cm]{logo-upv}% grandï¿½ ria 116mmx37mm escalada a 62.7mmx20mm
     \hspace{5.54cm}% 21cm-(2+6.27+5.19+2)cm
-                    \includegraphics[height=2cm]{logo-etsinf}% grandÃ ria 109mmx42mm escalada a 51.9mmx20mm
+                    \includegraphics[height=2cm]{logo-etsinf}% grandï¿½ ria 109mmx42mm escalada a 51.9mmx20mm
                     }}}
 \AddToShipoutPicture*{\includegraphics[width=21cm,height=12.89cm]{baseportada}}
 \centering
