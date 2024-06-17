@@ -120,9 +120,9 @@ Algunos de los comunicadores que existen actualmente en el mercado ya emplean di
 
 Los objetivos de este proyecto son los siguientes:
 \begin{enumerate}
-\item Investigar sobre los enfoques actuales para la generación de frases en el sector de los SAAC
-\item Implementar y evaluar modelos de lenguaje grandes para este tipo de herramientas
-\item Comparar los resultados que se obtienen con los modelos de lenguaje grandes respecto a otros comunicadores que permiten la generación de frases que se encuentran en el mercado, utilizando para ello las métricas de bleu y comet
+\item Investigar sobre los enfoques actuales para la generación de frases en el sector de los SAAC.
+\item Implementar y evaluar modelos de lenguaje grandes para este tipo de herramientas.
+\item Comparar los resultados que se obtienen con los modelos de lenguaje grandes respecto a otros comunicadores que permiten la generación de frases que se encuentran en el mercado, utilizando para ello las métricas de BLEU y COMET.
 \end{enumerate}
 
 \section{Estructura de la memoria}
@@ -143,34 +143,23 @@ REESCRIBIR: Los modelos de lenguaje se encuadran dentro de las técnicas de proc
 
 \section{Aprendizaje automático}
 
-El aprendizaje automático es una rama dentro de la inteligencia artificial que se centra en el desarrollo y estudio de algoritmos y modelos que permiten que los sistemas puedan relizar tareas específicas sin haber sido explícitamente programados para ello. Para ello, se utilizan conjuntos de datos de entrenamiento a partir de los cuales la máquina aprende patrones y relaciones. A medida que el sistema procesa estos datos, mejora su capacidad para generalizar y aplicar lo aprendido a nuevos datos, permitiéndole ejecutar las tareas de manera autónoma y eficaz. Tal y como explica Tom Mitchell \cite{mitchell1997mcgraw}:
+El aprendizaje automático (en inglés, \textit{machine learning}) es una disciplina dentro de la inteligencia artificial que se centra en el desarrollo y estudio de algoritmos y modelos que permiten que los sistemas puedan relizar tareas específicas sin haber sido explícitamente programados para ello. Este término fue acuñado por Arthur Samuel en el año 1959, quien creo uno de los primeros programas exitosos de esta disciplina, conocido como \textit{the Samuel Ckeckers-playing Program} \cite{samuelCheckers} (el programa de juego de damas de Samuel).
+
+Tom Mitchell \cite{mitchell1997mcgraw} define el proceso de aprendizaje de los programas en el campo del \textit{machine learning} de la siguiente manera:
 
 \textit{"Se dice que un programa aprende de la experiencia $E$ con respecto a alguna clase de tarea $T$, y medida de rendimiento $P$, si su rendimiento en tareas en $T$, medido por $P$, mejora con la experiencia $E$."}
 
-Dentro del aprendizaje automático, existen diferentes enfoques para el entrenamiento de los algoritmos. Estos son:
+Aunque la idea principal del aprendizaje automático es esta, econtramos diferentes enfoques para el entrenamiento de los algoritmos, dependiendo del tipo de tarea que se quiera llevar a cabo. Estos enfoques son: el aprendizaje supervisado, cuyo objetivo es, a partir de unos datos de entrenamiento, encontrar la función $f$ que realice el mejor mapeo posible entre un conjunto de entradas $X$ y sus salidas correspondientes $Y$, de manera que $(X, Y) = (X, f(Y))$; el aprendizaje no supervisado, que trata de modelar la estructura subyacente de un conjunto de datos para identificar relaciones y patrones, permitiendo así un entendimiento más profundo de los mismos; el aprendizaje semi-supervisado, que cae entre el supervisado y el no supervisado y utiliza una porción de datos etiquetados y no etiquetados y, por último, el aprendizaje por refuerzo, donde el algoritmo aprende a través de retroalimentaciones que va recibiendo, ajustando sus acciones con el objetivo de maximizar una recompensa acumulada a lo largo del tiempo.
 
-\begin{itemize}
-\item \textbf{Aprendizaje supervisado}: en este enfoque se parte de un conocimiento a priori. El objetivo es, a partir de unos datos de entrenamiento, encontrar la función $f$ que realice el mejor mapeo posible entre un conjunto de entradas $x \in X$ y sus salidas correspondientes $y \in Y$, de manera que $(x, y) = (x, f(y))$
-\item \textbf{Aprendizaje no supervisado}: a diferencia del aprendizaje supervisado, en este caso no contamos con conocimiento previo. El objetivo es modelar la estructura subyacente de los datos para identificar relaciones y patrones, permitiendo así un entendimiento más profundo de los mismos.
-\item \textbf{Aprendizaje semi-supervisado?}:
-\item \textbf{Aprendizaje por refuerzo}: este enfoque se ocupa de problemas donde no se cuenta con una supervisión directa pero sí se reciben retroalimentaciones o refuerzos que guían el proceso de aprendizaje. Los algoritmos van ajustando sus acciones con el objetivo de maximizar una recompensa acumulada a lo largo del tiempo.
-\end{itemize}
+Otro concepto importante dentro del aprendizaje automático es el aprendizaje profundo (\textit{deep learning}). El aprendizaje profundo es subconjunto dentro del aprendizaje automático que emplea algoritmos basados en redes neuronales. Dentro de este encontramos métodos como las redes neuronales profundas, las redes neuronales recurrentes, las redes neuronales convulacionales y los transformers, entre otros. Estos métodos tienen aplicaciones significativas en una gran variedad de ámbitos, entre los que se encuentra el procesamiento de lenguaje natural, disciplina en la que se enmarca este trabajo. En las siguientes secciones explicaremos con detalle los conceptos de redes neuronales y transformers.
 
-La tarea principal de este trabajo se llevará a cabo utilizando el enfoque de aprendizaje supervisado. 
+\section{Redes neuronales}
 
-Otro concepto importante dentro del aprendizaje automático es el aprendizaje profundo. El aprendizaje profundo es una rama dentro del aprendizaje automático que incluye algoritmos basados en redes neuronales. Profundizaremos sobre este concepto en la siguiente sección.
-
-\section{Aprendizaje profundo}
-
-Tal y como se ha mencionado en la sección anterior, el aprendizaje profundo es un subconjunto dentro del aprendizaje automático que emplea algoritmos basados en redes neuronales. Dentro del aprendizaje profundo encontramos métodos como las redes neuronales profundas, las redes neuronales recurrentes, las redes neuronales convulacionales y los transformers, entre otros. Estos métodos tienen aplicaciones significativas en una gran variedad de ámbitos, entre los que se encuentra el procesamiento de lenguaje natural, disciplina en la que se enmarca este trabajo.
-
-\subsection{Redes neuronales}
-
-\subsection{Transformers}
+\section{Transformers}
 
 \section{Procesamiento del lenguaje natural}
 
-\section{Modelos de lenguaje grandes (GPT, Gemma, Llama-3}
+\section{Modelos de lenguaje grandes (GPT, Gemma, Llama-3)}
 
 
 
@@ -211,10 +200,13 @@ Tal y como se ha mencionado en la sección anterior, el aprendizaje profundo es 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MODEL D'ARTICLE                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibitem{light}
+\bibitem{light}  %borrar
    Jennifer~S. Light.
    \newblock When computers were women.
    \newblock \textit{Technology and Culture}, 40:3:455--483, juliol, 1999.
+
+\bibitem{samuelCheckers}
+	%(2011). Samuel’s Checkers Player. In: Sammut, C., Webb, G.I. (eds) Encyclopedia of Machine Learning. Springer, Boston, MA. https://doi.org/10.1007/978-0-387-30164-8_740
 
 \bibitem{mitchell1997mcgraw}
 	Mitchell, Tom M and Learning, Machine
@@ -224,10 +216,20 @@ Tal y como se ha mencionado en la sección anterior, el aprendizaje profundo es 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MODEL DE LLIBRE                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibitem{ifrah}
+\bibitem{ifrah}  %borrar 
    Georges Ifrah.
    \newblock \textit{Historia universal de las cifras}.
    \newblock Espasa Calpe, S.A., Madrid, sisena edició, 2008.
+
+\bibitem{PMLkevinMurphy}
+   Kevin P. Murphy
+   \newblock \textit{Probabilistic Machine Learning}.
+   \newblock Massachusetts Institute of Technology, 2022.
+
+\bibitem{seyedehLeili}
+   Seyede Leili Mirtaheri, Reza Shahbazian.
+   \newblock \textit{Machine Learning}.
+   \newblock CRC Press, septiembre 2022.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MODEL D'URL                                                                 %
