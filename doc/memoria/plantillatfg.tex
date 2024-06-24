@@ -149,25 +149,70 @@ Tom Mitchell \cite{mitchell1997mcgraw} define el proceso de aprendizaje de los p
 
 \textit{"Se dice que un programa aprende de la experiencia $E$ con respecto a alguna clase de tarea $T$, y medida de rendimiento $P$, si su rendimiento en tareas en $T$, medido por $P$, mejora con la experiencia $E$."}
 
-Aunque la idea principal del aprendizaje automático es esta, econtramos diferentes enfoques para el entrenamiento de los algoritmos, dependiendo del tipo de tarea que se quiera llevar a cabo. Estos enfoques son: el aprendizaje supervisado, cuyo objetivo es, a partir de unos datos de entrenamiento, encontrar la función $f$ que realice el mejor mapeo posible entre un conjunto de entradas $X$ y sus salidas correspondientes $Y$, de manera que $(X, Y) = (X, f(Y))$; el aprendizaje no supervisado, que trata de modelar la estructura subyacente de un conjunto de datos para identificar relaciones y patrones, permitiendo así un entendimiento más profundo de los mismos; el aprendizaje semi-supervisado, que cae entre el supervisado y el no supervisado y utiliza una porción de datos etiquetados y no etiquetados y, por último, el aprendizaje por refuerzo, donde el algoritmo aprende a través de retroalimentaciones que va recibiendo, ajustando sus acciones con el objetivo de maximizar una recompensa acumulada a lo largo del tiempo.
+Aunque la idea principal del aprendizaje automático es esta, econtramos diferentes enfoques para el entrenamiento de los algoritmos, dependiendo del tipo de tarea que se quiera llevar a cabo. Estos enfoques son: el aprendizaje supervisado, cuyo objetivo es, a partir de unos datos de entrenamiento, encontrar la función $f$ que realice el mejor mapeo posible entre un conjunto de entradas $X$ y sus salidas correspondientes $Y$, de manera que $(X, Y) = (X, f(Y))$; el aprendizaje no supervisado, que trata de modelar la estructura subyacente de un conjunto de datos para identificar relaciones y patrones, permitiendo así un entendimiento más profundo de los mismos; el aprendizaje semi-supervisado, que cae entre el supervisado y el no supervisado y utiliza una porción de datos etiquetados y no etiquetados y, por último, el aprendizaje por refuerzo, donde el algoritmo aprende a través de retroalimentaciones que va recibiendo, ajustando sus acciones con el objetivo de maximizar una recompensa acumulada a lo largo del tiempo. La tarea principal de este trabajo se realizará utilizando las técincas del aprendizaje supervisado.
 
 Otro concepto importante dentro del aprendizaje automático es el aprendizaje profundo (\textit{deep learning}). El aprendizaje profundo es subconjunto dentro del aprendizaje automático que emplea algoritmos basados en redes neuronales. Dentro de este encontramos métodos como las redes neuronales profundas, las redes neuronales recurrentes, las redes neuronales convulacionales y los transformers, entre otros. Estos métodos tienen aplicaciones significativas en una gran variedad de ámbitos, entre los que se encuentra el procesamiento de lenguaje natural, disciplina en la que se enmarca este trabajo. En las siguientes secciones explicaremos con detalle los conceptos de redes neuronales y transformers.
 
 \section{Redes neuronales}
 
+Las redes neuronales están basadas en el funcionamiento del cerebro humano. Así, igual que en este, las redes neuronales están formadas por miles de billones de neuronas, también llamadas nodos, repartidas en capas. Hay 3 tipos de capas: input, hidden y output layer.
+
+%$https://web.stanford.edu/~jurafsky/slp3/ed3book_jan72023.pdf$
+Instead, a modern neural network is a network of small computing units, each
+of which takes a vector of input values and produces a single output value. 
+Neural networks share much of the same mathematics as logistic regression. But
+neural networks are a more powerful classifier than logistic regression, and indeed a
+minimal neural network (technically one with a single ‘hidden layer’) can be shown
+to learn any function.
+The building block of a neural network is a single computational unit. A unit takes
+a set of real valued numbers as input, performs some computation on them, and
+produces an output.
+At its heart, a neural unit is taking a weighted sum of its inputs, with one addibias term tional term in the sum called a bias term. Given a set of inputs x1...xn, a unit has
+a set of corresponding weights w1...wn and a bias b, so the weighted sum z can be
+represented as:
+z = b+
+X
+i
+wixi (7.1)
+Often it’s more convenient to express this weighted sum using vector notation; recall
+vector from linear algebra that a vector is, at heart, just a list or array of numbers. Thus
+we’ll talk about z in terms of a weight vector w, a scalar bias b, and an input vector
+x, and we’ll replace the sum with the convenient dot product:
+z = w · x+b (7.2)
+As defined in Eq. 7.2, z is just a real valued number.
+Finally, instead of using z, a linear function of x, as the output, neural units
+apply a non-linear function f to z. We will refer to the output of this function as
+activation the activation value for the unit, a. Since we are just modeling a single unit, the
+activation for the node is in fact the final output of the network, which we’ll generally
+call y. So the value y is defined as:
+y = a = f(z)
+
+
 \section{Transformers}
+
+All of these models are based on a technology called Transformers, which was invented by Google Research and Google Brain in 2017. I’ve had trouble finding a good human-readable description of how Transformers work; this is probably the best. [https://learning.oreilly.com/library/view/what-are-chatgpt/9781098152604/ch01.html]
+
+%[https://towardsdatascience.com/transformers-an-overview-of-the-most-novel-ai-architecture-cdd7961eef84]
+
+A Transformer takes some input and generates output. That output might be a response to the input; it might be a translation of the input into another language. While processing the input, a Transformer finds patterns between the input’s elements—for the time being, think “words,” though it’s a bit more subtle. These patterns aren’t just local (the previous word, the next word); they can show relationships between words that are far apart in the input. Together, these patterns and relationships make up “attention,” or the model’s notion of what is important in the sentence—and that’s revolutionary
+
+In itself, attention is a big step forward—again, “attention is all you need.” But Transformers have some other important advantages:
+
+Transformers don’t require training data to be labeled; that is, you don’t need metadata that specifies what each sentence in the training data means. When you’re training an image model, a picture of a dog or a cat needs to come with a label that says “dog” or “cat.” Labeling is expensive and error-prone, given that these models are trained on millions of images. It’s not even clear what labeling would mean for a language model: would you attach each of the sentences above to another sentence? In a language model, the closest thing to a label would be an embedding, which is the model’s internal representation of a word. Unlike labels, embeddings are learned from the training data, not produced by humans.
+
+The design of Transformers lends itself to parallelism, making it much easier to train a model (or to use a model) in a reasonable amount of time.
+
+The design of Transformers lends itself to large sets of training data.
 
 \section{Procesamiento del lenguaje natural}
 
 \section{Modelos de lenguaje grandes (GPT, Gemma, Llama-3)}
 
+%https://learning.oreilly.com/library/view/the-working-limitations/53863MIT65233/chapter001.xhtml#h1-1
 
+Los modelos de lenguaje grandes (en inglés, \textit{Large Language Models} o LLM) son modelos de aprendizaje profundo basados en redes neuronales con miles de millones de parámetros. Estos modelos pueden ser entrenados con grandes cantidades de texto, perimitiéndoles realizar una gran cantidad de tareas en el ámbito del procesamiento de lenguaje natural.
 
-
-
-
-
-
+Inicialmente, los LLM operaban de manera secuencial, basando sus predicciones en las distribuciones de probabilidad de las palabras dentro de un texto. Sin embargo, este enfoque tenía la limitación de no considerar el contexto más amplio en el que aparecen las palabras, así como sus distintos significados y asociaciones. Los  avances en la arquitectura de las redes neuronales y, especialmente, la aparición de los transformers, han representado una gran evolución hacia modelos de lenguaje grandes mucho más avanzados, capaces de procesar simultáneamente enormes cantidades de texto y permitiendo establecer relaciones más sólidas entre las palabras y el contexto en que aparecen.
 
 \chapter{Adaptación de modelos de lenguaje grandes (PEFT: LoRA)}
 
