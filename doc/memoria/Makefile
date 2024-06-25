@@ -1,4 +1,4 @@
-FILE	= plantillatfg 
+FILE	= plantillatfg
 
 all:
 	pdflatex  $(FILE).tex
