@@ -158,11 +158,18 @@ Otro concepto importante dentro del aprendizaje automático es el aprendizaje pr
 
 El primer modelo de red neuronal artificial fue creado en 1943 por Warren McCulloch y Walter Pitts. Este era un modelo simplificado que imitaba el comportamiento del cerebro humano, y dio inicio a un proceso de investigación de las redes neuronales desde dos enfoques distintos: uno centrado en los procesos biológicos del cerebro y otro en la aplicación de las redes neuronales para la inteligencia artificial. Las redes neuronales modernas, aunque inspiradas en estas primeras ideas, han evolucionado significatvamente y ya no se basan directamente en las inspiraciones biológicas iniciales.
 
-Las redes neuronales modernas están compuestas por pequeñas unidades de cómputo, cada una de las cuales toma un vector de entrada y produce un único valor de salida. Comparten muchas de las matemáticas utilizadas en la regresión logística, pero son clasificadores mucho más potentes.
+Las redes neuronales modernas están compuestas por pequeñas unidades de cómputo, conocidas como neuronas o nodos, cada una de las cuales toma un vector de entrada y produce un único valor de salida. Comparten muchas de las matemáticas utilizadas en la regresión logística, pero son clasificadores mucho más potentes.
 
-\subsection{Funcionamiento de las redes neuronales}
+Generalmente los nodos de la red se agrupan en tres tipos de capa: capa de entrada (\textit{input layer}), capas ocultas (\textit{hidden layers}) y capa de salida (\textit{output layer}).
 
 
+\subsection{Funcionamiento de las redes \textit{Feed Forward}}
+
+Tal y como hemos mencionado, el componente básico de una red neuronal son sus unidades de cálculo individuales, también conocidas como nodos o neuronas. Estas están conectadas entre si a través de enlaces o conexiones, que les permiten transmitirse señales unas a otras.
+
+Por lo general, las neuronas están organizadas en capas, cada una de las cuales utiliza transformaciones distintas en los datos de entrada. Así, los datos viajan desde la primera capa (capa de entrada o \textit{input layer}) hasta la última (capa de salida o \textit{output layer}) pasando por varias capas intermedias conocidas como capas ocultas o \textit{hidden layers}.
+
+ conectadas entre sí para transmitirse señales. Cada una de las unidades toma un conjunto de valores reales como entrada, realiza algún tipo de cálculo sobre estos y producen una salida. Después, esta salida pasará a la siguiente neurona, que tomará este valor como su entrada. En los enlaces, el valor de la salida de la neurona anterior es multiplicado por un valor de peso, que pueden incrementar o inhibir el estado de activación de las neuronas adyacentes. También a la salida de la neurona puede existir una función limitadora o umbral, que modifica el resultado o impone un límite que no se debe sobrepasar antes de propagarse a otra neurona. Esta función se conoce como función de activación.
 
 
 
