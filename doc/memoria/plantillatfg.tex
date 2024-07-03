@@ -158,21 +158,29 @@ Otro concepto importante dentro del aprendizaje automático es el aprendizaje pr
 
 El primer modelo de red neuronal artificial fue creado en 1943 por Warren McCulloch y Walter Pitts. Este era un modelo simplificado que imitaba el comportamiento del cerebro humano, y dio inicio a un proceso de investigación de las redes neuronales desde dos enfoques distintos: uno centrado en los procesos biológicos del cerebro y otro en la aplicación de las redes neuronales para la inteligencia artificial. Las redes neuronales modernas, aunque inspiradas en estas primeras ideas, han evolucionado significatvamente y ya no se basan directamente en las inspiraciones biológicas iniciales.
 
-Las redes neuronales modernas están compuestas por pequeñas unidades de cómputo, conocidas como neuronas o nodos, cada una de las cuales toma un vector de entrada y produce un único valor de salida. Comparten muchas de las matemáticas utilizadas en la regresión logística, pero son clasificadores mucho más potentes.
+Las redes neuronales modernas están compuestas por pequeñas unidades de cómputo conocidas como neuronas o nodos, conectadas entre si a través de enlaces para permitir la transmisión de señales entre estas. Generalmente el flujo de datos se inicia en los nodos de la capa de entrada (\textit{input layer}), pasa por una o más capas intermedias conocidas como capas ocultas (\textit{hidden layers}), y llega a los nodos de la capa de salida (\textit{output layer})..
 
-Generalmente los nodos de la red se agrupan en tres tipos de capa: capa de entrada (\textit{input layer}), capas ocultas (\textit{hidden layers}) y capa de salida (\textit{output layer}).
+\begin{figure}[h]
+\includegraphics[scale = 0.5]{images/neural_network.png}
+\centering
+\caption{Ejemplo de red neuronal}
+\end{figure}
 
+En la primera de estas capas los datos entran al modelo, en forma de vector. A cada una de las neuronas de la capa de entrada le corresponde un elemento del vector, sobre el cual realizará algún tipo de cálculo para luego enviar información a la siguiente neurona. Cada uno de los enlaces tiene asociado un peso, el cual ponderará el resultado anterior. Así, el valor que llega a la siguiente neurona es la suma ponderada de las entradas anteriores por los pesos de los enlaces, al cual se le puede añadir también un umbral, también conocido como \textit{bias term}, para poder controlar el nivel de activación de las neuronas. Dado un conjunto de entradas $x_1, ..., x_n$, los correspondientes pesos de los enlaces $w_1, ..., w_n$ y un término de \textit{bias} $b$, la suma ponderada $z$ se calcula:
 
-\subsection{Funcionamiento de las redes \textit{Feed Forward}}
+\begin{equation}
+z = b + \sum_i w_i x_i
+\end{equation}
 
-Tal y como hemos mencionado, el componente básico de una red neuronal son sus unidades de cálculo individuales, también conocidas como nodos o neuronas. Estas están conectadas entre si a través de enlaces o conexiones, que les permiten transmitirse señales unas a otras.
+En lugar de utilizar como output $z$, que es una función lineal de $x$, se aplica una función no lineal $f$ a $z$, conocida como función de activación, y es el resultado de esta el que llegará a la siguiente neurona. Entre las funciones de activación más comunes se encuentran la función sigmoide, la tangente hiperbólica (\textit{tanh}) y la rectificada lineal (\textit{ReLU}).
 
-Por lo general, las neuronas están organizadas en capas, cada una de las cuales utiliza transformaciones distintas en los datos de entrada. Así, los datos viajan desde la primera capa (capa de entrada o \textit{input layer}) hasta la última (capa de salida o \textit{output layer}) pasando por varias capas intermedias conocidas como capas ocultas o \textit{hidden layers}.
+%Los tipos de arquitectura más comunes de las redes neuronales son el perceptrón multicapa (MLP), redes neuronales convolucionales (CNN)o redes neuronales recurrentes (RNN).
 
- conectadas entre sí para transmitirse señales. Cada una de las unidades toma un conjunto de valores reales como entrada, realiza algún tipo de cálculo sobre estos y producen una salida. Después, esta salida pasará a la siguiente neurona, que tomará este valor como su entrada. En los enlaces, el valor de la salida de la neurona anterior es multiplicado por un valor de peso, que pueden incrementar o inhibir el estado de activación de las neuronas adyacentes. También a la salida de la neurona puede existir una función limitadora o umbral, que modifica el resultado o impone un límite que no se debe sobrepasar antes de propagarse a otra neurona. Esta función se conoce como función de activación.
+\subsection{Optimización y entrenamiento de las redes neuronales}
 
+?????
 
-
+A medida que las redes neuronales han evolucionado, se han desarrollado nuevas arquitecturas que abordan las limitaciones de los modelos anteriores. Uno de los avances más significativos en los últimos años es la introducción de los transformers. Estas arquitecturas han revolucionado el campo del procesamiento de lenguaje natural y otras áreas al permitir el modelado eficiente de dependencias a largo plazo. En la siguiente sección, exploraremos en detalle los transformers, su funcionamiento y su impacto en la inteligencia artificial.
 
 \section{Transformers}
 
