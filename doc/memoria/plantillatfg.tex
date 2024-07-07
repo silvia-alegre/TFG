@@ -158,7 +158,7 @@ Otro concepto importante dentro del aprendizaje automático es el aprendizaje pr
 
 El primer modelo de red neuronal artificial fue creado en 1943 por Warren McCulloch y Walter Pitts. Este era un modelo simplificado que imitaba el comportamiento del cerebro humano, y dio inicio a un proceso de investigación de las redes neuronales desde dos enfoques distintos: uno centrado en los procesos biológicos del cerebro y otro en la aplicación de las redes neuronales para la inteligencia artificial. Las redes neuronales modernas, aunque inspiradas en estas primeras ideas, han evolucionado significatvamente y ya no se basan directamente en las inspiraciones biológicas iniciales.
 
-Las redes neuronales modernas están compuestas por pequeñas unidades de cómputo conocidas como neuronas o nodos, conectadas entre si a través de enlaces para permitir la transmisión de señales entre estas. Generalmente el flujo de datos se inicia en los nodos de la capa de entrada (\textit{input layer}), pasa por una o más capas intermedias conocidas como capas ocultas (\textit{hidden layers}), y llega a los nodos de la capa de salida (\textit{output layer})..
+Las redes neuronales modernas están compuestas por pequeñas unidades de cómputo conocidas como neuronas o nodos, conectadas entre si a través de enlaces para permitir la transmisión de señales entre estas. Generalmente el flujo de datos se inicia en los nodos de la capa de entrada (\textit{input layer}), pasa por una o más capas intermedias conocidas como capas ocultas (\textit{hidden layers}), y llega a los nodos de la capa de salida (\textit{output layer}).
 
 \begin{figure}[h]
 \includegraphics[scale = 0.5]{images/neural_network.png}
@@ -174,19 +174,35 @@ z = b + \sum_i w_i x_i
 
 En lugar de utilizar como output $z$, que es una función lineal de $x$, se aplica una función no lineal $f$ a $z$, conocida como función de activación, y es el resultado de esta el que llegará a la siguiente neurona. Entre las funciones de activación más comunes se encuentran la función sigmoide, la tangente hiperbólica (\textit{tanh}) y la rectificada lineal (\textit{ReLU}).
 
-%Los tipos de arquitectura más comunes de las redes neuronales son el perceptrón multicapa (MLP), redes neuronales convolucionales (CNN)o redes neuronales recurrentes (RNN).
+\subsection{Redes neuronales para secuencias de texto}
 
-\subsection{Optimización y entrenamiento de las redes neuronales}
+En esta sección presentaremos dos tipos de redes neuronales que se utilizan para tareas con secuencias de texto.
 
-?????
+\subsubsection{Redes neuronales recurrentes (RNN)}
+Las redes neuronales recurrentes (en inglés, \textit{recurrent neural networks} (RNN)) son un tipo de red neuronal que mapean desde un conjunto de entrada a otro de salida de manera que esta predicción $y_t$ depende no solo de la de entrada $x_t$ sino también del estado oculto del sistema, $h_t$, que se actualiza con el tiempo a medida que se procesa los datos. Este tipo de modelos se pueden utilizar para la generación, clasificación y traducción de texto.
 
-A medida que las redes neuronales han evolucionado, se han desarrollado nuevas arquitecturas que abordan las limitaciones de los modelos anteriores. Uno de los avances más significativos en los últimos años es la introducción de los transformers. Estas arquitecturas han revolucionado el campo del procesamiento de lenguaje natural y otras áreas al permitir el modelado eficiente de dependencias a largo plazo. En la siguiente sección, exploraremos en detalle los transformers, su funcionamiento y su impacto en la inteligencia artificial.
+\subsubsection{Redes neuronales convolucionales (CNN)}
+El funcionamiento de las redes neuronales convolucionales (\textit{convolutional neural networks (CNN)} se basa en el calculo de una función de un vecindario local para cada una de las entradas utilizando pesos compartidos. Son una buena alternativa a las redes neuronales recurrentes, pues son sustancialmente más sencillas de entrenar, ya que no necesitan mantener el estado oculto a largo plazo. Se pueden utilizar en tareas de clasificación y de generación de texto.
+
+\subsection{Atención}
+
+En las redes neuronales clásicas, el cálculo de cada capa mediante una combinación lineal de los vectores de entrada y los correspondientes pesos, seguida de la aplicación de una función no lineal, conocida como función de activación. El resultado de esta operación es $Z = f(XW)$, donde $X$ es el vector de \textit{inputs}, $W$ es el vector de pesos, $f$ es la función de activación y $Z$ son los \textit{outputs}producidos.
+
+Sin embargo, podemos hacer que los modelos sean aún más flexibles si permitimos que los pesos dependan de los \textit{inputs}. Esto se representa como $Z = f(XW(X))$. A este tipo de interacción multiplicativa, donde los pesos varían en función de los \textit{inputs}, es lo que se conoce como atención.
+
+De manera más general, el mecanismo de atención puede describirse mediante la fórmula $Z = f(VW(Q, K))$. En este contexto, $Q$ (\textit{queries}) es un conjunto derivado de $X$ que se utiliza para describir lo que se busca con cada \textit{input}, $K$ (\textit{keys}) es otro conjunto derivado de $X$ que se usa para describir qué contiene cada vector de entrada y $V$ (\textit{values}) es un conjunto también derivado de $X$ que se utiliza pra describir cómo cada input debe ser transmitido hasta el output.
 
 \section{Transformers}
 
-%All of these models are based on a technology called Transformers, which was invented by Google Research and Google Brain in 2017. I’ve had trouble finding a good human-readable description of how Transformers work; this is probably the best. [https://learning.oreilly.com/library/view/what-are-chatgpt/9781098152604/ch01.html]
+En esta sección presentaremos la arquitectura de transformers.
 
-%[https://towardsdatascience.com/transformers-an-overview-of-the-most-novel-ai-architecture-cdd7961eef84]
+Los modelos basados en transformers son modelos del tipo \textit{seq2seq} (tanto la entrada como la salida son secuencias de texto) que utilizan el concept de atención definido en la sección anterior. La arquitectura de transformers fue introducida en el artículo "\textit{Attention is All You Need"} en 2017, y supuso una gran revolución en el campo del procesamiento de lenguaje natural y otras áreas del aprendizaje autmático.
+
+Los transformers destacan por su capacidad para manejar dependencias a largo plazo en las secuencias de datos de manera eficiente, superando a las redes neuronales recurrentes y las redes neuronales convolucionales en muchas tareas. Además, utilizan mecanismos de autoatención (\textit{self-attention}), que permiten ponderar la importancia de las diferentes partes de la secuencia de entrada al generar cada parte de la secuencia de salida.
+
+
+
+%All of these models are based on a technology called Transformers, which was invented by Google Research and Google Brain in 2017. I’ve had trouble finding a good human-readable description of how Transformers work; this is probably the best. [https://learning.oreilly.com/library/view/what-are-chatgpt/9781098152604/ch01.html]
 
 %A Transformer takes some input and generates output. That output might be a response to the input; it might be a translation of the input into another language. While processing the input, a Transformer finds patterns between the input’s elements—for the time being, think “words,” though it’s a bit more subtle. These patterns aren’t just local (the previous word, the next word); they can show relationships between words that are far apart in the input. Together, these patterns and relationships make up “attention,” or the model’s notion of what is important in the sentence—and that’s revolutionary
 
@@ -204,9 +220,14 @@ A medida que las redes neuronales han evolucionado, se han desarrollado nuevas a
 
 %https://learning.oreilly.com/library/view/the-working-limitations/53863MIT65233/chapter001.xhtml#h1-1
 
-Los modelos de lenguaje grandes (en inglés, \textit{Large Language Models} o LLM) son modelos de aprendizaje profundo basados en redes neuronales con miles de millones de parámetros. Estos modelos pueden ser entrenados con grandes cantidades de texto, perimitiéndoles realizar una gran cantidad de tareas en el ámbito del procesamiento de lenguaje natural.
+Los modelos de lenguaje grandes (en inglés, \textit{Large Language Models} o LLM) son modelos de aprendizaje profundo basados en redes neuronales con miles de millones de parámetros, que utilizan la arquitectura de transformers. Estos modelos pueden ser entrenados con grandes cantidades de texto, perimitiéndoles realizar una gran cantidad de tareas en el ámbito del procesamiento de lenguaje natural.
 
 Inicialmente, los LLM operaban de manera secuencial, basando sus predicciones en las distribuciones de probabilidad de las palabras dentro de un texto. Sin embargo, este enfoque tenía la limitación de no considerar el contexto más amplio en el que aparecen las palabras, así como sus distintos significados y asociaciones. Los  avances en la arquitectura de las redes neuronales y, especialmente, la aparición de los transformers, han representado una gran evolución hacia modelos de lenguaje grandes mucho más avanzados, capaces de procesar simultáneamente enormes cantidades de texto y permitiendo establecer relaciones más sólidas entre las palabras y el contexto en que aparecen.
+
+\subsection{Gemma}
+
+\subsection{Llama-3}
+
 
 \chapter{Adaptación de modelos de lenguaje grandes (PEFT: LoRA)}
 
