@@ -114,7 +114,7 @@ set mrtics default
 set nomttics
 set xtics border in scale 1,0.5 mirror norotate  autojustify
 set xtics  norangelimit logscale 
-set xtics   ("8" 8.00000, "16" 16.0000, "32" 32.0000, "64" 64.0000, "128" 128.000)
+set xtics   ("8" 8.00000, "16" 16.0000, "32" 32.0000, "64" 64.0000, "128" 128.000, "256" 256.000)
 set ytics border in scale 1,0.5 mirror norotate  autojustify
 set ytics  norangelimit autofreq 
 set ztics border in scale 1,0.5 nomirror norotate  autojustify
@@ -138,7 +138,7 @@ set xlabel ""
 set xlabel  font "" textcolor lt -1 norotate
 set x2label "" 
 set x2label  font "" textcolor lt -1 norotate
-set xrange [ 7.00000 : 140.000 ] noreverse writeback
+set xrange [ 7.00000 : 280.000 ] noreverse writeback
 set x2range [ * : * ] noreverse writeback
 set ylabel "" 
 set ylabel  font "" textcolor lt -1 rotate
@@ -184,6 +184,6 @@ I = {0.0, 1.0}
 VoxelDistance = 0.0
 GridDistance = 0.0
 ## Last datafile plotted: "xac"
-!cat results_llama3.csv | sed 's/,/ /g' | tail -n +2 | split -l 5 - /tmp/
+!cat results_llama3.csv | sed 's/,/ /g' | tail -n +2 | split -l 6 - /tmp/
 plot '/tmp/aa' u 2:3 t 'a = 32' w lp, '/tmp/ab' u 2:3 t 'a = 64' w lp, '/tmp/ac' u 2:3 t 'a=128' w lp
 #    EOF
