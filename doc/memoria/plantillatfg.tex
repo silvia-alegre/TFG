@@ -37,7 +37,7 @@
 \usepackage{amsmath}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
-
+\usetikzlibrary{babel}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        DADES DEL TREBALL                                    %
@@ -191,11 +191,19 @@ La arquitectura más simple de red neuronal es la de perceptrón. Este tipo de m
 		\node[activation] (act) at (6, 1.7) {$\phi$};
 
 	% Enlaces
+<<<<<<< HEAD
 		\draw[->] (circle1) -- (sum) node[midway, above] {$w_1$};
 		%\draw[->] (circle2) -- (sum) node[midway, above] {$w_2$};
 		%\draw[->] (circle3) -- (sum) node[midway, above] {$w_n$};
 		%\draw[->] (sum) -- (act) node[midway, above] {$z$};
 		%\draw[->] (act) -- (7.5, 1.7) node[midway, above] {$y$};
+=======
+		\draw[->]  (circle1) -- (sum) node[midway, above] {$w_1$};
+		\draw[->] (circle2) -- (sum) node[midway, above] {$w_2$};
+		\draw[->] (circle3) -- (sum) node[midway, above] {$w_n$};
+		\draw[->] (sum) -- (act) node[midway, above] {$z$};
+		\draw[->] (act) -- (7.5, 1.7) node[midway, above] {$y$};
+>>>>>>> 9831b1b3d3c594c6ea7f7d6af2523439f3f53942
 
 	\end{tikzpicture}
 	\caption{Esquema de perceptrón simple}
