@@ -191,19 +191,12 @@ La arquitectura más simple de red neuronal es la de perceptrón. Este tipo de m
 		\node[activation] (act) at (6, 1.7) {$\phi$};
 
 	% Enlaces
-<<<<<<< HEAD
-		\draw[->] (circle1) -- (sum) node[midway, above] {$w_1$};
-		%\draw[->] (circle2) -- (sum) node[midway, above] {$w_2$};
-		%\draw[->] (circle3) -- (sum) node[midway, above] {$w_n$};
-		%\draw[->] (sum) -- (act) node[midway, above] {$z$};
-		%\draw[->] (act) -- (7.5, 1.7) node[midway, above] {$y$};
-=======
 		\draw[->]  (circle1) -- (sum) node[midway, above] {$w_1$};
 		\draw[->] (circle2) -- (sum) node[midway, above] {$w_2$};
 		\draw[->] (circle3) -- (sum) node[midway, above] {$w_n$};
 		\draw[->] (sum) -- (act) node[midway, above] {$z$};
 		\draw[->] (act) -- (7.5, 1.7) node[midway, above] {$y$};
->>>>>>> 9831b1b3d3c594c6ea7f7d6af2523439f3f53942
+
 
 	\end{tikzpicture}
 	\caption{Esquema de perceptrón simple}
@@ -258,8 +251,8 @@ El modelo de perceptrón multicapa es una evolución del modelo de perceptrón s
         % Nodos de entrada
         \node[input](input1) at (0, 3.5) {$x_1$};
         \node[input](input2) at (0, 2) {$x_2$};
-        \node (dots) at (0, 0.8) {$\vdots$};
-        \node[input](input3) at (0, -0.5) {$x_n$};
+        \node (dots) at (0, 0.9) {$\vdots$};
+        \node[input](input3) at (0, -0.2) {$x_n$};
 
         % Nodos ocultos 1
         \node[hidden](hidden1) at (3, 4) {};
@@ -268,10 +261,10 @@ El modelo de perceptrón multicapa es una evolución del modelo de perceptrón s
         \node[hidden](hidden4) at (3, -0.5) {};
 
         % Nodos ocultos 2
-        \node[hidden](hidden5) at (6, 4) {$\dots$};
-        \node[hidden](hidden6) at (6, 2.5) {$\dots$};
-        \node[hidden](hidden7) at (6, 1) {$\dots$};
-        \node[hidden](hidden8) at (6, -0.5) {$\dots$};
+        \node[hidden](hidden5) at (6, 4) {};
+        \node[hidden](hidden6) at (6, 2.5) {};
+        \node[hidden](hidden7) at (6, 1) {};
+        \node[hidden](hidden8) at (6, -0.5) {};
 
         % Nodos ocultos 3
         \node[hidden](hidden9) at (9, 4) {};
@@ -280,33 +273,33 @@ El modelo de perceptrón multicapa es una evolución del modelo de perceptrón s
         \node[hidden](hidden12) at (9, -0.5) {};
 
         % Nodos de salida
-        \node[output](output1) at (12, 3) {$y_1$};
+        \node[output](output1) at (12, 2.5) {$y_1$};
         \node[output](output2) at (12, 1) {$y_2$};
 
         % Enlaces desde la capa de entrada a la primera capa oculta
-       % \foreach \i in {1,2,3}
-            %\foreach \j in {1,2,3,4}
-               % \draw[->] (input\i) -- (hidden\j);
+        \foreach \i in {1,2,3}
+            \foreach \j in {1,2,3,4}
+                \draw[->] (input\i) -- (hidden\j);
 
-        %\draw[->] (input3) -- (hidden1);
-       % \draw[->] (input3) -- (hidden2);
-        %\draw[->] (input3) -- (hidden3);
-        %\draw[->] (input3) -- (hidden4);
+        \draw[->] (input3) -- (hidden1);
+        \draw[->] (input3) -- (hidden2);
+        \draw[->] (input3) -- (hidden3);
+        \draw[->] (input3) -- (hidden4);
         
         % Enlaces desde la primera capa oculta a la segunda capa oculta
-        %\foreach \i in {1,2,3,4}
-            %\foreach \j in {5,6,7,8}
-                %\draw[->] (hidden\i) -- (hidden\j);
+        \foreach \i in {1,2,3,4}
+            \foreach \j in {5,6,7,8}
+                \draw[->] (hidden\i) -- (hidden\j);
 
         % Enlaces desde la segunda capa oculta a la tercera capa oculta
-        %\foreach \i in {5,6,7,8}
-            %\foreach \j in {9,10,11,12}
-                %\draw[->] (hidden\i) -- (hidden\j);
+        \foreach \i in {5,6,7,8}
+            \foreach \j in {9,10,11,12}
+                \draw[->] (hidden\i) -- (hidden\j);
 
         % Enlaces desde la tercera capa oculta a la capa de salida
-        %\foreach \i in {9,10,11,12}
-            %\foreach \j in {1,2}
-               % \draw[->] (hidden\i) -- (output\j);
+        \foreach \i in {9,10,11,12}
+            \foreach \j in {1,2}
+               \draw[->] (hidden\i) -- (output\j);
 
         % Textos de las capas
         \node at (0, 5) {Capa de entrada};
@@ -413,9 +406,111 @@ Este enfoque permite que los \textit{outputs} del modelo sean una combinación d
 
 En esta sección presentaremos la arquitectura de transformers.
 
-Los modelos basados en transformers son modelos del tipo \textit{seq2seq}, es decir, tanto la entrada como la salida son secuencias de texto, que utilizan el concepto de atención definido en la sección anterior. La arquitectura de transformers fue introducida en el artículo "\textit{Attention is All You Need"} \cite{vaswani2023attentionneed}, publicado en 2017, y supuso una gran revolución en el campo del procesamiento de lenguaje natural y otras áreas del aprendizaje automático.
+Los modelos basados en transformers emplean una arquitectura \textit{encoder-decoder} que utiliza el mecanismo de atención, descrito en la sección anterior. La arquitectura de los transformers fue introducida en el artículo "\textit{Attention is All You Need"} \cite{vaswani2023attentionneed}, publicado en 2017. Esta propuesta ha supuesto una gran revolución en diversas áreas del aprendizaje automático por su capacidad para manejar de manera efectiva secuencias largas y complejas.
 
-Los transformers destacan por su capacidad para manejar dependencias a largo plazo en las secuencias de datos de manera eficiente, superando a las redes neuronales recurrentes y las redes neuronales convolucionales en muchas tareas. Además, utilizan mecanismos de autoatención (\textit{self-attention}), que permiten ponderar la importancia de las diferentes partes de la secuencia de entrada al generar cada parte de la secuencia de salida.
+\subsection{Estructura del Transformer}
+
+La arquitectura de los transformers está compuesta por un total de seis bloques de \textit{encoders} y seis de \textit{decoders}. Cada bloque de \textit{encoder} y \textit{decoder} contiene varias capas y mecanismos que facilitan el procesamiento eficiente de las secuencias de datos.
+
+Los bloques de \textit{encoder} contienen dos componentes principales:  la capa de \textit{multi-head attention} y una red neuronal de tipo \textit{feed forward}. Cuando una secuencia entra en el \textit{encoder}, primero es porcesada por la capa de \textit{multi-head attention}. Esta capa procesa todas las palabras de la secuencia a la vez, relacionandolas todas con todas utilizando el mecanismo de atención. [EXPLICAR MEJOR MÁS ADELANTE]. A continuación, la secuencia pasa a ser procesada por la red \textit{feed forward}, que va procesando las palabras una a una. En cada uno de los seis \textit{encoders} encontramos un tipo de red \textit{feed forward} distinta. En cuanto al \textit{decoder}, encontramos tres componentes: una capa de \textit{masked multi-head attention}, otra de \textit{multi-head attention} y una red neuronal \textit{feed forward}.
+
+Además de estos componentes, tanto en el \textit{encoder} como en el \textit{decoder} encontramos capas de normalización, que se aplican tanto a las salidas de las capas de \textit{multi-head attention} como a las de la red \textit{feed forward}.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=1, transform shape]
+
+        % Encoder
+        \draw (0,0) rectangle (4,6.8);
+        \node at (2,7.7) {Encoder};
+        
+        % Encoder components
+        \draw (0.5,0.5) rectangle (3.5,2);
+        \node at (2,1.25) {\shortstack{Multi-Head\\Attention}};
+        
+        \draw (0.5,2.3) rectangle (3.5,3);
+        \node at (2,2.6) {Add \& Norm};
+        
+        \draw (0.5,4) rectangle (3.5,5.5);
+        \node at (2,4.75) {Feed Forward};
+        
+        \draw (0.5,5.8) rectangle (3.5,6.5);
+        \node at (2,6.1) {Add \& Norm};
+        
+        % Decoder
+        \draw[thick] (7,0) rectangle (11,10.5);
+        \node at (9,11.5) {Decoder};
+        
+        % Decoder components
+        \draw (7.5,0.5) rectangle (10.5,2);
+        \node at (9,1.25) {\shortstack{Masked\\Multi-Head\\Attention}};
+        
+        \draw (7.5,2.3) rectangle (10.5,3);
+        \node at (9,2.6) {Add \& Norm};
+        
+        \draw (7.5,4) rectangle (10.5,5.5);
+        \node at (9,4.75) {\shortstack{Multi-Head\\Attention}};
+        
+        \draw (7.5,5.8) rectangle (10.5,6.4);
+        \node at (9,6.1) {Add \& Norm};
+        
+        \draw (7.5,7.5) rectangle (10.5,9);
+        \node at (9,8.25) {Feed Forward};
+        
+        \draw (7.5,9.3) rectangle (10.5,10);
+        \node at (9,9.6) {Add \& Norm};
+        
+        % Encoder lines
+	\draw[->] (2, -0.3) -- (2, 0.5);
+	\draw[->] (2, 2) -- (2, 2.3);
+	\draw[->] (2, 3) -- (2, 4);
+	\draw[->] (2, 5.5) -- (2, 5.8);
+	\draw (2.02, 0.3) -- (0.2, 0.3);
+	\draw (0.2, 0.3) -- (0.2, 2.6);
+	\draw[->] (0.2, 2.6) -- (0.5, 2.6);
+
+	\draw (2.02, 3.5) -- (0.2, 3.5);
+	\draw (0.2, 3.5) -- (0.2, 6.1);
+	\draw[->] (0.2, 6.1) -- (0.5, 6.1);
+
+	% Decoder lines
+	\draw[->] (9, -0.3) -- (9, 0.5);
+	\draw[->] (9, 2) -- (9, 2.3);
+	\draw[->] (9, 3) -- (9, 4);
+	\draw[->] (9, 5.5) -- (9, 5.8);
+	\draw[->] (9, 6.4) -- (9, 7.5);
+	\draw[->] (9, 9) -- (9, 9.3);
+	\draw[->] (9, 10) -- (9, 10.9);
+
+	\draw (9, 0.3) -- (10.8, 0.3);
+	\draw (10.8, 0.3) -- (10.8, 2.6);
+	\draw[->] (10.8, 2.6) -- (10.5, 2.6);
+
+	\draw (9, 3.5) -- (10.8, 3.5);
+	\draw (10.8, 3.5) -- (10.8, 6.1);
+	\draw[->] (10.8, 6.1) -- (10.5, 6.1); 
+
+	\draw (9, 6.95) -- (10.8, 6.95);
+	\draw (10.8, 6.95) -- (10.8, 9.7);
+	\draw[->] (10.8, 9.7) -- (10.5, 9.7);
+
+
+	\draw (2, 6.5) -- (2, 7.2);
+	\draw (2, 7.2) -- (5.5, 7.2);
+	\draw (5.5, 7.2) -- (5.5, 4.7);
+	\draw[->] (5.5, 4.7) -- (7.5, 4.7);
+
+        
+    \end{tikzpicture}
+    \caption{Esquema de la arquitectura de los transformers}
+    \label{fig:transformers}
+\end{figure}
+
+\subsection{\textit{Multi-Head Attention}}
+\subsection{\textit{Positional encoding}}
+
+
+%Los transformers destacan por su capacidad para manejar dependencias a largo plazo en las secuencias de datos de manera eficiente, superando a las redes neuronales recurrentes y las redes neuronales convolucionales en muchas tareas. Además, utilizan mecanismos de autoatención (\textit{self-attention}), que permiten ponderar la importancia de las diferentes partes de la secuencia de entrada al generar cada parte de la secuencia de salida.
 
 
 \section{Procesamiento del lenguaje natural}
