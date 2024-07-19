@@ -38,6 +38,7 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 \usetikzlibrary{babel}
+\usepackage{hyperref}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        DADES DEL TREBALL                                    %
@@ -354,7 +355,7 @@ Uno de los principales problemas de las RNN es la dificultad para recordar infor
 \subsubsection{Redes neuronales convolucionales (CNN)}
 El funcionamiento de las redes neuronales convolucionales (\textit{convolutional neural networks (CNN)} se basa en el calculo de una función de un vecindario local para cada una de las entradas utilizando pesos compartidos. Son una buena alternativa a las redes neuronales recurrentes, pues son sustancialmente más sencillas de entrenar, ya que no necesitan mantener el estado oculto a largo plazo. Se pueden utilizar en tareas de clasificación y de generación de texto.
 
-\subsection{Arquitectura \textit{encoder-decoder}}
+\subsection{Arquitectura \textit{encoder-decoder}} \label{encdec}
 
 Los modelos \textit{encoder-decoder}, también conocidos como modelos \textit{seq2seq} (\textit{sequence-to-sequence}) son modelos capaces de generar secuencias de salida contextualmente apropiadas y de longitud arbitraria a partir de una secuencia de entrada \cite{jurafsky2023speech}. Se utilizan en problemas donde la secuencia de salida generada a partir de la secuencia de entrada no tiene la misma longitud. Estos modelos son ampliamente utilizados en tareas como el resumen de textos, la respuesta a preguntas, el diálogo y la traducción automática.
 
@@ -368,7 +369,7 @@ Este tipo de modelos están formados por tres componentes principales:
 
 Esta arquitectura se puede implementar utilizando diversos tipos de redes neuronales, incluyendo los transformers, como veremos en la sección \ref{transformers}, o las redes neuronales recurrentes.
 
-\subsection{Atención}
+\subsection{Atención} \label{atencion}
 
 Tal y como se ha explicado en las secciones anteriores, en las redes neuronales clásicas, el cálculo de cada capa se realiza mediante una combinación lineal de los vectores de entrada y los correspondientes pesos, seguida de la aplicación de una función de activación. Esta operación se representa matemáticamente como $Z = \phi(XW)$, donde $X$ es el vector de entrada, $W$ es el vector de pesos, $\phi$ es la función de activación y $Z$ son las salidas producidas en las capas. \cite{murphy2022probabilistic}
 
@@ -384,7 +385,13 @@ De manera más general, el mecanismo de atención puede describirse mediante la 
 
 Los vectores de \textit{queries}, \textit{keys} y valores se obtienen procesando las palabras mediante tres redes neuronales independientes.
 
-Cuando se utiliza la atención para calcular una salida $z_i$, se utiliza la \textit{query} $q_i$ correspondiente  y se compara con cada una de las claves $k_j$ de todas las otras palabras de la secuencia, calculando cuál es su nivel de relación con cada una. El resultado se representa como $\alpha_{ij}$ y debe cumplir las siguientes condiciones:
+Cuando se utiliza la atención para calcular una salida $z_i$, se utiliza la \textit{query} $q_i$ correspondiente  y se compara con cada una de las claves $k_j$ de todas las otras palabras de la secuencia, calculando cuál es su nivel de relación con cada una. Esto se realiza mediante el producto escalar entre el vector \textit{query} y los vectores \textit{key} de las otras palabras de la secuencia, de la siguiente manera:
+
+\begin{equation}
+\alpha_{ij} = softmax(q_i \cdot k_j)
+\end{equation}
+
+Se utiliza la función \textit{softmax} para normalizar los resultados y poder así crear el correspondiente vector de pesos. Así, el resultado se representa como $\alpha_{ij}$ y debe cumplir las siguientes condiciones:
 
 \begin{equation}
 0 \le \alpha_{ij} \le 1
@@ -394,27 +401,25 @@ Cuando se utiliza la atención para calcular una salida $z_i$, se utiliza la \te
 \sum_j\alpha_{ij} = 1
 \end{equation}
 
-El coeficiente $\alpha_ij$ determina cuánto peso se debe dar a cada valor $v_j$ en la combinación final. La salida $z_i$ se calcula entonces como una suma ponderada de los valores $v_j$, donde los pesos son los coeficientes calculados:
+El coeficiente $\alpha_ij$ determina cuánto peso se debe dar a cada valor $v_j$ en la combinación final, y representa el nivel de importancia que tiene cada palabra de la secuencia sobre la palabra $i$. La salida $z_i$ se calcula entonces como una suma ponderada de los valores $v_j$, donde los pesos son los coeficientes calculados:
 
 \begin{equation}
 z_i = \sum_j\alpha_{ij}v_j
 \end{equation}
 
-Este enfoque permite que los \textit{outputs} del modelo sean una combinación dinámica ponderada de los \textit{inputs}, lo que hace que este tipo de sistemas sean mucho más efectivos para una amplia gama de tareas, como la traducción automática, el resumen de textos o la generación de texto entre otros.
+Este enfoque permite que los \textit{outputs} del modelo sean una combinación dinámica ponderada de los \textit{inputs}, lo que hace que este tipo de sistemas sean mucho más efectivos para una amplia gama de tareas, como la traducción automática, el resumen de textos o la generación de texto entre otros. \cite{murphy2022probabilistic, jurafsky2023speech}
 
 \section{Transformers} \label{transformers}
 
 En esta sección presentaremos la arquitectura de transformers.
 
-Los modelos basados en transformers emplean una arquitectura \textit{encoder-decoder} que utiliza el mecanismo de atención, descrito en la sección anterior. La arquitectura de los transformers fue introducida en el artículo "\textit{Attention is All You Need"} \cite{vaswani2023attentionneed}, publicado en 2017. Esta propuesta ha supuesto una gran revolución en diversas áreas del aprendizaje automático por su capacidad para manejar de manera efectiva secuencias largas y complejas.
+Los modelos basados en transformers emplean una arquitectura \textit{encoder-decoder} que utiliza el mecanismo de atención, descrito en la sección anterior. La arquitectura de los transformers fue introducida en el artículo "\textit{Attention is All You Need"} \cite{vaswani2023attentionneed}, publicado en 2017. Esta supuso una gran revolución en diversas áreas del aprendizaje automático por su capacidad para manejar de manera efectiva secuencias largas y complejas \cite{dai2019transformerxlattentivelanguagemodels}. Actualmente, hay una gran cantidad de modelos basados en el que se utilizan en el área del procesamiento de lenguaje natural.
 
 \subsection{Estructura del Transformer}
 
-La arquitectura de los transformers está compuesta por un total de seis bloques de \textit{encoders} y seis de \textit{decoders}. Cada bloque de \textit{encoder} y \textit{decoder} contiene varias capas y mecanismos que facilitan el procesamiento eficiente de las secuencias de datos.
+Tal y como se ha mencionado anteriormente, la arquitectura de transformers utiliza el modelo \textit{encoder-decoder} introducido en la sección \ref{encdec}. En este caso, se utilizan un total de seis bloques de \textit{encoder} y seis de \textit{decoder}, cada uno de los cuales contiene varias capas y mecanismos que facilitan el procesamiento eficiente de las secuencias de datos.
 
-Los bloques de \textit{encoder} contienen dos componentes principales:  la capa de \textit{multi-head attention} y una red neuronal de tipo \textit{feed forward}. Cuando una secuencia entra en el \textit{encoder}, primero es porcesada por la capa de \textit{multi-head attention}. Esta capa procesa todas las palabras de la secuencia a la vez, relacionandolas todas con todas utilizando el mecanismo de atención. [EXPLICAR MEJOR MÁS ADELANTE]. A continuación, la secuencia pasa a ser procesada por la red \textit{feed forward}, que va procesando las palabras una a una. En cada uno de los seis \textit{encoders} encontramos un tipo de red \textit{feed forward} distinta. En cuanto al \textit{decoder}, encontramos tres componentes: una capa de \textit{masked multi-head attention}, otra de \textit{multi-head attention} y una red neuronal \textit{feed forward}.
-
-Además de estos componentes, tanto en el \textit{encoder} como en el \textit{decoder} encontramos capas de normalización, que se aplican tanto a las salidas de las capas de \textit{multi-head attention} como a las de la red \textit{feed forward}.
+En general, los transformers utilizan tres tipos de capas: capas lineales simples, capas de \textit{multi-head attention} y capas donde encontramos redes neuronales de tipo \textit{feed forward} \cite{jurafsky2023speech}. En la figura \ref{fig:transformers} encontramos el esquema de la estructura de los \textit{encoders} y  \textit{decoders}. Tal y como se puede observar, el \textit{encoder} está formado por una capa de \textit{multi-head attention} y una red neuronal \textit{feedforward}, además de las capas de normalización que encontramos después de estas. Por lo que respecta al \textit{decoder}, lo conforman dos capas de autoatención y una red neuronal, también con capas de normalización después de estas.
 
 \begin{figure}[h]
     \centering
@@ -506,16 +511,43 @@ Además de estos componentes, tanto en el \textit{encoder} como en el \textit{de
     \label{fig:transformers}
 \end{figure}
 
-\subsection{\textit{Multi-Head Attention}}
+La ide principal del transformer es, a lo largo de esta serie de capas, poder construir representaciones contextualizadas cada vez más acertadas de los significados de las palabras o \textit{tokens} de las secuencias de entrada. Así, en las distintas capas del transformer, para obtener la representación de una palabra, se combina la información de la representación obtenida en la capa anterior con la información de las representaciones de las palabras vecinas. El objetivo es producir la versión contextualizada de cada palabra, representando lo que significa esta en el contexto particular en que se encuentra. \cite{jurafsky2023speech}
+
+A continuación se explica con más detalle los procesos que ocurren dentro de cada capa.
+
+\subsection{Capas de \textit{multi-head attention}}
+Las capas de \textit{multi-head attention} suponen la verdadera innovación de la arquitectura de transformers \cite{jurafsky2023speech}, pues es en estas donde el modelo aplica el mecansimo de atención.  En el caso de los transformers, se utiliza una variación del mecanismo de atención explicado en la sección \ref{atencion}. Esta variación se conoce como \textit{scaled dot-product attention}. Igual que en el mecanismo general de atención, se utilizan tres matrices: la matriz de \textit{queries} $Q$, la de claves $K$ (por su nombre en inglés, \textit{keys}) y la de valores $V$ (\textit{values}). En este caso, el valor de atención se calcula utilizando la siguiente fórmula:
+
+\begin{equation}
+A(Q, K, V) = softmax(\frac{QK^t}{\sqrt{d_k}})
+\end{equation}
+
+Donde $d_k$ es la dimensión del estado oculto de la fuente.
+
+Como vemos, el cambio respecto al cálculo de atención descrito en la sección \ref{atencion} reside en que en este caso se añade el factor $\frac{1}{d_k}$, que se utiliza para escalar el resultado obtenido, y conseguir así que las gradientes sean más estables, ya que si la secuencia de entrada fuera muy larga, la función \textit{softmax} puede devolver gradientes extremadamente pequeños, cosa que podria dificultar al modelo realizar un aprendizaje eficiente. \cite{9204059]}
+
+\subsection{Red \textit{Feed Forward}}
+
+\subsection{Capas de normalización}
+
 \subsection{\textit{Positional encoding}}
-
-
-%Los transformers destacan por su capacidad para manejar dependencias a largo plazo en las secuencias de datos de manera eficiente, superando a las redes neuronales recurrentes y las redes neuronales convolucionales en muchas tareas. Además, utilizan mecanismos de autoatención (\textit{self-attention}), que permiten ponderar la importancia de las diferentes partes de la secuencia de entrada al generar cada parte de la secuencia de salida.
 
 
 \section{Procesamiento del lenguaje natural}
 
 \section{Modelos de lenguaje grandes (GPT, Gemma, Llama-3)}
+
+There are two existing strategies for applying pre-trained language representations to downstream tasks: feature-based and fine-tuning. The
+feature-based approach, such as ELMo (Peters
+et al., 2018a), uses task-specific architectures that
+include the pre-trained representations as additional features. The fine-tuning approach, such as
+the Generative Pre-trained Transformer (OpenAI
+GPT) (Radford et al., 2018), introduces minimal
+task-specific parameters, and is trained on the
+downstream tasks by simply fine-tuning all pretrained parameters. The two approaches share the
+same objective function during pre-training, where
+they use unidirectional language models to learn
+general language representations. \cite{devlin2019bertpretrainingdeepbidirectional}
 
 %https://learning.oreilly.com/library/view/the-working-limitations/53863MIT65233/chapter001.xhtml#h1-1
 
