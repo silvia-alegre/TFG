@@ -166,6 +166,10 @@ Generalmente, los enfoques para el entrenamiento de algoritmos se agrupan en:
 
 La tarea principal de este trabajo se realizará utilizando las técincas del aprendizaje supervisado.
 
+%%%%%%%%%%%%%%%%%
+% Añadir algo sobre NLP %%%
+%%%%%%%%%%%%%%%%%
+
 Otro concepto importante dentro del aprendizaje automático es el aprendizaje profundo (\textit{deep learning}). El aprendizaje profundo es subconjunto dentro del aprendizaje automático que emplea algoritmos basados en redes neuronales. Dentro de este encontramos métodos como las redes neuronales profundas, las redes neuronales recurrentes, las redes neuronales convulacionales y los transformers, entre otros. Estos métodos tienen aplicaciones significativas en una gran variedad de ámbitos, entre los que se encuentra el procesamiento de lenguaje natural, disciplina en la que se enmarca este trabajo. En las siguientes secciones explicaremos con detalle los conceptos de redes neuronales y transformers.
 
 \section{Redes neuronales}
@@ -233,7 +237,7 @@ Estos pasos se repiten durante un número determinado de iteraciones o hasta que
 
 Este modelo de perceptrón tiene una limitación principal: el modelo solo converge si las dos clases en las cuales debe clasificar las muestras son linealmente separables. En caso de que no lo sean, los pesos oscilarán indefinidamente, hasta que el número máximo de iteraciones se alcance. Para solventar esta limitación existen modelos de redes neuronales mucho más complejos, con más neuronas y que utilizan funciones de activación no lineales. El modelo más conocido de este tipo es el de perceptrón multicapa (MLP, por su nombre en inglés: \textit{Multi-Layer Perceptron}).
 
-\subsection{Perceptrón multicapa}
+\subsection{Perceptrón multicapa} \label{perceptronmulticapa}
 El modelo de perceptrón multicapa es una evolución del modelo de perceptrón simple que aparece con intención de poder resolver problemas no lineales. La idea principal detrás de este es la combinación de varios perceptrones simples en un único modelo. En esta arquitectura podemos encontrar un número elevado de neuronas, conectadas entre si y divididas en capas. Encontramos tres tipos de capas: una capa de entrada (\textit{input layer}), una o más capas ocultas (\textit{hidden layers}) y una capa de salida (\textit{output layer}) (ver figura \ref{fig:perceptronMulticapa}).
 
 %\begin{figure}[h]
@@ -331,7 +335,7 @@ El procesamiento de secuencias de texto utilizando redes neuronales es una técn
 
 Cada palabra en la secuencia de texto es procesada por la red neuronal de manera secuencial. A continuación, se presentan dos tipos de red neuronal que son utilizadas para el procesamiento de este tipo de datos.
 
-\subsubsection{Redes neuronales recurrentes (RNN)}
+\subsubsection{Redes neuronales recurrentes (RNN)} \label{rnn}
 Las redes neuronales recurrentes (en inglés, \textit{recurrent neural networks} (RNN)) son un tipo de red neuronal que mapean desde un conjunto de entrada a otro de salida de manera que la predicción $y_t$ depende no solo de la de entrada $x_t$ sino también del estado oculto del sistema, $h_t$ \cite{murphy2022probabilistic}. El estado oculto $h_t$ es una representación interna de la red en el momento de tiempo $t$ que captura información relevante que ha sido procesada anteriormente. Se actualiza con el tiempo a medida que se procesan los datos. Este tipo de modelos se pueden utilizar para la generación, clasificación y traducción de texto.
 
 El proceso que siguen este tipo de redes es el siguiente. En primer lugar, se inicializa la red con un estado oculto $h_0$, que puede ser un vector de ceros o una inicialización aprendida. Para cada elemento en la secuencia de entrada, la red actualiza su estado oculto y produce una salida. Así, en el momento de tiempo t, la entrada $x_t$ y el estado oculto previo $h_{t-1}$ se combinan para generar el nuevo estado oculto $h_t$. Este se calcula utilizando la fórmula:
@@ -419,7 +423,7 @@ Los modelos basados en transformers emplean una arquitectura \textit{encoder-dec
 
 Tal y como se ha mencionado anteriormente, la arquitectura de transformers utiliza el modelo \textit{encoder-decoder} introducido en la sección \ref{encdec}. En este caso, se utilizan un total de seis bloques de \textit{encoder} y seis de \textit{decoder}, cada uno de los cuales contiene varias capas y mecanismos que facilitan el procesamiento eficiente de las secuencias de datos.
 
-En general, los transformers utilizan tres tipos de capas: capas lineales simples, capas de \textit{multi-head attention} y capas donde encontramos redes neuronales de tipo \textit{feed forward} \cite{jurafsky2023speech}. En la figura \ref{fig:transformers} encontramos el esquema de la estructura de los \textit{encoders} y  \textit{decoders}. Tal y como se puede observar, el \textit{encoder} está formado por una capa de \textit{multi-head attention} y una red neuronal \textit{feedforward}, además de las capas de normalización que encontramos después de estas. Por lo que respecta al \textit{decoder}, lo conforman dos capas de autoatención y una red neuronal, también con capas de normalización después de estas.
+En general, los transformers utilizan tres tipos de capas: capas lineales simples, capas de \textit{multi-head attention} y capas donde encontramos redes neuronales de tipo \textit{feed forward}. En la figura \ref{fig:transformers} encontramos el esquema de la estructura de los \textit{encoders} y  \textit{decoders}. Tal y como se puede observar, el \textit{encoder} está formado por una primera capa de \textit{multi-head attention} y, a continuación, una red neuronal de tipo \textit{feedforward} completamente conectada, además de las capas de normalización que encontramos después de estas. Por lo que respecta al \textit{decoder}, lo conforman dos capas de autoatención y una red neuronal, también con capas de normalización después de estas. \cite{jurafsky2023speech, multiheaddotproduct}
 
 \begin{figure}[h]
     \centering
@@ -524,30 +528,63 @@ A(Q, K, V) = softmax(\frac{QK^t}{\sqrt{d_k}})
 
 Donde $d_k$ es la dimensión del estado oculto de la fuente.
 
-Como vemos, el cambio respecto al cálculo de atención descrito en la sección \ref{atencion} reside en que en este caso se añade el factor $\frac{1}{d_k}$, que se utiliza para escalar el resultado obtenido, y conseguir así que las gradientes sean más estables, ya que si la secuencia de entrada fuera muy larga, la función \textit{softmax} puede devolver gradientes extremadamente pequeños, cosa que podria dificultar al modelo realizar un aprendizaje eficiente. \cite{9204059]}
+Como vemos, el cambio respecto al cálculo de atención descrito en la sección \ref{atencion} reside en que en este caso se añade el factor $\frac{1}{\sqrt{d_k}}$, que se utiliza para escalar el resultado obtenido, y conseguir así que las gradientes sean más estables, ya que si la secuencia de entrada fuera muy larga, la función \textit{softmax} puede devolver gradientes extremadamente pequeños, cosa que podria dificultar al modelo realizar un aprendizaje eficiente. \cite{multiheaddotproduct}
 
-\subsection{Red \textit{Feed Forward}}
+Aunque esta forma de cálculo de la atención es empleada por los transformers, estos no se quedan solamente en este concepto, sino que van un paso más allá y utilizan un tipo de atención algo más complejo conocido como \textit{multi-head attention}. Este proceso consiste en calcular distintas atenciones sobre las mismas \textit{queries} y pares clave-valor. Se utiliza este tipo de atención ya que las distintas palabras dentro de la secuencia de texto pueden estar relacionadas entre sí de muchas maneras distintas de manera simultánea. Capturar todas estas relaciones entre palabras es muy complicado si se utiliza un solo valor de atención.
+
+Así, en las capas de \textit{multi-head attention} encontramos distintas capas de atención conocidas como \textit{heads} (cabezas), que calculan valores de atención de manera paralela. Cada una de estas tiene un conjunto distinto de parámetros que se aprende durante el entrenamiento, con los cuales hará el cálculo de atención entre las palabras de entrada. Utilizando parámetros distintos en cada cabeza se consigue que cada una se centre en aspectos distintos de las relaciones entre las palabras. El cálculo de atención para una cabeza $i$ se realiza mediante la siguiente fórmula:
+
+\begin{equation}
+H_i = A(QW_i^Q, KW_i^K, VW_i^V)
+\end{equation}
+
+Donde $W_i^Q$, $W_i^K$ y $W_i^V$ son las matrices de parámtetros asociadas a la \textit{query}, clave y valor respectivamente de la cabeza $i$. El valor de \textit{multi-head attention} se obtiene mediante la concatenación de los resultados de las cabezas. Para un total de $h$ cabezas de atención:
+
+\begin{equation}
+MultiHead(Q, K, V) = (H_1 \oplus H_2 \oplus ... \oplus H_h)W_O
+\end{equation}
+
+La matriz de parámetros $W_O$ proyecta la concatenación de los resultados de las $h$ cabezas de vuelta al subespacio original. \cite{cordonnier2021multiheadattentioncollaborateinstead, multiheaddotproduct, jurafsky2023speech}
+
+\subsection{Caps de redes \textit{Feed Forward}}
+Las capas de redes \textit{feed forward} en la arquitectura de transformers están compuestas por $N$ redes neuronales independientes de tipo \textit{feed forward} (en español, redes de propagación hacia adelante).
+
+Una red neuronal de tipo \textit{feed forward} es una red multicapa en la que, a diferencia de las redes neuronales recurrentes (RNN) explicadas en la sección \ref{rnn}, las conexiones entre neuronas no pueden formar ciclos. Esto implica que las señales siempre se propagan en una única dirección: desde la capa de entrada hacia la capa de salida, pasando por las capas ocultas. En la arquitectura de transformers, estas redes están completamente conectadas, lo que significa que las neuronas de una capa reciben las salidas de todas las neuronas de la capa anterior y envían sus salidas a todas las neuronas de la capa siguiente. Además, típicamente contienen solamente una capa oculta.
+
+Este tipo de red neuronal es similar al modelo de perceptró multicapa explicado en la sección \ref{perceptronmulticapa}, pero no deben confundirse, pues en el caso de las redes neuronales \textit{feed forward}, las unidades de cómputo no son perceptrones, sino unidades más complejas. \cite{jurafsky2023speech}
+
+En los transformers, estas capas complementan las salidas de la capa de atención. Mientras que la capa de atención procesa cada palabra de la secuencia relacionandola con las demás palabras, las capas \textit{feef forward} procesan cada palabra de manera independiente. Este procesamiento es crucial para mejorar la representación de las características extraídas de la capa de atención.
 
 \subsection{Capas de normalización}
 
-\subsection{\textit{Positional encoding}}
+Las capas de normalización se encuentran detrás de tanto las capas de atención como las de redes \textit{forward}. En ellas se aplica el proceso de normalización de capas (en inglés, \textit{layer normalization} o \textit{layer norm} \cite{ba2016layernormalization}). Este tipo de normalización se utiliza para mejorar el rendimiento del entrenamiento de redes neuronales profundas, manteniendo los valores de la capa oculta dentro de un rango que facilita el entrenamiento basado en gradientes.
 
+El proceso de normalización de capas toma como entrada un vector para cada palabra de la secuencia, y devuelve este mismo vector normalizado. El primer paso en el proceso es calcular la media $\mu$ y la desviación típica $\sigma$ del vector, de la siguiente manera:
 
-\section{Procesamiento del lenguaje natural}
+\begin{equation}
+\mu^l = \frac{1}{H} \sum_{i = 1}^Hx_i^l
+\end{equation}
 
+\begin{equation}
+\sigma^l = \sqrt{\frac{1}{H} \sum_{i = 1}^H (x_i^l - \mu^l)^2}
+\end{equation}
+
+Donde $H$ es el número de unidades ocultas en la capa. A continuación, los componentes del vector se normalizan restando la media y desviación típica calculadas \cite{jurafsky2023speech}:
+
+\begin{equation}
+\hat{x} = \frac{(x - \mu)}{\sigma}
+\end{equation}
+
+Finalmente, se introducen parámetros de \textit{bias} $b$ y \textit{gain} $g$:
+
+\begin{equation}
+LayerNorm = g\hat{x} + b
+\end{equation}
+
+%\section{Procesamiento del lenguaje natural}
 \section{Modelos de lenguaje grandes (GPT, Gemma, Llama-3)}
 
-There are two existing strategies for applying pre-trained language representations to downstream tasks: feature-based and fine-tuning. The
-feature-based approach, such as ELMo (Peters
-et al., 2018a), uses task-specific architectures that
-include the pre-trained representations as additional features. The fine-tuning approach, such as
-the Generative Pre-trained Transformer (OpenAI
-GPT) (Radford et al., 2018), introduces minimal
-task-specific parameters, and is trained on the
-downstream tasks by simply fine-tuning all pretrained parameters. The two approaches share the
-same objective function during pre-training, where
-they use unidirectional language models to learn
-general language representations. \cite{devlin2019bertpretrainingdeepbidirectional}
+%There are two existing strategies for applying pre-trained language representations to downstream tasks: feature-based and fine-tuning. The feature-based approach, such as ELMo (Peters et al., 2018a), uses task-specific architectures that include the pre-trained representations as additional features. The fine-tuning approach, such as the Generative Pre-trained Transformer (OpenAI GPT) (Radford et al., 2018), introduces minimal task-specific parameters, and is trained on the downstream tasks by simply fine-tuning all pretrained parameters. The two approaches share the same objective function during pre-training, where they use unidirectional language models to learn general language representations. \cite{devlin2019bertpretrainingdeepbidirectional}
 
 %https://learning.oreilly.com/library/view/the-working-limitations/53863MIT65233/chapter001.xhtml#h1-1
 
@@ -566,7 +603,7 @@ Inicialmente, los LLM operaban de manera secuencial, basando sus predicciones en
 
 \section{Low-Rank Adaptation (LoRA}
 
-LoRA \cite{hu2021loralowrankadaptationlarge}
+%LoRA \cite{hu2021loralowrankadaptationlarge}
 
 \chapter{Resultados experimentales}
 
