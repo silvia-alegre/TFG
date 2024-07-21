@@ -593,19 +593,19 @@ Las tareas sobre las que se aplican son casos de generación condicional, es dec
 En primer lugar, debemos proporcionar al modelo una \textit{prompt} con la pregunta a contestar, con un formato que sugiera que después de la pregunta se espera una respuesta, por ejemplo: 
 
 \begin{displayquote}
-\centerline{"Q: ¿Cuál es la capital de Francia? A: "}
+\centerline{"Pregunta: ¿Cuál es la capital de Francia? Respuesta: "}
 \end{displayquote}
 
 A continuación, el modelo calcula la probabilidad para cada palabra $w$ dentro de su vocabulario de que esta sea la palabra que continua la \textit{prompt}:
 
 \begin{displayquote}
-\centerline{$P(w|\text{Q: ¿Cuál es la capital de Francia? A: })$}
+\centerline{$P(w|\text{Pregunta: ¿Cuál es la capital de Francia? Respuesta: })$}
 \end{displayquote}
 
 Los vocabularios en los LLMs se refieren al conjunto de palabras sobre las que trabajan. Así, habiendo calculado las probabilidades para todas las posibles palabras, encontraremos algunas con probabilidades más altas, entre las cuales debería encontrarse la palabra \textit{París}, que es la respuesta a la pregunta. El modelo deberia seleccionar esta palabra y, si se quiere generar una respuesta más larga, se calcula la siguiente probabilidad:
 
 \begin{displayquote}
-\centerline{$P(w|\text{Q: ¿Cuál es la capital de Francia? A: París})$}
+\centerline{$P(w|\text{Pregunta: ¿Cuál es la capital de Francia? Respuesta: París})$}
 \end{displayquote}
 
 El proceso puede seguir hasta que llegemos al número de palabras deseadas.
@@ -640,23 +640,23 @@ Debido a estas limitaciones, en los LLM se suelen emplear algoritmos más sofist
 
 \subsubsection{\textit{Top-k sampling}}
 
-El algoritmo de \textit{top-k sampling} es una generalización del \textit{greedy decoding} que consiste en elegir las $K$ palabras con mayor probabilidad de la distribución y aplicar \textit{random sampling} solamente sobre este conjunto. Una vez se eligen las $K$ palabras del conjunto, se deben normalizar sus probabilidades de acuerdo al conjunto creado. Así, las probabilidades con las que se trabaja se calculan como:
+El algoritmo de \textit{top-k sampling} es una generalización del \textit{greedy decoding} que consiste en seleccionar las $K$ palabras con mayor probabilidad de la distribución y aplicar \textit{random sampling} únicamente sobre este conjunto. Una vez se seleccionan las $K$ palabras del conjunto, sus probabilidades deben ser normalizadas según el nuevo conjunto. Las probabilidades normalizadas se calculan de la siguiente manera:
 
 \begin{equation}
 \hat{p}_i = \frac{p_i * \mathbb{1}\{i \leq K\}}{\sum_{j = 1}^K p_j}
 \end{equation}
 
-Donde $\mathbb{1}$ es la función característica \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
+Donde $\mathbb{1}$ es la función característica, que indica si una palabra está dentro o no del conjunto de las $K$ más probables \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
 
 \subsubsection{\textit{Nucleus sampling}}
 
-El algoritmo de \textit{nucleus sampling} \cite{holtzman2020curiouscaseneuraltext}, también conocido como \textit{top-p sampling} sigue con la idea de eliminar de la distribución las palabras menos probables, pero en lugar de quedarse con las $K$ palabras más frecuentes, mantiene un el porcentaje $p$ más importante de la muestra. Así, dada una distribución $P(x |x_{1:i-})$, las \textit{top-p} palabras del vocabulario $V^{(p)} \subset V$ como el conjunto más pequeño que cumpla:
+El algoritmo de \textit{nucleus sampling} \cite{holtzman2020curiouscaseneuraltext}, también conocido como \textit{top-p sampling} también sigue la idea de eliminar de la distribución las palabras menos probables. Sin embargo, en lugar de seleccionar un número fijo de palabras, lo que hace es mantener un el porcentaje $p$ más importante de la muestra. Así, dada una distribución $P(x |x_{1:i-1})$, las \textit{top-p} palabras del vocabulario $V^{(p)} \subset V$ se definen como el conjunto más pequeño que cumpla:
 
 \begin{equation}
 \sum_{x \in V^{(p)}} P(x | x_{1:i-1}) \ge p
 \end{equation}
 
-Al medir la probabilidad en lugar de un número fijo de palabras, se espera que la medida sea más robusta incluso en contextos muy diferentes, que podrian tener resultados muy distintos si se usara un número fijo de palabras. De nuevo, tras seleccionar el conjunto de palabras que se utilizarán en el \textit{sampling} se deben normalizar sus probabilidades de acuerdo al conjunto.
+Al medir la probabilidad acumulada en lugar de un número fijo de palabras, se espera que esta medida sea más robusta incluso en contextos diversos, que podrian tener resultados muy distintos si se usara un número fijo de palabras. De nuevo, tras seleccionar el subconjunto de palabras del vocabulario se deben normalizar sus probabilidades.
 
 Las probabilidades normalizadas de cada palabra en el vocabulario se pueden calcular como:
 
@@ -668,7 +668,7 @@ Donde $p'_i = p_i * \mathbb{1}\{\sum_{j = 1}^{i-1}p_j < P\}$ \cite{nadeem2020sys
 
 \subsubsection{\textit{Tempered sampling}}
 
-En el algoritmo de \textit{tempered sampling} \cite{nadeem2020systematiccharacterizationsamplingalgorithms}, en lugar de crear un subconjunto de palabras del vocabulario lo que se hace es hacer un \textit{reshape} de este. Para ello, se utiliza un parámetro $\tau$, que cumple $0 < \tau < 1$, utilizando la siguiente fórmula:
+En el algoritmo de \textit{tempered sampling} \cite{nadeem2020systematiccharacterizationsamplingalgorithms} no crea un subconjunto de palabras del vocabulario, sino que ajusta la distribución de probabilidad de las palabras mediante una transformación. Para ello, se utiliza un parámetro $\tau$, que cumple $0 < \tau < 1$, según la siguiente fórmula:
 
 \begin{equation}
 \hat{p}_i = \frac{exp(log(p_i)/\tau)}{\sum_{j = 1}^{|V|}exp(log(p_j)/\tau)}
@@ -689,7 +689,6 @@ En las siguientes secciones se presentan algunos de los modelos de lenguaje gran
 \subsection{Gemma}
 
 \subsection{Llama-3}
-
 
 \chapter{Adaptación de modelos de lenguaje grandes (PEFT: LoRA)}
 
