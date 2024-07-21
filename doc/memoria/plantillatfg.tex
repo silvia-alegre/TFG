@@ -650,9 +650,39 @@ Donde $\mathbb{1}$ es la función característica \cite{nadeem2020systematicchar
 
 \subsubsection{\textit{Nucleus sampling}}
 
-\subsubsection{\textit{Tempered sampling}}
-%% HABLAR TB DE TEMPERED TOP-K SAMPLING
+El algoritmo de \textit{nucleus sampling} \cite{holtzman2020curiouscaseneuraltext}, también conocido como \textit{top-p sampling} sigue con la idea de eliminar de la distribución las palabras menos probables, pero en lugar de quedarse con las $K$ palabras más frecuentes, mantiene un el porcentaje $p$ más importante de la muestra. Así, dada una distribución $P(x |x_{1:i-})$, las \textit{top-p} palabras del vocabulario $V^{(p)} \subset V$ como el conjunto más pequeño que cumpla:
 
+\begin{equation}
+\sum_{x \in V^{(p)}} P(x | x_{1:i-1}) \ge p
+\end{equation}
+
+Al medir la probabilidad en lugar de un número fijo de palabras, se espera que la medida sea más robusta incluso en contextos muy diferentes, que podrian tener resultados muy distintos si se usara un número fijo de palabras. De nuevo, tras seleccionar el conjunto de palabras que se utilizarán en el \textit{sampling} se deben normalizar sus probabilidades de acuerdo al conjunto.
+
+Las probabilidades normalizadas de cada palabra en el vocabulario se pueden calcular como:
+
+\begin{equation}
+\hat{p}_i = \frac{p'_i}{\sum_{j = 1}^{|V|} p'_j}
+\end{equation}
+
+Donde $p'_i = p_i * \mathbb{1}\{\sum_{j = 1}^{i-1}p_j < P\}$ \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
+
+\subsubsection{\textit{Tempered sampling}}
+
+En el algoritmo de \textit{tempered sampling} \cite{nadeem2020systematiccharacterizationsamplingalgorithms}, en lugar de crear un subconjunto de palabras del vocabulario lo que se hace es hacer un \textit{reshape} de este. Para ello, se utiliza un parámetro $\tau$, que cumple $0 < \tau < 1$, utilizando la siguiente fórmula:
+
+\begin{equation}
+\hat{p}_i = \frac{exp(log(p_i)/\tau)}{\sum_{j = 1}^{|V|}exp(log(p_j)/\tau)}
+\end{equation}
+
+Además, existe una variación de este algoritmo que se conoce como \textit{tempered top-k sampling}, el cual combina las transformaciones definidas por el algoritmo \textit{top-k} y el \textit{tempered sampling}. Así, la probabilidad normalizada se calcula:
+
+\begin{equation}
+\hat{p}_i = \frac{p'_i}{\sum_{j = 1}{|V|}p'_j}
+\end{equation}
+
+Donde $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
+
+En las siguientes secciones se presentan algunos de los modelos de lenguaje grandes más utilizados actualmente.
 
 \subsection{GPT}
 
