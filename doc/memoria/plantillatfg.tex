@@ -39,6 +39,7 @@
 \usetikzlibrary{positioning}
 \usetikzlibrary{babel}
 \usepackage{hyperref}
+\usepackage{csquotes}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        DADES DEL TREBALL                                    %
@@ -150,7 +151,9 @@ El aprendizaje automático (en inglés, \textit{machine learning}) es una discip
 
 Tom Mitchell \cite{mitchell1997mcgraw} define el proceso de aprendizaje de los programas en el campo del \textit{machine learning} de la siguiente manera:
 
+\begin{displayquote}
 \textit{"Se dice que un programa aprende de la experiencia $E$ con respecto a alguna clase de tarea $T$, y medida de rendimiento $P$, si su rendimiento en tareas en $T$, medido por $P$, mejora con la experiencia $E$."}
+\end{displayquote}
 
 Aunque la idea principal del aprendizaje automático es esta, econtramos diferentes tipos de aprendizaje automático, dependiendo del tipo de tarea que se quiera llevar a cabo, de la naturaleza de la medida del rendimiento que se utiliza para evaluar el sistema y de el tipo de entrenamiento o experiencia que le proporcionamos a este.
 
@@ -164,11 +167,7 @@ Generalmente, los enfoques para el entrenamiento de algoritmos se agrupan en:
 
 \end{itemize}
 
-La tarea principal de este trabajo se realizará utilizando las técincas del aprendizaje supervisado.
-
-%%%%%%%%%%%%%%%%%
-% Añadir algo sobre NLP %%%
-%%%%%%%%%%%%%%%%%
+La tarea principal de este trabajo se llevará a cabo utilizando técnicas de aprendizaje supervisado.
 
 Otro concepto importante dentro del aprendizaje automático es el aprendizaje profundo (\textit{deep learning}). El aprendizaje profundo es subconjunto dentro del aprendizaje automático que emplea algoritmos basados en redes neuronales. Dentro de este encontramos métodos como las redes neuronales profundas, las redes neuronales recurrentes, las redes neuronales convulacionales y los transformers, entre otros. Estos métodos tienen aplicaciones significativas en una gran variedad de ámbitos, entre los que se encuentra el procesamiento de lenguaje natural, disciplina en la que se enmarca este trabajo. En las siguientes secciones explicaremos con detalle los conceptos de redes neuronales y transformers.
 
@@ -350,7 +349,7 @@ Donde $W_h$ y $W_x$ son las matrices de pesos asociadas al estado oculto y a las
 y_t = g(W_yh_t + b_y)
 \end{equation}
 
-Donde $W_y$ es una matriz de pesos, $g$ es la función de activación y $b_y$ es un vector de sesgos.
+Donde $W_y$ es una matriz de pesos, $g$ es la función de activación y $b_y$ es un vector de sesgos \cite{sutskever2014sequencesequencelearningneural}.
 
 El proceso se repite para cada elemento de la secuencia de entrada, propagando así la información relevante anterior a través de los estados ocultos.
 
@@ -361,21 +360,16 @@ El funcionamiento de las redes neuronales convolucionales (\textit{convolutional
 
 \subsection{Arquitectura \textit{encoder-decoder}} \label{encdec}
 
-Los modelos \textit{encoder-decoder}, también conocidos como modelos \textit{seq2seq} (\textit{sequence-to-sequence}) son modelos capaces de generar secuencias de salida contextualmente apropiadas y de longitud arbitraria a partir de una secuencia de entrada \cite{jurafsky2023speech}. Se utilizan en problemas donde la secuencia de salida generada a partir de la secuencia de entrada no tiene la misma longitud. Estos modelos son ampliamente utilizados en tareas como el resumen de textos, la respuesta a preguntas, el diálogo y la traducción automática.
+Los modelos \textit{encoder-decoder}, también conocidos como modelos \textit{seq2seq} (\textit{sequence-to-sequence}) son modelos capaces de generar secuencias de salida contextualmente apropiadas y de longitud arbitraria a partir de una secuencia de entrada. Estos modelos pueden generar secuencias de salida de longitud variable a partir de secuencias de entrada también de longitud variable, es decir, secuencias con longitudes distintas en la entrada y la salida.
+Son modelos ampliamente utilizados en tareas como el resumen de textos, la respuesta a preguntas, el diálogo y la traducción automática \cite{jurafsky2023speech}.
 
-Este tipo de modelos están formados por tres componentes principales:
-
-\begin{itemize}
-	\item El codificador o \textit{encoder}, que acepta las secuencias de entrada y genera la secuencia correspondiente de representaciones contextualizadas. Esta secuencia captura la información relevante de cada elemento de la secuencia de entrada y sus contextos.
-	\item El vector de contexto $c$, que es una función de la secuencia de representaciones generada por el \textit{encoder}. Este vector sintetiza la información necesaria de la secuencia de entrada para que el decodificador pueda generar la secuencia de salida.
-	\item El decodificador o \textit{decoder}, que toma el vector de contexto $c$ como entrada y genera una secuencia de estados ocultos de longitud arbitraria. A partir de esta, se obtiene la secuencia correspondiente de estados de salida.
-\end{itemize}
+Este tipo de modelos están formados por dos componentes principales: el \textit{encoder} (en español, codificador) y el \textit{decoder} (decodificador). El \textit{encoder} es la primera parte del modelo. Se encarga de mapear las secuencias de entrada a una representación intermedia contextualizada $h$ en forma de vector. Este vector $h$ captura la información relevante de cada elemento de la secuencia de entrada y sus contextos. A continuación, el \textit{decoder} toma el vector de contexto $h$ y, a partir de este, genera la secuencia de salida. Además, el \textit{decoder} puede tener en cuenta también los estados del \textit{encoder} gracias al mecanismo de atención, que se explicará en detalle en la sección \ref{atencion} \cite{sriram2017coldfusiontrainingseq2seq}.
 
 Esta arquitectura se puede implementar utilizando diversos tipos de redes neuronales, incluyendo los transformers, como veremos en la sección \ref{transformers}, o las redes neuronales recurrentes.
 
 \subsection{Atención} \label{atencion}
 
-Tal y como se ha explicado en las secciones anteriores, en las redes neuronales clásicas, el cálculo de cada capa se realiza mediante una combinación lineal de los vectores de entrada y los correspondientes pesos, seguida de la aplicación de una función de activación. Esta operación se representa matemáticamente como $Z = \phi(XW)$, donde $X$ es el vector de entrada, $W$ es el vector de pesos, $\phi$ es la función de activación y $Z$ son las salidas producidas en las capas. \cite{murphy2022probabilistic}
+Tal y como se ha explicado en las secciones anteriores, en las redes neuronales clásicas, el cálculo de cada capa se realiza mediante una combinación lineal de los vectores de entrada y los correspondientes pesos, seguida de la aplicación de una función de activación. Esta operación se representa matemáticamente como $Z = \phi(XW)$, donde $X$ es el vector de entrada, $W$ es el vector de pesos, $\phi$ es la función de activación y $Z$ son las salidas producidas en las capas \cite{murphy2022probabilistic}. 
 
 Sin embargo, los modelos de redes neuronales pueden volverse aún más flexibles y potentes si permitimos que los pesos dependan de los \textit{inputs}. Esta interacción multiplicativa, donde los pesos son dinámicos y dependen de las entradas, se conoce como mecanismo de atención. Formalmente, puede expresarse como $Z = \phi(XW(X))$.
 
@@ -581,8 +575,12 @@ Finalmente, se introducen parámetros de \textit{bias} $b$ y \textit{gain} $g$:
 LayerNorm = g\hat{x} + b
 \end{equation}
 
-%\section{Procesamiento del lenguaje natural}
-\section{Modelos de lenguaje grandes (GPT, Gemma, Llama-3)}
+%\section{Procesamiento del lenguaje natural} \label{nlp}
+
+%El procesamiento de lenguaje natural (NLP, por su nombre en inglés \textit{Natural Language Processing}) es una rama de la inteligencia artificial que se ocupa del desarrollo de algoritmos y modelos para la realización de tareas relacionadas con el lenguaje humano. Más específicamente, involucra tareas como el modelado de lenguaje, clasificación de textos, recuperación y extracción de información, resumen de textos o traducción automática entre otras. \cite{alma997066713303706} 
+
+
+\section{Modelos de lenguaje grandes}
 
 %There are two existing strategies for applying pre-trained language representations to downstream tasks: feature-based and fine-tuning. The feature-based approach, such as ELMo (Peters et al., 2018a), uses task-specific architectures that include the pre-trained representations as additional features. The fine-tuning approach, such as the Generative Pre-trained Transformer (OpenAI GPT) (Radford et al., 2018), introduces minimal task-specific parameters, and is trained on the downstream tasks by simply fine-tuning all pretrained parameters. The two approaches share the same objective function during pre-training, where they use unidirectional language models to learn general language representations. \cite{devlin2019bertpretrainingdeepbidirectional}
 
@@ -590,7 +588,71 @@ LayerNorm = g\hat{x} + b
 
 Los modelos de lenguaje grandes (en inglés, \textit{Large Language Models} o LLM) son modelos de aprendizaje profundo basados en redes neuronales con miles de millones de parámetros, que utilizan la arquitectura de transformers. Estos modelos pueden ser entrenados con grandes cantidades de texto, perimitiéndoles realizar una gran cantidad de tareas en el ámbito del procesamiento de lenguaje natural.
 
-Inicialmente, los LLM operaban de manera secuencial, basando sus predicciones en las distribuciones de probabilidad de las palabras dentro de un texto. Sin embargo, este enfoque tenía la limitación de no considerar el contexto más amplio en el que aparecen las palabras, así como sus distintos significados y asociaciones. Los  avances en la arquitectura de las redes neuronales y, especialmente, la aparición de los transformers, han representado una gran evolución hacia modelos de lenguaje grandes mucho más avanzados, capaces de procesar simultáneamente enormes cantidades de texto y permitiendo establecer relaciones más sólidas entre las palabras y el contexto en que aparecen.
+Las tareas sobre las que se aplican son casos de generación condicional, es decir, generación de texto condicionado a un fragmento de entrada (\textit{prompt}), ya que los LLM son modelos que están diseñados fundamentalmente para predecir la siguiente palabra de una secuencia de palabras \cite{jurafsky2023speech}. Aunque el ámbito de tareas sobre el que se pueden aplicar los LLM pueda parecer reducido, la realidad es que la gran mayoría de tareas en el ámbito de NLP pueden ser enfocadas desde un punto de vista de generación condicional. Por ejemplo, para la tarea de responder preguntas, podriamos plantearlo de la siguiente manera:
+
+En primer lugar, debemos proporcionar al modelo una \textit{prompt} con la pregunta a contestar, con un formato que sugiera que después de la pregunta se espera una respuesta, por ejemplo: 
+
+\begin{displayquote}
+\centerline{"Q: ¿Cuál es la capital de Francia? A: "}
+\end{displayquote}
+
+A continuación, el modelo calcula la probabilidad para cada palabra $w$ dentro de su vocabulario de que esta sea la palabra que continua la \textit{prompt}:
+
+\begin{displayquote}
+\centerline{$P(w|\text{Q: ¿Cuál es la capital de Francia? A: })$}
+\end{displayquote}
+
+Los vocabularios en los LLMs se refieren al conjunto de palabras sobre las que trabajan. Así, habiendo calculado las probabilidades para todas las posibles palabras, encontraremos algunas con probabilidades más altas, entre las cuales debería encontrarse la palabra \textit{París}, que es la respuesta a la pregunta. El modelo deberia seleccionar esta palabra y, si se quiere generar una respuesta más larga, se calcula la siguiente probabilidad:
+
+\begin{displayquote}
+\centerline{$P(w|\text{Q: ¿Cuál es la capital de Francia? A: París})$}
+\end{displayquote}
+
+El proceso puede seguir hasta que llegemos al número de palabras deseadas.
+
+Inicialmente, este cálculo de probabilidades se realizaba de manera secuencial, basando las predicciones en las distribuciones de probabilidad de las palabras dentro de un texto. Actualmente se utiliza la arquitectura de transformers, que permite procesar grandes cantidades de texto de manera eficiente y proporciona predicciones mucho más acertadas, pues tiene en cuenta el contexto en el que se encuentran las palabras y las relaciones entre estas \cite{burtsev2023working}.
+
+Existen distintos enfoques para la selección de cuál es la palabra que sigue en la secuencia. Uno de los métodos más simples es utilizar el algoritmo de \textit{greedy decoding} \cite{gu2017trainablegreedydecodingneural}. El algoritmo \textit{greedy decoding} consiste en elegir la palabra con la probabilidad condicional más alta hasta el momento en cada instante.
+
+\begin{equation}
+\hat{w}_i = argmax_{w \in V} P(w | \{w_1, w_2, ..., w_{i-1}\})
+\end{equation}
+
+Con el tiempo se ha descubierto que este método llega a resultados subóptimos, pues al elegir siempre la palabra que es más probable que ocurra, tiende a generar textos excesivamente genéricos y repetitivos.
+
+Existe una extension de este algoritmo conocida como \textit{beam search}, la cual ha demostrado ser más efectiva, sobretodo en tareas de traducción automática. La diferencia entre el algoritmo \textit{greedy decoding} y este, es que el \textit{beam search}, en lugar de quedarse solamente con la palabra con mayor probabilidad y crear una única respuesta, el algoritmo guarda $K > 1$ posibles respuestas (hipótesis) durante la decodificación. Así, en cada iteración, el algoritmo elige las K hipótesis con mayor \textit{score}:
+
+\begin{equation}
+\prod_{i = 1}^N = p(w_i | \{w_1, w_2, ..., w_{i-1}\})
+\end{equation}
+
+Cuando estas se terminan de generar, selecciona la hipótesis con mayor probabilidad logarítmica.
+
+Aunque el rendimiento de \textit{beam search} es superior al \textit{greedy decoding}, en los LLM se suelen utilizar métodos más complejos, que proporcionan resultados más sofisticados. Estos métodos se conocen como métodos de generación por \textit{sampling}. Se explicarán con detalle en la siguiente sección.
+
+\subsection{Métodos de generación por \textit{sampling}}
+
+En términos generales, el proceso de \textit{sampling} consiste en seleccionar de manera aleatoria una serie de individuos de una muestra, teniendo (o no) en cuenta sus distribuciones de probabilidad. En el contexto de los LLM, esto se traduce en elegir las palabras que se generan en la secuencia de acuerdo con su probabilidad dentro del contexto definido por el modelo. De esta manera, es más probable seleccionar palabras con probabilidades altas y menos probable (aunque no imposible) elegir aquellas con probabilidades bajas.
+
+ El algoritmo de generación por \textit{sampling} más sencillo se conoce como \textit{random sampling}, el cual consiste en seleccionar la siguiente palabra de la secuencia de de manera aleatoria según la distribución de probabilidades proporcionada por el transformer. Sin embargo, este enfoque es demasiado simplista para la generación de texto de calidad, ya que al seleccionar las palabras de manera aleatoria, incluso las palabras poco comunes, que tendrán probabilidades bajas, pueden ser elegidas, lo que podría resultar en la generación de frases incorrectas o extrañas \cite{jurafsky2023speech}.
+
+Debido a estas limitaciones, en los LLM se suelen emplear algoritmos más sofisticados, los cuales analizaremos en las siguientes secciones.
+
+\subsubsection{\textit{Top-k sampling}}
+
+El algoritmo de \textit{top-k sampling} es una generalización del \textit{greedy decoding} que consiste en elegir las $K$ palabras con mayor probabilidad de la distribución y aplicar \textit{random sampling} solamente sobre este conjunto. Una vez se eligen las $K$ palabras del conjunto, se deben normalizar sus probabilidades de acuerdo al conjunto creado. Así, las probabilidades con las que se trabaja se calculan como:
+
+\begin{equation}
+\hat{p}_i = \frac{p_i * \mathbb{1}\{i \leq K\}}{\sum_{j = 1}^K p_j}
+\end{equation}
+
+Donde $\mathbb{1}$ es la función característica \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
+
+\subsubsection{\textit{Nucleus sampling}}
+
+\subsubsection{\textit{Tempered sampling}}
+%% HABLAR TB DE TEMPERED TOP-K SAMPLING
+
 
 \subsection{GPT}
 
