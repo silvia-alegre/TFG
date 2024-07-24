@@ -714,19 +714,22 @@ El concepto de aprendizaje por transferencia (en inglés, \textit{transfer learn
 
 Existen cuatro enfoques principales dentro del aprendizaje por transferencia: aprendizaje basado en instancias (\textit{instance-based}), basado en características (\textit{feature-based}), basado en parámetros (\textit{parameter-based}) y basado en relaciones (\textit{relational-based}) \cite{Weiss2016}.
 
-En cuanto al aprendizaje basado en instancias, la idea principal es utilizar una combinación de modelos preentrenados en el dominio fuente para etiquetar los datos no etiquetados del dominio objetivo. Para ello, se asignan pesos a los modelos del dominio fuente en función de su similitud con el dominio objetivo. Los resultados de los modelos se ponderan según estos pesos para estimar las etiquetas de los datos no etiquetados del dominio objetivo. Finalmente, se construye el modelo del dominio objetivo a partir de los datos etiquetados de este y las etiquetas estimadas.
-
-En el enfoque basado en características, se crean nuevos modelos específicos para las tareas, y se incorpora en estos las representaciones obtenidas con el modelo preentrenado, añadiéndolas como características adicionales. De esta manera, el modelo preentrenado sirve como punto de partida para el modelo específico. Utilizando las características extraídas del modelo preentrenado, el modelo específico puede transferir el conocimiento general obtenido por este al contexto del dominio específico de la tarea. Dentro de este enfoque, existen dos variantes: asimétrico y simétrico  \cite{9134370}. En el enfoque asimétrico, se transforma las características extraídas por el modelo preentrenado para que se ajusten a las del dominio objetivo. Por el contrario, en el simétrico lo que se hace es buscar un espacio común de características latentes y transformar tanto las características del dominio fuente como del objetivo en una nueva representación de características.
-
-En el enfoque basado en parámetros se modifica y reentrena el modelo preentrenado para la tarea en particular, ajustando directamente sus parámetros. De esta manera, el modelo conserva el conocimiento general obtenido en el preentrenamiento y, tras la modificación y reentrenamiento, aprende nuevo conocimiento específico de la tarea.
-
-Por último, en el enfoque basado en relaciones se centra principalmente en los problemas de dominios relacionales, transfiriendo la lógica de relaciones o reglas aprendidas en el dominio fuente al dominio objetivo. Estos métodos buscan preservar y adaptar las relaciones entre entidades para resolver tareas en el nuevo dominio.
+\begin{itemize}
+	\item \textbf{Aprendizaje basado en instancias}: la idea principal es utilizar una combinación de modelos preentrenados en el dominio fuente para etiquetar los datos no etiquetados del dominio objetivo. Para ello, se asignan pesos a los modelos del dominio fuente en función de su similitud con el dominio objetivo. Los resultados de los modelos se ponderan según estos pesos para estimar las etiquetas de los datos no etiquetados del dominio objetivo. Finalmente, se construye el modelo del dominio objetivo a partir de los datos etiquetados de este y las etiquetas estimadas.
+	\item \textbf{Aprendizaje basado en características}: en este enfoque, se crean nuevos modelos específicos para las tareas, y se incorpora en estos las representaciones obtenidas con el modelo preentrenado, añadiéndolas como características adicionales. De esta manera, el modelo preentrenado sirve como punto de partida para el modelo específico. Utilizando las características extraídas del modelo preentrenado, el modelo específico puede transferir el conocimiento general obtenido por este al contexto del dominio específico de la tarea. Dentro de este enfoque, existen dos variantes: asimétrico y simétrico  \cite{9134370}. En el enfoque asimétrico, se transforma las características extraídas por el modelo preentrenado para que se ajusten a las del dominio objetivo. Por el contrario, en el simétrico lo que se hace es buscar un espacio común de características latentes y transformar tanto las características del dominio fuente como del objetivo en una nueva representación de características.
+	\item \textbf{Aprendizaje basado en parámetros}: consiste en modificar y reentrenar el modelo preentrenado para la tarea en particular, ajustando directamente sus parámetros. De esta manera, el modelo conserva el conocimiento general obtenido en el preentrenamiento y, tras la modificación y reentrenamiento, aprende nuevo conocimiento específico de la tarea.
+	\item \textbf{Aprendizaje basado en relaciones}: este enfoque se centra principalmente en los problemas de dominios relacionales, transfiriendo la lógica de relaciones o reglas aprendidas en el dominio fuente al dominio objetivo. Estos métodos buscan preservar y adaptar las relaciones entre entidades para resolver tareas en el nuevo dominio.
+\end{itemize}
 
 Para los experimentos de este trabajo, se realizará la adaptación de los modelos de lenguaje preentrenados mediante aprendizaje por tranferencia basado en parámetros. Específicamente, se utilizará la técnica de \textit{fine-tuning}.
 
+\section{\textit{Fine-tuning}}
+
+El \textit{fine-tuning} es una técnica detro del aprendizaje por transferencia basado en parámetros que consiste en ajustar los parámetros del modelo preentrenado utilizando para su entrenamiento un conjunto de datos adaptado a la tarea sobre la que se va a utilizar el modelo.
+
 El principal inconveniente del método de \textit{fine-tuning} es que puede ser un proceso muy lento, ya que es necesario ajustar todos los parámetros del modelo preentrenado, los cuales suelen ser numerosos. Existe un enfoque alternativo en el que se mantiene el modelo preentrenado intacto, y se añaden unos pocos parámetros adicionales que modifican su comportamiento interno para adaptarlo a la tarea específica. Durante el entrenamiento, solamente es necesario ajustar estos nuevos parámetros. Esta idea se conoce como adaptadores.
 
-\section{Adaptadores}
+\subsection{Adaptadores}
 
 El método de ajuste basado en adaptadores funciona añadiendo módulos específicos a un modelo preentrenado, de manera que durante el entrenamiento de este para alguna tarea específica se actualizan únicamente los parámetros de estos módulos, y no los del modelo completo. De esta manera, se incorporan solo unos pocos parámetros entrenables para cada nueva tarea, lo que permite un alto grado de compartición de parámetros \cite{he2021effectivenessadapterbasedtuningpretrained}. Este enfoque puede ser utilizado como alternativa al \textit{fine-tuning} completo del modelo, ya que, se ha demostrado que ambos métodos ofrecen un rendmiento comparable, siendo el ajuste con adaptadores mucho más eficientes en términos del número parámetros \cite{houlsby2019parameterefficienttransferlearningnlp, stickland2019bertpalsprojectedattention}.
 
@@ -742,7 +745,7 @@ Uno de los métodos de ajuste basado en adaptadores para los modelos de lenguaje
 
 Dentro de los métodos de \textit{fine-tuning} para LLM, PEFT (\textit{parameter-efficient fine-tuning}) es uno de los más eficientes, pues solamente requiere realizar el ajuste de unos pocos parámetros externos en lugar del LLM al completo, consiguiendo un rendimiento comparable o incluso mejor. \cite{hu2023llmadaptersadapterfamilyparameterefficient}
 
-\section{\textit{Low-Rank Adaptation} (LoRA)}
+\subsection{\textit{Low-Rank Adaptation} (LoRA)}
 
 %LoRA \cite{hu2021loralowrankadaptationlarge}
 
