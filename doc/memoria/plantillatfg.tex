@@ -741,13 +741,103 @@ En el ámbito del procesamiento de lenguaje natural, los adaptadores generalment
 
 \section{\textit{Parameter-efficient fine-tuning} (PEFT)}
 
-Uno de los métodos de ajuste basado en adaptadores para los modelos de lenguaje grandes es el \textit{parameter-efficient fine-tuning} (PEFT).
+El \textit{Parameter- Efficient Fine-Tuning} (PEFT) es uno de los métodos de ajuste basados en adaptadores que pueden aplicarse a modelos de lenguaje grandes. Este método incluye cuatro enfoques: basado en \textit{promtps}, basado en reparametrización, adaptadores en serie y adaptadores en paralelo.
 
-Dentro de los métodos de \textit{fine-tuning} para LLM, PEFT (\textit{parameter-efficient fine-tuning}) es uno de los más eficientes, pues solamente requiere realizar el ajuste de unos pocos parámetros externos en lugar del LLM al completo, consiguiendo un rendimiento comparable o incluso mejor. \cite{hu2023llmadaptersadapterfamilyparameterefficient}
+En este trabajo, se empleará el enfoque basado en reparametrización. Este se centra en la transformación de los pesos de la red mediante técnicas de bajo rango, de manera que se consigue reducir de manera eficaz el número de parámetros que necesitan ser entrenados, mientras se conserva la capacidad de manejar matrices de alta dimensión \cite{hu2023llmadaptersadapterfamilyparameterefficient}. Dentro de este marco, existen varios métodos, entre los cuales se destaca LoRA (\textit{Low-Rank Adaptation}), que es el enfoque que se utilizará en este proyecto.
 
 \subsection{\textit{Low-Rank Adaptation} (LoRA)}
 
-%LoRA \cite{hu2021loralowrankadaptationlarge}
+El método de \textit{Low-Rank Adaptation} (LoRA) fue presentado en el artículo \textit{LoRA: Low-Rank adaptation of Large Language models} \cite{hu2021loralowrankadaptationlarge}, desarrollado por un equipo de Microsoft. Como se mencionó en la sección anterior, este forma parte del enfoque PEFT basado en reparametrización de los modelos. LoRA se basa en congelar los pesos del modelo preentrenado durante el entrenamiento para luego ajustarlos mediante una matriz de parámetros adicionales que representan el cambio necesario en los pesos originales del modelo. La matriz de cambios es la que se ajusta en el entrenamiento. Generalmente, la matriz de pesos originales se denota como $W$ y la matriz de cambios, $\bigtriangleup W$.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+
+% Modelo preentrenado
+\draw (0,0) rectangle (4,4);
+\node at (2,3) {Pesos preentrenados};
+\node at (2, 1.5) {
+\(\begin{bmatrix}
+w_{11} & w_{12} & \dots & w_{1d} \\
+\vdots & \vdots & \vdots & \vdots \\
+w_{k1} & w_{k2} & \dots & w_{kd}
+\end{bmatrix}\)
+};
+
+% LoRA
+\draw (5.5,0) rectangle (10.5,4);
+\node at (8,3) {Pesos de LoRA};
+\node at (8, 1.5) {
+\(\begin{bmatrix}
+\bigtriangleup  w_{11} & \bigtriangleup  w_{12} & \dots & \bigtriangleup w_{1d} \\
+\vdots & \vdots & \vdots & \vdots \\
+\bigtriangleup w_{k1} & \bigtriangleup w_{k2} & \dots & \bigtriangleup w_{kd}
+\end{bmatrix}\)
+};
+
+% Flechas
+\node at (2, 5.5) {\textit{Inputs}};
+\draw[->] (2,5) -- (2,4);
+
+\node at (2, -1.5) {\textit{Outputs}};
+\draw[->] (2, 0) -- (2, -1);
+
+\draw[->] (5.5, 1.5) -- (4, 1.5);
+\node at (4.8, 2) {+};
+\end{tikzpicture}
+\caption{Esquema de las matrices de parámetros de LoRA}
+\label{fig:matricesLoRA}
+\end{figure}
+
+LoRA se basa en la idea de la descomposición en rangos de las matrices. El rango de una matriz hace referencia al número de columnas linealmente independientes de esta. Una columna es linealmente dependiente si puede ser obtenida como combinación lineal de otras columnas de la matriz. Esto implica que, si existen columnas linealmente dependientes en la matriz, estas se pueden eliminar sin necesidad de perder información, permitiendo así reducir el tamaño de esta.
+
+Así, en lugar de optimizar los pesos de la matriz completa, LoRA utiliza lo que se conoce como \textit{low rank decomposition} (en español, descomposición en rango bajo), de manera que la matriz $\bigtriangleup W$ se representa como el producto de dos matrices:
+
+\begin{equation}
+\bigtriangleup W = B \cdot A =
+\begin{bmatrix}
+b_{11} & \dots & b_{1r} \\
+\vdots &  \vdots & \vdots \\
+b_{d1} & \dots & b_{dr}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+a_{11} & \dots & a_{1k} \\
+\vdots & \vdots & \vdots \\
+a_{r1} & \dots & a_{rk}
+\end{bmatrix}
+\end{equation}
+
+Aquí, la matriz $B$ tiene dimensiones $d x r$, y la matriz A, $r x k$, donde $d$ es el número de filas de la matriz de pesos original, $k$ es el número de columnas y $r$, es un hiperparámetro (denominado \textit{rank} o rango) que se debe determinar.
+
+Este enfoque proporciona una mayor eficiencia computacional, ya que se está reduciendo el número de elementos en las matrices $A$ y $B$ con respecto a la matriz original. En el entrenamiento, la matriz $A$ se inicializa a partir de una distribución gaussiana, mientras que la matriz $B$ es inicializada a 0. A medida que trascurre el entrenamiento, los pesos se ajustan para adaptar el modelo a la tarea.
+
+En las siguientes secciones presentaremos cuáles son los hiperparámetros que se deben ajustar en un entrenamiento con LoRA.
+
+\subsubsection{Rango}
+
+El primer hiperparámetro que se debe determinar en un entrenamiento con LoRA es el rango (\textit{rank}, $r$). Este representa el rango de la matriz de parámetros original. Su valor exacto es desconocido, por lo que se deberá seleccionar al inicio del entrenamientol. Idealmente, $r$ debe ser lo más pequeño posible, pero aún debe ser suficiente para capturar la información esencial. Se debe tener en cuenta que:
+
+\begin{itemize}
+	\item Si $r$ es demasiado pequeño, la matriz se reduce excesivamente, eliminando columnas que no son linealmente dependientes y, por tanto, perdiendo información necesaria.
+	\item Si $r$ es demasiado grande, se incluirán parámetros linealmente dependientes, cosa que puede reducir la efectividad computacional.
+\end{itemize}
+
+\subsubsection{\textit{Alpha}}
+
+\textit{Alpha} es un parámetro que se utiliza para escalar los pesos entrenados, determinando la importancia que se les debe dar a los pesos aprendidos durante el entrenamiento en el modelo. Se debe tener en cuenta lo siguiente:
+
+\begin{itemize}
+	\item Si $\alpha = r$, los nuevos pesos serán integrados con los del modelo original en una proporción de 1:1.
+	\item Si $\alpha > r$, se está dando mayor peso a los nuevos parámetros aprendidos. Esto es recomendable únicamente cuando se cuenta con un conjunto de datos de entrenamiento grande y de alta calidad. De lo contrario, al darle más importancia al conocieminto aprendido del nuevo conjunto de datos en lugar de al conociemiento preexistente del modelo, podría resultar en incoherencias.
+	\item Si $\alpha < r$, se prioriza el conocimiento preexistente del modelo sobre el nuevo. Esta configuración es aconsejable cuando el conjunto de datos de entrenamiento es pequeño, pues así se garantiza que el modelo conserve más el conociemiento original.
+\end{itemize}
+
+\subsubsection{\textit{Dropout}}
+
+El parámetro de \textit{dropout} determina cuál la probabilidad de que uno de los parámetros ajustados en el entrenamiento sea configurado artificialmente a 0 para un lote de entrenamiento específico. Este procedimiento se realiza para evitar problemas de \textit{overfitting}, donde el modelo se ajusta demasiado a los datos de entrenamiento y pierde capacidad de generalización.
+
+Generalmente, se recomienda utilizar un \textit{dropout} de 0.1 para modelos de 7B y 13B parámetros y reducirlo a 0.05 para modelos de 33B y 65B parámetros. Esto ayuda a mantener un equilibrio adecuado entre regularización y capacidad de aprendizaje del modelo.
 
 \chapter{Resultados experimentales}
 
