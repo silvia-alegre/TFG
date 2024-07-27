@@ -593,19 +593,19 @@ Las tareas sobre las que se aplican son casos de generación condicional, es dec
 En primer lugar, debemos proporcionar al modelo una \textit{prompt} con la pregunta a contestar, con un formato que sugiera que después de la pregunta se espera una respuesta, por ejemplo: 
 
 \begin{displayquote}
-\centerline{"Q: ¿Cuál es la capital de Francia? A: "}
+\centerline{"Pregunta: ¿Cuál es la capital de Francia? Respuesta: "}
 \end{displayquote}
 
 A continuación, el modelo calcula la probabilidad para cada palabra $w$ dentro de su vocabulario de que esta sea la palabra que continua la \textit{prompt}:
 
 \begin{displayquote}
-\centerline{$P(w|\text{Q: ¿Cuál es la capital de Francia? A: })$}
+\centerline{$P(w|\text{Pregunta: ¿Cuál es la capital de Francia? Respuesta: })$}
 \end{displayquote}
 
 Los vocabularios en los LLMs se refieren al conjunto de palabras sobre las que trabajan. Así, habiendo calculado las probabilidades para todas las posibles palabras, encontraremos algunas con probabilidades más altas, entre las cuales debería encontrarse la palabra \textit{París}, que es la respuesta a la pregunta. El modelo deberia seleccionar esta palabra y, si se quiere generar una respuesta más larga, se calcula la siguiente probabilidad:
 
 \begin{displayquote}
-\centerline{$P(w|\text{Q: ¿Cuál es la capital de Francia? A: París})$}
+\centerline{$P(w|\text{Pregunta: ¿Cuál es la capital de Francia? Respuesta: París})$}
 \end{displayquote}
 
 El proceso puede seguir hasta que llegemos al número de palabras deseadas.
@@ -640,32 +640,204 @@ Debido a estas limitaciones, en los LLM se suelen emplear algoritmos más sofist
 
 \subsubsection{\textit{Top-k sampling}}
 
-El algoritmo de \textit{top-k sampling} es una generalización del \textit{greedy decoding} que consiste en elegir las $K$ palabras con mayor probabilidad de la distribución y aplicar \textit{random sampling} solamente sobre este conjunto. Una vez se eligen las $K$ palabras del conjunto, se deben normalizar sus probabilidades de acuerdo al conjunto creado. Así, las probabilidades con las que se trabaja se calculan como:
+El algoritmo de \textit{top-k sampling} es una generalización del \textit{greedy decoding} que consiste en seleccionar las $K$ palabras con mayor probabilidad de la distribución y aplicar \textit{random sampling} únicamente sobre este conjunto. Una vez se seleccionan las $K$ palabras del conjunto, sus probabilidades deben ser normalizadas según el nuevo conjunto. Las probabilidades normalizadas se calculan de la siguiente manera:
 
 \begin{equation}
 \hat{p}_i = \frac{p_i * \mathbb{1}\{i \leq K\}}{\sum_{j = 1}^K p_j}
 \end{equation}
 
-Donde $\mathbb{1}$ es la función característica \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
+Donde $\mathbb{1}$ es la función característica, que indica si una palabra está dentro o no del conjunto de las $K$ más probables \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
 
 \subsubsection{\textit{Nucleus sampling}}
 
+El algoritmo de \textit{nucleus sampling} \cite{holtzman2020curiouscaseneuraltext}, también conocido como \textit{top-p sampling} también sigue la idea de eliminar de la distribución las palabras menos probables. Sin embargo, en lugar de seleccionar un número fijo de palabras, lo que hace es mantener un el porcentaje $p$ más importante de la muestra. Así, dada una distribución $P(x |x_{1:i-1})$, las \textit{top-p} palabras del vocabulario $V^{(p)} \subset V$ se definen como el conjunto más pequeño que cumpla:
+
+\begin{equation}
+\sum_{x \in V^{(p)}} P(x | x_{1:i-1}) \ge p
+\end{equation}
+
+Al medir la probabilidad acumulada en lugar de un número fijo de palabras, se espera que esta medida sea más robusta incluso en contextos diversos, que podrian tener resultados muy distintos si se usara un número fijo de palabras. De nuevo, tras seleccionar el subconjunto de palabras del vocabulario se deben normalizar sus probabilidades.
+
+Las probabilidades normalizadas de cada palabra en el vocabulario se pueden calcular como:
+
+\begin{equation}
+\hat{p}_i = \frac{p'_i}{\sum_{j = 1}^{|V|} p'_j}
+\end{equation}
+
+Donde $p'_i = p_i * \mathbb{1}\{\sum_{j = 1}^{i-1}p_j < P\}$ \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
+
 \subsubsection{\textit{Tempered sampling}}
-%% HABLAR TB DE TEMPERED TOP-K SAMPLING
 
+En el algoritmo de \textit{tempered sampling} \cite{nadeem2020systematiccharacterizationsamplingalgorithms} no crea un subconjunto de palabras del vocabulario, sino que ajusta la distribución de probabilidad de las palabras mediante una transformación. Para ello, se utiliza un parámetro $\tau$, que cumple $0 < \tau < 1$, según la siguiente fórmula:
 
-\subsection{GPT}
+\begin{equation}
+\hat{p}_i = \frac{exp(log(p_i)/\tau)}{\sum_{j = 1}^{|V|}exp(log(p_j)/\tau)}
+\end{equation}
 
-\subsection{Gemma}
+Además, existe una variación de este algoritmo que se conoce como \textit{tempered top-k sampling}, el cual combina las transformaciones definidas por el algoritmo \textit{top-k} y el \textit{tempered sampling}. Así, la probabilidad normalizada se calcula:
 
-\subsection{Llama-3}
+\begin{equation}
+\hat{p}_i = \frac{p'_i}{\sum_{j = 1}{|V|}p'_j}
+\end{equation}
 
+Donde $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
 
-\chapter{Adaptación de modelos de lenguaje grandes (PEFT: LoRA)}
+%En las siguientes secciones se presentan algunos de los modelos de lenguaje grandes más utilizados actualmente.
 
-\section{Low-Rank Adaptation (LoRA}
+\subsection{Modelos de Lenguaje Grande Preentrenados (\textit{Pre-trained LLMs})} \label{pretrainedLLM}
 
-%LoRA \cite{hu2021loralowrankadaptationlarge}
+Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLMs preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
+
+A continuación se presentan algunos de los modelos de lenguaje preentrenados más utilizados actualmente.
+
+\subsubsection{GPT}
+
+\subsubsection{Gemma}
+
+\subsubsection{Llama-3}
+
+\chapter{Adaptación de modelos de lenguaje grandes}
+
+En este capítulo se aborda cómo podemos adaptar los modelos de lenguaje grandes (LLMs) preentrenados para realizar tareas específicas, explorando las diferentes estrategias y enfoques disponibles. Se hará especial incapié en el método PEFT (\textit{parameter-efficient fine-tuning}) y LoRA (\textit{Low-Rank Adaptation}).
+
+\section{Ajuste de LLMs}
+
+Tal y como se ha mencionado en la sección \ref{pretrainedLLM}, los LLMs preentrenados son modelos entrenados con grandes cantidades de datos genéricos que no han sido todavía ajustados para la realización de ninguna tarea específica. Por lo tanto, para aplicarlos a tareas concretas, es necesario ajustar estos modelos para adaptarlos a los requisitos específicos de cada tarea. Generalmente, para adaptar los modelos se utilizan técnicas de \textit{transfer learning}.
+
+\subsection{Aprendizaje por transferencia}
+
+El concepto de aprendizaje por transferencia (en inglés, \textit{transfer learning}) se refiere a la transferencia de conocimiento desde un dominio fuente, donde se dispone de una mayor cantidad de datos, hacia dominios más específicos, que cuentan con menos datos disponibles. Una definición formal dada en \cite{Weiss2016} es la siguiente:
+
+\begin{displayquote}
+\textit{"Dado un dominio fuente $D_s$ con una tarea fuente correspondiente $T_s$ y un dominio objetivo $D_t$ con una tarea correspondiente $T_t$, el aprendizaje por transferencia es el proceso de mejora de la función predictiva objetivo $f_t(\cdot)$ mediante el uso de la información relacionada del dominio $D_s$ y la tarea $T_s$, donde $D_s \neq D_t$ o $T_s \neq T_t$"}
+\end{displayquote}
+
+Existen cuatro enfoques principales dentro del aprendizaje por transferencia: aprendizaje basado en instancias (\textit{instance-based}), basado en características (\textit{feature-based}), basado en parámetros (\textit{parameter-based}) y basado en relaciones (\textit{relational-based}) \cite{Weiss2016}.
+
+\begin{itemize}
+	\item \textbf{Aprendizaje basado en instancias}: la idea principal es utilizar una combinación de modelos preentrenados en el dominio fuente para etiquetar los datos no etiquetados del dominio objetivo. Para ello, se asignan pesos a los modelos del dominio fuente en función de su similitud con el dominio objetivo. Los resultados de los modelos se ponderan según estos pesos para estimar las etiquetas de los datos no etiquetados del dominio objetivo. Finalmente, se construye el modelo del dominio objetivo a partir de los datos etiquetados de este y las etiquetas estimadas.
+	\item \textbf{Aprendizaje basado en características}: en este enfoque, se crean nuevos modelos específicos para las tareas, y se incorpora en estos las representaciones obtenidas con el modelo preentrenado, añadiéndolas como características adicionales. De esta manera, el modelo preentrenado sirve como punto de partida para el modelo específico. Utilizando las características extraídas del modelo preentrenado, el modelo específico puede transferir el conocimiento general obtenido por este al contexto del dominio específico de la tarea. Dentro de este enfoque, existen dos variantes: asimétrico y simétrico  \cite{9134370}. En el enfoque asimétrico, se transforma las características extraídas por el modelo preentrenado para que se ajusten a las del dominio objetivo. Por el contrario, en el simétrico lo que se hace es buscar un espacio común de características latentes y transformar tanto las características del dominio fuente como del objetivo en una nueva representación de características.
+	\item \textbf{Aprendizaje basado en parámetros}: consiste en modificar y reentrenar el modelo preentrenado para la tarea en particular, ajustando directamente sus parámetros. De esta manera, el modelo conserva el conocimiento general obtenido en el preentrenamiento y, tras la modificación y reentrenamiento, aprende nuevo conocimiento específico de la tarea.
+	\item \textbf{Aprendizaje basado en relaciones}: este enfoque se centra principalmente en los problemas de dominios relacionales, transfiriendo la lógica de relaciones o reglas aprendidas en el dominio fuente al dominio objetivo. Estos métodos buscan preservar y adaptar las relaciones entre entidades para resolver tareas en el nuevo dominio.
+\end{itemize}
+
+Para los experimentos de este trabajo, se realizará la adaptación de los modelos de lenguaje preentrenados mediante aprendizaje por tranferencia basado en parámetros. Específicamente, se utilizará la técnica de \textit{fine-tuning}.
+
+\section{\textit{Fine-tuning}}
+
+El \textit{fine-tuning} es una técnica detro del aprendizaje por transferencia basado en parámetros que consiste en ajustar los parámetros del modelo preentrenado utilizando para su entrenamiento un conjunto de datos adaptado a la tarea sobre la que se va a utilizar el modelo.
+
+El principal inconveniente del método de \textit{fine-tuning} es que puede ser un proceso muy lento, ya que es necesario ajustar todos los parámetros del modelo preentrenado, los cuales suelen ser numerosos. Existe un enfoque alternativo en el que se mantiene el modelo preentrenado intacto, y se añaden unos pocos parámetros adicionales que modifican su comportamiento interno para adaptarlo a la tarea específica. Durante el entrenamiento, solamente es necesario ajustar estos nuevos parámetros. Esta idea se conoce como adaptadores.
+
+\subsection{Adaptadores}
+
+El método de ajuste basado en adaptadores funciona añadiendo módulos específicos a un modelo preentrenado, de manera que durante el entrenamiento de este para alguna tarea específica se actualizan únicamente los parámetros de estos módulos, y no los del modelo completo. De esta manera, se incorporan solo unos pocos parámetros entrenables para cada nueva tarea, lo que permite un alto grado de compartición de parámetros \cite{he2021effectivenessadapterbasedtuningpretrained}. Este enfoque puede ser utilizado como alternativa al \textit{fine-tuning} completo del modelo, ya que, se ha demostrado que ambos métodos ofrecen un rendmiento comparable, siendo el ajuste con adaptadores mucho más eficientes en términos del número parámetros \cite{houlsby2019parameterefficienttransferlearningnlp, stickland2019bertpalsprojectedattention}.
+
+Los módulos de los adaptadores deben cumplir con dos propiedades esenciales: contener un número reducido de parámetros y tener una incialización cercana a la identidad. los adaptadores deben ser pequeños en comparación con las capas del modelo original para asegurar que el modelo crezca de manera controlada al añadir nuevas tareas. La inicialización cercana a la unidad es necesaria para mantener la estabilidad del entrenamiento. De esta manera, el modelo original no se verá afectado al inicio del entrenamiento. Durante este, los adaptadores pueden activarse para cambiar la distribución de las activaciones en la red. Además, los módulos pueden ignorarse si no son necesarios. Si la incialización se desviara demasiado de la identidad, el modelo podria fallar durante el entrenamiento \cite{houlsby2019parameterefficienttransferlearningnlp}.
+
+En el ámbito del procesamiento de lenguaje natural, los adaptadores generalmente se insertan como módulos entre las capas del modelo. En el caso de la arquitectura de transformers, la idea es insertar dos redes neuronales MLP poco profundas como cuello de botella dentro de cada uno de los bloques del transformer: una después de la capa de \textit{multi-head attention} y otra, después de la capa de red \textit{feed forward}. Estas redes MLP deben tener lo que se conoce como \textit{skip connections}, es decir, conexiones que permiten saltarse capas inermedias, para permitir la incialización de las redes como identidad \cite{murphy2022probabilistic}.
+
+%Para la realización de este trabajo, se utilizará este método de ajuste basado en adaptadores, añadiendo específicamente módulos de PEFT (\textit{parameter-efficient fine-tuning}) y LoRA (\textit{Low-Rank Adaptation}).
+
+\section{\textit{Parameter-efficient fine-tuning} (PEFT)}
+
+El \textit{Parameter- Efficient Fine-Tuning} (PEFT) es uno de los métodos de ajuste basados en adaptadores que pueden aplicarse a modelos de lenguaje grandes. Este método incluye cuatro enfoques: basado en \textit{promtps}, basado en reparametrización, adaptadores en serie y adaptadores en paralelo.
+
+En este trabajo, se empleará el enfoque basado en reparametrización. Este se centra en la transformación de los pesos de la red mediante técnicas de bajo rango, de manera que se consigue reducir de manera eficaz el número de parámetros que necesitan ser entrenados, mientras se conserva la capacidad de manejar matrices de alta dimensión \cite{hu2023llmadaptersadapterfamilyparameterefficient}. Dentro de este marco, existen varios métodos, entre los cuales se destaca LoRA (\textit{Low-Rank Adaptation}), que es el enfoque que se utilizará en este proyecto.
+
+\subsection{\textit{Low-Rank Adaptation} (LoRA)}
+
+El método de \textit{Low-Rank Adaptation} (LoRA) fue presentado en el artículo \textit{LoRA: Low-Rank adaptation of Large Language models} \cite{hu2021loralowrankadaptationlarge}, desarrollado por un equipo de Microsoft. Como se mencionó en la sección anterior, este forma parte del enfoque PEFT basado en reparametrización de los modelos. LoRA se basa en congelar los pesos del modelo preentrenado durante el entrenamiento para luego ajustarlos mediante una matriz de parámetros adicionales que representan el cambio necesario en los pesos originales del modelo. La matriz de cambios es la que se ajusta en el entrenamiento. Generalmente, la matriz de pesos originales se denota como $W$ y la matriz de cambios, $\bigtriangleup W$.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+
+% Modelo preentrenado
+\draw (0,0) rectangle (4,4);
+\node at (2,3) {Pesos preentrenados};
+\node at (2, 1.5) {
+\(\begin{bmatrix}
+w_{11} & w_{12} & \dots & w_{1d} \\
+\vdots & \vdots & \vdots & \vdots \\
+w_{k1} & w_{k2} & \dots & w_{kd}
+\end{bmatrix}\)
+};
+
+% LoRA
+\draw (5.5,0) rectangle (10.5,4);
+\node at (8,3) {Pesos de LoRA};
+\node at (8, 1.5) {
+\(\begin{bmatrix}
+\bigtriangleup  w_{11} & \bigtriangleup  w_{12} & \dots & \bigtriangleup w_{1d} \\
+\vdots & \vdots & \vdots & \vdots \\
+\bigtriangleup w_{k1} & \bigtriangleup w_{k2} & \dots & \bigtriangleup w_{kd}
+\end{bmatrix}\)
+};
+
+% Flechas
+\node at (2, 5.5) {\textit{Inputs}};
+\draw[->] (2,5) -- (2,4);
+
+\node at (2, -1.5) {\textit{Outputs}};
+\draw[->] (2, 0) -- (2, -1);
+
+\draw[->] (5.5, 1.5) -- (4, 1.5);
+\node at (4.8, 2) {+};
+\end{tikzpicture}
+\caption{Esquema de las matrices de parámetros de LoRA}
+\label{fig:matricesLoRA}
+\end{figure}
+
+LoRA se basa en la idea de la descomposición en rangos de las matrices. El rango de una matriz hace referencia al número de columnas linealmente independientes de esta. Una columna es linealmente dependiente si puede ser obtenida como combinación lineal de otras columnas de la matriz. Esto implica que, si existen columnas linealmente dependientes en la matriz, estas se pueden eliminar sin necesidad de perder información, permitiendo así reducir el tamaño de esta.
+
+Así, en lugar de optimizar los pesos de la matriz completa, LoRA utiliza lo que se conoce como \textit{low rank decomposition} (en español, descomposición en rango bajo), de manera que la matriz $\bigtriangleup W$ se representa como el producto de dos matrices:
+
+\begin{equation}
+\bigtriangleup W = B \cdot A =
+\begin{bmatrix}
+b_{11} & \dots & b_{1r} \\
+\vdots &  \vdots & \vdots \\
+b_{d1} & \dots & b_{dr}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+a_{11} & \dots & a_{1k} \\
+\vdots & \vdots & \vdots \\
+a_{r1} & \dots & a_{rk}
+\end{bmatrix}
+\end{equation}
+
+Aquí, la matriz $B$ tiene dimensiones $d x r$, y la matriz A, $r x k$, donde $d$ es el número de filas de la matriz de pesos original, $k$ es el número de columnas y $r$, es un hiperparámetro (denominado \textit{rank} o rango) que se debe determinar.
+
+Este enfoque proporciona una mayor eficiencia computacional, ya que se está reduciendo el número de elementos en las matrices $A$ y $B$ con respecto a la matriz original. En el entrenamiento, la matriz $A$ se inicializa a partir de una distribución gaussiana, mientras que la matriz $B$ es inicializada a 0. A medida que trascurre el entrenamiento, los pesos se ajustan para adaptar el modelo a la tarea.
+
+En las siguientes secciones presentaremos cuáles son los hiperparámetros que se deben ajustar en un entrenamiento con LoRA.
+
+\subsubsection{Rango}
+
+El primer hiperparámetro que se debe determinar en un entrenamiento con LoRA es el rango (\textit{rank}, $r$). Este representa el rango de la matriz de parámetros original. Su valor exacto es desconocido, por lo que se deberá seleccionar al inicio del entrenamientol. Idealmente, $r$ debe ser lo más pequeño posible, pero aún debe ser suficiente para capturar la información esencial. Se debe tener en cuenta que:
+
+\begin{itemize}
+	\item Si $r$ es demasiado pequeño, la matriz se reduce excesivamente, eliminando columnas que no son linealmente dependientes y, por tanto, perdiendo información necesaria.
+	\item Si $r$ es demasiado grande, se incluirán parámetros linealmente dependientes, cosa que puede reducir la efectividad computacional.
+\end{itemize}
+
+\subsubsection{\textit{Alpha}}
+
+\textit{Alpha} es un parámetro que se utiliza para escalar los pesos entrenados, determinando la importancia que se les debe dar a los pesos aprendidos durante el entrenamiento en el modelo. Se debe tener en cuenta lo siguiente:
+
+\begin{itemize}
+	\item Si $\alpha = r$, los nuevos pesos serán integrados con los del modelo original en una proporción de 1:1.
+	\item Si $\alpha > r$, se está dando mayor peso a los nuevos parámetros aprendidos. Esto es recomendable únicamente cuando se cuenta con un conjunto de datos de entrenamiento grande y de alta calidad. De lo contrario, al darle más importancia al conocieminto aprendido del nuevo conjunto de datos en lugar de al conociemiento preexistente del modelo, podría resultar en incoherencias.
+	\item Si $\alpha < r$, se prioriza el conocimiento preexistente del modelo sobre el nuevo. Esta configuración es aconsejable cuando el conjunto de datos de entrenamiento es pequeño, pues así se garantiza que el modelo conserve más el conociemiento original.
+\end{itemize}
+
+\subsubsection{\textit{Dropout}}
+
+El parámetro de \textit{dropout} determina cuál la probabilidad de que uno de los parámetros ajustados en el entrenamiento sea configurado artificialmente a 0 para un lote de entrenamiento específico. Este procedimiento se realiza para evitar problemas de \textit{overfitting}, donde el modelo se ajusta demasiado a los datos de entrenamiento y pierde capacidad de generalización.
+
+Generalmente, se recomienda utilizar un \textit{dropout} de 0.1 para modelos de 7B y 13B parámetros y reducirlo a 0.05 para modelos de 33B y 65B parámetros. Esto ayuda a mantener un equilibrio adecuado entre regularización y capacidad de aprendizaje del modelo.
 
 \chapter{Resultados experimentales}
 
