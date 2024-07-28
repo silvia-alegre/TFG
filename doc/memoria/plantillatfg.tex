@@ -841,11 +841,90 @@ Generalmente, se recomienda utilizar un \textit{dropout} de 0.1 para modelos de 
 
 \chapter{Resultados experimentales}
 
+REESCRIBIR: En este capítulo se presenta el experimento principal de este trabajo, que consiste en el entrenamiento de dos modelos de lenguaje grandes preentrenados: Gemma y Llama-3, enfocados en la tarea específica de generar frases de lenguaje natural a partir de palabras clave en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. A continuación, se detallan los experimentos realizados, las medidas de evaluación empleadas y los resultados obtenidos.
+
 \section{Conjunto de datos}
+
+Para la realización de los experimentos, se han utilizado dos conjuntos de datos distintos, ambos extraídos del portal de la Universidad de Vigo. Ambos conjuntos contienen frases extraídas de los recursos del Portal Aragonés de la Comunicación Aumentativa y Alternativa, acompañada de la lista de lemas o palabras clave asociadas a cada frase. Estas palabras clave han sido seleccionadas por un grupo de anotadores expertos lingüistas.
+
+El primer conjunto de datos incluye un total de 212 frases, todas ellas en español. El segundo conjunto consta de 263 frases, disponibles tanto en español como en inglés.
+
+A continuación, se presentan algunos ejemplos de frases del primer conjunto de datos para ilustrar su formato:
+
+\begin{center}
+\begin{tabular}{ | c | }
+\hline
+	El policía puso una multa. | policía poner un multa \\
+	El lobo quiere comerlo. | lobo querer comer lo \\
+	La niña escribe en la arena. | niña escribir arena \\
+	Los niños juegan en la piscina. | niño jugar piscina \\
+	Los cerditos viven felices. | cerditos vivir feliz \\
+\hline
+\end{tabular}
+\end{center}
+
+En cuanto al segundo conjunto de datos, se incluyen ejemplos bilingües:
+
+\begin{center}
+\begin{tabular}{ | c | }
+\hline
+	Su mamá se enfadó.	su, mamá, se, enfadar | His mother got angry.	his, mother, get, angry \\
+	Pili ha metido un gol.	Pili, haber, meter, un, gol | Pili has scored a goal.	Pili, score, a, goal \\
+	La Luna está en el cielo.	Luna, estar, cielo | The moon is in the sky.	moon, be, sky \\
+	Juan encontró un castillo.	Juan, encontrar, castillo | Juan found a castle.	Juan, find, a, castle \\
+	No lo cambiaré.	no, lo, cambiar | I will not change it.	change, it, not  \\
+\hline
+\end{tabular}
+\end{center}
+
+En el segundo conjunto de datos, se encontraron algunos valores nulos en las listas de palabras clave para ciertas frases en español. Estas frases fueron anotadas manualmente para completar la información faltante.
+
+A partir de estos dos conjuntos, se han creado un conjunto de datos para el entrenamiento en español y otro, en inglés.
+
+\begin{itemize}
+	\item \textbf{Conjunto en español}: se ha creado a partir de la unión de las frases en español de los dos conjuntos mencionados. Contiene un total de 340 frases, ya que entre los conjuntos originales algunas se encontraban repetidas.
+	\item \textbf {Conjunto en inglés}: se ha creado a partir de las frases en inglés del segundo conjunto de datos, por lo que contiene un total de 263 frases.
+\end{itemize}
+
+\subsection{Partición de los datos en entrenamiento, test y validación}
+
+Para evaluar los modelos, se utilizará la técnica de \textit{cross-validation}, que consiste en realizar diferentes particiones de los datos en conjuntos de entrenamiento y test, entrenando y evaluando cada partición por separado. Por esta razón, los datos se han dividido en un conjunto de entrenamiento y test para \textit{cross-validation} y un conjunto de validación.
+
+Los datos de validación no serán utilizados para el entrenamiento del modelo, y se utilizarán para la comparación final de resultados entre los modelos. El conjunto de datos de validación ha sido seleccionado de manera aleatoria entre las frases que no presentaban valores nulos.
+
+La siguiente tabla muestra la cantidad de datos utilizados para los experimentos en español y en inglés:
+
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{ | c | c | c | }
+	\hline
+	\ & Conjunto en español & Conjunto en inglés \\
+	\hline
+	Validación & 50 & 40 \\
+	\hline
+	Entrenamiento-Test & 290 & 223 \\
+	\hline
+\end{tabular}
+\end{center}
+\caption{Número de frases para validación y entrenamiento de los conjuntos de datos en español y en inglés}
+\end{table}
 
 \section{Medidas de evaluación}
 
+Para evaluar se utilizarán las métricas de BLEU y COMET
+
+\subsection{BLEU}
+
+\subsection{COMET}
+
+\section{Entrenamiento de los modelos}
+
+[Formato de las prompts]
+[Explicación proceso (cross validation con n = ?, lora y parámetros utilizados)]
+
 \section{Resultados experimentales}
+
+\section{Comparación con otros modelos}
 
 ????? ????????????? ????????????? ????????????? ????????????? ?????????????
 
