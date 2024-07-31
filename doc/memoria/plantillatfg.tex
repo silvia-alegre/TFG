@@ -155,30 +155,30 @@ Tom Mitchell \cite{mitchell1997mcgraw} define el proceso de aprendizaje de los p
 \textit{"Se dice que un programa aprende de la experiencia $E$ con respecto a alguna clase de tarea $T$, y medida de rendimiento $P$, si su rendimiento en tareas en $T$, medido por $P$, mejora con la experiencia $E$."}
 \end{displayquote}
 
-Aunque la idea principal del aprendizaje automático es esta, econtramos diferentes tipos de aprendizaje automático, dependiendo del tipo de tarea que se quiera llevar a cabo, de la naturaleza de la medida del rendimiento que se utiliza para evaluar el sistema y de el tipo de entrenamiento o experiencia que le proporcionamos a este.
+Aunque la idea principal del aprendizaje automático es esta, econtramos diferentes tipos de aprendizaje automático, dependiendo del tipo de tarea que se quiera llevar a cabo, de la naturaleza de la medida del rendimiento que se utiliza para evaluar el sistema y del tipo de entrenamiento o experiencia que le proporcionamos a este.
 
 Generalmente, los enfoques para el entrenamiento de algoritmos se agrupan en:
 
 \begin{itemize}
-	\item \textbf{Aprendizaje supervisado}, cuyo objetivo es, a partir de unos datos de entrenamiento, encontrar la función $f$ que realice el mejor mapeo posible entre un conjunto de entradas $X$ y sus salidas correspondientes $Y$, de manera que $(X, Y) = (X, f(Y))$
-	\item \textbf{Aprendizaje no supervisado}, que trata de modelar la estructura subyacente de un conjunto de datos para identificar relaciones y patrones, permitiendo así un entendimiento más profundo de los mismos
-	\item \textbf{Aprendizaje semi-supervisado}, que cae entre el supervisado y el no supervisado y utiliza una porción de datos etiquetados y no etiquetados
-	\item \textbf{Aprendizaje por refuerzo}, donde el algoritmo aprende a través de retroalimentaciones que va recibiendo, ajustando sus acciones con el objetivo de maximizar una recompensa acumulada a lo largo del tiempo. \cite{mirtaheri2022machine}
+	\item \textbf{Aprendizaje supervisado}, cuyo objetivo es, a partir de unos datos de entrenamiento, encontrar la función $f$ que realice el mejor mapeo posible entre un conjunto de entradas $X$ y sus salidas correspondientes $Y$, de manera que $(X, Y) = (X, f(X))$.
+	\item \textbf{Aprendizaje no supervisado}, que trata de modelar la estructura subyacente de un conjunto de datos para identificar relaciones y patrones, permitiendo así un entendimiento más profundo de los mismos.
+	\item \textbf{Aprendizaje semi-supervisado}, que cae entre el supervisado y el no supervisado y utiliza una porción de datos etiquetados y no etiquetados.
+	\item \textbf{Aprendizaje por refuerzo}, donde el algoritmo aprende a través de retroalimentaciones que va recibiendo, ajustando sus acciones con el objetivo de maximizar una recompensa acumulada a lo largo del tiempo \cite{mirtaheri2022machine}.
 
 \end{itemize}
 
 La tarea principal de este trabajo se llevará a cabo utilizando técnicas de aprendizaje supervisado.
 
-Otro concepto importante dentro del aprendizaje automático es el aprendizaje profundo (\textit{deep learning}). El aprendizaje profundo es subconjunto dentro del aprendizaje automático que emplea algoritmos basados en redes neuronales. Dentro de este encontramos métodos como las redes neuronales profundas, las redes neuronales recurrentes, las redes neuronales convulacionales y los transformers, entre otros. Estos métodos tienen aplicaciones significativas en una gran variedad de ámbitos, entre los que se encuentra el procesamiento de lenguaje natural, disciplina en la que se enmarca este trabajo. En las siguientes secciones explicaremos con detalle los conceptos de redes neuronales y transformers.
+Otro concepto importante dentro del aprendizaje automático es el aprendizaje profundo (\textit{deep learning}). El aprendizaje profundo es subconjunto dentro del aprendizaje automático que emplea algoritmos basados en redes neuronales. Dentro de este encontramos métodos como las redes neuronales profundas, las redes neuronales recurrentes, las redes neuronales convolucionales y los transformers, entre otros. Estos métodos tienen aplicaciones significativas en una gran variedad de ámbitos, entre los que se encuentra el procesamiento de lenguaje natural, disciplina en la que se enmarca este trabajo. En las siguientes secciones explicaremos con detalle los conceptos de redes neuronales y transformers.
 
 \section{Redes neuronales}
 %https://web.stanford.edu/~jurafsky/slp3/ed3book_jan72023.pdf
 
-El primer modelo de red neuronal artificial fue creado en 1943 por Warren McCulloch y Walter Pitts, y se conoce como \textit{McCulloch-Pitts neuron} \cite{mcculloch1943logical}. Este era un modelo simplificado que imitaba el comportamiento del cerebro humano. A partir de este dio inicio a un proceso de investigación de las redes neuronales desde dos enfoques distintos: uno centrado en los procesos biológicos del cerebro y otro en la aplicación de las redes neuronales para la inteligencia artificial. Las redes neuronales modernas, aunque inspiradas en estas primeras ideas, han evolucionado significatvamente y ya no se basan directamente en las inspiraciones biológicas iniciales.
+El primer modelo de red neuronal artificial fue creado en 1943 por Warren McCulloch y Walter Pitts, y se conoce como \textit{McCulloch-Pitts neuron} \cite{mcculloch1943logical}. Este era un modelo simplificado que imitaba el comportamiento de una neurona natural. Esto dio inicio a un proceso de investigación de las redes neuronales desde dos enfoques distintos: uno centrado en los procesos biológicos del cerebro y otro en la aplicación de las redes neuronales para la inteligencia artificial. Las redes neuronales modernas, aunque inspiradas en estas primeras ideas, han evolucionado significativamente y ya no se basan directamente en las inspiraciones biológicas iniciales.
 
 Las redes neuronales modernas están compuestas por pequeñas unidades de cómputo conocidas como neuronas o nodos, conectadas entre si a través de enlaces para permitir la transmisión de señales entre estas. Los nodos están organizados en capas, de manera que un nodo en una capa está conectado a todos los nodos de la capa siguiente. Existen tres tipos de capa: capa de entrada (\textit{input layer}), capas ocultas (\textit{hidden layers}) y capa de salida (\textit{output layer}). 
 
-La arquitectura más simple de red neuronal es la de perceptrón. Este tipo de modelo se utiliza para tareas de clasificación binaria, en las que se debe decidir si un determinado \textit{input} pertenece o no a una clase. Es un tipo de clasificador lineal, por lo que hace sus predicciones basandose en una función de predicción lineal que combina un conjunto de pesos con el vector de entrada. Este tipo de arquitectura sirve como base para arquitecturas de redes neuronales mucho más complejas.
+La arquitectura más simple de red neuronal es la de perceptrón. Este tipo de modelo surgió como método para tareas de clasificación binaria, en las que se debe decidir si un determinado \textit{input} pertenece o no a una clase, aunque se amplió para abarcar también tareas de clasificación multiclase. Es un tipo de clasificador lineal, por lo que hace sus predicciones basándose en una función de predicción lineal que combina un conjunto de pesos con el vector de entrada. Este tipo de arquitectura sirve como base para arquitecturas de redes neuronales mucho más complejas.
 
 \begin{figure}[h]
 	\centering
@@ -204,10 +204,11 @@ La arquitectura más simple de red neuronal es la de perceptrón. Este tipo de m
 
 	\end{tikzpicture}
 	\caption{Esquema de perceptrón simple}
+	\label{fig:perceptronSimple}	
 \end{figure}
 
 
-Tal y como vemos en la figura, en la arquitectura de perceptrón encontramos solamente una neurona, que toma un vector $X$ como entrada. La neurona calcula la combinación lineal de los elementos del vector $x_1, x_2, ..., x_n$ con los pesos correspondientes $w_1, w_2, ..., w_n$, añadiendo al resultado un valor conocido como umbral o \textit{bias term}:
+Tal y como vemos en la Figura \ref{fig:perceptronSimple}, en la arquitectura de perceptrón simple encontramos solamente una neurona, que toma un vector $X$ como entrada. La neurona calcula la combinación lineal de los elementos del vector $x_1, x_2, ..., x_n$ con los pesos correspondientes $w_1, w_2, ..., w_n$, añadiendo al resultado un valor conocido como umbral o \textit{bias term}:
 
  \begin{equation}
 \label{form:calcularZ}
@@ -227,17 +228,17 @@ y = \phi(z) =
 El entrenamiento de las redes neuronales consiste en ajustar los distintos pesos de la red de manera que produzca las salidas más acertadas posibles. En el caso de las redes de perceptrón, al contar con solamente una neurona, este proceso resulta relativamente sencillo. El primer paso es inicializar el vector de pesos con valores aleatorios y calcular la salida de cada vector de entrada del conjunto de entrenamiento. A continuación, se comprueba si la predicción ha sido correcta. Si no lo ha sido, el vector de pesos se modifica utilizando la siguiente fórmula:
 
 \begin{equation}
-w_i = w_i - \lambda(\hat{Y}^t-Y^t)X^t
+w = w - \lambda(\hat{y}-y)x
 \end{equation}
 
-Donde $\lambda$ es la tasa de aprendizaje, $\hat{Y}$ es el \textit{output} predicho por el modelo y $Y$ es la clasificación real.
+Donde $\lambda$ es la tasa de aprendizaje, $\hat{y}$ es el \textit{output} predicho por el modelo y $y$ es la clasificación real.
 
 Estos pasos se repiten durante un número determinado de iteraciones o hasta que el modelo converge.
 
 Este modelo de perceptrón tiene una limitación principal: el modelo solo converge si las dos clases en las cuales debe clasificar las muestras son linealmente separables. En caso de que no lo sean, los pesos oscilarán indefinidamente, hasta que el número máximo de iteraciones se alcance. Para solventar esta limitación existen modelos de redes neuronales mucho más complejos, con más neuronas y que utilizan funciones de activación no lineales. El modelo más conocido de este tipo es el de perceptrón multicapa (MLP, por su nombre en inglés: \textit{Multi-Layer Perceptron}).
 
 \subsection{Perceptrón multicapa} \label{perceptronmulticapa}
-El modelo de perceptrón multicapa es una evolución del modelo de perceptrón simple que aparece con intención de poder resolver problemas no lineales. La idea principal detrás de este es la combinación de varios perceptrones simples en un único modelo. En esta arquitectura podemos encontrar un número elevado de neuronas, conectadas entre si y divididas en capas. Encontramos tres tipos de capas: una capa de entrada (\textit{input layer}), una o más capas ocultas (\textit{hidden layers}) y una capa de salida (\textit{output layer}) (ver figura \ref{fig:perceptronMulticapa}).
+El modelo de perceptrón multicapa es una evolución del modelo de perceptrón simple que aparece con intención de poder resolver problemas no lineales. La idea principal detrás de este es la combinación de varios perceptrones simples en un único modelo. En esta arquitectura podemos encontrar un número elevado de neuronas, conectadas entre si y divididas en capas. Encontramos tres tipos de capas: una capa de entrada (\textit{input layer}), una o más capas ocultas (\textit{hidden layers}) y una capa de salida (\textit{output layer}) (ver Figura \ref{fig:perceptronMulticapa}).
 
 %\begin{figure}[h]
 %\includegraphics[scale = 0.5]{images/neural_network.png}
@@ -314,9 +315,13 @@ El modelo de perceptrón multicapa es una evolución del modelo de perceptrón s
     \label{fig:perceptronMulticapa}	
 \end{figure}
 
-Cada una de las neuronas que se encuentra en una capa está conectada a todas las neuronas de la capa siguiente, y cada uno de los enlaces tiene asociado un peso $w$. De manera similar al modelo de perceptrón simple, los datos entran al modelo en forma de vector a través de la capa de entrada, y se calcula el valor $z_i$ de cada entrada utilizando la fórmula \ref{form:calcularZ}. A continuación se aplica la función de activación $\phi$. Así, el resultado que pasa a la neurona siguiente es $\phi(t)$. En este tipo de modelos se utilizan funciones no lineales como función de activación, para poder aplicarse a problemas no lineales. Entre las funciones de activación más comunes se encuentran la función sigmoide, la tangente hiperbólica (\textit{tanh}) y la rectificada lineal (\textit{ReLU}).
+Cada una de las neuronas que se encuentra en una capa está conectada a todas las neuronas de la capa siguiente, y cada uno de los enlaces tiene asociado un peso $w$. De manera similar al modelo de perceptrón simple, los datos entran al modelo en forma de vector a través de la capa de entrada, y se calcula el valor $z_i$ de cada entrada utilizando la Ecuación \ref{form:calcularZ}. A continuación se aplica la función de activación $\phi$. Así, el resultado que pasa a la neurona siguiente es $\phi(z_i)$. En este tipo de modelos se utilizan funciones no lineales como función de activación, para poder aplicarse a problemas no lineales. Entre las funciones de activación más comunes se encuentran la función sigmoide, la tangente hiperbólica (\textit{tanh}) y la rectificada lineal (\textit{ReLU}).
 
 Este proceso se repite en todas las capas, hasta llegar a la capa de salida y producir el \textit{output} final.
+
+\subsubsection{Algoritmo \textit{backprop}}
+
+!!!!!!!!! COMPLETAR !!!!!!!!!!!!!!!! cómo se realiza ajuste de los pesos
 
 \subsection{Redes neuronales para secuencias de texto}
 
@@ -328,7 +333,7 @@ El procesamiento de secuencias de texto utilizando redes neuronales es una técn
 
 \begin{enumerate}
 	\item \textbf{Tokenización y conversión a índices}: el primer paso consiste en convertir la frase en una secuencia de palabras o tokens. Una vez obtenida la lista de tokens, se asigna a cada uno un número que servirá como índice.
-	\item \textbf{Transformación de palabras en vectores}: los índices numéricos se transforman en vectores utilizando \textit{embeddings}. Los \textit{embeddings} son representaciones vectoriales densas y de baja dimensión que capturan las características semánticas de las palabras.
+	\item \textbf{Transformación de palabras en vectores}: los índices numéricos se transforman en vectores utilizando \textit{embeddings}. Los \textit{embeddings} son representaciones vectoriales densas que capturan las características semánticas de las palabras.
 	\item \textbf{Creación de la matriz de \textit{embeddings}}: una vez que se han obtenido los vectores asociados a cada una de las palabras, se puede construir una matriz de \textit{embeddings} que representa la frase completa. Esta matriz facilita la entrada secuencial de los vectores en la red neuronal.
 \end{enumerate}
 
@@ -343,20 +348,20 @@ El proceso que siguen este tipo de redes es el siguiente. En primer lugar, se in
 h_t = f(W_hh_{t-1} + W_xx_t + b_h)
 \end{equation}
 
-Donde $W_h$ y $W_x$ son las matrices de pesos asociadas al estado oculto y a las entradas respectivamente, $f$ es una función no lineal y $b_h$ es un vector de sesgos. La salida $y_t$ se obtiene a partir del estado oculto $h_t$:
+donde $W_h$ y $W_x$ son las matrices de pesos asociadas al estado oculto y a las entradas respectivamente, $f$ es una función no lineal y $b_h$ es un vector de sesgos. La salida $y_t$ se obtiene a partir del estado oculto $h_t$:
 
 \begin{equation}
 y_t = g(W_yh_t + b_y)
 \end{equation}
 
-Donde $W_y$ es una matriz de pesos, $g$ es la función de activación y $b_y$ es un vector de sesgos \cite{sutskever2014sequencesequencelearningneural}.
+donde $W_y$ es una matriz de pesos, $g$ es la función de activación y $b_y$ es un vector de sesgos \cite{sutskever2014sequencesequencelearningneural}.
 
 El proceso se repite para cada elemento de la secuencia de entrada, propagando así la información relevante anterior a través de los estados ocultos.
 
 Uno de los principales problemas de las RNN es la dificultad para recordar información a largo plazo, pues se ha comprobado que, si el modelo es entrenado con secuencias de entrada largas, la importancia de las primeras palabras que son procesadas tiende a ir perdiendose a medida que se procesa el resto de la secuencia. Esto limita la capacidad de este tipo de redes para capturar dependencias a largo plazo en secuencias largas.
 
-\subsubsection{Redes neuronales convolucionales (CNN)}
-El funcionamiento de las redes neuronales convolucionales (\textit{convolutional neural networks (CNN)} se basa en el calculo de una función de un vecindario local para cada una de las entradas utilizando pesos compartidos. Son una buena alternativa a las redes neuronales recurrentes, pues son sustancialmente más sencillas de entrenar, ya que no necesitan mantener el estado oculto a largo plazo. Se pueden utilizar en tareas de clasificación y de generación de texto.
+%\subsubsection{Redes neuronales convolucionales (CNN)}
+%El funcionamiento de las redes neuronales convolucionales (\textit{convolutional neural networks (CNN)} se basa en el calculo de una función de un vecindario local para cada una de las entradas utilizando pesos compartidos. Son una buena alternativa a las redes neuronales recurrentes, pues son sustancialmente más sencillas de entrenar, ya que no necesitan mantener el estado oculto a largo plazo. Se pueden utilizar en tareas de clasificación y de generación de texto.
 
 \subsection{Arquitectura \textit{encoder-decoder}} \label{encdec}
 
@@ -399,7 +404,7 @@ Se utiliza la función \textit{softmax} para normalizar los resultados y poder a
 \sum_j\alpha_{ij} = 1
 \end{equation}
 
-El coeficiente $\alpha_ij$ determina cuánto peso se debe dar a cada valor $v_j$ en la combinación final, y representa el nivel de importancia que tiene cada palabra de la secuencia sobre la palabra $i$. La salida $z_i$ se calcula entonces como una suma ponderada de los valores $v_j$, donde los pesos son los coeficientes calculados:
+El coeficiente $\alpha_{ij}$ determina cuánto peso se debe dar a cada valor $v_j$ en la combinación final, y representa el nivel de importancia que tiene cada palabra de la secuencia sobre la palabra $i$. La salida $z_i$ se calcula entonces como una suma ponderada de los valores $v_j$, donde los pesos son los coeficientes calculados:
 
 \begin{equation}
 z_i = \sum_j\alpha_{ij}v_j
@@ -409,9 +414,7 @@ Este enfoque permite que los \textit{outputs} del modelo sean una combinación d
 
 \section{Transformers} \label{transformers}
 
-En esta sección presentaremos la arquitectura de transformers.
-
-Los modelos basados en transformers emplean una arquitectura \textit{encoder-decoder} que utiliza el mecanismo de atención, descrito en la sección anterior. La arquitectura de los transformers fue introducida en el artículo "\textit{Attention is All You Need"} \cite{vaswani2023attentionneed}, publicado en 2017. Esta supuso una gran revolución en diversas áreas del aprendizaje automático por su capacidad para manejar de manera efectiva secuencias largas y complejas \cite{dai2019transformerxlattentivelanguagemodels}. Actualmente, hay una gran cantidad de modelos basados en el que se utilizan en el área del procesamiento de lenguaje natural.
+En esta sección presentaremos la arquitectura de transformers. Los modelos basados en transformers emplean una arquitectura \textit{encoder-decoder} que utiliza el mecanismo de atención, descrito en la sección anterior. La arquitectura de los transformers fue introducida en el artículo "\textit{Attention is All You Need"} \cite{vaswani2023attentionneed}, publicado en 2017. Esta supuso una gran revolución en diversas áreas del aprendizaje automático por su capacidad para manejar de manera efectiva secuencias largas y complejas \cite{dai2019transformerxlattentivelanguagemodels}. Actualmente, hay una gran cantidad de modelos basados en esta arquitectura que se utilizan en el área del procesamiento de lenguaje natural.
 
 \subsection{Estructura del Transformer}
 
@@ -509,18 +512,18 @@ En general, los transformers utilizan tres tipos de capas: capas lineales simple
     \label{fig:transformers}
 \end{figure}
 
-La ide principal del transformer es, a lo largo de esta serie de capas, poder construir representaciones contextualizadas cada vez más acertadas de los significados de las palabras o \textit{tokens} de las secuencias de entrada. Así, en las distintas capas del transformer, para obtener la representación de una palabra, se combina la información de la representación obtenida en la capa anterior con la información de las representaciones de las palabras vecinas. El objetivo es producir la versión contextualizada de cada palabra, representando lo que significa esta en el contexto particular en que se encuentra. \cite{jurafsky2023speech}
+La idea principal del transformer es, a lo largo de esta serie de capas, poder construir representaciones contextualizadas cada vez más acertadas de los significados de las palabras o \textit{tokens} de las secuencias de entrada. Así, en las distintas capas del transformer, para obtener la representación de una palabra, se combina la información de la representación obtenida en la capa anterior con la información de las representaciones de las palabras vecinas. El objetivo es producir la versión contextualizada de cada palabra, representando lo que significa esta en el contexto particular en que se encuentra. \cite{jurafsky2023speech}
 
 A continuación se explica con más detalle los procesos que ocurren dentro de cada capa.
 
 \subsection{Capas de \textit{multi-head attention}}
-Las capas de \textit{multi-head attention} suponen la verdadera innovación de la arquitectura de transformers \cite{jurafsky2023speech}, pues es en estas donde el modelo aplica el mecansimo de atención.  En el caso de los transformers, se utiliza una variación del mecanismo de atención explicado en la sección \ref{atencion}. Esta variación se conoce como \textit{scaled dot-product attention}. Igual que en el mecanismo general de atención, se utilizan tres matrices: la matriz de \textit{queries} $Q$, la de claves $K$ (por su nombre en inglés, \textit{keys}) y la de valores $V$ (\textit{values}). En este caso, el valor de atención se calcula utilizando la siguiente fórmula:
+Las capas de \textit{multi-head attention} suponen la verdadera innovación de la arquitectura de transformers \cite{jurafsky2023speech}, pues es en estas donde el modelo aplica el mecanismo de atención.  En el caso de los transformers, se utiliza una variación del mecanismo de atención explicado en la sección \ref{atencion}. Esta variación se conoce como \textit{scaled dot-product attention}. Igual que en el mecanismo general de atención, se utilizan tres matrices: la matriz de \textit{queries} $Q$, la de claves $K$ (por su nombre en inglés, \textit{keys}) y la de valores $V$ (\textit{values}). En este caso, el valor de atención se calcula utilizando la siguiente fórmula:
 
 \begin{equation}
 A(Q, K, V) = softmax(\frac{QK^t}{\sqrt{d_k}})
 \end{equation}
 
-Donde $d_k$ es la dimensión del estado oculto de la fuente.
+donde $d_k$ es la dimensión del estado oculto de la fuente.
 
 Como vemos, el cambio respecto al cálculo de atención descrito en la sección \ref{atencion} reside en que en este caso se añade el factor $\frac{1}{\sqrt{d_k}}$, que se utiliza para escalar el resultado obtenido, y conseguir así que las gradientes sean más estables, ya que si la secuencia de entrada fuera muy larga, la función \textit{softmax} puede devolver gradientes extremadamente pequeños, cosa que podria dificultar al modelo realizar un aprendizaje eficiente. \cite{multiheaddotproduct}
 
@@ -540,14 +543,17 @@ MultiHead(Q, K, V) = (H_1 \oplus H_2 \oplus ... \oplus H_h)W_O
 
 La matriz de parámetros $W_O$ proyecta la concatenación de los resultados de las $h$ cabezas de vuelta al subespacio original. \cite{cordonnier2021multiheadattentioncollaborateinstead, multiheaddotproduct, jurafsky2023speech}
 
-\subsection{Caps de redes \textit{Feed Forward}}
+\subsection{Capas de redes \textit{Feed Forward}}
+
+!!!!!!!!!!!!!! REESCRIBIR TENIENDO EN CUENTA Q SÍ ES LO MISMO Q PERCEPTRÓN MULTICAPA !!!!!!!!!!!!!!!!!!!!
+
 Las capas de redes \textit{feed forward} en la arquitectura de transformers están compuestas por $N$ redes neuronales independientes de tipo \textit{feed forward} (en español, redes de propagación hacia adelante).
 
 Una red neuronal de tipo \textit{feed forward} es una red multicapa en la que, a diferencia de las redes neuronales recurrentes (RNN) explicadas en la sección \ref{rnn}, las conexiones entre neuronas no pueden formar ciclos. Esto implica que las señales siempre se propagan en una única dirección: desde la capa de entrada hacia la capa de salida, pasando por las capas ocultas. En la arquitectura de transformers, estas redes están completamente conectadas, lo que significa que las neuronas de una capa reciben las salidas de todas las neuronas de la capa anterior y envían sus salidas a todas las neuronas de la capa siguiente. Además, típicamente contienen solamente una capa oculta.
 
 Este tipo de red neuronal es similar al modelo de perceptró multicapa explicado en la sección \ref{perceptronmulticapa}, pero no deben confundirse, pues en el caso de las redes neuronales \textit{feed forward}, las unidades de cómputo no son perceptrones, sino unidades más complejas. \cite{jurafsky2023speech}
 
-En los transformers, estas capas complementan las salidas de la capa de atención. Mientras que la capa de atención procesa cada palabra de la secuencia relacionandola con las demás palabras, las capas \textit{feef forward} procesan cada palabra de manera independiente. Este procesamiento es crucial para mejorar la representación de las características extraídas de la capa de atención.
+En los transformers, estas capas complementan las salidas de la capa de atención. Mientras que la capa de atención procesa cada palabra de la secuencia relacionandola con las demás palabras, las capas \textit{feed forward} procesan cada palabra de manera independiente. Este procesamiento es crucial para mejorar la representación de las características extraídas de la capa de atención.
 
 \subsection{Capas de normalización}
 
@@ -572,7 +578,7 @@ Donde $H$ es el número de unidades ocultas en la capa. A continuación, los com
 Finalmente, se introducen parámetros de \textit{bias} $b$ y \textit{gain} $g$:
 
 \begin{equation}
-LayerNorm = g\hat{x} + b
+z = g\hat{x} + b
 \end{equation}
 
 %\section{Procesamiento del lenguaje natural} \label{nlp}
@@ -580,13 +586,13 @@ LayerNorm = g\hat{x} + b
 %El procesamiento de lenguaje natural (NLP, por su nombre en inglés \textit{Natural Language Processing}) es una rama de la inteligencia artificial que se ocupa del desarrollo de algoritmos y modelos para la realización de tareas relacionadas con el lenguaje humano. Más específicamente, involucra tareas como el modelado de lenguaje, clasificación de textos, recuperación y extracción de información, resumen de textos o traducción automática entre otras. \cite{alma997066713303706} 
 
 
-\section{Modelos de lenguaje grandes}
+\section{Modelos de lenguaje grandes} \label{modelosLenguajeGrandes}
 
 %There are two existing strategies for applying pre-trained language representations to downstream tasks: feature-based and fine-tuning. The feature-based approach, such as ELMo (Peters et al., 2018a), uses task-specific architectures that include the pre-trained representations as additional features. The fine-tuning approach, such as the Generative Pre-trained Transformer (OpenAI GPT) (Radford et al., 2018), introduces minimal task-specific parameters, and is trained on the downstream tasks by simply fine-tuning all pretrained parameters. The two approaches share the same objective function during pre-training, where they use unidirectional language models to learn general language representations. \cite{devlin2019bertpretrainingdeepbidirectional}
 
 %https://learning.oreilly.com/library/view/the-working-limitations/53863MIT65233/chapter001.xhtml#h1-1
 
-Los modelos de lenguaje grandes (en inglés, \textit{Large Language Models} o LLM) son modelos de aprendizaje profundo basados en redes neuronales con miles de millones de parámetros, que utilizan la arquitectura de transformers. Estos modelos pueden ser entrenados con grandes cantidades de texto, perimitiéndoles realizar una gran cantidad de tareas en el ámbito del procesamiento de lenguaje natural.
+Los modelos de lenguaje grandes (en inglés, \textit{Large Language Models} o LLM) son modelos de aprendizaje profundo basados en redes neuronales con miles de millones de parámetros, que utilizan la arquitectura de transformers. Estos modelos pueden ser entrenados con grandes cantidades de texto, permitiéndoles realizar una gran cantidad de tareas en el ámbito del procesamiento de lenguaje natural.
 
 Las tareas sobre las que se aplican son casos de generación condicional, es decir, generación de texto condicionado a un fragmento de entrada (\textit{prompt}), ya que los LLM son modelos que están diseñados fundamentalmente para predecir la siguiente palabra de una secuencia de palabras \cite{jurafsky2023speech}. Aunque el ámbito de tareas sobre el que se pueden aplicar los LLM pueda parecer reducido, la realidad es que la gran mayoría de tareas en el ámbito de NLP pueden ser enfocadas desde un punto de vista de generación condicional. Por ejemplo, para la tarea de responder preguntas, podriamos plantearlo de la siguiente manera:
 
@@ -608,7 +614,7 @@ Los vocabularios en los LLMs se refieren al conjunto de palabras sobre las que t
 \centerline{$P(w|\text{Pregunta: ¿Cuál es la capital de Francia? Respuesta: París})$}
 \end{displayquote}
 
-El proceso puede seguir hasta que llegemos al número de palabras deseadas.
+El proceso puede seguir hasta que lleguemos al número de palabras deseadas.
 
 Inicialmente, este cálculo de probabilidades se realizaba de manera secuencial, basando las predicciones en las distribuciones de probabilidad de las palabras dentro de un texto. Actualmente se utiliza la arquitectura de transformers, que permite procesar grandes cantidades de texto de manera eficiente y proporciona predicciones mucho más acertadas, pues tiene en cuenta el contexto en el que se encuentran las palabras y las relaciones entre estas \cite{burtsev2023working}.
 
@@ -623,10 +629,10 @@ Con el tiempo se ha descubierto que este método llega a resultados subóptimos,
 Existe una extension de este algoritmo conocida como \textit{beam search}, la cual ha demostrado ser más efectiva, sobretodo en tareas de traducción automática. La diferencia entre el algoritmo \textit{greedy decoding} y este, es que el \textit{beam search}, en lugar de quedarse solamente con la palabra con mayor probabilidad y crear una única respuesta, el algoritmo guarda $K > 1$ posibles respuestas (hipótesis) durante la decodificación. Así, en cada iteración, el algoritmo elige las K hipótesis con mayor \textit{score}:
 
 \begin{equation}
-\prod_{i = 1}^N = p(w_i | \{w_1, w_2, ..., w_{i-1}\})
+p(w_1, w_2, ..., w_N) = \prod_{i = 1}^{N} p(w_i \mid w_1, w_2, ..., w_{i-1})
 \end{equation}
 
-Cuando estas se terminan de generar, selecciona la hipótesis con mayor probabilidad logarítmica.
+Cuando estas se terminan de generar, selecciona la hipótesis con mayor probabilidad.
 
 Aunque el rendimiento de \textit{beam search} es superior al \textit{greedy decoding}, en los LLM se suelen utilizar métodos más complejos, que proporcionan resultados más sofisticados. Estos métodos se conocen como métodos de generación por \textit{sampling}. Se explicarán con detalle en la siguiente sección.
 
@@ -634,7 +640,7 @@ Aunque el rendimiento de \textit{beam search} es superior al \textit{greedy deco
 
 En términos generales, el proceso de \textit{sampling} consiste en seleccionar de manera aleatoria una serie de individuos de una muestra, teniendo (o no) en cuenta sus distribuciones de probabilidad. En el contexto de los LLM, esto se traduce en elegir las palabras que se generan en la secuencia de acuerdo con su probabilidad dentro del contexto definido por el modelo. De esta manera, es más probable seleccionar palabras con probabilidades altas y menos probable (aunque no imposible) elegir aquellas con probabilidades bajas.
 
- El algoritmo de generación por \textit{sampling} más sencillo se conoce como \textit{random sampling}, el cual consiste en seleccionar la siguiente palabra de la secuencia de de manera aleatoria según la distribución de probabilidades proporcionada por el transformer. Sin embargo, este enfoque es demasiado simplista para la generación de texto de calidad, ya que al seleccionar las palabras de manera aleatoria, incluso las palabras poco comunes, que tendrán probabilidades bajas, pueden ser elegidas, lo que podría resultar en la generación de frases incorrectas o extrañas \cite{jurafsky2023speech}.
+ El algoritmo de generación por \textit{sampling} más sencillo se conoce como \textit{random sampling}, el cual consiste en seleccionar la siguiente palabra de la secuencia de manera aleatoria según la distribución de probabilidades proporcionada por el transformer. Sin embargo, este enfoque es demasiado simplista para la generación de texto de calidad, ya que al seleccionar las palabras de manera aleatoria, incluso las palabras poco comunes, que tendrán probabilidades bajas, pueden ser elegidas, lo que podría resultar en la generación de frases incorrectas o extrañas \cite{jurafsky2023speech}.
 
 Debido a estas limitaciones, en los LLM se suelen emplear algoritmos más sofisticados, los cuales analizaremos en las siguientes secciones.
 
@@ -650,13 +656,13 @@ Donde $\mathbb{1}$ es la función característica, que indica si una palabra est
 
 \subsubsection{\textit{Nucleus sampling}}
 
-El algoritmo de \textit{nucleus sampling} \cite{holtzman2020curiouscaseneuraltext}, también conocido como \textit{top-p sampling} también sigue la idea de eliminar de la distribución las palabras menos probables. Sin embargo, en lugar de seleccionar un número fijo de palabras, lo que hace es mantener un el porcentaje $p$ más importante de la muestra. Así, dada una distribución $P(x |x_{1:i-1})$, las \textit{top-p} palabras del vocabulario $V^{(p)} \subset V$ se definen como el conjunto más pequeño que cumpla:
+El algoritmo de \textit{nucleus sampling} \cite{holtzman2020curiouscaseneuraltext}, también conocido como \textit{top-p sampling} también sigue la idea de eliminar de la distribución las palabras menos probables. Sin embargo, en lugar de seleccionar un número fijo de palabras, lo que hace es mantener el porcentaje $p$ más importante de la muestra. Así, dada una distribución $P(x |x_{1:i-1})$, las \textit{top-p} palabras del vocabulario $V^{(p)} \subset V$ se definen como el conjunto más pequeño que cumpla:
 
 \begin{equation}
 \sum_{x \in V^{(p)}} P(x | x_{1:i-1}) \ge p
 \end{equation}
 
-Al medir la probabilidad acumulada en lugar de un número fijo de palabras, se espera que esta medida sea más robusta incluso en contextos diversos, que podrian tener resultados muy distintos si se usara un número fijo de palabras. De nuevo, tras seleccionar el subconjunto de palabras del vocabulario se deben normalizar sus probabilidades.
+Al medir la probabilidad acumulada en lugar de un número fijo de palabras, se espera que esta medida sea más robusta incluso en contextos diversos, que podrían tener resultados muy distintos si se usara un número fijo de palabras. De nuevo, tras seleccionar el subconjunto de palabras del vocabulario se deben normalizar sus probabilidades.
 
 Las probabilidades normalizadas de cada palabra en el vocabulario se pueden calcular como:
 
@@ -674,13 +680,13 @@ En el algoritmo de \textit{tempered sampling} \cite{nadeem2020systematiccharacte
 \hat{p}_i = \frac{exp(log(p_i)/\tau)}{\sum_{j = 1}^{|V|}exp(log(p_j)/\tau)}
 \end{equation}
 
-Además, existe una variación de este algoritmo que se conoce como \textit{tempered top-k sampling}, el cual combina las transformaciones definidas por el algoritmo \textit{top-k} y el \textit{tempered sampling}. Así, la probabilidad normalizada se calcula:
+Además, existe una variación de este algoritmo que se conoce como \textit{tempered top-k sampling}, el cual combina las transformaciones definidas por el algoritmo \textit{tempered sampling} y el \textit{top-k}. Así, la probabilidad normalizada se calcula:
 
 \begin{equation}
 \hat{p}_i = \frac{p'_i}{\sum_{j = 1}{|V|}p'_j}
 \end{equation}
 
-Donde $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
+donde $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
 
 %En las siguientes secciones se presentan algunos de los modelos de lenguaje grandes más utilizados actualmente.
 
@@ -688,13 +694,7 @@ Donde $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
 
 Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLMs preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
 
-A continuación se presentan algunos de los modelos de lenguaje preentrenados más utilizados actualmente.
-
-\subsubsection{GPT}
-
-\subsubsection{Gemma}
-
-\subsubsection{Llama-3}
+Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo GPT-4  \cite{openai2024gpt4technicalreport}, desarrollado por \textit{OpenAI}, Gemma \cite{gemmateam2024gemmaopenmodelsbased}, desarrollado por Google, y Llama-3, desarrollado por Meta. Estos tres modelos se explicarán en detalle en la sección \ref{modelosUtilizados}
 
 \chapter{Adaptación de modelos de lenguaje grandes}
 
@@ -745,7 +745,7 @@ El \textit{Parameter- Efficient Fine-Tuning} (PEFT) es uno de los métodos de aj
 
 En este trabajo, se empleará el enfoque basado en reparametrización. Este se centra en la transformación de los pesos de la red mediante técnicas de bajo rango, de manera que se consigue reducir de manera eficaz el número de parámetros que necesitan ser entrenados, mientras se conserva la capacidad de manejar matrices de alta dimensión \cite{hu2023llmadaptersadapterfamilyparameterefficient}. Dentro de este marco, existen varios métodos, entre los cuales se destaca LoRA (\textit{Low-Rank Adaptation}), que es el enfoque que se utilizará en este proyecto.
 
-\subsection{\textit{Low-Rank Adaptation} (LoRA)}
+\subsection{\textit{Low-Rank Adaptation} (LoRA)} \label{lora}
 
 El método de \textit{Low-Rank Adaptation} (LoRA) fue presentado en el artículo \textit{LoRA: Low-Rank adaptation of Large Language models} \cite{hu2021loralowrankadaptationlarge}, desarrollado por un equipo de Microsoft. Como se mencionó en la sección anterior, este forma parte del enfoque PEFT basado en reparametrización de los modelos. LoRA se basa en congelar los pesos del modelo preentrenado durante el entrenamiento para luego ajustarlos mediante una matriz de parámetros adicionales que representan el cambio necesario en los pesos originales del modelo. La matriz de cambios es la que se ajusta en el entrenamiento. Generalmente, la matriz de pesos originales se denota como $W$ y la matriz de cambios, $\bigtriangleup W$.
 
@@ -839,6 +839,26 @@ El parámetro de \textit{dropout} determina cuál la probabilidad de que uno de 
 
 Generalmente, se recomienda utilizar un \textit{dropout} de 0.1 para modelos de 7B y 13B parámetros y reducirlo a 0.05 para modelos de 33B y 65B parámetros. Esto ayuda a mantener un equilibrio adecuado entre regularización y capacidad de aprendizaje del modelo.
 
+\section{Cuantización}
+
+Los modelos de lenguaje grandes necesitan hacen uso de una gran cantidad de recursos computacionales.
+
+\section{Modelos utilizados} \label{modelosUtilizados}
+
+\subsubsection{GPT-4}
+
+El modelo GPT-4 \cite{openai2024gpt4technicalreport} es el último de los modelos GPT, desarrollados por \textit{OpenAI}. Estos son modelos de lenguaje grandes que utilizan la arquitectura de transformer y que están diseñados para predecir la siguiente palabra en una secuencia.
+
+La innovación de este modelo frente a los anteriores es que es un modelo multimodal, es decir, además de aceptar entradas en formato de texto, también es capaz de analizar imágenes. Puede alcanzar resultados a nivel humano en una gran cantidad de tareas en ámbitos profesionales y académicos. Además, GPT-4 ha sido entrenado con un conjunto de datos mucho más grande que sus predecesores. Este conjunto cuenta con más de 10 billones de palabras, 10 veces más que el modelo anterior, GPT-3, e incluye todo tipo de datos, desde libros y artículos hasta páginas web y publicaciones en redes sociales.
+
+\subsubsection{Gemma}
+
+Gemma \cite{gemmateam2024gemmaopenmodelsbased} es una familia de modelos abiertos basados en los modelos Gemini de Google \cite{geminiteam2024geminifamilyhighlycapable}. Gemma se presenta en dos tamaños: un modelo con 7 billones de parámetros, para despliegue en GPU y TPU, y otro con 2 millones de parámetros, para despliege en CPU. El modelo de 7B está entrenado con 6T de tokens, mientras que el de 2B, con 3T. Los datos de entrenamiento de ambos son datos en inglés, extraídos de documentos web, matemáticas y código. A diferencia de Gemini y GPT-4, estos modelos no son multimodales ni se han entrenado para obtener los mejores resultados en tareas multilingües.
+
+El modelo que se utilizará en este trabajo es el de 7B.
+
+\subsubsection{Llama-3}
+
 \chapter{Resultados experimentales}
 
 REESCRIBIR: En este capítulo se presenta el experimento principal de este trabajo, que consiste en el entrenamiento de dos modelos de lenguaje grandes preentrenados: Gemma y Llama-3, enfocados en la tarea específica de generar frases de lenguaje natural a partir de palabras clave en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. A continuación, se detallan los experimentos realizados, las medidas de evaluación empleadas y los resultados obtenidos.
@@ -854,11 +874,11 @@ A continuación, se presentan algunos ejemplos de frases del primer conjunto de 
 \begin{center}
 \begin{tabular}{ | c | }
 \hline
-	El policía puso una multa. | policía poner un multa \\
-	El lobo quiere comerlo. | lobo querer comer lo \\
-	La niña escribe en la arena. | niña escribir arena \\
-	Los niños juegan en la piscina. | niño jugar piscina \\
-	Los cerditos viven felices. | cerditos vivir feliz \\
+	El policía puso una multa. | policía, poner, un, multa \\
+	El lobo quiere comerlo. | lobo, querer, comer, lo \\
+	La niña escribe en la arena. | niña, escribir, arena \\
+	Los niños juegan en la piscina. | niño, jugar, piscina \\
+	Los cerditos viven felices. | cerditos, vivir, feliz \\
 \hline
 \end{tabular}
 \end{center}
@@ -886,43 +906,81 @@ A partir de estos dos conjuntos, se han creado un conjunto de datos para el entr
 	\item \textbf {Conjunto en inglés}: se ha creado a partir de las frases en inglés del segundo conjunto de datos, por lo que contiene un total de 263 frases.
 \end{itemize}
 
+\subsection{Transformación de los datos}
+
+Tal y como se explicó en la sección \ref{modelosLenguajeGrandes}, para introducir los datos en el modelo de lenguaje es necesario que estos tengan una estructura de \textit{prompt}, que indique al modelo que esperamos una determinada respuesta de él.
+
+Por esta razón, las frases y sus correspondientes palabras clave han sido transformadas a formato \textit{prompt} para crear los conjuntos de datos. Tanto el conjunto de frases en español como el de frases en inglés contienen una sola columna de tipo texto, que siguen el siguiente formato:
+
+\begin{displayquote}
+\centerline{Lemmas: [lista de palabras clave]}
+\centerline{Phrase: [frase generada]}
+\end{displayquote}
+
+Por ejemplo:
+
+\begin{displayquote}
+\centerline{Lemmas: policía poner un multa}
+\centerline{Phrase: El policía puso una multa.}
+\end{displayquote}
+
+Esta será la manera en que los datos entren al modelo durante el entrenamiento. Para los datos de test, se introducirán con el mismo formato pero sin incluir la frase que generan las palabras clave, pues esta debe ser generada por el modelos:
+
+\begin{displayquote}
+\centerline{Lemmas: policía poner un multa}
+\centerline{Phrase:}
+\end{displayquote}
+
 \subsection{Partición de los datos en entrenamiento, test y validación}
 
 Para evaluar los modelos, se utilizará la técnica de \textit{cross-validation}, que consiste en realizar diferentes particiones de los datos en conjuntos de entrenamiento y test, entrenando y evaluando cada partición por separado. Por esta razón, los datos se han dividido en un conjunto de entrenamiento y test para \textit{cross-validation} y un conjunto de validación.
 
 Los datos de validación no serán utilizados para el entrenamiento del modelo, y se utilizarán para la comparación final de resultados entre los modelos. El conjunto de datos de validación ha sido seleccionado de manera aleatoria entre las frases que no presentaban valores nulos.
 
-La siguiente tabla muestra la cantidad de datos utilizados para los experimentos en español y en inglés:
+La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los experimentos en español y en inglés:
 
 \begin{table}[!h]
+\caption{Número de frases para validación y entrenamiento de los conjuntos de datos en español y en inglés}
 \begin{center}
-\begin{tabular}{ | c | c | c | }
-	\hline
+\begin{tabular}{  c || c  c  }
 	\ & Conjunto en español & Conjunto en inglés \\
 	\hline
-	Validación & 50 & 40 \\
-	\hline
 	Entrenamiento-Test & 290 & 223 \\
-	\hline
+	Validación & 50 & 40
 \end{tabular}
 \end{center}
-\caption{Número de frases para validación y entrenamiento de los conjuntos de datos en español y en inglés}
+\label{tab:frases}
 \end{table}
 
 \section{Medidas de evaluación}
 
-Para evaluar se utilizarán las métricas de BLEU y COMET
+Para evaluar los modelos entrenados se utilizarán las métricas de BLEU y COMET
 
 \subsection{BLEU}
 
 \subsection{COMET}
 
-\section{Entrenamiento de los modelos}
-
-[Formato de las prompts]
-[Explicación proceso (cross validation con n = ?, lora y parámetros utilizados)]
-
 \section{Resultados experimentales}
+
+Tal y como se mencionó en la Sección \ref{modelos}, los modelos utilizados para los experimentos han sido Gemma y Llama-3. Para el entrenamiento de ambos se ha utilizado el método de adaptación de LoRA, explicado en la Sección \ref{lora}. Para el testeo de los modelos se ha utilizado el método de \textit{cross-validation}, realizando un total de diez particiones sobre los datos de entrenamiento. A partir de estas se ha creado el conjunto final de predicciones, sobre el cual se han calculado las métricas de BLEU y COMET.
+
+En la primera tanda de experimentos, se han utilizado los siguientes parámetros de LoRA:
+
+\begin{itemize}
+	\item Rango = 16, 32, 64
+	\item Alfa = 8, 16, 32, 64 
+	\item \textit{Dropout} = 0.1
+\end{itemize}
+
+Los resultados obtenidos en el entrenamiento se muestran en la tabla 
+
+!!! INSERTAR TABLA/GRÁFICA RESULTADOS !!!
+
+En estos experimentos observamos que con el modelo de Llama-3 se obtienen mejores resultados que con Gemma. Por esta razón, se ha decidido ampliar los experimentos con este modelo para comprobar si podemos obtener aún mejores resultados.
+
+rango = 128, alfa = 128
+
+!!! INSERTAR GRAFICAS/TABLAS !!!!
 
 \section{Comparación con otros modelos}
 
