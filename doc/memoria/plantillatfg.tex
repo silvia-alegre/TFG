@@ -837,11 +837,15 @@ El primer hiperparámetro que se debe determinar en un entrenamiento con LoRA es
 
 El parámetro de \textit{dropout} determina cuál la probabilidad de que uno de los parámetros ajustados en el entrenamiento sea configurado artificialmente a 0 para un lote de entrenamiento específico. Este procedimiento se realiza para evitar problemas de \textit{overfitting}, donde el modelo se ajusta demasiado a los datos de entrenamiento y pierde capacidad de generalización.
 
-Generalmente, se recomienda utilizar un \textit{dropout} de 0.1 para modelos de 7B y 13B parámetros y reducirlo a 0.05 para modelos de 33B y 65B parámetros. Esto ayuda a mantener un equilibrio adecuado entre regularización y capacidad de aprendizaje del modelo.
+%Generalmente, se recomienda utilizar un \textit{dropout} de 0.1 para modelos de 7B y 13B parámetros y reducirlo a 0.05 para modelos de 33B y 65B parámetros. Esto ayuda a mantener un equilibrio adecuado entre regularización y capacidad de aprendizaje del modelo.
 
 \section{Cuantización}
 
 Los modelos de lenguaje grandes necesitan hacen uso de una gran cantidad de recursos computacionales.
+
+La cuantización mapea de un valor de alta precisión a niveles discretos para un mejor soporte del hardware y eficiencia.
+
+\cite{xiao2024smoothquantaccurateefficientposttraining}
 
 \section{Modelos utilizados} \label{modelosUtilizados}
 
