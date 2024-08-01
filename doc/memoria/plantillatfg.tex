@@ -698,7 +698,33 @@ Algunos de los modelos más utilizados actualmente y que se utilizan en este tra
 
 \chapter{Adaptación de modelos de lenguaje grandes}
 
-En este capítulo se aborda cómo podemos adaptar los modelos de lenguaje grandes (LLMs) preentrenados para realizar tareas específicas, explorando las diferentes estrategias y enfoques disponibles. Se hará especial incapié en el método PEFT (\textit{parameter-efficient fine-tuning}) y LoRA (\textit{Low-Rank Adaptation}).
+En este capítulo se presentan los modelos de lenguaje grandes utilizados en este trabajo. Además, se aborda cómo podemos adaptar estos modelos preentrenados para realizar tareas  específicas, explorando las diferentes estrategias y enfoques disponibles. Se hará especial incapié en el método PEFT  (\textit{parameter-efficient fine-tuning}), centrándonos concretamente en LoRA (\textit{Low-Rank Adaptation}), que es uno de sus tipos de enfoque.
+
+\section{Modelos de lenguaje utilizados} \label{modelosUtilizados}
+
+En este trabajo se utilizarán y compararán tres modelos \textit{open-source} preentrenados: el modelo GPT-4, el modelo Gemma y el modelo Llama-3.
+
+\subsubsection{Modelos GPT}
+
+ALARGAR: Los modelos GPT han sido desarrollados por la compañía \textit{OpenAI}. Concretamente, en este trabajo se utilizará el modelo GPT-4
+
+El modelo GPT-4 \cite{openai2024gpt4technicalreport} es el último de los modelos GPT, desarrollados por \textit{OpenAI}.
+
+%Estos son modelos de lenguaje grandes que utilizan la arquitectura de transformer y que están diseñados para predecir la siguiente palabra en una secuencia.
+
+La innovación de este modelo frente a los anteriores es que es un modelo multimodal, es decir, además de aceptar entradas en formato de texto, también es capaz de analizar imágenes. Puede alcanzar resultados a nivel humano en una gran cantidad de tareas en ámbitos profesionales y académicos. Además, GPT-4 ha sido entrenado con un conjunto de datos mucho más grande que sus predecesores. Este conjunto cuenta con más de 10 billones de palabras, 10 veces más que el modelo anterior, GPT-3, e incluye todo tipo de datos, desde libros y artículos hasta páginas web y publicaciones en redes sociales.
+
+\subsubsection{Gemma}
+
+Gemma \cite{gemmateam2024gemmaopenmodelsbased} es un modelo abierto desarrollado por Google, basado en el modelo privado de esta misma compañía, Gemini \cite{geminiteam2024geminifamilyhighlycapable}. Gemma se presenta en dos tamaños: un modelo con 7 billones de parámetros, para despliegue en GPU y TPU, y otro con 2 millones de parámetros, para despliege en CPU. El modelo de 7B está entrenado con 6T de tokens, mientras que el de 2B, con 3T. Los datos de entrenamiento de ambos son datos en inglés, extraídos de documentos web, matemáticas y código. A diferencia de Gemini y GPT-4, estos modelos no son multimodales ni se han entrenado para obtener los mejores resultados en tareas multilingües.
+
+El modelo que se utilizará en este trabajo es el de 7B.
+
+\subsubsection{Llama}
+
+Llama es un conjunto de modelos \textit{open-source} desarrollados por Meta [...]
+
+Concretamente, en este trabajo se utilizará el modelo Llama-3.
 
 \section{Ajuste de LLMs}
 
@@ -841,27 +867,16 @@ El parámetro de \textit{dropout} determina cuál la probabilidad de que uno de 
 
 \section{Cuantización}
 
-Los modelos de lenguaje grandes necesitan hacen uso de una gran cantidad de recursos computacionales.
+La creciente complejidad de la arquitectura de los modelos de lenguaje grandes hace que se requiera una gran cantidad de recursos computacionales y de memoria para su implementación y utilización. Este requerimiento intensivo de recursos presenta un desafío significativo, especialmente en entornos con limitaciones en el hardware. Por esta razón, en estos contextos es esencial hacer uso de técnicas que permitan la ejecución eficiente de los modelos, sin compromenter sustancialmente su rendimiento. Una de las técnicas más efectivas en este contexto es la cuantización.
 
-La cuantización mapea de un valor de alta precisión a niveles discretos para un mejor soporte del hardware y eficiencia.
+La cuantización es un proceso que consiste en convertir los valores de alta  precisión de un modelo, representados normalmente en punto flotante de 32 o 64 bits, a representaciones de menor precisión, generalmente enteros de 8 o 16 bits \cite{choukroun2019low}. Este mapeo de valores continuos de alta precisión a niveles discretos proporciona una gran mejora en términos de computación y memoria, ya que los requisitos de almacenamiento de un modelo de baja precisión son sustancialmente menores que los de uno de alta precisión. Además, también se pueden observar mejoras en cuanto al consumo de energía, los requisitos de ancho de banda de la memoria y la complejidad computacional.
 
-\cite{xiao2024smoothquantaccurateefficientposttraining}
+De todas maneras, es importante tener en cuenta que la inferencia con baja precisión de bits puede conllevar a una pérdida de precisión en la tarea. Esta pérdida de precisión puede compensarse mediante varias técnicas.
 
-\section{Modelos utilizados} \label{modelosUtilizados}
+Una de las técnicas de cuantización más utilizadas es la de precisión mixta \cite{micikevicius2018mixedprecisiontraining}. Esta técnica consiste en utilizar una combinación de representaciones de alta y baja precisión dentro del modelo. Por ejemplo, los pesos del modelo pueden estar almacenados en alta precisión, para asegurar la exactitud, mientras que los cálculos durante el entrenamiento se realizan con menor precisión para aumentar la velocidad y reducir el uso de la memoria. Posteriormente, los gradientes calculados en baja precisión se utilizan para actualizar los pesos originales.
 
-\subsubsection{GPT-4}
+Otra técnia ampliamente utilizada es la de cuantización post entrenamiento \cite{xiao2024smoothquantaccurateefficientposttraining}. Esta técnica se aplica después de que los modelos hayan sido completament entrenados utilizando representaciones de alta precisión (en el caso de los modelos de lenguaje grandes preentrenados, después del preentrenamiento). El bojetivo principal es reducir el tamaño del modelo y los requisitos de cálculo para permitir una implementación más eficiente en cuanto a memoria y computación, sin tener que reentrenar el modelo desde cero. De esta manera, los pesos y, a veces, las activaciones del modelo son convertidos a representaciones de menor precisión, generalmente de 8 bits.
 
-El modelo GPT-4 \cite{openai2024gpt4technicalreport} es el último de los modelos GPT, desarrollados por \textit{OpenAI}. Estos son modelos de lenguaje grandes que utilizan la arquitectura de transformer y que están diseñados para predecir la siguiente palabra en una secuencia.
-
-La innovación de este modelo frente a los anteriores es que es un modelo multimodal, es decir, además de aceptar entradas en formato de texto, también es capaz de analizar imágenes. Puede alcanzar resultados a nivel humano en una gran cantidad de tareas en ámbitos profesionales y académicos. Además, GPT-4 ha sido entrenado con un conjunto de datos mucho más grande que sus predecesores. Este conjunto cuenta con más de 10 billones de palabras, 10 veces más que el modelo anterior, GPT-3, e incluye todo tipo de datos, desde libros y artículos hasta páginas web y publicaciones en redes sociales.
-
-\subsubsection{Gemma}
-
-Gemma \cite{gemmateam2024gemmaopenmodelsbased} es una familia de modelos abiertos basados en los modelos Gemini de Google \cite{geminiteam2024geminifamilyhighlycapable}. Gemma se presenta en dos tamaños: un modelo con 7 billones de parámetros, para despliegue en GPU y TPU, y otro con 2 millones de parámetros, para despliege en CPU. El modelo de 7B está entrenado con 6T de tokens, mientras que el de 2B, con 3T. Los datos de entrenamiento de ambos son datos en inglés, extraídos de documentos web, matemáticas y código. A diferencia de Gemini y GPT-4, estos modelos no son multimodales ni se han entrenado para obtener los mejores resultados en tareas multilingües.
-
-El modelo que se utilizará en este trabajo es el de 7B.
-
-\subsubsection{Llama-3}
 
 \chapter{Resultados experimentales}
 
@@ -994,9 +1009,13 @@ rango = 128, alfa = 128
 %                                 CONCLUSIONS                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Conclusions}
+\chapter{Conclusiones}
 
 ????? ????????????? ????????????? ????????????? ????????????? ????????????? 
+
+\section{Objetivos cumplidos}
+
+\section{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                BIBLIOGRAFIA                                 %
