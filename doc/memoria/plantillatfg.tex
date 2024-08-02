@@ -696,7 +696,7 @@ Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenado
 
 Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo GPT-4  \cite{openai2024gpt4technicalreport}, desarrollado por \textit{OpenAI}, Gemma \cite{gemmateam2024gemmaopenmodelsbased}, desarrollado por Google, y Llama-3, desarrollado por Meta. Estos tres modelos se explicarán en detalle en la sección \ref{modelosUtilizados}
 
-\chapter{Adaptación de modelos de lenguaje grandes}
+\chapter{Adaptación y evaluación de modelos de lenguaje grandes}
 
 En este capítulo se presentan los modelos de lenguaje grandes utilizados en este trabajo. Además, se aborda cómo podemos adaptar estos modelos preentrenados para realizar tareas  específicas, explorando las diferentes estrategias y enfoques disponibles. Se hará especial incapié en el método PEFT  (\textit{parameter-efficient fine-tuning}), centrándonos concretamente en LoRA (\textit{Low-Rank Adaptation}), que es uno de sus tipos de enfoque.
 
@@ -713,13 +713,17 @@ En cuanto a su arquitectura, esta está basada en el modelo de \textit{transform
 \begin{itemize}
 	\item \textbf{\textit{Multi-Query Attention}} \cite{shazeer2019fasttransformerdecodingwritehead}: es una variación de \textit{multi-head attention} que permite que varias cabezas de las capas de atención compartan las mismas claves y valores, mejorando así la eficiencia computacional.
 	\item \textbf{\textit{Rotary Position Embeddings (RoPE)}} \cite{su2023roformerenhancedtransformerrotary}: este tipo de \textit{embeddings} mejora la representación de las posicones relativas en la secuencia, ya que se basan en la distancia relativa entre los \textit{tokens}.
-	\item \textbf{\textit{GeGLU Activations}} \cite{shazeer2020gluvariantsimprovetransformer}: en lugar de utilizar la función de activación ReLU, se utiliza la función GeGLU, la cual ha demostrado mejorar el rendimiento del modelo en tareas de generación de texto.
-	\item \textbf{\textit{RMSNorm}} \cite{zhang2019rootmeansquarelayer}: se normaliza la entrada a cada una de las capas con RMSNorm para estabilizar el entrenamiento. Este tipo de normalización es más eficiente que la de la arquitectura de transformers original.
+	\item \textbf{\textit{GeGLU activations}} \cite{shazeer2020gluvariantsimprovetransformer}: en lugar de utilizar la función de activación ReLU, se utiliza la función GeGLU, la cual ha demostrado mejorar el rendimiento del modelo en tareas de generación de texto.
+	\item \textbf{Pre-normalización con RMSNorm} \cite{zhang2019rootmeansquarelayer}: se normaliza la entrada a cada una de las capas con RMSNorm para estabilizar el entrenamiento. Este tipo de normalización es más eficiente que la de la arquitectura de transformers original.
 \end{itemize}
 
-\subsubsection{Llama}
+\subsubsection{LLaMA}
 
-Llama es un conjunto de modelos \textit{open-source} desarrollados por Meta [...]
+LLaMA \cite{touvron2023llamaopenefficientfoundation} es una familia de modelos de lenguaje \textit{open-source} desarrollados por Meta. Estos modelos van desde los 7B a los 65B de parámetros. Están entrenados utilizando exclusivamente datos disponibles de manera pública, con un conjunto de datos de entrenamiento formado por fuentes diversas, que abarca una gran cantidad de dominios.
+
+En cuanto a su arquitectura, al igual que Gemma, está basada en el modelo de \textit{transformer decoder only}, pero incorpora varias mejoras. Algunas de estas mejoras las encontramos también en los modelos Gemma, como la pre-normalización con RMSNorm o el uso de \textit{rotary position embeddings}. En lugar de la función de activación ReLU, LLaMA utiliza la función SwiGLU \cite{shazeer2020gluvariantsimprovetransformer}, que ha demostrado ser más eficiente en términos de rendimiento del modelo.
+
+LLaMA incorpora también optimizaciones para reducir el tiempo de entrenamiento. Una de estas es la implementación eficiente del \textit{causal multi-head attention}, que consiste en no guardar los valores de los pesos de atención ni calcular los \textit{scores} entre claves y valores que están ocultas en la tarea, reduciendo así el coste computacional. Otra optimización es la reducción de las activaciones recalculadas mediante \textit{checkpointing}, de manera que se guardan las activaciones costosas de calcular implementando manualmente la función hacia atrás para las capas transformadoras.
 
 Concretamente, en este trabajo se utilizará el modelo Llama-3.
 
@@ -884,6 +888,14 @@ Una de las técnicas de cuantización más utilizadas es la de precisión mixta 
 
 Otra técnia ampliamente utilizada es la de cuantización post entrenamiento \cite{xiao2024smoothquantaccurateefficientposttraining}. Esta técnica se aplica después de que los modelos hayan sido completament entrenados utilizando representaciones de alta precisión (en el caso de los modelos de lenguaje grandes preentrenados, después del preentrenamiento). El bojetivo principal es reducir el tamaño del modelo y los requisitos de cálculo para permitir una implementación más eficiente en cuanto a memoria y computación, sin tener que reentrenar el modelo desde cero. De esta manera, los pesos y, a veces, las activaciones del modelo son convertidos a representaciones de menor precisión, generalmente de 8 bits.
 
+\section{Medidas de evaluación}
+
+Para evaluar los modelos entrenados se utilizarán las métricas de BLEU y COMET
+
+\subsection{BLEU}
+
+\subsection{COMET}
+
 
 \chapter{Resultados experimentales}
 
@@ -977,14 +989,6 @@ La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los exper
 \end{center}
 \label{tab:frases}
 \end{table}
-
-\section{Medidas de evaluación}
-
-Para evaluar los modelos entrenados se utilizarán las métricas de BLEU y COMET
-
-\subsection{BLEU}
-
-\subsection{COMET}
 
 \section{Resultados experimentales}
 
