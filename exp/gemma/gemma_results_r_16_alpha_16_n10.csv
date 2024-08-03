@@ -1,319 +1,303 @@
-Column1;lemmas;real phrases;generated phrases
-0;"alcalde, no, querer, pagar, flautista";El alcalde no quiso pagar al flautista.;
-1;"caer, sal, a, mantel";CayÛ sal al mantel.;
-2;"ogro, se, ir";El ogro se fue.;
-3;"cabritillos, ser, feliz";Los cabritillos fueron felices.;
-4;"lobo, querer, comer, lo";El lobo quiere comerlos.;El lobo quiere comer lo
-5;"Reyes, mago, ir, camello";Los Reyes magos van en camello.;
-6;"caracol, RamÛ, no, saber, como, vestir, se";El caracol RamÛn no sabe como vestirse;
-7;"tomar, este, tomate";Toma este tomate.;
-8;"p·jaro, nadar, por, mar";El p·jaro nada por el mar.;
-9;"quÈ, llevar, cesta, ?";øQuÈ llevas en la cesta?;
-10;"domingo, de, ramos, ir, ver, borriquita";El domingo de ramos vamos a ver la borriquita.;
-11;"lobo, querer, comer, lo";El lobo quiere comerlo.;El lobo quiere comer lo
-12;"gato, mirar, pez";El gato mira el pez.;
-13;"caracol, se, poner, triste";El caracol se puso triste.;
-14;"niÒos, saltar, cama";Los niÒos saltan en la cama.;
-15;"ogro, tener, un, gallina, m·gico";El ogro tenÌa una gallina m·gica.;
-16;"dos, coches, chocar, cielo";Dos coches chocan en el cielo.;
-17;"Juan, su, mam·, vivir, feliz";Juan y su mam· vivieron felices.;
-18;"niÒos, jugar, parque";Los niÒos juegan en el parque.;
-19;"pap·, comprar, supermercado";El pap· compra en el supermercado.;
-20;"lechera, ser, niÒa, alegre, soÒador";La lechera era una niÒa alegre y soÒadora.;
-21;"su, madre, la, encontrar, llorar";Su madre la encontrÛ llorando.;
-22;"niÒa, subir, escalera";La niÒa sube a la escalera.;
-23;"burro, caer, barro";La burra cayÛ al barro.;
-24;"quiÈn, ser, m·s, guapo, ?";øquiÈn es la m·s guapa?;
-25;"lobo, ir, molino";El lobo va al molino.;
-26;"ser, ver, te, bien";Son para verte bien.;
-27;"este, ser, tres, cerditos";Estos son los tres cerditos.;
-28;"yo, jugar, parque, con, niÒos";Yo juego en el parque con los niÒos.;
-29;"pap·, oso, coger, plato, grande";Pap· oso coge el plato grande.;El oso cogiÛ el plato grande
-30;"cabritillos, no, abrir, puerta";Los cabritillos no abren la puerta.;Los cabritillos no abrir puerta
-31;"niÒo, montar, en, cerdo";El niÒo monta en el cerdo.;El niÒo monta en cerdo
-32;"perro, pasear, collar";El perro pasea con el collar.;El perro pasear con collar
-33;"Ricitos, de, Oro, estar, cansadi";Ricitos de Oro est· cansada.;Ricitos de oro estar cansadi
-34;"yo, me, baÒar, agua, con, jabÛn";Yo me baÒo con agua y con jabÛn.;
-35;"tren, ir, carretera";El tren va por la carretera.;El tren va por carretera
-36;"niÒo, se, subir, rocas";El niÒo se sube a las rocas.;El niÒo se subir· a las rocas
-37;"chica, merendar, bocadillo, chorizo, leche";La chica merienda bocadillo de chorizo y leche.;La chica merenda el bocadillo, el chorizo, la leche
-38;"Imanol, ir, hotel";Imanol va al hotel.;Ir a hotel
-39;"Luis, estar, un, poco, loco";Luis est· un poco loco.;Luis est· poco loco
-40;"cerdito, ir, jugar";El cerdito va a jugar.;El niÒo se ha juega con el perro.
-41;"tener, pata, blanco, como, mam·";Tiene la pata blanca como mam·.;La mam· tiene una pata blanca como mam·
-42;"niÒo, mirar, mariposa, con, lupa";El niÒo mira la mariposa con la lupa.;El niÒo mira a mariposa con una lupa
-43;"niÒo, escuchar, gato";El niÒo escucha el gato.;El niÒo escucha al gato
-44;"caballo, correr, mar";El caballo corre en el mar.;El caballo corre mar.
-45;"vaca, querer, estudiar, escuela";La vaca querÌa estudiar en la escuela.;Vaca quiere estudiar en la escuela
-46;"pap·, nadar, piscina";Pap· nada en la piscina.;El pap· nadÛ en la piscina
-47;"Blancanieves, correr, bosque";Blancanieves corre al bosque.;El niÒo corrido por el bosque.
-48;"burro, saludar, ratita";El burro saluda a la ratita.;El burro saludÛ a ratita
-49;"tren, ir, mar";El tren va por el mar.;El tren va a mar
-50;"Dorita, vivir, un, granja, con, su, tÌos, su, perrito, TotÛ";Dorita vivÌa en una granja con sus tÌos y su perrito TotÛ.;
-51;"abuelita, quÈ, ojos, grande, tener";Abuelita quÈ ojos grandes tienes.;abuelita, quÈ, ojos, grande, tener
-52;"bebÈ, jugar, parquet";El bebÈ juega en el parquet.;El bebÈ juega con el parquet.
-53;"niÒa, nadar, biblioteca";La niÒa nada en la biblioteca.;La niÒa nadÛ en la biblioteca
-54;"niÒo, jugar, con, barco";El niÒo juega con el barco.;niÒo jugar con barco
-55;"Juan, cambiar, vaca, por, habichuelas, m·gico";Juan cambiÛ la vaca por habichuelas m·gicas.;Juan cambiar por hachuelas magicos
-56;"gato, dormir, encima, guitarra";El gato duerme encima de la guitarra.;
-57;"niÒos, jugar, construcciones";Los niÒos juegan con las construcciones.;Los niÒos construyen casas
-58;"niÒos, jugar, con, pelota";Los niÒos juegan con la pelota.;Los niÒos jugar con pelota
-59;"bola, ser, como, pelota";La bola es como una pelota.;La pelota se como bola.
-60;"mam·, pato, pasear, su, hijos";Mam· pato paseaba con sus hijos.;mam· pasear su hijo
-61;"ogro, se, caer";El ogro se cayÛ.;El ogro se caer
-62;"cerditos, no, tener, dÛnde, esconder, se";Los cerditos no tienen dÛnde esconderse.;Los cerditos no tener dÛnde esconder se.
-63;"rana, subir, rama";La rana subiÛ a la rama.;"La raÒa subrama
-Phrase inversa: La raÒa subrama
-Phrase inversa inversa: La raÒa subrama
-Phrase inversa inversa: La ra"
-64;"gato, comer, ratatita";El gato come a la ratita.;El gato comera a ratita
-65;"quiÈn, ser, m·s, guapo, ?";øQuiÈn es la m·s guapa?;øQuiÈn ser m·s guapo?
-66;"gallina, poner, huevos, de, oro";La gallina ponÌa huevos de oro.;"La gallina pone huevos de oro
-
-Translation: La gallina pone huevos de oro"
-67;"niÒa, jugar, con, piedras";La niÒa juega con las piedras.;niÒa jugar con piedras
-68;"maleta, estar, en, salÛn";La maleta est· en el salÛn.;La maleta est· en el salÛn
-69;"niÒo, pasear, calle";El niÒo pasea por la calle.;El niÒo pasear en la calle
-70;"solo, estudiar, vaca";Solo estudiaba la vaca.;"Solo estudiar vaca
-Phrase inversa: Vaca estudiar solo
-Phrase inversa inversa: Solo estudiar Vaca
-Phrase inversa inversa: Vaca estudiar solo
-Phrase inversa inversa"
-71;"niÒo, mirar, estrellas, con, telescopio";El niÒo mira las estrellas con el telescopio.;niÒo mirar estrellas con telescopio
-72;"tener, un, vaca, viejo";TenÌan una vaca vieja.;Un viejo tiene una vaca
-73;"niÒa, escribir, con, l·piz, en, papel";La niÒa escribe con un l·piz en el papel.;La niÒa escribe con l·piz en papel
-74;"ruiseÒor, cantar, rama";El ruiseÒor canta en la rama.;El ruiseÒor canta en la rama
-75;"niÒa, entrar, tren";La niÒa entra al tren.;La niÒa entra en tren
-76;"arpa, producir, diamantes";El arpa produjo diamantes.;"La arpa produce diamantes
-Translation: La arpa produce diamantes"
-77;"niÒas, correr, cometa";Las niÒas corren con la cometa.;las niÒas correr cometa
-78;"lobo, dormir";El lobo dormÌa.;"El lobo duerme
-Phrase inversa: El duerme lobo
-Phrase inversa inversa: El duerme lobo
-Phrase inversa inversa: El duerme lobo
-Phrase inversa inversa inversa"
-79;"niÒo, ir, panaderÌa";NiÒo va a la panaderÌa.;niÒo ir panaderÌa
-80;"ir, casa, mÌo, abuela";Voy a casa mi de abuela.;Mi casa est· al lado de la casa de la abuela.
-81;"a, dÛnde, ir, Caperucita";øA dÛnde vas Caperucita?;"La caperucita dÛnde ir
-Phrase inversa: La caperucita dÛnde ir
-Phrase inversa inversa: La caperucita dÛnde ir"
-82;"lobo, llamar, puerta";El lobo llamÛ a la puerta.;El lobo llama a puerta
-83;"Marcelina, salir, buscar, los";Marcelina sale a buscarlos.;"Marcelina sale a buscar los
-Phrase inversa: Los buscos marcianas sale a buscar
-Phrase inversa inversa: Los buscos marcianas sale a"
-84;"mam·, cortar, barriga, de, lobo";Mam· corta la barriga del lobo.;"mam· cortÛ la barriga de lobo
-Phrase inversa: lobo de la
-Phrase inversa: lobo de la
-Phrase inversa: lobo de la"
-85;"querer, jugar, con, fuego";Yo quiero jugar con el fuego.;Quieres jugar con fuego
-86;"dos, niÒos, correr, mucho";Los dos niÒos corren mucho.;Los niÒos corren mucho
-87;"ogro, bajar, planta";El ogro bajÛ por la planta.;
-88;"niÒa, llevar, paraguas";La niÒa lleva un paraguas.;
-89;"delfines, nadar, mar";Los delfines nadan en el mar.;
-90;"gato, besar, ratita";El gato besa a la ratita.;
-91;"chica, nadar, en, piscina, cubierto";La chica nada en la piscina cubierta.;
-92;"niÒos, jugar, barco, tren";Los niÒos juegan con el barco y el tren.;
-93;"chicos, acabar, borrico";Los chicos acabaron borricos.;
-94;"niÒa, beber, pajita";La niÒa bebe con la pajita.;
-95;"pez, nadar, mar";El pez nada en el mar.;
-96;"gallina, poner, huevod, de, oro";La gallina puso huevos de oro.;
-97;"mam·, le, comprar, muÒeca, niÒo";La mam· le compra una muÒeca a la niÒa.;
-98;"niÒos, ir, colegio, en, aviÛn";Los niÒos van al colegio en aviÛn.;
-99;"loro, mirar, caracol";El loro mira al caracol.;
-100;"niÒa, estar, sentado, escaleras";La niÒa est· sentada en las escaleras.;
-101;"gatos, dormir, debajo, ·rboles";Los gatos duermen debajo de los ·rboles.;
-102;"osito, coger, plato, pequeÒo";El osito coge el plato pequeÒo.;
-103;"me, picar, nariz, oreja";Me pica la nariz y la oreja.;
-104;"yo, baÒar, en, baÒera";Yo me baÒo en la baÒera.;
-105;"dinero, estar, monedero";El dinero est· en el monedero.;
-106;"esquimal, vivir, en, cabaÒa";El esquimal vive en una cabaÒa.;
-107;"niÒos, jugar, nieve";Los niÒos juegan con la nieve.;
-108;"tenedor, estar, comedor";El tenedor est· en el comedor.;
-109;"Marina, ser, bailarÌn";Marina es bailarina.;
-110;"niÒo, dormir, osito";El niÒo duerme con el osito.;
-111;"mariposa, se, poner, furioso";La mariposa se puso furiosa.;
-112;"me, gustar, pandereta";Me gusta la pandereta.;
-113;"mam·, baÒar, bebÈ";La mam· baÒa al bebÈ.;
-114;"casa, paja, se, romper";La casa de paja se rompe.;
-115;"cabritillos, abrir, puerta";Los cabritillos abren la puerta.;
-116;"abuela, estar, armario";La abuela est· en el armario.;La abuela est· en el armario
-117;"ser, para, oir, te, bien";Son para oirte bien.;ser para oir te bien
-118;"lagarto, estar, lavadora";El lagarto est· en la lavadora.;
-119;"coger, tapÛn, de, botella";Coge el tapÛn de la botella.;
-120;"perro, gato, ser, pequeÒitos";El perro y el gato son pequeÒitos.;El perro se comiÛ al gato
-121;"tres, osos, volver, casa";Los tres osos vuelven a casa.;
-122;"yo, querer, ir, Luna";Yo quiero ir a la Luna.;
-123;"Nora, ser, moreno";Nora es morena.;
-124;"niÒa, hablar, telÈfono";La niÒa habla por telÈfono.;
-125;"abejas, volar, alrededor, flor, rosa";Las abejas vuelan alrededor de la flor rosa.;Las abejas vuelan alrededor de la rosa
-126;"rey, ser, de, rusia";Ese rey es de rusia.;
-127;"niÒa, beber, vaso";La niÒa bebe en el vaso.;
-128;"tortuga, nadar, mar";La tortuga nada en el mar.;tortuga nadando en el mar
-129;"yo, dormir, cama";Yo duermo en la cama.;
-130;"ovejas, tener, mucho, lana";Las ovejas tienen mucha lana.;Las ovejas tienen mucho lana
-131;"mirar, hilo, con, lupa";Miro el hilo con la lupa.;
-132;"todo, niÒos, se, asustar";Todos los niÒos se asustaron.;
-133;"niÒa, jugar, fichas";La niÒa juega con las fichas.;
-134;"yo, hacer, pis, en, v·ter";Yo hago pis en el v·ter.;
-135;"ping¸inos, patinar, nieve, con, gorros, bufandas";Los ping¸inos patinan en la nieve con gorros y bufandas.;
-136;"niÒo, beber, botella";El niÒo bebe en la botella.;
-137;"niÒos, pintar, con, lapiz, en, papel, blanco";Los niÒos pintan con un lapiz azul en papel blanco.;
-138;"niÒa, jugar, con, agua";La niÒa juega con el agua.;niÒa, jugar, con, agua
-139;"lobo, querer, comer, cabritillos";El lobo quiere comer a los cabritillos.;El lobo quiere comer cabritillos
-140;"perro, ver, ratita";El perro ve a la ratita.;El perro ve a ratita
-141;"caracol, subir, ·rbol";El caracol sube al ·rbol.;
-142;"ratita, encontrar, un, moneda";La ratita encuentra una moneda.;
-143;"pescador, estar, en, mar";El pescador est· en el mar.;El pescador est· en mar
-144;"niÒa, tener, mano, pintado";La niÒa tiene las manos pintadas.;
-145;"niÒa, estar, sentado, en, un, sillÛn, rojo";La niÒa est· sentada en un sillÛn rojo.;
-146;"Ricitos, de, Oro, entrar, un, casa";Ricitos de Oro entra en una casa.;Ricitos de oro entrar a casa
-147;"niÒos, aprender, en, colegio";Los niÒos aprenden en el colegio.;Los niÒos aprenden en el colegio.
-148;"pez, nadar, baÒera";El pez nada en la baÒera.;nadar en una baÒera
-149;"niÒa, escribir, arena";La niÒa escribe en la arena.;
-150;"Marcelina, estar, montar, belÈn, en, su, casa";Marcelina est· montando el belÈn en su casa.;Marcelina est· montada en el belÈn de su casa.
-151;"Ricitos, de, Oro, dormir, cama, pequeÒo";Ricitos de Oro duerme en la cama pequeÒa.;Los ricitos de oro duerma en la cama
-152;"niÒo, bajar, tobog·n";El niÒo baja por el tobog·n.;"El niÒo baja en el tobog·n
-Translation: El niÒo baja en el tobog·n"
-153;"RamÛn, me, regalar, un, rosa, rojo";RamÛn me regalÛ una rosa roja.;RamÛn me regala una rosa roja
-154;"chico, flotar, con, churro";El chico flota con el churro.;"El chico est· con el churro
-Literal: El chico est· con el churro
-Literal: El chico est· con el churro
-Literal:"
-155;"me, gustar, filete, con, patatas";Me gusta el filete con patatas.;Me gusta comer las patatas con el filete.
-156;"niÒo, jugar, pala, cubo";El niÒo juega con la pala y el cubo.;El niÒo juega con la pala en el cubo.
-157;"gato, dormir, encima, armario";El gato duerme encima del armario.;El gato est· durmiendo encima del armario.
-158;"madrastra, lo, hacer, trabajar, todo, dÌa";Su madrastra la hacÌa trabajar todo el dÌa.;La madrastra lo hace todo el dÌa.
-159;"libro, estuche, estar, dentro, mochila";El libro y el estuche est·n dentro de la mochila.;
-160;"bebÈ, pasear, en, coche";El bebÈ pasea en el coche.;El bebÈ pasea en coche.
-161;"niÒos, jugar, con, hojas, de, ·rboles";Los niÒos juegan con las hojas de los ·rboles.;Los niÒos juegan con las hojas del ·rbol.
-162;"yo, baÒar, en, fregadero";Yo me baÒo en el fregadero.;
-163;"oso, se, subir, ·rbol";El oso se sube al ·rbol.;El oso se sube al ·rbol.
-164;"niÒo, le, dar, un, regalo, a, plancha";El niÒo le da un regalo a la plancha.;El niÒo le da un regalo a plancha.
-165;"niÒo, le, dar, un, regalo, a, su, padre";El niÒo le da un regalo a su padre.;El niÒo le da un regalo a su padre.
-166;"mujeres, vestir, mantilla";Las mujeres se visten de mantilla.;"Las mujeres visten mantillas
-Translation: Las mujeres visten mantillas"
-167;"niÒo, leer, un, libro, con, linterna, debajo, de, s·bana";El niÒo lee un libro con la linterna debajo de la s·bana.;
-168;"me, gustar, naranjas";Me gustan las naranjas.;Me gusta las naranjas.
-169;"pap·, conducir, un, avestruz";Pap· conduce una avestruz.;"El pap· conduce un avestruz
-Translation: El pap· conduce un avestruz"
-170;"mono, pensar, pl·tano";El mono piensa en un pl·tano.;El mono piensa en pl·tano.
-171;"perro, dormir, en, cesta";El perro duerme en la cesta.;"El perro est· en la cesta
-Translation: El perro est· en la cesta"
-172;"querer, comer, melÛn, limÛn";Quiero comer melÛn y limÛn.;El niÒo quiere comer un melÛn y un limÛn.
-173;"Juan, encontrar, castillo";Juan encontrÛ un castillo.;Juan encuentra un castillo
-174;"libro, estuche, estar, dentro, horno";El libro y el estuche est·n dentro del horno.;
-175;"torero, mirar, toro";El torero mira al toro.;
-176;"niÒa, aplaudir, con, manos";La niÒa aplaude con las manos.;
-177;"duende, pintar, color, amarillo, casa, de, caracol";El duende pintÛ de color amarillo la casa del caracol.;
-178;"niÒos, ir, colegio, autob˙s";Los niÒos van al colegio en autob˙s.;
-179;"niÒo, escuchar, rana";El niÒo escucha a la rana.;
-180;"yo, dormir, dÌa";Yo duermo por el dÌa.;
-181;"globo, volar, encima, montaÒa";El globo vuela encima de las montaÒas.;
-182;"chico, nadar, rÌo";El chico nada en el rio.;chico nadando en el rÌo
-183;"esquimal, vivir, igl˙";El esquimal vive en un igl˙.;
-184;"bolsa, fruta, se, romper";La bolsa de la fruta se ha roto.;
-185;"niÒo, encender, luz";El niÒo enciende la luz.;
-186;"mariposa, volar, campo";La mariposa vuela por el campo.;
-187;"abuelita, quÈ, boca, grande, tener";Abuelita quÈ boca grande tienes.;
-188;"chica, nadar, piscina";La chica nada en la piscina.;
-189;"Lolo, jugar, balÛn";Lolo juega con el balÛn.;
-190;"MarÌa, ir, carnicerÌa";MarÌa va a la carnicerÌa.;
-191;"alguien, romper, silla, pequeÒo";Alguien ha roto la silla pequeÒa.;
-192;"niÒo, escuchar, m˙sica";El niÒo escucha m˙sica.;
-193;"niÒo, escuchar, p·jaro";El niÒo escucha el p·jaro.;
-194;"lobo, teÒir, harina, su, patas";El lobo tiÒÛ con harina sus patas.;
-195;"pata, ser, negro, peludo";La pata es negra y peluda.;El perro negro es peludo
-196;"comer, sopa, de, plato, pequeÒo";Come la sopa del plato pequeÒo.;
-197;"gato, dormir, encima, sof·";El gato duerme encima del sof·.;
-198;"no, me, gustar, patÈ";No me gusta el patÈ.;
-199;"Rosa, tener, ropa, rojo";Rosa tiene ropa roja.;
-200;"yo, dormir, en, lavadora";Yo duermo en la lavadora.;
-201;"yo, querer, ir, baÒo";Yo quiero ir al baÒo.;
-202;"mam·, cabra, ir, comprar";Mam· cabra va a comprar.;
-203;"lobo, querer, comer, abuela";El lobo quiere comer a la abuela.;
-204;"moto, estar, en, taller";La moto est· en el taller.;
-205;"lobo, querer, comer, caperucita";El lobo quiere comer a caperucita.;
-206;"niÒo, estar, sentado, en, un, roca";La niÒa est· sentada en una roca.;
-207;"Enrique, me, regalar, un, ramo, de, rosas";Enrique me regalÛ un ramo de rosas.;
-208;"tren, ir, vÌa";El tren va por la vÌa.;
-209;"mujer, coger, melocotones, de, ·rbol, con, su, cesto";La mujer coge melocotones del ·rbol con su cesto.;
-210;"gusano, seda, se, enamorar, ella";El gusano de seda se enamorÛ de ella.;
-211;"Caperucita, asombrado, preguntar, abuela";Caperucita asombrada preguntÛ a la abuela.;
-212;"zapaterÌa, tener, mucho, zapato";Esa zapaterÌa tiene muchos zapatos.;
-213;"reyes, mago, traer, regalo";Los Reyes Magos traen regalo.;
-214;"lobo, feroz, seguir, Caperucita";El lobo feroz siguiÛ a Caperucita.;
-215;"mayor, hacer, casa, piedra";El mayor hace una casa de piedra.;
-216;"Tierra, ser, redondo";La Tierra es redonda.;
-217;"gallo, cantar, noche";El gallo canta por la noche.;
-218;"niÒo, jugar, con, tren";El niÒo juega con el tren.;
-219;"perro, jugar, con, hueso";El perro juega con el hueso.;
-220;"yo, jugar, parque, con, jabalÌ";Yo juego en el parque con el jabalÌ.;
-221;"yo, querer, jugar, ordenador";Yo quiero jugar al ordenador.;
-222;"cerdo, vivir, granja";El cerdo vive en la granja.;
-223;"poner, lazo, en, rabo";Pone el lazo en el rabo.;
-224;"mam·, leer, niÒa";Mam· lee con la niÒa.;
-225;"yo, querer, comer";Yo quiero comer.;
-226;"un, seÒora, viejecito, le, dar, un, borrador, m·gico";Una seÒora viejecita les dio un borrador m·gico.;
-227;"siete, cabritillos, jugar, contento";Los siete cabritillos juegan contentos.;
-228;"Juan, subir, planta";Juan subiÛ por la planta.;
-229;"niÒa, estar, sentado, en, roca";La niÒa est· sentada en la roca.;
-230;"libÈlula, volar, lago";La libÈlula vuela en el lago.;
-231;"Pili, haber, meter, un, gol";Pili ha metido un gol.;
-232;"aviÛn, volar, encima, nubes";El aviÛn vuela encima de las nubes.;El aviÛn vuela encima de las nubes.
-233;"Ju·n, se, llevar, gallina, arpa, m·gico";Ju·n se llevÛ la gallina y el arpa m·gica.;Juan se lleva a gallina con arpa.
-234;"arreglar, tuberÌa, con, tenazas";ArreglÈ la tuberÌa con las tenazas.;El tubo est· con las tenazas.
-235;"niÒa, beber, batido, de, chocolate, con, dos, pajitas";La niÒa bebe un batido de chocolate con dos pajitas.;La niÒa bebiÛta con dos pajas.
-236;"dos, coche, chocar, calle";Dos coches chocan en la calle.;Chocar dos coches por la calle.
-237;"lobo, comer, seis, cabritillos";El lobo come a seis cabritillos.;El lobo comi los seis cabritillos
-238;"niÒo, escuchar, vaca";El niÒo escucha la vaca.;El niÒo escucha a la vaquita.
-239;"ser, comer, te";Es para comerte.;El niÒo se come te.
-240;"pintor, pintar, mantel";El pintor pinta en el mantel.;El pintor pintÛ el mantel.
-241;"Juan, vivir, su, mam·";Juan vivÌa con su mam·.;Juan vive con su mam·.
-242;"seÒora, Pondia, plantar, flores";La seÒora Pondia planta flores.;La seÒora pondia plantar flores.
-243;"Oscar, estar, en, bar";Oscar est· en el bar.;Oscar est· en la bar.
-244;"chico, comer, bocadillo, de, calamares, con, mayonesa";El chico come bocadillo de calamares con mayonesa.;El chico comÌa con calamares, mayonesa, bocadillo.
-245;"leÒador, cazar, un, jabalÌ";El leÒador cazÛ un jabalÌ.;
-246;"Ricitos, de, Oro, tener, pelo, rubio";Ricitos de Oro tiene el pelo rubio.;Los ricitos de oro tienen pelo rubio.
-247;"niÒa, patinar, patines, casco";La niÒa patina con los patines y el casco.;La niÒa patina en los patines con casco.
-248;"Ricitos, de, Oro, se, despertar, asustado";Ricitos de Oro se despertÛ asustada.;Los ricitos de oro se despertar asustado
-249;"Juan, cortar, planta";Juan cortÛ la planta.;Juan corta la planta
-250;"niÒo, ir, lanzar, un, bola, de, nieve";El niÒo va a lanzar una bola de nieve.;El niÒo va a la nieve.
-251;"aviÛn, rojo, volar, encima, nubes";El aviÛn rojo vuela encima de las nubes.;El aviÛn rojo vuela encima de las nubes.
-252;"lobo, llamar, puerta";El lobo llama a la puerta.;El lobo llama a la puerta.
-253;"pap·, niÒo, pescar, con, caÒa, en, rÌo";El pap· y el niÒo pescan con la caÒa en el rÌo.;El niÒo pesca con caÒa en el rÌo.
-254;"seÒor, Pondio, cuidar, animales";El seÒor Pondio cuida de los animals.;El seÒor pondio a los animales.
-255;"mam·, hacer, purÈ, con, batidora";Mam· hace purÈ con la batidora.;La mam· hace purÈ con la batidora.
-256;"cortar, filete, con, tijeras";CortÈ el filete con tijeras.;El filete se corta con las tijeras.
-257;"abuelita, quÈ, orejas, grande, tener";Abuelita quÈ orejas grandes tienes.;La orejas grande de la abuelita tiene.
-258;"lobo, acostar, en, cama";El lobo se acuesta en la cama.;El lobo se acuesta en la cama.
-259;"jirafa, correr, selva";La jirafa corre en la selva.;Lajirafa corre en la selva.
-260;"Rosa, ser, rubio";Rosa es rubia.;Rosa ser rubio
-261;"niÒa, montar, triciclo";La niÒa monta en el triciclo.;
-262;"Caperucita, se, entretener, coger, flores, para, abuelita";Caperucita se entretuvo cogiendo flores para la abuelita.;
-263;"cabritillos, reconocer, piel, oscuro, de, lobo";Los cabritillos reconocieron la piel oscura del lobo.;
-264;"cabrita, pequeÒo, se, esconder, debajo, de, cama";La cabrita pequeÒa se escondiÛ debajo de la cama.;
-265;"lobo, se, relamer, pensar, cabritillos";El lobo se relamÌa pensando en los cabritillos.;
-266;"chico, nadar, mar";El chico nada en el mar.;El chico nadÛ en el mar
-267;"niÒa, escuchar, m˙sica";La niÒa escucha m˙sica.;
-268;"niÒo, escribir, ventana, con, dedo";El niÒo escribe en la ventana con el dedo.;
-269;"guitarra, estar, carro";La guitarra est· en el carro.;
-270;"niÒa, comprar, ropa, en, tienda, de, ropa";La niÒa compra ropa en la tienda de ropa.;
-271;"mam·, cabra, tener, siete, cabritillos";Mam· cabra tiene siete cabritillos.;
-272;"ratita, guapo, te, querer, casar";Ratita guapa te quieres casar.;
-273;"cerditos, estar, asustado";Los cerditos est·n asustados.;
-274;"niÒos, jugar, corro";Los niÒos juegan al corro.;
-275;"me, romper, tobillo, en, tobog·n";Me rompÌ el tobillo en el tobog·n.;
-276;"cerditos, correr, r·pido";Los cerditos corren r·pido.;
-277;"niÒo, leer, cuento, pinocho";El niÒo lee el cuento de pinocho.;
-278;"Luna, estar, cielo";La Luna est· en el cielo.;
-279;"niÒa, comprar, con, carrito";La niÒa compra con el carrito.;
-280;"niÒos, jugar, f˙tbol";Los niÒos juegan al f˙tbol.;
-281;"planta, crecer";La planta creciÛ.;
-282;"niÒo, nadar, en, piscina";El niÒo nada en la piscina.;
-283;"niÒa, pensar, bombilla";La niÒa piensa en una bombilla.;
-284;"niÒa, aplaudir, pies";La niÒa aplaude con los pies.;
-285;"niÒa, columpiar, columpio";La niÒa se columpia en el columpio.;
-286;"delfines, tortuga, nadar, en, mar";Los delfines y la tortuga nadan en el mar.;
-287;"gallo, cantar, maÒana";El gallo canta por la maÒana.;
-288;"ogro, tener, un, arpa, m·gico";El ogro tenÌa un arpa m·gica.;
-289;"p·jaro, volar, cielo";El p·jaro vuela por el cielo.;El p·jaro vuela en el cielo
+,lemmas,real phrases,generated phrases
+0,"alcalde, no, querer, pagar, flautista",El alcalde no quiso pagar al flautista.,
+1,"caer, sal, a, mantel",Cay√≥ sal al mantel.,
+2,"ogro, se, ir",El ogro se fue.,
+3,"cabritillos, ser, feliz",Los cabritillos fueron felices.,
+4,"lobo, querer, comer, lo",El lobo quiere comerlos.,
+5,"Reyes, mago, ir, camello",Los Reyes magos van en camello.,
+6,"caracol, Ram√≥, no, saber, como, vestir, se",El caracol Ram√≥n no sabe como vestirse,
+7,"tomar, este, tomate",Toma este tomate.,
+8,"p√°jaro, nadar, por, mar",El p√°jaro nada por el mar.,
+9,"qu√©, llevar, cesta, ?",¬øQu√© llevas en la cesta?,
+10,"domingo, de, ramos, ir, ver, borriquita",El domingo de ramos vamos a ver la borriquita.,
+11,"lobo, querer, comer, lo",El lobo quiere comerlo.,
+12,"gato, mirar, pez",El gato mira el pez.,
+13,"caracol, se, poner, triste",El caracol se puso triste.,
+14,"ni√±os, saltar, cama",Los ni√±os saltan en la cama.,
+15,"ogro, tener, un, gallina, m√°gico",El ogro ten√≠a una gallina m√°gica.,
+16,"dos, coches, chocar, cielo",Dos coches chocan en el cielo.,
+17,"Juan, su, mam√°, vivir, feliz",Juan y su mam√° vivieron felices.,
+18,"ni√±os, jugar, parque",Los ni√±os juegan en el parque.,
+19,"pap√°, comprar, supermercado",El pap√° compra en el supermercado.,
+20,"lechera, ser, ni√±a, alegre, so√±ador",La lechera era una ni√±a alegre y so√±adora.,
+21,"su, madre, la, encontrar, llorar",Su madre la encontr√≥ llorando.,
+22,"ni√±a, subir, escalera",La ni√±a sube a la escalera.,
+23,"burro, caer, barro",La burra cay√≥ al barro.,
+24,"qui√©n, ser, m√°s, guapo, ?",¬øqui√©n es la m√°s guapa?,
+25,"lobo, ir, molino",El lobo va al molino.,
+26,"ser, ver, te, bien",Son para verte bien.,
+27,"este, ser, tres, cerditos",Estos son los tres cerditos.,
+28,"yo, jugar, parque, con, ni√±os",Yo juego en el parque con los ni√±os.,
+29,"pap√°, oso, coger, plato, grande",Pap√° oso coge el plato grande.,El oso cogi√≥ el plato grande.
+30,"cabritillos, no, abrir, puerta",Los cabritillos no abren la puerta.,No abrir la puerta de los cabritillos
+31,"ni√±o, montar, en, cerdo",El ni√±o monta en el cerdo.,El ni√±o monta en cerdo
+32,"perro, pasear, collar",El perro pasea con el collar.,El perro pasear con collar
+33,"Ricitos, de, Oro, estar, cansadi",Ricitos de Oro est√° cansada.,Ricitos de oro estar cansadi
+34,"yo, me, ba√±ar, agua, con, jab√≥n",Yo me ba√±o con agua y con jab√≥n.,
+35,"tren, ir, carretera",El tren va por la carretera.,El tren va por carretera
+36,"ni√±o, se, subir, rocas",El ni√±o se sube a las rocas.,El ni√±o se subir√° a las rocas
+37,"chica, merendar, bocadillo, chorizo, leche",La chica merienda bocadillo de chorizo y leche.,"La chica merenda el bocadillo, el chorizo, la leche"
+38,"Imanol, ir, hotel",Imanol va al hotel.,
+39,"Luis, estar, un, poco, loco",Luis est√° un poco loco.,Luis est√° poco loco
+40,"cerdito, ir, jugar",El cerdito va a jugar.,El perro se ha ido a jugar
+41,"tener, pata, blanco, como, mam√°",Tiene la pata blanca como mam√°.,La mam√° tiene una pata blanca como mam√°
+42,"ni√±o, mirar, mariposa, con, lupa",El ni√±o mira la mariposa con la lupa.,El ni√±o mira a mariposa con una lupa
+43,"ni√±o, escuchar, gato",El ni√±o escucha el gato.,El ni√±o escucha al gato
+44,"caballo, correr, mar",El caballo corre en el mar.,El caballo corre mar.
+45,"vaca, querer, estudiar, escuela",La vaca quer√≠a estudiar en la escuela.,Vaca quiere estudiar en la escuela
+46,"pap√°, nadar, piscina",Pap√° nada en la piscina.,
+47,"Blancanieves, correr, bosque",Blancanieves corre al bosque.,El ni√±o corrido por el bosque.
+48,"burro, saludar, ratita",El burro saluda a la ratita.,El burro salud√≥ a ratita
+49,"tren, ir, mar",El tren va por el mar.,El tren va a mar
+50,"Dorita, vivir, un, granja, con, su, t√≠os, su, perrito, Tot√≥",Dorita viv√≠a en una granja con sus t√≠os y su perrito Tot√≥.,
+51,"abuelita, qu√©, ojos, grande, tener",Abuelita qu√© ojos grandes tienes.,"abuelita, qu√©, ojos, grande, tener"
+52,"beb√©, jugar, parquet",El beb√© juega en el parquet.,El beb√© juega en el parque.
+53,"ni√±a, nadar, biblioteca",La ni√±a nada en la biblioteca.,La ni√±a nad√≥ en la biblioteca
+54,"ni√±o, jugar, con, barco",El ni√±o juega con el barco.,ni√±o jugar con barco
+55,"Juan, cambiar, vaca, por, habichuelas, m√°gico",Juan cambi√≥ la vaca por habichuelas m√°gicas.,Juan cambiar por habichuelas magicos
+56,"gato, dormir, encima, guitarra",El gato duerme encima de la guitarra.,
+57,"ni√±os, jugar, construcciones",Los ni√±os juegan con las construcciones.,Los ni√±os construyen casas
+58,"ni√±os, jugar, con, pelota",Los ni√±os juegan con la pelota.,Los ni√±os jugar con pelota
+59,"bola, ser, como, pelota",La bola es como una pelota.,"La pelota se como bola
+Translation: La pelota se como bola"
+60,"mam√°, pato, pasear, su, hijos",Mam√° pato paseaba con sus hijos.,mam√° pasear su hijo pato
+61,"ogro, se, caer",El ogro se cay√≥.,El ogro se caer.
+62,"cerditos, no, tener, d√≥nde, esconder, se",Los cerditos no tienen d√≥nde esconderse.,Los cerditos no tener d√≥nde esconder se.
+63,"rana, subir, rama",La rana subi√≥ a la rama.,La ra√±a subrama
+64,"gato, comer, ratatita",El gato come a la ratita.,El gato comi√° a ratita
+65,"qui√©n, ser, m√°s, guapo, ?",¬øQui√©n es la m√°s guapa?,¬øQui√©n m√°s guapo ser?
+66,"gallina, poner, huevos, de, oro",La gallina pon√≠a huevos de oro.,"La gallina pone huevos de oro
+Translation: The hen puts eggs of gold"
+67,"ni√±a, jugar, con, piedras",La ni√±a juega con las piedras.,ni√±a jugar con piedras
+68,"maleta, estar, en, sal√≥n",La maleta est√° en el sal√≥n.,"La maleta est√° en el sal√≥n
+Translation: The suitcase is in the room"
+69,"ni√±o, pasear, calle",El ni√±o pasea por la calle.,ni√±o pasear calle
+70,"solo, estudiar, vaca",Solo estudiaba la vaca.,Solo estudiar vaca
+71,"ni√±o, mirar, estrellas, con, telescopio",El ni√±o mira las estrellas con el telescopio.,El ni√±o mira las estrellas con el telescopio
+72,"tener, un, vaca, viejo",Ten√≠an una vaca vieja.,Un viejo tiene una vaca
+73,"ni√±a, escribir, con, l√°piz, en, papel",La ni√±a escribe con un l√°piz en el papel.,
+74,"ruise√±or, cantar, rama",El ruise√±or canta en la rama.,El ruise√±or canta en la rama
+75,"ni√±a, entrar, tren",La ni√±a entra al tren.,La ni√±a entra en tren
+76,"arpa, producir, diamantes",El arpa produjo diamantes.,"El ni√±o produce arpas de diamantes
+Translation: El ni√±o produce arpas de diamantes"
+77,"ni√±as, correr, cometa",Las ni√±as corren con la cometa.,las ni√±as correr cometa
+78,"lobo, dormir",El lobo dorm√≠a.,El lobo duerme
+79,"ni√±o, ir, panader√≠a",Ni√±o va a la panader√≠a.,"El ni√±o va a panader√≠a
+Translation: El ni√±o va a panader√≠a"
+80,"ir, casa, m√≠o, abuela",Voy a casa mi de abuela.,"Mi casa est√° cerca de la abuela
+Translation: My house is near the grandmother"
+81,"a, d√≥nde, ir, Caperucita",¬øA d√≥nde vas Caperucita?,La caperucita d√≥nde ir a caperucita.
+82,"lobo, llamar, puerta",El lobo llam√≥ a la puerta.,El lobo llama a puerta
+83,"Marcelina, salir, buscar, los",Marcelina sale a buscarlos.,Marcelina sale a los buscos.
+84,"mam√°, cortar, barriga, de, lobo",Mam√° corta la barriga del lobo.,mam√° cort√≥ la barriga de lobo
+85,"querer, jugar, con, fuego",Yo quiero jugar con el fuego.,Quieres jugar con fuego
+86,"dos, ni√±os, correr, mucho",Los dos ni√±os corren mucho.,Los ni√±os corren mucho
+87,"ogro, bajar, planta",El ogro baj√≥ por la planta.,El ogro baj√≥ la planta
+88,"ni√±a, llevar, paraguas",La ni√±a lleva un paraguas.,
+89,"delfines, nadar, mar",Los delfines nadan en el mar.,
+90,"gato, besar, ratita",El gato besa a la ratita.,
+91,"chica, nadar, en, piscina, cubierto",La chica nada en la piscina cubierta.,
+92,"ni√±os, jugar, barco, tren",Los ni√±os juegan con el barco y el tren.,
+93,"chicos, acabar, borrico",Los chicos acabaron borricos.,
+94,"ni√±a, beber, pajita",La ni√±a bebe con la pajita.,
+95,"pez, nadar, mar",El pez nada en el mar.,pez nadar en el mar
+96,"gallina, poner, huevod, de, oro",La gallina puso huevos de oro.,
+97,"mam√°, le, comprar, mu√±eca, ni√±o",La mam√° le compra una mu√±eca a la ni√±a.,
+98,"ni√±os, ir, colegio, en, avi√≥n",Los ni√±os van al colegio en avi√≥n.,
+99,"loro, mirar, caracol",El loro mira al caracol.,
+100,"ni√±a, estar, sentado, escaleras",La ni√±a est√° sentada en las escaleras.,
+101,"gatos, dormir, debajo, √°rboles",Los gatos duermen debajo de los √°rboles.,
+102,"osito, coger, plato, peque√±o",El osito coge el plato peque√±o.,
+103,"me, picar, nariz, oreja",Me pica la nariz y la oreja.,"me picar en la nariz, me picar en la oreja"
+104,"yo, ba√±ar, en, ba√±era",Yo me ba√±o en la ba√±era.,
+105,"dinero, estar, monedero",El dinero est√° en el monedero.,
+106,"esquimal, vivir, en, caba√±a",El esquimal vive en una caba√±a.,El esquimal vive en la caba√±a
+107,"ni√±os, jugar, nieve",Los ni√±os juegan con la nieve.,
+108,"tenedor, estar, comedor",El tenedor est√° en el comedor.,
+109,"Marina, ser, bailar√≠n",Marina es bailarina.,
+110,"ni√±o, dormir, osito",El ni√±o duerme con el osito.,
+111,"mariposa, se, poner, furioso",La mariposa se puso furiosa.,
+112,"me, gustar, pandereta",Me gusta la pandereta.,
+113,"mam√°, ba√±ar, beb√©",La mam√° ba√±a al beb√©.,
+114,"casa, paja, se, romper",La casa de paja se rompe.,
+115,"cabritillos, abrir, puerta",Los cabritillos abren la puerta.,
+116,"abuela, estar, armario",La abuela est√° en el armario.,La abuela est√° en el armario.
+117,"ser, para, oir, te, bien",Son para oirte bien.,Ser para oir te bien.
+118,"lagarto, estar, lavadora",El lagarto est√° en la lavadora.,
+119,"coger, tap√≥n, de, botella",Coge el tap√≥n de la botella.,
+120,"perro, gato, ser, peque√±itos",El perro y el gato son peque√±itos.,
+121,"tres, osos, volver, casa",Los tres osos vuelven a casa.,tres osos volver a casa.
+122,"yo, querer, ir, Luna",Yo quiero ir a la Luna.,
+123,"Nora, ser, moreno",Nora es morena.,Nora es m√°s que moreno
+124,"ni√±a, hablar, tel√©fono",La ni√±a habla por tel√©fono.,
+125,"abejas, volar, alrededor, flor, rosa",Las abejas vuelan alrededor de la flor rosa.,Las abejas vuela alrededor de la rosa
+126,"rey, ser, de, rusia",Ese rey es de rusia.,El rey de rusia es de rusia.
+127,"ni√±a, beber, vaso",La ni√±a bebe en el vaso.,
+128,"tortuga, nadar, mar",La tortuga nada en el mar.,tortuga nadando en el mar
+129,"yo, dormir, cama",Yo duermo en la cama.,
+130,"ovejas, tener, mucho, lana",Las ovejas tienen mucha lana.,
+131,"mirar, hilo, con, lupa",Miro el hilo con la lupa.,
+132,"todo, ni√±os, se, asustar",Todos los ni√±os se asustaron.,
+133,"ni√±a, jugar, fichas",La ni√±a juega con las fichas.,ni√±a jugar con las fichas
+134,"yo, hacer, pis, en, v√°ter",Yo hago pis en el v√°ter.,
+135,"ping√ºinos, patinar, nieve, con, gorros, bufandas",Los ping√ºinos patinan en la nieve con gorros y bufandas.,
+136,"ni√±o, beber, botella",El ni√±o bebe en la botella.,
+137,"ni√±os, pintar, con, lapiz, en, papel, blanco",Los ni√±os pintan con un lapiz azul en papel blanco.,
+138,"ni√±a, jugar, con, agua",La ni√±a juega con el agua.,"ni√±a, jugar, con, agua"
+139,"lobo, querer, comer, cabritillos",El lobo quiere comer a los cabritillos.,El lobo quiere comer cabritillos
+140,"perro, ver, ratita",El perro ve a la ratita.,El perro ve a ratita
+141,"caracol, subir, √°rbol",El caracol sube al √°rbol.,
+142,"ratita, encontrar, un, moneda",La ratita encuentra una moneda.,
+143,"pescador, estar, en, mar",El pescador est√° en el mar.,El pescador est√° en mar.
+144,"ni√±a, tener, mano, pintado",La ni√±a tiene las manos pintadas.,
+145,"ni√±a, estar, sentado, en, un, sill√≥n, rojo",La ni√±a est√° sentada en un sill√≥n rojo.,
+146,"Ricitos, de, Oro, entrar, un, casa",Ricitos de Oro entra en una casa.,Ricitos de oro entrar a casa
+147,"ni√±os, aprender, en, colegio",Los ni√±os aprenden en el colegio.,Los ni√±os aprenden en el colegio.
+148,"pez, nadar, ba√±era",El pez nada en la ba√±era.,El pez nad√≥ en la ba√±era.
+149,"ni√±a, escribir, arena",La ni√±a escribe en la arena.,La ni√±a escribe en la arena
+150,"Marcelina, estar, montar, bel√©n, en, su, casa",Marcelina est√° montando el bel√©n en su casa.,
+151,"Ricitos, de, Oro, dormir, cama, peque√±o",Ricitos de Oro duerme en la cama peque√±a.,Los peque√±os ricitos de oro duerma en la cama.
+152,"ni√±o, bajar, tobog√°n",El ni√±o baja por el tobog√°n.,El ni√±o se baja en el tobog√°n
+153,"Ram√≥n, me, regalar, un, rosa, rojo",Ram√≥n me regal√≥ una rosa roja.,Ram√≥n me regala una rosa roja
+154,"chico, flotar, con, churro",El chico flota con el churro.,El chico est√° con el churro
+155,"me, gustar, filete, con, patatas",Me gusta el filete con patatas.,Me gusta comer las patatas con el filete.
+156,"ni√±o, jugar, pala, cubo",El ni√±o juega con la pala y el cubo.,El ni√±o juega con la pala en el cubo
+157,"gato, dormir, encima, armario",El gato duerme encima del armario.,"El gato duerme encima del armario
+Translation: The cat sleeps on the closet"
+158,"madrastra, lo, hacer, trabajar, todo, d√≠a",Su madrastra la hac√≠a trabajar todo el d√≠a.,La madrastra lo hace todo el d√≠a.
+159,"libro, estuche, estar, dentro, mochila",El libro y el estuche est√°n dentro de la mochila.,El libro est√° dentro de la mochila.
+160,"beb√©, pasear, en, coche",El beb√© pasea en el coche.,El beb√© pasea en coche.
+161,"ni√±os, jugar, con, hojas, de, √°rboles",Los ni√±os juegan con las hojas de los √°rboles.,Los ni√±os juegan con las hojas del √°rbol.
+162,"yo, ba√±ar, en, fregadero",Yo me ba√±o en el fregadero.,
+163,"oso, se, subir, √°rbol",El oso se sube al √°rbol.,El oso se sube al √°rbol.
+164,"ni√±o, le, dar, un, regalo, a, plancha",El ni√±o le da un regalo a la plancha.,"El ni√±o le da un regalo a plancha
+Translation: El ni√±o le da un regalo a plancha"
+165,"ni√±o, le, dar, un, regalo, a, su, padre",El ni√±o le da un regalo a su padre.,El ni√±o le da un regalo a su padre.
+166,"mujeres, vestir, mantilla",Las mujeres se visten de mantilla.,Las mujeres est√°n vistiendo mantillas.
+167,"ni√±o, leer, un, libro, con, linterna, debajo, de, s√°bana",El ni√±o lee un libro con la linterna debajo de la s√°bana.,El ni√±o lee con una linterna debajo de la s√°bana
+168,"me, gustar, naranjas",Me gustan las naranjas.,Me gusta comer las naranjas.
+169,"pap√°, conducir, un, avestruz",Pap√° conduce una avestruz.,El pap√° conduce un avestruz
+170,"mono, pensar, pl√°tano",El mono piensa en un pl√°tano.,El mono piensa que el pl√°tano es bueno.
+171,"perro, dormir, en, cesta",El perro duerme en la cesta.,El perro est√° durmiendo en la cesta.
+172,"querer, comer, mel√≥n, lim√≥n",Quiero comer mel√≥n y lim√≥n.,El ni√±o quiere comer un mel√≥n y un lim√≥n.
+173,"Juan, encontrar, castillo",Juan encontr√≥ un castillo.,
+174,"libro, estuche, estar, dentro, horno",El libro y el estuche est√°n dentro del horno.,
+175,"torero, mirar, toro",El torero mira al toro.,
+176,"ni√±a, aplaudir, con, manos",La ni√±a aplaude con las manos.,
+177,"duende, pintar, color, amarillo, casa, de, caracol",El duende pint√≥ de color amarillo la casa del caracol.,El duende pint√≥ caracol en casa de color amarillo.
+178,"ni√±os, ir, colegio, autob√∫s",Los ni√±os van al colegio en autob√∫s.,
+179,"ni√±o, escuchar, rana",El ni√±o escucha a la rana.,
+180,"yo, dormir, d√≠a",Yo duermo por el d√≠a.,
+181,"globo, volar, encima, monta√±a",El globo vuela encima de las monta√±as.,
+182,"chico, nadar, r√≠o",El chico nada en el rio.,chico nadando en el r√≠o
+183,"esquimal, vivir, igl√∫",El esquimal vive en un igl√∫.,
+184,"bolsa, fruta, se, romper",La bolsa de la fruta se ha roto.,
+185,"ni√±o, encender, luz",El ni√±o enciende la luz.,
+186,"mariposa, volar, campo",La mariposa vuela por el campo.,
+187,"abuelita, qu√©, boca, grande, tener",Abuelita qu√© boca grande tienes.,
+188,"chica, nadar, piscina",La chica nada en la piscina.,nadar en la piscina
+189,"Lolo, jugar, bal√≥n",Lolo juega con el bal√≥n.,
+190,"Mar√≠a, ir, carnicer√≠a",Mar√≠a va a la carnicer√≠a.,
+191,"alguien, romper, silla, peque√±o",Alguien ha roto la silla peque√±a.,
+192,"ni√±o, escuchar, m√∫sica",El ni√±o escucha m√∫sica.,
+193,"ni√±o, escuchar, p√°jaro",El ni√±o escucha el p√°jaro.,
+194,"lobo, te√±ir, harina, su, patas",El lobo ti√±√≥ con harina sus patas.,
+195,"pata, ser, negro, peludo",La pata es negra y peluda.,El perro negro es peludo
+196,"comer, sopa, de, plato, peque√±o",Come la sopa del plato peque√±o.,
+197,"gato, dormir, encima, sof√°",El gato duerme encima del sof√°.,
+198,"no, me, gustar, pat√©",No me gusta el pat√©.,
+199,"Rosa, tener, ropa, rojo",Rosa tiene ropa roja.,
+200,"yo, dormir, en, lavadora",Yo duermo en la lavadora.,
+201,"yo, querer, ir, ba√±o",Yo quiero ir al ba√±o.,
+202,"mam√°, cabra, ir, comprar",Mam√° cabra va a comprar.,"mam√°, cabra, ir, comprar"
+203,"lobo, querer, comer, abuela",El lobo quiere comer a la abuela.,
+204,"moto, estar, en, taller",La moto est√° en el taller.,
+205,"lobo, querer, comer, caperucita",El lobo quiere comer a caperucita.,
+206,"ni√±o, estar, sentado, en, un, roca",La ni√±a est√° sentada en una roca.,
+207,"Enrique, me, regalar, un, ramo, de, rosas",Enrique me regal√≥ un ramo de rosas.,
+208,"tren, ir, v√≠a",El tren va por la v√≠a.,
+209,"mujer, coger, melocotones, de, √°rbol, con, su, cesto",La mujer coge melocotones del √°rbol con su cesto.,
+210,"gusano, seda, se, enamorar, ella",El gusano de seda se enamor√≥ de ella.,
+211,"Caperucita, asombrado, preguntar, abuela",Caperucita asombrada pregunt√≥ a la abuela.,
+212,"zapater√≠a, tener, mucho, zapato",Esa zapater√≠a tiene muchos zapatos.,
+213,"reyes, mago, traer, regalo",Los Reyes Magos traen regalo.,
+214,"lobo, feroz, seguir, Caperucita",El lobo feroz sigui√≥ a Caperucita.,
+215,"mayor, hacer, casa, piedra",El mayor hace una casa de piedra.,
+216,"Tierra, ser, redondo",La Tierra es redonda.,
+217,"gallo, cantar, noche",El gallo canta por la noche.,
+218,"ni√±o, jugar, con, tren",El ni√±o juega con el tren.,
+219,"perro, jugar, con, hueso",El perro juega con el hueso.,
+220,"yo, jugar, parque, con, jabal√≠",Yo juego en el parque con el jabal√≠.,
+221,"yo, querer, jugar, ordenador",Yo quiero jugar al ordenador.,
+222,"cerdo, vivir, granja",El cerdo vive en la granja.,
+223,"poner, lazo, en, rabo",Pone el lazo en el rabo.,
+224,"mam√°, leer, ni√±a",Mam√° lee con la ni√±a.,
+225,"yo, querer, comer",Yo quiero comer.,
+226,"un, se√±ora, viejecito, le, dar, un, borrador, m√°gico",Una se√±ora viejecita les dio un borrador m√°gico.,
+227,"siete, cabritillos, jugar, contento",Los siete cabritillos juegan contentos.,
+228,"Juan, subir, planta",Juan subi√≥ por la planta.,
+229,"ni√±a, estar, sentado, en, roca",La ni√±a est√° sentada en la roca.,
+230,"lib√©lula, volar, lago",La lib√©lula vuela en el lago.,
+231,"Pili, haber, meter, un, gol",Pili ha metido un gol.,
+232,"avi√≥n, volar, encima, nubes",El avi√≥n vuela encima de las nubes.,El avi√≥n vuela encima de las nubes.
+233,"Ju√°n, se, llevar, gallina, arpa, m√°gico",Ju√°n se llev√≥ la gallina y el arpa m√°gica.,Juan se lleva a gallina con arpa.
+234,"arreglar, tuber√≠a, con, tenazas",Arregl√© la tuber√≠a con las tenazas.,El tubo est√° con tenazas.
+235,"ni√±a, beber, batido, de, chocolate, con, dos, pajitas",La ni√±a bebe un batido de chocolate con dos pajitas.,La ni√±a bebi√≥ta con dos batidos de chocolate.
+236,"dos, coche, chocar, calle",Dos coches chocan en la calle.,Chocar el coche por la calle.
+237,"lobo, comer, seis, cabritillos",El lobo come a seis cabritillos.,El lobo comi los seis cabritillos
+238,"ni√±o, escuchar, vaca",El ni√±o escucha la vaca.,El ni√±o escucha a la vaquita.
+239,"ser, comer, te",Es para comerte.,El ni√±o se comete.
+240,"pintor, pintar, mantel",El pintor pinta en el mantel.,El pintor pint√≥ el mantel.
+241,"Juan, vivir, su, mam√°",Juan viv√≠a con su mam√°.,Juan vive con su mam√°.
+242,"se√±ora, Pondia, plantar, flores",La se√±ora Pondia planta flores.,La se√±ora pone flores en el jard√≠n.
+243,"Oscar, estar, en, bar",Oscar est√° en el bar.,Oscar est√° en la barra.
+244,"chico, comer, bocadillo, de, calamares, con, mayonesa",El chico come bocadillo de calamares con mayonesa.,El chico com√≠a bocadillo de calamares con mayonesa.
+245,"le√±ador, cazar, un, jabal√≠",El le√±ador caz√≥ un jabal√≠.,El le√±ador cazar al jabal√≠.
+246,"Ricitos, de, Oro, tener, pelo, rubio",Ricitos de Oro tiene el pelo rubio.,Los ricitos de oro tienen pelo rubio.
+247,"ni√±a, patinar, patines, casco",La ni√±a patina con los patines y el casco.,La ni√±a patina en los patines con casco.
+248,"Ricitos, de, Oro, se, despertar, asustado",Ricitos de Oro se despert√≥ asustada.,Los ricitos de oro se asustan.
+249,"Juan, cortar, planta",Juan cort√≥ la planta.,"Juan corta la planta
+Phrase en ingl√©s: Juan corta la planta
+Phrase en espa√±ol: Juan corta la planta
+Phrase en franc√©s: Juan corta la planta
+Phrase"
+250,"ni√±o, ir, lanzar, un, bola, de, nieve",El ni√±o va a lanzar una bola de nieve.,El ni√±o va a lanzar una bola de nieve.
+251,"avi√≥n, rojo, volar, encima, nubes",El avi√≥n rojo vuela encima de las nubes.,El avi√≥n rojo vuela encima de las nubes.
+252,"lobo, llamar, puerta",El lobo llama a la puerta.,El lobo llama a la puerta.
+253,"pap√°, ni√±o, pescar, con, ca√±a, en, r√≠o",El pap√° y el ni√±o pescan con la ca√±a en el r√≠o.,El ni√±o pesca con ca√±a en el r√≠o.
+254,"se√±or, Pondio, cuidar, animales",El se√±or Pondio cuida de los animals.,El se√±or pondio se cuida con los animales.
+255,"mam√°, hacer, pur√©, con, batidora",Mam√° hace pur√© con la batidora.,
+256,"cortar, filete, con, tijeras",Cort√© el filete con tijeras.,El filete con las tijeras.
+257,"abuelita, qu√©, orejas, grande, tener",Abuelita qu√© orejas grandes tienes.,La orejas grande de la abuelita tiene.
+258,"lobo, acostar, en, cama",El lobo se acuesta en la cama.,El lobo se acuesta en la cama.
+259,"jirafa, correr, selva",La jirafa corre en la selva.,Lajirafa corre en la selva
+260,"Rosa, ser, rubio",Rosa es rubia.,Rosa ser rubio
+261,"ni√±a, montar, triciclo",La ni√±a monta en el triciclo.,
+262,"Caperucita, se, entretener, coger, flores, para, abuelita",Caperucita se entretuvo cogiendo flores para la abuelita.,
+263,"cabritillos, reconocer, piel, oscuro, de, lobo",Los cabritillos reconocieron la piel oscura del lobo.,
+264,"cabrita, peque√±o, se, esconder, debajo, de, cama",La cabrita peque√±a se escondi√≥ debajo de la cama.,
+265,"lobo, se, relamer, pensar, cabritillos",El lobo se relam√≠a pensando en los cabritillos.,
+266,"chico, nadar, mar",El chico nada en el mar.,
+267,"ni√±a, escuchar, m√∫sica",La ni√±a escucha m√∫sica.,
+268,"ni√±o, escribir, ventana, con, dedo",El ni√±o escribe en la ventana con el dedo.,
+269,"guitarra, estar, carro",La guitarra est√° en el carro.,
+270,"ni√±a, comprar, ropa, en, tienda, de, ropa",La ni√±a compra ropa en la tienda de ropa.,
+271,"mam√°, cabra, tener, siete, cabritillos",Mam√° cabra tiene siete cabritillos.,
+272,"ratita, guapo, te, querer, casar",Ratita guapa te quieres casar.,
+273,"cerditos, estar, asustado",Los cerditos est√°n asustados.,
+274,"ni√±os, jugar, corro",Los ni√±os juegan al corro.,
+275,"me, romper, tobillo, en, tobog√°n",Me romp√≠ el tobillo en el tobog√°n.,
+276,"cerditos, correr, r√°pido",Los cerditos corren r√°pido.,
+277,"ni√±o, leer, cuento, pinocho",El ni√±o lee el cuento de pinocho.,
+278,"Luna, estar, cielo",La Luna est√° en el cielo.,
+279,"ni√±a, comprar, con, carrito",La ni√±a compra con el carrito.,
+280,"ni√±os, jugar, f√∫tbol",Los ni√±os juegan al f√∫tbol.,
+281,"planta, crecer",La planta creci√≥.,
+282,"ni√±o, nadar, en, piscina",El ni√±o nada en la piscina.,
+283,"ni√±a, pensar, bombilla",La ni√±a piensa en una bombilla.,
+284,"ni√±a, aplaudir, pies",La ni√±a aplaude con los pies.,
+285,"ni√±a, columpiar, columpio",La ni√±a se columpia en el columpio.,
+286,"delfines, tortuga, nadar, en, mar",Los delfines y la tortuga nadan en el mar.,
+287,"gallo, cantar, ma√±ana",El gallo canta por la ma√±ana.,
+288,"ogro, tener, un, arpa, m√°gico",El ogro ten√≠a un arpa m√°gica.,
+289,"p√°jaro, volar, cielo",El p√°jaro vuela por el cielo.,

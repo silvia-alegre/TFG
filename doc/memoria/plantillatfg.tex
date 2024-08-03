@@ -103,7 +103,9 @@ En este primer capítulo introductorio presentamos la motivación y objetivos de
 
 La comunicación y el lenguaje son dos pilares fundamentales de la sociedad actual, pues constituyen la base de las relaciones interpersonales, permitiendo el intercambio de ideas e información. Gracias a ello podemos transmitir a los demás nuestros pensamientos, emociones y necesidades, permitiéndonos participar en la vida en sociedad. Sin embargo, para algunas personas, el hecho de comunicarse de manera satisfactoria puede resultar realmente complicado debido a distintas causas. Es aquí donde entran en juego los Sistemas Aumentativos y Alternativos de Comunicación (SAAC).
 
-Tal y como explica el Centro Aragonés para la Comunicación Aumentativa y Alternativa (ARASAAC), “los Sistemas Aumentativos y Alternativos de Comunicación son formas de expresión distintas al lenguaje hablado que tienen como objetivo aumentar el nivel de expresión y/o compensar las dificultades de comunicación y lenguaje de las personas que tienen dificultades en este ámbito”. Hay distintas razones por las cuales una persona podría necesitar utilizar un SAAC. Entre ellas encontramos la parálisis cerebral, la discapacidad intelectual, los trastornos del espectro autista, algunas enfermedades neurológicas, las distrofias musculares o las afasias, entre otras.
+Tal y como se explica en el portal del Centro Aragonés para la Comunicación Aumentativa y Alternativa (ARASAAC), "\textit{los Sistemas Aumentativos y Alternativos de Comunicación (SAAC) son formas de expresión diferentes del lenguaje hablado que tienen como objetivo aumentar el nivel de expresión (aumentativo) y/o compensar (alternativo) las dificultades de comunicación que presentan algunas personas en este área}” \cite{arasaac}.
+
+Hay distintas razones por las cuales una persona podría necesitar utilizar un SAAC. Entre ellas encontramos la parálisis cerebral, la discapacidad intelectual, los trastornos del espectro autista, algunas enfermedades neurológicas, las distrofias musculares o las afasias.
 
 Aunque hay muchos tipos de SAAC, todos se caracterizan por estar basados en sistemas de símbolos, ya sean gráficos (fotografías, dibujos, pictogramas, palabras o letras) o gestuales (mímica o símbolos manuales). En este trabajo nos centraremos en los comunicadores electrónicos. Los comunicadores electrónicos son herramientas tecnológicas que pueden ser utilizados en cualquier tipo de dispositivo electrónico. Por lo general, consisten en un tablero donde aparecen distintos símbolos gráficos (pictogramas) que representan palabras.
 
@@ -117,8 +119,7 @@ Estos pictogramas pueden ser organizados y adaptados dependiendo de las necesida
 
 Así, estas herramientas resultan verdaderamente útiles para solventar los problemas de comunicación de las personas. Sin embargo, presentan una limitación que puede afectar a la fluidez y al nivel de expresividad con que se realiza la comunicación: la dificultad para conjugar las frases de manera adecuada, pues para facilitar y simplificar el uso de la herramienta, en este tipo de tableros se suelen incluir solamente palabras clave en su forma simple, sin distinción de número, género o tiempo verbal.
 
-Algunos de los comunicadores que existen actualmente en el mercado ya emplean diferentes métodos para abordar este problema, pero existe todavía un amplio margen de mejora. Los modelos de lenguaje grandes prometen ofrecer buenos resultados en este área.
-
+Algunos de los comunicadores que existen actualmente en el mercado ya emplean diferentes métodos para abordar este problema, pero existe todavía un amplio margen de mejora. Las recientes innoviaciones en el campo de la inteligencia artificial y el procsamiento de lenguaje natural prometen ofrecer buenos resultados en esta área. Es por esto, que en este trabajo se estudiará la aplicabilidad de los modelos de lenguaje grandes a este tipo de herramientas.
 
 \section{Objetivos}
 
@@ -896,10 +897,43 @@ En este trabajo, utilizaremos las métricas de BLEU y COMET para la evaluación 
 
 \subsection{BLEU}
 
-BLEU (\textit{Bilingual Evaluation Understudy}) \cite{papineni-etal-2002-bleu} es una de las métricas más utilizadas actualmente para la evaluación de modelos en el campo del procesamiento de lenguaje natural.
+BLEU (\textit{Bilingual Evaluation Understudy}) \cite{papineni-etal-2002-bleu} es una de las métricas más utilizadas actualmente para la evaluación de modelos en el campo del procesamiento de lenguaje natural. Esta métrica se basa en la premisa de que una frase generada por un modelo es mejor cuanto más se parezca a la frase que habría sido generada por una persona. Para poder calcularla, se necesita el conjunto de frases generadas por el modelo y un conjunto de frases de referencia reales generadas por personas.
+
+El enfoque de BLEU consiste en utilizar una media ponderada de las coincidencias entre la frase generada por el modelo y las frases de referencia reales. Para ello, BLEU calcula la precisión modificada de n-gramas ($p_n$) entre las frase de referencia y la frase generada por el modelo. Para calcular esta precisión modificada, primero se cuentan cuántos n-gramas de la frase generada por el modelo coinciden con los n-gramas de las frases de referencia. Este conteo se realiza utilizando los \textit{clipped n-gram counts}, que limitan la cantidad de veces que un n-grama en particular puede ser contado, basado en su frecuencia en las frases de referencia. A continuación, se suma el total de estos n-gramas limitados para todas las frases candidatas generadas por el modelo.
+
+El cálculo de $p_n$ se formaliza de la siguiente manera:
+
+\begin{equation}
+p_n = \frac{\sum_{C \in \{\text{Candidatos}\}} \sum_{\text{n-grama} \in C} Count_{clip}(\text{n-grama})}{\sum_{C \in \{\text{Candidatos}\}} \sum_{\text{n-grama }\in C} Count(\text{n-grama})}
+\end{equation}
+
+donde el numerador representa la suma total de los \textit{clipped n-gram counts} para todos los candidatos y el denominador es el conteo total de n-gramas en todas las frases candidatas.
+
+BLEU incorpora también un factor de penalización por brevedad (\textit{brevity penalty}), para evitar premiar las frases generadas que sean mucho más cortas que la frase de referencia. Este factor de penalización por brevedad se define como:
+
+\begin{equation}
+BP = 
+\begin{cases}
+	1 & \text{si } c > r \\
+	e^{(1-r/c)} & \text{si } c \le r
+\end{cases}
+\end{equation}
+
+donde $c$ es la longitud de la frase candidatas generadas por el m odelo y $r$ es la longitud de la frase de referencia.
+
+Finalmente, el valor de BLEU se obtiene combinando estas precisiones de n-gramas modificadas a través de diferentes valores de n:
+
+\begin{equation}
+BLEU = BP + exp(\sum_{n = 1}^N w_n log p_n)
+\end{equation}
+
+donde generalmente se utilizan los valores de $N = 4$ y $w_n = \frac{1}{N}$.
+
+AÑADIR LIMITACIONES
 
 \subsection{COMET}
 
+COMET (\textit{Crosslingual Optimized Metric for Evaluation of Translation}) \cite{rei2020cometneuralframeworkmt}
 
 \chapter{Resultados experimentales}
 
@@ -909,7 +943,7 @@ REESCRIBIR: En este capítulo se presenta el experimento principal de este traba
 
 Para la realización de los experimentos, se han utilizado dos conjuntos de datos distintos, ambos extraídos del portal de la Universidad de Vigo. Ambos conjuntos contienen frases extraídas de los recursos del Portal Aragonés de la Comunicación Aumentativa y Alternativa, acompañada de la lista de lemas o palabras clave asociadas a cada frase. Estas palabras clave han sido seleccionadas por un grupo de anotadores expertos lingüistas.
 
-El primer conjunto de datos incluye un total de 212 frases, todas ellas en español. El segundo conjunto consta de 263 frases, disponibles tanto en español como en inglés.
+El primer conjunto de datos incluye un total de 212 frases, todas ellas en español. El segundo conjunto consta de 260 frases, disponibles tanto en español como en inglés.
 
 A continuación, se presentan algunos ejemplos de frases del primer conjunto de datos para ilustrar su formato:
 
@@ -945,7 +979,7 @@ A partir de estos dos conjuntos, se han creado un conjunto de datos para el entr
 
 \begin{itemize}
 	\item \textbf{Conjunto en español}: se ha creado a partir de la unión de las frases en español de los dos conjuntos mencionados. Contiene un total de 340 frases, ya que entre los conjuntos originales algunas se encontraban repetidas.
-	\item \textbf {Conjunto en inglés}: se ha creado a partir de las frases en inglés del segundo conjunto de datos, por lo que contiene un total de 263 frases.
+	\item \textbf {Conjunto en inglés}: se ha creado a partir de las frases en inglés del segundo conjunto de datos, por lo que contiene un total de 260 frases.
 \end{itemize}
 
 \subsection{Transformación de los datos}
@@ -987,7 +1021,7 @@ La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los exper
 \begin{tabular}{  c || c  c  }
 	\ & Conjunto en español & Conjunto en inglés \\
 	\hline
-	Entrenamiento-Test & 290 & 223 \\
+	Entrenamiento-Test & 290 & 220 \\
 	Validación & 50 & 40
 \end{tabular}
 \end{center}
