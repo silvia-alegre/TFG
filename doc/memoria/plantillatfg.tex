@@ -933,7 +933,26 @@ AÑADIR LIMITACIONES
 
 \subsection{COMET}
 
-COMET (\textit{Crosslingual Optimized Metric for Evaluation of Translation}) \cite{rei2020cometneuralframeworkmt}
+COMET (\textit{Crosslingual Optimized Metric for Evaluation of Translation}) \cite{rei2020cometneuralframeworkmt} es una métrica avanzada utilizada para evaluar la calidad de las traducciones generadas por modelos de lenguaje en el campo de la traducción automática. A diferencia de BLEU, que se basa en coincidencias léxicas de n-gramas, COMET utiliza modelos de aprendizaje profundo para capturar de manera más efectiva la calidad de las traducciones.
+
+COMET se presenta en dos tipos de arquitecturas: el \textit{estimator model} y \textit{translation ranking model}. La diferencia entre ambas es el objetivo de entrenamiento, ya que el \textit{estimator model} está diseñado para predecir directamente un \textit{score} de calidad para una traducción dada, mientras que el \textit{translation ranking model} se entrena para minimizar la distancia entre una traducción generada por el modelo y su correspondiente frase de referencia y frase original en el idioma fuente.
+
+Ambos modelos están formados por dos componentes principales:
+
+\begin{itemize}
+	\item \textbf{\textit{Cross-lingual encoder}}: es un modelo pre-entrenado multilingüe, por ejemplo BERT, XLM o XLM-RoBERTa. Estos modelos contienen varias capas de codificación de \textit{transformer} que generan representaciones (\textit{embeddings}) de las secuencias de entrada. En el caso de COMET, estas secuencias serán las frases originales, las frases generadas por el modelo y las frases de referencia. Así, el codificador mapea todas estas a un mismo espacio de características, de manera que es posible hacer comparaciones más precisas.
+	\item \textbf{\textit{Pooling layer}}: es una capa de agrupamiento que toma los \textit{embeddings} más importantes generados por las capas del codificador y los combina en una única representación fija $e_{x_j}$. Esta representación se calcula como:
+
+\begin{equation}
+e_{x_j} = \mu E_{x_j}^T \alpha
+\end{equation}
+
+donde $\mu$ es un parámetro entrenable, $E_{x_j}$ es el vector de \textit{embeddings} para el token $x_j$ y $\alpha$ es un vector que corresponde a los pesos entrenables por capas.
+
+Finalmente, estos \textit{embeddings} son agrupados mediante \textit{average pooling} para obtener una la representación final de cada frase.
+\end{itemize}
+
+Las representaciones obtenidas son las que se utilizan posteriormente para calcular el \textit{score} (en el caso del \textit{estimator model}) o el ranking (en el caso del \textit{translation ranking model}) de las frases.
 
 \chapter{Resultados experimentales}
 
@@ -947,31 +966,63 @@ El primer conjunto de datos incluye un total de 212 frases, todas ellas en espa�
 
 A continuación, se presentan algunos ejemplos de frases del primer conjunto de datos para ilustrar su formato:
 
-\begin{center}
-\begin{tabular}{ | c | }
-\hline
-	El policía puso una multa. | policía, poner, un, multa \\
-	El lobo quiere comerlo. | lobo, querer, comer, lo \\
-	La niña escribe en la arena. | niña, escribir, arena \\
-	Los niños juegan en la piscina. | niño, jugar, piscina \\
-	Los cerditos viven felices. | cerditos, vivir, feliz \\
-\hline
-\end{tabular}
-\end{center}
+%\begin{center}
+%\begin{tabular}{ | c | }
+%\hline
+	%El policía puso una multa. | policía, poner, un, multa \\
+	%El lobo quiere comerlo. | lobo, querer, comer, lo \\
+	%La niña escribe en la arena. | niña, escribir, arena \\
+	%Los niños juegan en la piscina. | niño, jugar, piscina \\
+	%Los cerditos viven felices. | cerditos, vivir, feliz \\
+%\hline
+%\end{tabular}
+%\end{center}
+
+%\noindent\rule{15cm}{0.4pt}
+
+\begin{displayquote}
+
+El policía puso una multa. | policía, poner, un, multa
+
+El lobo quiere comerlo. | lobo, querer, comer, lo
+
+La niña escribe en la arena. | niña, escribir, arena
+
+Los niños juegan en la piscina. | niño, jugar, piscina
+
+Los cerditos viven felices. | cerditos, vivir, feliz
+
+\end{displayquote}
+
+%\noindent\rule{15cm}{0.4pt}
 
 En cuanto al segundo conjunto de datos, se incluyen ejemplos bilingües:
 
-\begin{center}
-\begin{tabular}{ | c | }
-\hline
-	Su mamá se enfadó.	su, mamá, se, enfadar | His mother got angry.	his, mother, get, angry \\
-	Pili ha metido un gol.	Pili, haber, meter, un, gol | Pili has scored a goal.	Pili, score, a, goal \\
-	La Luna está en el cielo.	Luna, estar, cielo | The moon is in the sky.	moon, be, sky \\
-	Juan encontró un castillo.	Juan, encontrar, castillo | Juan found a castle.	Juan, find, a, castle \\
-	No lo cambiaré.	no, lo, cambiar | I will not change it.	change, it, not  \\
-\hline
-\end{tabular}
-\end{center}
+%\begin{center}
+%\begin{tabular}{ | c | }
+%\hline
+	%Su mamá se enfadó.	su, mamá, se, enfadar | His mother got angry.	his, mother, get, angry \\
+	%Pili ha metido un gol.	Pili, haber, meter, un, gol | Pili has scored a goal.	Pili, score, a, goal \\
+	%La Luna está en el cielo.	Luna, estar, cielo | The moon is in the sky.	moon, be, sky \\
+	%Juan encontró un castillo.	Juan, encontrar, castillo | Juan found a castle.	Juan, find, a, castle \\
+	%No lo cambiaré.	no, lo, cambiar | I will not change it.	change, it, not  \\
+%\hline
+%\end{tabular}
+%\end{center}
+
+\begin{displayquote}
+
+Su mamá se enfadó.	su, mamá, se, enfadar | His mother got angry.	his, mother, get, angry
+
+Pili ha metido un gol.	Pili, haber, meter, un, gol | Pili has scored a goal.	Pili, score, a, goal 
+
+La Luna está en el cielo.	Luna, estar, cielo | The moon is in the sky.	moon, be, sky 
+
+Juan encontró un castillo.	Juan, encontrar, castillo | Juan found a castle.	Juan, find, a, castle 
+
+No lo cambiaré.	no, lo, cambiar | I will not change it.	change, it, not  
+
+\end{displayquote}
 
 En el segundo conjunto de datos, se encontraron algunos valores nulos en las listas de palabras clave para ciertas frases en español. Estas frases fueron anotadas manualmente para completar la información faltante.
 
@@ -984,27 +1035,30 @@ A partir de estos dos conjuntos, se han creado un conjunto de datos para el entr
 
 \subsection{Transformación de los datos}
 
-Tal y como se explicó en la sección \ref{modelosLenguajeGrandes}, para introducir los datos en el modelo de lenguaje es necesario que estos tengan una estructura de \textit{prompt}, que indique al modelo que esperamos una determinada respuesta de él.
+Tal y como se explicó en la Sección \ref{modelosLenguajeGrandes}, para introducir los datos en el modelo de lenguaje es necesario que estos tengan una estructura de \textit{prompt}, que indique al modelo que esperamos una determinada respuesta de él.
 
 Por esta razón, las frases y sus correspondientes palabras clave han sido transformadas a formato \textit{prompt} para crear los conjuntos de datos. Tanto el conjunto de frases en español como el de frases en inglés contienen una sola columna de tipo texto, que siguen el siguiente formato:
 
 \begin{displayquote}
-\centerline{Lemmas: [lista de palabras clave]}
-\centerline{Phrase: [frase generada]}
+Lemmas: [lista de palabras clave]
+
+Phrase: [frase generada]
 \end{displayquote}
 
 Por ejemplo:
 
 \begin{displayquote}
-\centerline{Lemmas: policía poner un multa}
-\centerline{Phrase: El policía puso una multa.}
+Lemmas: policía poner un multa
+
+Phrase: El policía puso una multa.
 \end{displayquote}
 
 Esta será la manera en que los datos entren al modelo durante el entrenamiento. Para los datos de test, se introducirán con el mismo formato pero sin incluir la frase que generan las palabras clave, pues esta debe ser generada por el modelos:
 
 \begin{displayquote}
-\centerline{Lemmas: policía poner un multa}
-\centerline{Phrase:}
+Lemmas: policía poner un multa
+
+Phrase:
 \end{displayquote}
 
 \subsection{Partición de los datos en entrenamiento, test y validación}
@@ -1028,17 +1082,41 @@ La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los exper
 \label{tab:frases}
 \end{table}
 
-\section{Resultados experimentales}
+\section{Resultados experimentales con Gemma y Llama-3}
 
-Tal y como se mencionó en la Sección \ref{modelos}, los modelos utilizados para los experimentos han sido Gemma y Llama-3. Para el entrenamiento de ambos se ha utilizado el método de adaptación de LoRA, explicado en la Sección \ref{lora}. Para el testeo de los modelos se ha utilizado el método de \textit{cross-validation}, realizando un total de diez particiones sobre los datos de entrenamiento. A partir de estas se ha creado el conjunto final de predicciones, sobre el cual se han calculado las métricas de BLEU y COMET.
+Los primeros experimentos de este trabajo han sido realizados utilizando los modelos de Gemma y Llama-3, concretamente Gemma-7B y Llama3-8B. Para el entrenamiento de ambos se ha utilizado el método de adaptación de LoRA, explicado en la Sección \ref{lora}. Además,el testeo de los modelos ha sido realizado mediante \textit{cross-validation}, realizando un total de diez particiones sobre los datos de entrenamiento. A partir de estas se ha creado el conjunto final de predicciones, sobre el cual se han calculado las métricas de BLEU y COMET.
 
-En la primera tanda de experimentos, se han utilizado los siguientes parámetros de LoRA:
+%En la primera tanda de experimentos, se han utilizado los siguientes parámetros de LoRA:
 
-\begin{itemize}
-	\item Rango = 16, 32, 64
-	\item Alfa = 8, 16, 32, 64 
-	\item \textit{Dropout} = 0.1
-\end{itemize}
+%\begin{itemize}
+	%\item Rango = 16, 32, 64
+	%\item Alfa = 8, 16, 32, 64 
+	%\item \textit{Dropout} = 0.1
+%\end{itemize}
+
+\begin{table}[!h]
+\caption{\textit{Scores} de BLEU y COMET para el modelo Gemma-7B}
+\begin{center}
+\begin{tabular}{ c c c c c c }
+	\ & \ & Español & \ & Inglés & \ \\
+	\hline
+	\textit{Rank} & \textit{Alpha} & BLEU & COMET & BLEU & COMET \\
+	\hline
+	\hline
+	16 & 8 & 0 & 42.64 & - & - \\
+	16 & 16 & 10.26 & 59.27 & - & - \\
+	16 & 32 & 50.39 & 87.24 & - & - \\
+	32 & 16 & 13.47 & 61.57 & - & - \\
+	32 & 32 & 52.56 & 87.54 & - & - \\
+	32 & 64 & 53.22 & 89.53 & - & - \\
+	64 & 32 & 52.26 & 88.15 & - & - \\
+	64 & 64 & 52.44 & 89.05 & - & - \\
+	64 & 128 & 46.92 & 87.38 & - & - \\
+	
+
+\end{tabular}
+\end{center}
+\end{table}
 
 Los resultados obtenidos en el entrenamiento se muestran en la tabla 
 
@@ -1050,9 +1128,27 @@ rango = 128, alfa = 128
 
 !!! INSERTAR GRAFICAS/TABLAS !!!!
 
+\section{Validación de los modelos}
+
 \section{Comparación con otros modelos}
 
-????? ????????????? ????????????? ????????????? ????????????? ?????????????
+\begin{table}[!h]
+\caption{\textit{Scores} de BLEU y COMET para el modelo Gemma-7B}
+\begin{center}
+\begin{tabular}{ c c c c c }
+	 \ & Español & \ & Inglés & \ \\
+	\hline
+	\ & BLEU & COMET & BLEU & COMET \\
+	\hline
+	\hline
+	Llama-3 & - & - & - & - \\
+	Gemma & - & - & - & - \\
+	GPT-4 & 66.36 & 92.51 & - & - \\
+	AsTeRICS Grid & 26.89 & 78.36 & - & - \\
+
+\end{tabular}
+\end{center}
+\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 CONCLUSIONS                                 %
