@@ -61,9 +61,9 @@ aumentativos y alternativos de comunicación}
 % les paraules clau i el resum en els tres idiomes                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\keywords{????, ?????????, ????, ?????????????????} % Paraules clau 
-         {?????, ???, ???????????????}              % Palabras clave
-         {?????, ????? ?????, ?????????????}        % Key words
+\keywords{Aprentatje Automàtic, Transformers, Models de Llenguatge Gran} % Paraules clau 
+         {Aprendizaje Automático, Transformers, Modelos de Lenguaje Grandes}              % Palabras clave
+         {Machine Learning, Transformers, Large Language Models}        % Key words
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                              INICI DEL DOCUMENT                             %
@@ -95,44 +95,47 @@ Augmentative and Alternative Communication (AAC) systems are vital tools for fac
 %                                  INTRODUCCIO                                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Introducción}
-ESCRIBIR BIEN !!!
-En este primer capítulo introductorio presentamos la motivación y objetivos del trabajo. También explicaremos cómo será la estructura del contenido de este.
+\chapter{Introducción} \label{cap1}
+
+En este trabajo se explorará cómo los Modelos de Lenguaje Grandes (LLMs) pueden ser aplicados en el campo de los Sistemas Aumentativos y Alternativos de Comunicación (SAAC). Para ello, se entrenarán y evaluarán algunos de los LLMs más populares actualmente, con el objetivo de realizar tareas de generación de texto en este contexto específico.
+
+En este primer capítulo se presenta la motivación y los objetivos principales del trabajo, así como una visión general de la estructura que sigue el documento.
 
 \section{Motivación}
 
-La comunicación y el lenguaje son dos pilares fundamentales de la sociedad actual, pues constituyen la base de las relaciones interpersonales, permitiendo el intercambio de ideas e información. Gracias a ello podemos transmitir a los demás nuestros pensamientos, emociones y necesidades, permitiéndonos participar en la vida en sociedad. Sin embargo, para algunas personas, el hecho de comunicarse de manera satisfactoria puede resultar realmente complicado debido a distintas causas. Es aquí donde entran en juego los Sistemas Aumentativos y Alternativos de Comunicación (SAAC).
+La comunicación y el lenguaje son dos pilares fundamentales de la sociedad actual, pues constituyen la base de las relaciones interpersonales, permitiendo el intercambio de ideas e información. Gracias a ello podemos transmitir a los demás nuestros pensamientos, emociones y necesidades, permitiéndonos participar en la vida en sociedad. Sin embargo, para algunas personas, el hecho de comunicarse de manera satisfactoria puede suponer un gran desafío, debido a distintas causas. En estos casos, los Sistemas Aumentativos y Alternativos de Comunicación (SAAC) juegan un papel crucial.
 
 Tal y como se explica en el portal del Centro Aragonés para la Comunicación Aumentativa y Alternativa (ARASAAC), "\textit{los Sistemas Aumentativos y Alternativos de Comunicación (SAAC) son formas de expresión diferentes del lenguaje hablado que tienen como objetivo aumentar el nivel de expresión (aumentativo) y/o compensar (alternativo) las dificultades de comunicación que presentan algunas personas en este área}” \cite{arasaac}.
 
 Hay distintas razones por las cuales una persona podría necesitar utilizar un SAAC. Entre ellas encontramos la parálisis cerebral, la discapacidad intelectual, los trastornos del espectro autista, algunas enfermedades neurológicas, las distrofias musculares o las afasias.
 
-Aunque hay muchos tipos de SAAC, todos se caracterizan por estar basados en sistemas de símbolos, ya sean gráficos (fotografías, dibujos, pictogramas, palabras o letras) o gestuales (mímica o símbolos manuales). En este trabajo nos centraremos en los comunicadores electrónicos. Los comunicadores electrónicos son herramientas tecnológicas que pueden ser utilizados en cualquier tipo de dispositivo electrónico. Por lo general, consisten en un tablero donde aparecen distintos símbolos gráficos (pictogramas) que representan palabras.
+Aunque hay muchos tipos de SAAC, todos se caracterizan por estar basados en sistemas de símbolos, ya sean gráficos (fotografías, dibujos, pictogramas, palabras o letras) o gestuales (mímica o símbolos manuales).
+
+En este trabajo nos centraremos en los comunicadores electrónicos. Los comunicadores electrónicos son herramientas tecnológicas que pueden ser utilizados en cualquier tipo de dispositivo electrónico. Por lo general, consisten en un tablero donde aparecen distintos símbolos gráficos (pictogramas) que representan palabras. Los pictogramas pueden ser organizados y adaptados dependiendo de las necesidades de cada persona, permitiendo que cada usuario añada aquellos que necesite. De esta manera, los usuarios seleccionan los pictogramas para formar mensajes, que luego son traducidos por el programa en forma de habla digitalizada o texto escrito. Un ejemplo de comunicador electrónico muy utilizado actualmente es el comunicador AsTeRISCS Grid, desarrollado por ARASAAC, ilustrado en la Figura \ref{fig:comunicador}.
 
 \begin{figure}[h]
-\includegraphics[scale = 0.5]{images/asteriscsGrid.jpg}
+\includegraphics[scale = 0.8]{images/comunicador.jpg}
 \centering
-\caption{Comunicador AsTeRISCS Grid desarrollado por ARASAAC}
+\caption{Comunicador AsTeRISCS Grid desarrollado por ARASAAC. Extraído de \cite{asterics_grid_comunicador}}
+\label{fig:comunicador}
 \end{figure}
 
-Estos pictogramas pueden ser organizados y adaptados dependiendo de las necesidades de cada persona, permitiendo que cada usuario añada aquellos que necesite. El funcionamiento es simple: el usuario clica sobre los pictogramas y el programa se encarga de dar la salida del mensaje, generalmente en forma de habla digitalizada o en formato escrito.
+Aunque los comunicadores electrónicos son herramientas verdaderamente útiles para mejorar la comunicación de las personas, presentan ciertas limitaciones. Una de las principales es la dificultad para formar frases complejas y gramaticalmente correctas, ya que, para facilitar y simplificar su uso, estos sistemas suelen incluir solamente palabras clave en su forma básica, sin distinguir número, género o tiempo verbal, cosa que restringe en gran medida la fluidez y expresividad de la comunicación.
 
-Así, estas herramientas resultan verdaderamente útiles para solventar los problemas de comunicación de las personas. Sin embargo, presentan una limitación que puede afectar a la fluidez y al nivel de expresividad con que se realiza la comunicación: la dificultad para conjugar las frases de manera adecuada, pues para facilitar y simplificar el uso de la herramienta, en este tipo de tableros se suelen incluir solamente palabras clave en su forma simple, sin distinción de número, género o tiempo verbal.
-
-Algunos de los comunicadores que existen actualmente en el mercado ya emplean diferentes métodos para abordar este problema, pero existe todavía un amplio margen de mejora. Las recientes innoviaciones en el campo de la inteligencia artificial y el procsamiento de lenguaje natural prometen ofrecer buenos resultados en esta área. Es por esto, que en este trabajo se estudiará la aplicabilidad de los modelos de lenguaje grandes a este tipo de herramientas.
+Algunos de los comunicadores que existen actualmente en el mercado ya emplean diferentes métodos para abordar este problema, pero existe todavía un amplio margen de mejora. Las recientes innoviaciones en el campo de la inteligencia artificial y el procesamiento de lenguaje natural ofrecen nuevas oportunidades para superar estas limitaciones. En particular, los modelos de lenguaje grandes (LLMs) tienen un gran potencial para transformar el uso de estos sistemas, pudiendo proporcionar una generación de texto mucho más natural.
 
 \section{Objetivos}
 
-Los objetivos de este proyecto son los siguientes:
+Los objetivos principales de este proyecto son los siguientes:
 \begin{enumerate}
 \item Investigar sobre los enfoques actuales para la generación de frases en el sector de los SAAC.
-\item Implementar y evaluar modelos de lenguaje grandes para este tipo de herramientas.
-\item Comparar los resultados que se obtienen con los modelos de lenguaje grandes respecto a otros comunicadores que permiten la generación de frases que se encuentran en el mercado, utilizando para ello las métricas de BLEU y COMET.
+\item Adaptar y evaluar modelos de lenguaje grandes de acceso público que son utilizados actualmente para la generación de frases en herramientas SAAC.
+\item Comparar los resultados que se obtienen con los LLMs respecto a otros comunicadores que permiten la generación de frases que se encuentran en el mercado.
 \end{enumerate}
 
 \section{Estructura de la memoria}
 
-????? ????????????? ????????????? ????????????? ????????????? ????????????? 
+Este documento está dividido en 5 capítulos. El Capítulo \ref{cap1} proporciona la motivación y los objetivos del trabajo, estableciendo también el contexto de la investigación. El Capítulo \ref{cap2} presenta los conceptos esenciales, comenzando con una visión general del aprendizaje automático y seguido de una explicación detallada de las redes neuronales, tranformers y modelos de lenguaje grandes. En el Capítulo \ref{cap3} se detallan los modelos de lenguaje utilizados, los métodos para su ajuste y adaptación al contexto y las técnicas de evaluación. El Capítulo \ref{cap4} describe los datos utilizados, el entrenamiento de los modelos y los resultados obtenidos. Finalmente, el Capítulo \ref{cap5} ofrece un resumen de los resultados, evalúa los objetivos alcanzados y sugiere posibles direcciones para futuras investigaciones.
 
 %\section{Notes bibliografiques} %%%%% Opcional
 
@@ -142,13 +145,13 @@ Los objetivos de este proyecto son los siguientes:
 %                         CAPITOLS (tants com calga)                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Fundamentos}\label{capitulo:fundamentos}
+\chapter{Fundamentos}\label{cap2}
 
-REESCRIBIR: Los modelos de lenguaje se encuadran dentro de las técnicas de procesamiento de lenguaje natural, las cuales forman parte del ámbito del aprendizaje automático. Antes de profundizar en las tareas específicas que realizan los modelos de lenguaje grandes, debemos introducir los conceptos básicos del aprendizaje automático, del aprendizaje profunod y del procesamiento de lenguaje natural. Así, en este capítulo abordaremos las distintas tareas y enfoques del aprendizaje automático, proporcionando el contexto necesario para comprender el funcionamiento y las aplicaciones de los modelos de lenguaje.
+En este capítulo se abordan los conceptos fundamentales necesarios para comprender el funcionamiento de los modelos de lenguaje grandes. En primer lugar, se presenta una visión general del aprendizaje automático, seguido de una explicación detallada sobre las redes neuronales, con un efoque particular en su aplicación en el procesamiento de texto. A continuación, se explora la arquitectura de los transformers y se presentan los modelos de lenguaje grandes, explicando detalladamente su funcionamiento.
 
 \section{Aprendizaje automático}
 
-El aprendizaje automático (en inglés, \textit{machine learning}) es una disciplina dentro de la inteligencia artificial que se centra en el desarrollo y estudio de algoritmos y modelos que permiten que los sistemas puedan relizar tareas específicas sin haber sido explícitamente programados para ello. Este término fue acuñado por Arthur Samuel en el año 1959, quien creo uno de los primeros programas exitosos de esta disciplina, conocido como \textit{the Samuel Ckeckers-playing Program} \cite{samuelCheckers} (el programa de juego de damas de Samuel).
+El aprendizaje automático (ML, por su nombre en inglés, \textit{machine learning}) es una disciplina dentro de la inteligencia artificial que se centra en el desarrollo y estudio de algoritmos y modelos que permiten que los sistemas puedan relizar tareas específicas sin haber sido explícitamente programados para ello. Este término fue acuñado por Arthur Samuel en el año 1959, quien creo uno de los primeros programas exitosos de esta disciplina, conocido como \textit{the Samuel Ckeckers-playing Program} \cite{samuelCheckers} (el programa de juego de damas de Samuel).
 
 Tom Mitchell \cite{mitchell1997mcgraw} define el proceso de aprendizaje de los programas en el campo del \textit{machine learning} de la siguiente manera:
 
@@ -156,7 +159,7 @@ Tom Mitchell \cite{mitchell1997mcgraw} define el proceso de aprendizaje de los p
 \textit{"Se dice que un programa aprende de la experiencia $E$ con respecto a alguna clase de tarea $T$, y medida de rendimiento $P$, si su rendimiento en tareas en $T$, medido por $P$, mejora con la experiencia $E$."}
 \end{displayquote}
 
-Aunque la idea principal del aprendizaje automático es esta, econtramos diferentes tipos de aprendizaje automático, dependiendo del tipo de tarea que se quiera llevar a cabo, de la naturaleza de la medida del rendimiento que se utiliza para evaluar el sistema y del tipo de entrenamiento o experiencia que le proporcionamos a este.
+Aunque la idea principal del aprendizaje automático es esta, econtramos diferentes enfoques dependiendo del tipo de tarea que se quiera llevar a cabo, de la naturaleza de esta, de la medida del rendimiento que se utiliza para evaluar el sistema y del tipo de entrenamiento o experiencia que le proporcionamos a este.
 
 Generalmente, los enfoques para el entrenamiento de algoritmos se agrupan en:
 
@@ -209,7 +212,7 @@ La arquitectura más simple de red neuronal es la de perceptrón. Este tipo de m
 \end{figure}
 
 
-Tal y como vemos en la Figura \ref{fig:perceptronSimple}, en la arquitectura de perceptrón simple encontramos solamente una neurona, que toma un vector $X$ como entrada. La neurona calcula la combinación lineal de los elementos del vector $x_1, x_2, ..., x_n$ con los pesos correspondientes $w_1, w_2, ..., w_n$, añadiendo al resultado un valor conocido como umbral o \textit{bias term}:
+Tal y como vemos en la Figura \ref{fig:perceptronSimple}, en la arquitectura de perceptrón simple encontramos solamente una neurona, que toma un vector $x$ como entrada. La neurona calcula la combinación lineal de los elementos del vector $x_1, x_2, ..., x_n$ con los pesos correspondientes $w_1, w_2, ..., w_n$, añadiendo al resultado un valor conocido como umbral o \textit{bias term}:
 
  \begin{equation}
 \label{form:calcularZ}
@@ -232,20 +235,14 @@ El entrenamiento de las redes neuronales consiste en ajustar los distintos pesos
 w = w - \lambda(\hat{y}-y)x
 \end{equation}
 
-Donde $\lambda$ es la tasa de aprendizaje, $\hat{y}$ es el \textit{output} predicho por el modelo y $y$ es la clasificación real.
+donde $\lambda$ es la tasa de aprendizaje, $\hat{y}$ es el \textit{output} predicho por el modelo y $y$ es la clasificación real. Este proceso se puede realizar muestra a muestra (\textit{online}) o para un subconjunto de muestras de entrenamiento (\textit{batch}).
 
-Estos pasos se repiten durante un número determinado de iteraciones o hasta que el modelo converge.
+Así, estos pasos se repiten durante un número determinado de iteraciones o hasta que el modelo converge.
 
 Este modelo de perceptrón tiene una limitación principal: el modelo solo converge si las dos clases en las cuales debe clasificar las muestras son linealmente separables. En caso de que no lo sean, los pesos oscilarán indefinidamente, hasta que el número máximo de iteraciones se alcance. Para solventar esta limitación existen modelos de redes neuronales mucho más complejos, con más neuronas y que utilizan funciones de activación no lineales. El modelo más conocido de este tipo es el de perceptrón multicapa (MLP, por su nombre en inglés: \textit{Multi-Layer Perceptron}).
 
 \subsection{Perceptrón multicapa} \label{perceptronmulticapa}
-El modelo de perceptrón multicapa es una evolución del modelo de perceptrón simple que aparece con intención de poder resolver problemas no lineales. La idea principal detrás de este es la combinación de varios perceptrones simples en un único modelo. En esta arquitectura podemos encontrar un número elevado de neuronas, conectadas entre si y divididas en capas. Encontramos tres tipos de capas: una capa de entrada (\textit{input layer}), una o más capas ocultas (\textit{hidden layers}) y una capa de salida (\textit{output layer}) (ver Figura \ref{fig:perceptronMulticapa}).
-
-%\begin{figure}[h]
-%\includegraphics[scale = 0.5]{images/neural_network.png}
-%\centering
-%\caption{Perceptrón multicapa}
-%\end{figure}
+El modelo de perceptrón multicapa es una evolución del modelo de perceptrón simple que tiene como objetivo el poder resolver problemas no lineales. La idea principal detrás de este modelo es la combinación de varios perceptrones simples en una única arquitectura más compleja. En esta arquitectura podemos encontrar un número elevado de neuronas, conectadas entre sí y organizadas en capas. Encontramos tres tipos de capas: una capa de entrada (\textit{input layer}), una o más capas ocultas (\textit{hidden layers}) y una capa de salida (\textit{output layer}) (ver Figura \ref{fig:perceptronMulticapa}).
 
 \begin{figure}[h]
     \centering
@@ -316,19 +313,20 @@ El modelo de perceptrón multicapa es una evolución del modelo de perceptrón s
     \label{fig:perceptronMulticapa}	
 \end{figure}
 
-Cada una de las neuronas que se encuentra en una capa está conectada a todas las neuronas de la capa siguiente, y cada uno de los enlaces tiene asociado un peso $w$. De manera similar al modelo de perceptrón simple, los datos entran al modelo en forma de vector a través de la capa de entrada, y se calcula el valor $z_i$ de cada entrada utilizando la Ecuación \ref{form:calcularZ}. A continuación se aplica la función de activación $\phi$. Así, el resultado que pasa a la neurona siguiente es $\phi(z_i)$. En este tipo de modelos se utilizan funciones no lineales como función de activación, para poder aplicarse a problemas no lineales. Entre las funciones de activación más comunes se encuentran la función sigmoide, la tangente hiperbólica (\textit{tanh}) y la rectificada lineal (\textit{ReLU}).
+Cada una de las neuronas de una capa está conectada a todas las neuronas de la capa siguiente, y cada uno de los enlaces tiene asociado un peso $w$. De manera similar al modelo de perceptrón simple, los datos se introducen en el modelo en forma de vector a través de la capa de entrada. El ajuste de pesos en el entrenamiento del modelo de perceptrón multicapa se realiza mediante el algoritmo de retropropagación (en inglés, \textit{backpropagation algorithm}) \cite{Rojas1996}. El algoritmo de retropropagación se puede desglosar en cuatro fases:
 
-Este proceso se repite en todas las capas, hasta llegar a la capa de salida y producir el \textit{output} final.
+\begin{enumerate}
+	\item \textbf{Computación hacia adelante (\textit{feed-forward})}: se realiza una pasada hacia adelante a través de la red, desde la capa de entrada hasta la capa de salida. En esta fase, se calculan las salidas de las neuronas utilizando la Ecuación \ref{form:calcularZ} y aplicando sobre este resultado una función de activación no lineal, por ejemplo la función sigmoide, la tangente hiperbólica (\textit{tanh}) o la rectificada lineal (\textit{ReLU}). El uso de este tipo de funciones permite que el modelo pueda aplicarse a problemas no lineales. Al llegar a a la capa de salida, se calcula la predicción final del modelo.
+	\item \textbf{Retropropagación en la capa de salida}: a continuación, se calcula el error en la capa de salida comparando las predicciones del modelo con los valores reales. Posteriormente, se calculan los gradientes del error respecto a los pesos de esta capa.
+	\item \textbf{Retropropagación en las capas ocultas}: utilizando los gradientes obtenidos en la capa de salida, el error se propaga hacia atrás a través de las capas ocultas, ajustando los gradientes del error respecto a los pesos en cada una de estas.
+	\item \textbf{Actualización de los pesos}: finalmente, se actualizan los pesos de la red utilizando los gradientes calculados en las fases anteriores mediante el método de descenso de gradiente u otro algoritmo de optimización similar.
+\end{enumerate}
 
-\subsubsection{Algoritmo \textit{backprop}}
-
-!!!!!!!!! COMPLETAR !!!!!!!!!!!!!!!! cómo se realiza ajuste de los pesos
+Este proceso se repite de manera iterativa hasta alcanzar el número máximo de iteracoines o hasta que el modelo converge.
 
 \subsection{Redes neuronales para secuencias de texto}
 
 % Probabilistic neural networks (book1)
-
-%En esta sección presentaremos dos tipos de redes neuronales que se utilizan para tareas con secuencias de texto.
 
 El procesamiento de secuencias de texto utilizando redes neuronales es una técnica fundamental en el campo del procesamiento de lenguaje natural. Dado que las redes neuronales operan utilizando vectores numéricos, es necesario transformar las secuencias de texto en vectores antes de poder procesarlas. Este proceso se realiza en varias etapas, que se detallan a continuación:
 
@@ -338,7 +336,7 @@ El procesamiento de secuencias de texto utilizando redes neuronales es una técn
 	\item \textbf{Creación de la matriz de \textit{embeddings}}: una vez que se han obtenido los vectores asociados a cada una de las palabras, se puede construir una matriz de \textit{embeddings} que representa la frase completa. Esta matriz facilita la entrada secuencial de los vectores en la red neuronal.
 \end{enumerate}
 
-Cada palabra en la secuencia de texto es procesada por la red neuronal de manera secuencial. A continuación, se presentan dos tipos de red neuronal que son utilizadas para el procesamiento de este tipo de datos.
+Cada palabra en la secuencia de texto es procesada por la red neuronal de manera secuencial. En la siguiente sección se presentan las redes neuronales recurrentes (RNNs), un tipo de red neuronal que es ampliamente utlizado para el procesamiento de secuencias de texto.
 
 \subsubsection{Redes neuronales recurrentes (RNN)} \label{rnn}
 Las redes neuronales recurrentes (en inglés, \textit{recurrent neural networks} (RNN)) son un tipo de red neuronal que mapean desde un conjunto de entrada a otro de salida de manera que la predicción $y_t$ depende no solo de la de entrada $x_t$ sino también del estado oculto del sistema, $h_t$ \cite{murphy2022probabilistic}. El estado oculto $h_t$ es una representación interna de la red en el momento de tiempo $t$ que captura información relevante que ha sido procesada anteriormente. Se actualiza con el tiempo a medida que se procesan los datos. Este tipo de modelos se pueden utilizar para la generación, clasificación y traducción de texto.
@@ -546,15 +544,11 @@ La matriz de parámetros $W_O$ proyecta la concatenación de los resultados de l
 
 \subsection{Capas de redes \textit{Feed Forward}}
 
-!!!!!!!!!!!!!! REESCRIBIR TENIENDO EN CUENTA Q SÍ ES LO MISMO Q PERCEPTRÓN MULTICAPA !!!!!!!!!!!!!!!!!!!!
+Las capas \textit{feed forward} en la arquitectura de transformers están compuestas por redes neuronales independientes de tipo \textit{feed forward} (en español, redes de propagación hacia adelante). Este tipo de red neuronal es equivalente al modelo de perceptrón multicapa descrito en la Sección  \ref{perceptronmulticapa}.
 
-Las capas de redes \textit{feed forward} en la arquitectura de transformers están compuestas por $N$ redes neuronales independientes de tipo \textit{feed forward} (en español, redes de propagación hacia adelante).
+Así, una red neuronal de tipo \textit{feed forward} es una red multicapa en la que, a diferencia de las redes neuronales recurrentes (RNN) explicadas en la sección \ref{rnn}, las conexiones entre neuronas no pueden formar ciclos. Esto implica que las señales siempre se propagan en una única dirección: desde la capa de entrada, a través de las capas ocultas, hacia la capa de salida. En la arquitectura de transformers, estas redes están completamente conectadas, lo que significa que las neuronas de una capa reciben las salidas de todas las neuronas de la capa anterior y envían sus salidas a todas las neuronas de la capa siguiente. Además, típicamente contienen solamente una capa oculta.
 
-Una red neuronal de tipo \textit{feed forward} es una red multicapa en la que, a diferencia de las redes neuronales recurrentes (RNN) explicadas en la sección \ref{rnn}, las conexiones entre neuronas no pueden formar ciclos. Esto implica que las señales siempre se propagan en una única dirección: desde la capa de entrada hacia la capa de salida, pasando por las capas ocultas. En la arquitectura de transformers, estas redes están completamente conectadas, lo que significa que las neuronas de una capa reciben las salidas de todas las neuronas de la capa anterior y envían sus salidas a todas las neuronas de la capa siguiente. Además, típicamente contienen solamente una capa oculta.
-
-Este tipo de red neuronal es similar al modelo de perceptró multicapa explicado en la sección \ref{perceptronmulticapa}, pero no deben confundirse, pues en el caso de las redes neuronales \textit{feed forward}, las unidades de cómputo no son perceptrones, sino unidades más complejas. \cite{jurafsky2023speech}
-
-En los transformers, estas capas complementan las salidas de la capa de atención. Mientras que la capa de atención procesa cada palabra de la secuencia relacionandola con las demás palabras, las capas \textit{feed forward} procesan cada palabra de manera independiente. Este procesamiento es crucial para mejorar la representación de las características extraídas de la capa de atención.
+En los transformers, estas capas complementan las salidas de la capa de atención. Mientras que la capa de atención procesa cada palabra de la secuencia relacionandola con las demás palabras, las capas \textit{feed forward} procesan cada palabra de manera independiente. Este procesamiento independiente es crucial para mejorar la representación de las características extraídas de la capa de atención.
 
 \subsection{Capas de normalización}
 
@@ -589,15 +583,27 @@ z = g\hat{x} + b
 
 \section{Modelos de lenguaje grandes} \label{modelosLenguajeGrandes}
 
-%There are two existing strategies for applying pre-trained language representations to downstream tasks: feature-based and fine-tuning. The feature-based approach, such as ELMo (Peters et al., 2018a), uses task-specific architectures that include the pre-trained representations as additional features. The fine-tuning approach, such as the Generative Pre-trained Transformer (OpenAI GPT) (Radford et al., 2018), introduces minimal task-specific parameters, and is trained on the downstream tasks by simply fine-tuning all pretrained parameters. The two approaches share the same objective function during pre-training, where they use unidirectional language models to learn general language representations. \cite{devlin2019bertpretrainingdeepbidirectional}
+Los modelos de lenguaje grandes (en inglés, \textit{Large Language Models} o LLM) representan una de las innovaciones más significativas en el campo del procesamiento de lenguaje natural. Estos modelos están basados en redes neuronales profundas, y generalmente utilizan la arquitectura de transformers. Estos modelos cuentan con miles de millones de parámetros, y pueden ser entrenados con enormes cantidades de texto, lo que hace que sean capaces de procesar y generar lenguaje humano con una gran fluidez, naturalidad y corrección.
 
-%https://learning.oreilly.com/library/view/the-working-limitations/53863MIT65233/chapter001.xhtml#h1-1
+Las tareas sobre las que se aplican son casos de generación condicional, es decir, generación de texto condicionado a un fragmento de entrada, conocido como \textit{prompt}. Los LLMs son modelos que están diseñados fundamentalmente para predecir la siguiente palabra de una secuencia de palabras \cite{jurafsky2023speech}. Aunque el ámbito de tareas sobre el que se pueden aplicar los LLMs pueda parecer reducido, la realidad es que la gran mayoría de tareas en el ámbito de NLP pueden ser enfocadas desde un punto de vista de generación condicional.
 
-Los modelos de lenguaje grandes (en inglés, \textit{Large Language Models} o LLM) son modelos de aprendizaje profundo basados en redes neuronales con miles de millones de parámetros, que utilizan la arquitectura de transformers. Estos modelos pueden ser entrenados con grandes cantidades de texto, permitiéndoles realizar una gran cantidad de tareas en el ámbito del procesamiento de lenguaje natural.
+En la siguiente sección se explica cómo se deben introducir los datos de entrada al modelo mediante \textit{prompting}.
 
-Las tareas sobre las que se aplican son casos de generación condicional, es decir, generación de texto condicionado a un fragmento de entrada (\textit{prompt}), ya que los LLM son modelos que están diseñados fundamentalmente para predecir la siguiente palabra de una secuencia de palabras \cite{jurafsky2023speech}. Aunque el ámbito de tareas sobre el que se pueden aplicar los LLM pueda parecer reducido, la realidad es que la gran mayoría de tareas en el ámbito de NLP pueden ser enfocadas desde un punto de vista de generación condicional. Por ejemplo, para la tarea de responder preguntas, podriamos plantearlo de la siguiente manera:
+\subsection{\textit{Prompting}}
 
-En primer lugar, debemos proporcionar al modelo una \textit{prompt} con la pregunta a contestar, con un formato que sugiera que después de la pregunta se espera una respuesta, por ejemplo: 
+\textit{Prompting} se refiere al proceso mediante el cual se introducen una secuencia de entrada o \textit{query} al modelo a partir de la cual debe comenzar la tarea de generación de texto. Existen diversas maneras de crear estas \textit{prompts}. Las más utilizadas son las siguientes:
+
+\begin{itemize}
+	\item \textbf{\textit{Zero-shot prompting}}:
+	\item \textbf{\textit{In-context learning }(ICL)}:
+	\item \textbf{\textit{Chain-of-thought} (CoT)}:
+	\item \textbf{\textit{Self consistency}}:
+	\item \textbf{\textit{Tree of thought} (ToT)}:
+\end{itemize}
+
+Por ejemplo, para la tarea de responder preguntas, podriamos plantearlo de la siguiente manera:
+
+En primer lugar, se proporciona al modelo una \textit{prompt} con la pregunta a contestar, con un formato que sugiera que después de la pregunta se espera una respuesta, por ejemplo: 
 
 \begin{displayquote}
 \centerline{"Pregunta: ¿Cuál es la capital de Francia? Respuesta: "}
@@ -691,19 +697,32 @@ donde $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
 
 %En las siguientes secciones se presentan algunos de los modelos de lenguaje grandes más utilizados actualmente.
 
-\subsection{Modelos de Lenguaje Grande Preentrenados (\textit{Pre-trained LLMs})} \label{pretrainedLLM}
+%\subsection{Modelos de Lenguaje Grande Preentrenados (\textit{Pre-trained LLMs})} \label{pretrainedLLM}
 
-Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLMs preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
+%Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLMs preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
 
-Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo GPT-4  \cite{openai2024gpt4technicalreport}, desarrollado por \textit{OpenAI}, Gemma \cite{gemmateam2024gemmaopenmodelsbased}, desarrollado por Google, y Llama-3, desarrollado por Meta. Estos tres modelos se explicarán en detalle en la sección \ref{modelosUtilizados}
+%Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo GPT-4  \cite{openai2024gpt4technicalreport}, desarrollado por \textit{OpenAI}, Gemma \cite{gemmateam2024gemmaopenmodelsbased}, desarrollado por Google, y Llama-3, desarrollado por Meta. Estos tres modelos se explicarán en detalle en la sección \ref{modelosUtilizados}
 
-\chapter{Adaptación y evaluación de modelos de lenguaje grandes}
+\subsection{Arquitecturas de los LLMs}
+
+Existen cuatro tipos principales de arquitecturas de los LLMs:
+
+\begin{itemize}
+	\item \textbf{Arquitectura \textit{encoder-decoder}}: esta es la arquitectura explicada en la Sección \ref{encdec}, sobre la cual se basa también la arquitectura de transformers original, presentada en la Sección \ref{transformers}. Tal y como se explicó, consta de un codificador que se encarga de procesar la entrada de texto, transformándola a una representación interna que captura el significado y contexto del texto original. A continuación, el decodificador utiliza esta representación para generar el texto de salida.
+	\item \textbf{Arquitectura \textit{encoder-only}}: en esta arquitectura se utiliza únicamente el componente de codificador del modelo \textit{encoder-decoder}. Así, en este enfoque, el codificador crea una representación detallada de la entrada de texto, que puede ser utilizada posteriormente para tareas de comprensión del lenguaje, como la clasificación de texto o la extracción de información.
+	\item \textbf{Arquitectura \textit{decoder-only}}: esta arquitectura utiliza únicamente el componente del decodificador. De esta manera, el modelo se entrena para generar texto de manera autoregresiva, es decir, prediciendo cada palabra o token en función de los tokens generados anteriormente. Este enfoque es adecuado para tareas que requieren generación continua de texto, como la completación de frases y la generación de contenido \cite{liu2018generatingwikipediasummarizinglong}.
+	\item \textbf{Arquitectura \textit{Mixture of Experts} (MoE)}: introduce un enfoque en el que se utilizan varios expertos especializados para mejorar la eficiencia y el rendimiento del modelo. En lugar de activar todos los parámetros del modelo para cada tarea, solo un subconjunto de expertos se activa en función de la entrada específica. Este enfoque permite una mayor eficiencia en el procesamiento y optimiza el uso de los recursos computacionales.
+\end{itemize}
+
+\chapter{Adaptación y evaluación de modelos de lenguaje grandes} \label{cap3}
 
 En este capítulo se presentan los modelos de lenguaje grandes utilizados en este trabajo. Además, se aborda cómo podemos adaptar estos modelos preentrenados para realizar tareas  específicas, explorando las diferentes estrategias y enfoques disponibles. Se hará especial incapié en el método PEFT  (\textit{parameter-efficient fine-tuning}), centrándonos concretamente en LoRA (\textit{Low-Rank Adaptation}), que es uno de sus tipos de enfoque.
 
 \section{Modelos de lenguaje utilizados} \label{modelosUtilizados}
 
-Para los experimentos de este trabajo, se utilizarán y compararán tres modelos \textit{open-source} preentrenados: Gemma, Llama-3 y GPT-4. Estos modelos serán explicados con detalle en las siguientes secciones.
+Para la realización de este trabajo se utilizarán modelos de lenguaje grandes preentrenados. Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLMs preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
+
+Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo Gemma, desarrollado por Google, Llama-3, desarrollado por Meta, y los modelos GPT, desarrollados por la compañía \textit{OpenAI},. Estos tres modelos se explicarán en detalle en las siguientes secciones.
 
 \subsubsection{Gemma}
 
@@ -787,7 +806,7 @@ En este trabajo, se empleará el enfoque basado en reparametrización. Este se c
 
 El método de \textit{Low-Rank Adaptation} (LoRA) fue presentado en el artículo \textit{LoRA: Low-Rank adaptation of Large Language models} \cite{hu2021loralowrankadaptationlarge}, desarrollado por un equipo de Microsoft. Como se mencionó en la sección anterior, este forma parte del enfoque PEFT basado en reparametrización de los modelos. LoRA se basa en congelar los pesos del modelo preentrenado durante el entrenamiento para luego ajustarlos mediante una matriz de parámetros adicionales que representan el cambio necesario en los pesos originales del modelo. La matriz de cambios es la que se ajusta en el entrenamiento. Generalmente, la matriz de pesos originales se denota como $W$ y la matriz de cambios, $\bigtriangleup W$.
 
-\begin{figure}[h]
+\begin{figure}[!h]
 \centering
 \begin{tikzpicture}
 
@@ -954,7 +973,7 @@ Finalmente, estos \textit{embeddings} son agrupados mediante \textit{average poo
 
 Las representaciones obtenidas son las que se utilizan posteriormente para calcular el \textit{score} (en el caso del \textit{estimator model}) o el ranking (en el caso del \textit{translation ranking model}) de las frases.
 
-\chapter{Resultados experimentales}
+\chapter{Resultados experimentales} \label{cap4}
 
 REESCRIBIR: En este capítulo se presenta el experimento principal de este trabajo, que consiste en el entrenamiento de dos modelos de lenguaje grandes preentrenados: Gemma y Llama-3, enfocados en la tarea específica de generar frases de lenguaje natural a partir de palabras clave en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. A continuación, se detallan los experimentos realizados, las medidas de evaluación empleadas y los resultados obtenidos.
 
@@ -1106,9 +1125,11 @@ Los primeros experimentos de este trabajo han sido realizados utilizando los mod
 	16 & 8 & 0 & 42.64 & - & - \\
 	16 & 16 & 10.26 & 59.27 & - & - \\
 	16 & 32 & 50.39 & 87.24 & - & - \\
+	\hline
 	32 & 16 & 13.47 & 61.57 & - & - \\
 	32 & 32 & 52.56 & 87.54 & - & - \\
 	32 & 64 & 53.22 & 89.53 & - & - \\
+	\hline
 	64 & 32 & 52.26 & 88.15 & - & - \\
 	64 & 64 & 52.44 & 89.05 & - & - \\
 	64 & 128 & 46.92 & 87.38 & - & - \\
@@ -1154,7 +1175,7 @@ rango = 128, alfa = 128
 %                                 CONCLUSIONS                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Conclusiones}
+\chapter{Conclusiones} \label{cap5}
 
 ????? ????????????? ????????????? ????????????? ????????????? ????????????? 
 
