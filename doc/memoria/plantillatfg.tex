@@ -40,6 +40,8 @@
 \usetikzlibrary{babel}
 \usepackage{hyperref}
 \usepackage{csquotes}
+\usepackage{caption}
+\usepackage{subcaption}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        DADES DEL TREBALL                                    %
@@ -908,7 +910,7 @@ Una de las técnicas de cuantización más utilizadas es la de precisión mixta 
 
 Otra técnia ampliamente utilizada es la de cuantización post entrenamiento \cite{xiao2024smoothquantaccurateefficientposttraining}. Esta técnica se aplica después de que los modelos hayan sido completament entrenados utilizando representaciones de alta precisión (en el caso de los modelos de lenguaje grandes preentrenados, después del preentrenamiento). El bojetivo principal es reducir el tamaño del modelo y los requisitos de cálculo para permitir una implementación más eficiente en cuanto a memoria y computación, sin tener que reentrenar el modelo desde cero. De esta manera, los pesos y, a veces, las activaciones del modelo son convertidos a representaciones de menor precisión, generalmente de 8 bits.
 
-\section{Medidas de evaluación}
+\section{Medidas de evaluación} \label{metricas}
 
 La correcta evaluación de los modelos de lenguaje grandes es crucial para poder medir su desempeño en la realización de tareas. A medida que los modelos se vuelven complejos y capaces de generar texto con mayor coherencia y fluidez, se vuelve indispensable contar con métricas de evaluación que permitan cuantificar su desempeño de manera precisa. Estas métricas no solo pueden ayudarnos a comparar modelos entre sí, sino que también proporcionan información sobre las áreas en las que un modelo puede necesitar mejoras.
 
@@ -1101,71 +1103,165 @@ La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los exper
 \label{tab:frases}
 \end{table}
 
-\section{Resultados experimentales con Gemma y Llama-3}
+\section{Experimentos realizados con el conjunto en español}
 
-Los primeros experimentos de este trabajo han sido realizados utilizando los modelos de Gemma y Llama-3, concretamente Gemma-7B y Llama3-8B. Para el entrenamiento de ambos se ha utilizado el método de adaptación de LoRA, explicado en la Sección \ref{lora}. Además,el testeo de los modelos ha sido realizado mediante \textit{cross-validation}, realizando un total de diez particiones sobre los datos de entrenamiento. A partir de estas se ha creado el conjunto final de predicciones, sobre el cual se han calculado las métricas de BLEU y COMET.
+Los modelos utilizados para los experimentos de este trabajo son los modelos Gemma-7B y Llama3-8B. Ambos modelos están disponibles para su uso libre en el portal de \textit{Hugging Face}.
 
-%En la primera tanda de experimentos, se han utilizado los siguientes parámetros de LoRA:
+Para el entrenamiento de los modelos, se ha  aplicado el método de adaptación LoRA, que se describe en detalle en la sección \ref{lora}. Este método requiere la configuración de dos parámetros clave: el rango ($r$) y el parámetro \textit{alpha}. Dado que estos parámetros pueden influir significativamente en el rendimiento del modelo, se han realizado experimentos variando sus valores para identificar la configuración óptmia que proporciona mejores resultados.
 
-%\begin{itemize}
-	%\item Rango = 16, 32, 64
-	%\item Alfa = 8, 16, 32, 64 
-	%\item \textit{Dropout} = 0.1
-%\end{itemize}
+Para garantizar una evaluación robusta y fiable de los modelos, se ha utilizado la técnica de \textit{cross-validation} con 10 particiones. Esto implica dividir el conjunto de datos en 10 partes iguales. En cada iteración, 9 partes se utilizan para entrenar el modelo y la parte restante, para probarlo. Las particiones se han realizado de manera que, al final del proceso, todos los datos hayan sido utilizados tanto para entrenamiento como para prueba, asegurando que cada dato aparezce solo una vez en el conjunto de prueba.
+
+Se ha entrenado un modelo independiente para cada una de las 10 particiones. Una vez completado el entrenamiento y realizadas las predicciones de estos 10 modelos, se han combinado las predicciones de todos ellos en un solo conjunto de predicciones para calcular las métricas de rendimiento. Las métricas utilizadas para la evaluación son las métricas BLEU y COMET, ambas descritas en la Sección \ref{metricas}.
+
+\subsection{Primeros experimentos con Gemma y Llama-3}
+
+En los primeros experimentos realizados, se ha comparado el rendimiento de los modelos Gemma-7B y Llama3-8B para evaluar cómo se comportan bajo diferentes configuraciones. El enfoque principal fue explorar el impacto del parámetro de rango en la adaptación LoRA, manteniendo un valor fijo para el parámetro \textit{alpha}. Este enfoque sigue la práctica común de fijar el parámetro \textit{alpha} a dos veces el valor del rango. Los valores de rango explorados han sido 16, 32 y 64.
+
+La Tabla \ref{tab: Gemma y Llama} presenta los resultados obtenidos de BLEU y COMET.
 
 \begin{table}[!h]
-\caption{\textit{Scores} de BLEU y COMET para el modelo Gemma-7B}
+\caption{\textit{Scores} de BLEU y COMET para los modelo Gemma-7B y Llama3-8B}
 \begin{center}
 \begin{tabular}{ c c c c c c }
-	\ & \ & Español & \ & Inglés & \ \\
+	\ & \ & Gemma-7B & \ & Llama3-8B & \ \\
 	\hline
 	\textit{Rank} & \textit{Alpha} & BLEU & COMET & BLEU & COMET \\
 	\hline
 	\hline
-	16 & 8 & 0 & 42.64 & - & - \\
-	16 & 16 & 10.26 & 59.27 & - & - \\
-	16 & 32 & 50.39 & 87.24 & - & - \\
+	16 & 32 & 52.44 & 88.92 & 65.59 & 92.82 \\
 	\hline
-	32 & 16 & 13.47 & 61.57 & - & - \\
-	32 & 32 & 52.56 & 87.54 & - & - \\
-	32 & 64 & 53.22 & 89.53 & - & - \\
+	32 & 64 & 44.44 & 87.44 & 66.13 & 93.37 \\
 	\hline
-	64 & 32 & 52.26 & 88.15 & - & - \\
-	64 & 64 & 52.44 & 89.05 & - & - \\
-	64 & 128 & 46.92 & 87.38 & - & - \\
+	64 & 128 & 55.21 & 87.82 & 67.62 & 93.23 \\
 	
 
 \end{tabular}
 \end{center}
+\label{tab: Gemma y Llama}
 \end{table}
 
-Los resultados obtenidos en el entrenamiento se muestran en la tabla 
+\begin{figure}[h]
 
-!!! INSERTAR TABLA/GRÁFICA RESULTADOS !!!
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=9cm]{images/gemma_llama_BLEU} 
+\caption{Resultados de BLEU para los modelos Gemma-7B y Llama3-8B}
+\label{fig:subim1}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=9cm]{images/gemma_llama_COMET}
+\caption{Resultados de COMET para los modelos Gemma-7B y Llama3-8B}
+\label{fig:subim2}
+\end{subfigure}
 
-En estos experimentos observamos que con el modelo de Llama-3 se obtienen mejores resultados que con Gemma. Por esta razón, se ha decidido ampliar los experimentos con este modelo para comprobar si podemos obtener aún mejores resultados.
+\caption{Resultados obtenidos en las métricas de BLEU y COMET con los modelos Gemma-7B y Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32 y 64 y un \textit{alpha} igual a dos veces $r$.}
+\label{fig:image2}
+\end{figure}
 
-rango = 128, alfa = 128
+Los resultados muestran que, en todas las configuraciones de rango probadas, el modelo Gemma presenta un rendimiento consistentemente inferior respecto al modelo Llama-3. Esta diferencia de rendimiento sugiere que Llama-3 puede ser más efectivo para las tareas evaluadas.
 
-!!! INSERTAR GRAFICAS/TABLAS !!!!
+Dado que Llama-3 ha demostrado ser superior en las pruebas iniciales, se ha decidido que este será el modelo principal a utilizar en los experimentos posteriores. Esta decisión busca maximizar la calidad de los resultados en los experimentos posteriores.
 
-\section{Validación de los modelos}
+\subsection{Exploración de los valores de \textit{alpha}}
+
+En esta fase de los experimentos, se ha investigado el impacto del parámetro \textit{alpha} en el rendimiento del modelo. El parámetro \textit{alpha} controla el peso relativo que se le asigna a los parámetros de LoRA en comparación con los parámetros del modelo preentrenado. Así, para esta exploración se han realizado experimentos utilizando diferentes valores para el rango $r$ de LoRA: 16, 32, 64 y 128. Para cada valor de $r$, se han probado tres configuraciones distintas de \textit{alpha}:
+
+\begin{enumerate}
+	\item \textbf{\textit{alpha} = r/2}: en esta configuración, \textit{alpha} es la mitad del valor del rango. De esta manera, se da más peso a los parámetros del modelo preentrenado y menos a los aprendidos durante el entrenamiento con LoRA.
+	\item \textbf{\textit{alpha} = r}: en esta configuración, \textit{alpha} es igual al valor del rango. De esta manera, se da el mismo peso a los parámetros del modelo preentrenado y a los aprendidos durante el entrenamiento con LoRA.
+	\item \textbf{\textit{alpha} = 2r}: en esta configuración, \textit{alpha} es el doble del valor del rango. De esta manera, se da más peso a los parámetros aprendidos durante el entrenamiento con LoRA que a los del modelo preentrenado.
+\end{enumerate}
+
+Los resultados obtenidos se observan en la Tabla \ref{tab: Llama exploración de alpha}.
+
+\begin{table}[!h]
+\caption{\textit{Scores} de BLEU y COMET para el modelo Llama3-8B}
+\begin{center}
+\begin{tabular}{ c c c c }
+	\hline
+	\textit{Rank} & \textit{Alpha} & BLEU & COMET \\
+	\hline
+	\hline
+	16 & 8 & 64.56 & 92.57 \\
+	16 & 16 & 65.85 & 92.96 \\
+	16 & 32 & 65.59 & 92.82 \\
+	\hline
+	32 & 16 & 64.55 & 92.95 \\
+	32 & 32 & 66.02 & 93.10 \\
+	32 & 64 &  66.13 & 93.37 \\
+	\hline
+	64 & 32 & 68.89 & 93.20\\
+	64 & 64 & 67.30 & 93.09\\
+	64 & 128 & 67.62 & 93.23\\
+	\hline
+	128 & 64 & 68.21 & 93.07\\
+	128 & 128 & 70.06 & 93.29\\
+	128 & 256 & 69.06 & 92.97\\
+	\hline
+	256 & 128 & 68.21 & 93.07\\
+	256 & 256 & 67.77 & 92.90\\
+	256 & 512 & 66.61 & 92.84\\
+	
+
+\end{tabular}
+\end{center}
+\label{tab: Llama exploración de alpha}
+\end{table}
+
+\begin{figure}[h]
+
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_BLEU} 
+\caption{Resultados de BLEU para Llama3-8B}
+\label{fig:subim1}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_COMET}
+\caption{Resultados de COMET para Llama3-8B}
+\label{fig:subim2}
+\end{subfigure}
+
+\caption{Resultados obtenidos en las métricas de BLEU y COMET conel modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32, 64 y 128 y explorando distintos valores de \textit{alpha}.}
+\label{fig:graficasLlama}
+\end{figure}
+
+En los gráficos de la Figura \ref{fig:graficasLlama} se puede observar visualmente el rendimiento de los diferentes valores de \textit{alpha} en función del parámetro de rango.
+
+En cuanto a la métrica BLEU, los resultados muestran que los experimentos con \textit{alpha} igual a $r/2$ presentan una mayor inestabilidad en comparación con las configuracionies de \textit{alpha} mayores. Los resultados para \textit{alpha} igual a $r$ y \textit{alpha} igual a $2r$ siguen una tendencia más clara y consistente, y en general, muestran un mejor desempeño. Esto sugiere que las configuraciones con valores más altos de \textit{alpha} proporcionan un rendimiento más estable y predecible.
+
+En lo que respecta a la métrica COMET, los resultados muestran que todas las configuraciones de \textit{alpha} se encuentran en un rango de valores de esta métrica similar, sin presentar diferencias notables en su comportamiento.
+
+Para investigar más a fondo, se realizó un experimento adicional con \textit{alpha} igual a $r$ y \textit{alpha} igual a $2r$ utilizando un valor de rango (\textit{r}) de 256. Sin embargo, en este caso, no se observó una tendencia ascendente en el rendimiento.
+
+Así, estos experimentos sugieren que la combinación óptima de parámetros es $r$ igual a 128 con \textit{alpha} igual a $r$.
+
+\subsection{Validación del modelo en español}
+
+Finalmente, se ha llevado a cabo el entrenamiento del modelo de Llama-3 con la mejor combinación de parámetros obtenidos en los experimentos anteriores: $r$ = 128 y \textit{alpha} = $r$. En este caso, el modelo ha sido entrenado utilizando todo el conjunto de datos disponible para el entrenamiento.
+
+Una vez completado el entrenamiento, se ha realizado la validación del modelo utilizando el conjunto de datos reservado específicamente para validación. De esta manera, se ha evaluado el desempeño del modelo en datos que no habían sido vistos por el modelo en ninguna fase de entrenamiento, lo que proporciona una medida de su capacidad de generalización.
+
+Los resultados obtenidos con esta configuración final han sido los siguientes:
+
+\begin{itemize}
+	\item BLEU = 62.90
+	\item COMET = 89.15
+\end{itemize}
+
+
+\section{Experimentos realizados con el conjunto en inglés}
 
 \section{Comparación con otros modelos}
 
 \begin{table}[!h]
 \caption{\textit{Scores} de BLEU y COMET para el modelo Gemma-7B}
 \begin{center}
-\begin{tabular}{ c c c c c }
-	 \ & Español & \ & Inglés & \ \\
-	\hline
-	\ & BLEU & COMET & BLEU & COMET \\
+\begin{tabular}{ c c c }
+	\ & BLEU & COMET \\
 	\hline
 	\hline
-	Llama-3 & - & - & - & - \\
-	Gemma & - & - & - & - \\
-	GPT-4 & 66.36 & 92.51 & - & - \\
-	AsTeRICS Grid & 26.89 & 78.36 & - & - \\
+	Llama-3 & 62.90 & 89.15  \\
+	GPT-4 & 66.36 & 92.51\\
+	AsTeRICS Grid & 26.89 & 78.36 \\
 
 \end{tabular}
 \end{center}
