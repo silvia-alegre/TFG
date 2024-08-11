@@ -1154,7 +1154,7 @@ En los primeros experimentos realizados, se ha comparado el rendimiento de los m
 La Tabla \ref{tab: Gemma y Llama} presenta los resultados obtenidos de BLEU y COMET.
 
 \begin{table}[!h]
-\caption{\textit{Scores} de BLEU y COMET para los modelo Gemma-7B y Llama3-8B}
+\caption{Puntuación de BLEU y COMET para los modelo Gemma-7B y Llama3-8B}
 \begin{center}
 \begin{tabular}{ c c c c c c }
 	\ & \ & Gemma-7B & \ & Llama3-8B & \ \\
@@ -1208,7 +1208,7 @@ En esta fase de los experimentos, se ha investigado el impacto del parámetro \t
 Los resultados obtenidos se observan en la Tabla \ref{tab: Llama exploración de alpha}.
 
 \begin{table}[!h]
-\caption{\textit{Scores} de BLEU y COMET para el modelo Llama3-8B}
+\caption{Puntuación de BLEU y COMET para el modelo Llama3-8B}
 \begin{center}
 \begin{tabular}{ c c | c c }
 	\hline
@@ -1230,6 +1230,10 @@ Los resultados obtenidos se observan en la Tabla \ref{tab: Llama exploración de
 	128 & 64 & 68.21 & 93.07\\
 	128 & 128 & 70.06 & 93.29\\
 	128 & 256 & 69.06 & 92.97\\
+	\hline
+	256 & 128 & 67.28 & 92.94\\
+	256 & 256 & 67.77 & 92.90\\
+	256 & 512 & 66.61 & 92.84\\	
 	
 
 \end{tabular}
@@ -1281,14 +1285,69 @@ Aunque los valores obtenidos para BLEU y COMET son inferiores a los resultados a
 
 \section{Experimentos realizados con el conjunto en inglés}
 
-Para evaluar la influencia del idioma en los resultados de los modelos, se han replicado los mismos experimentos realizados con el conjunto de datos en español utilizando el conjunto en inglés. En las siguientes secciones se presentan los resultados obtenidos.
+Para evaluar la influencia del idioma en los resultados de los modelos, se han replicado los mismos experimentos realizados con el conjunto de datos en español utilizando el conjunto en inglés. De nuevo, se han utilizado los modelos Gemma-7B y Llama3-8B disponibles en el portal de \textit{Hugging Face}.
+
+Al igual que en los experimentos anteriores, se ha aplicado la adaptación LoRA y se ha llevado a cabo el entrenamiento utilizando \textit{cross-validation} con un total de 10 particiones.
+
+Los resultados obtenidos de estos experimentos se presentan en las siguientes secciones.
 
 \subsection{Experimentos con Gemma y Llama-3}
 
-\subsection{Exploración de valores de \textit{alpha}}
+Al igual que los experimentos realizados con el conjunto de datos en español, el primer experimento con el conjunto en inglés consistió en comparar el rendimiento de los modelos Gemma-7B y Llama3-8B. Para la adaptación con LoRA, se han explorado los valores de rango 16, 32 y 64; manteniendo el parámetro \textit{alpha} a dos veces el valor del rango.
+
+Los resultados obtenidos se presentan en la tabla \ref{tab: Gemma y Llama inglés}
 
 \begin{table}[!h]
-\caption{\textit{Scores} de BLEU y COMET para el modelo Llama3-8B con el conjunto de datos en inglés}
+\caption{Puntuación de BLEU y COMET para los modelo Gemma-7B y Llama3-8B}
+\begin{center}
+\begin{tabular}{ c c c c c c }
+	\ & \ & Gemma-7B & \ & Llama3-8B & \ \\
+	\hline
+	\textit{Rank} & \textit{Alpha} & BLEU & COMET & BLEU & COMET \\
+	\hline
+	\hline
+	16 & 32 & 52.44 & 88.92 & 61.84 & 90.86 \\
+	\hline
+	32 & 64 & 44.44 & 87.44 & 62.22 & 91.12 \\
+	\hline
+	64 & 128 & 55.21 & 87.82 & 63.42 & 90.85 \\
+	
+
+\end{tabular}
+\end{center}
+\label{tab: Gemma y Llama inglés}
+\end{table}
+
+Los resultados muestran que,al igual que con el conjunto de datos en español, el rendimiento del modelo Gemma es significativamente inferior al de el de Llama-3 en todas las configuraciones.
+
+En la Figura \ref{fig:graficasComparacion} se presentan las puntuaciones de BLEU y COMET de ambos modelos entrenados en los dos idiomas idiomas, con los valores de rango y configuración de \textit{alpha} descritos. Observamos que los resultados para el modelo Llama3-8B en inglés siguen exactamente la misma tendencia que los obtenidos con el conjunto en español, aunque se encuentran ligeramente por debajo. Por otro lado, para el modelo Gemma-7B, los resultados en inglés también son ligeramente inferiores a los del conjunto en español, pero muestran un gran incremento en $r = 32$, superando los valores de las métricas obtenidos con el conjunto en español. En este caso, las tendencias del modelo en inglés y en español no son completamente consistentes.
+
+\begin{figure}
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=9cm]{images/BLEU_comparacion_idiomas} 
+\caption{Resultados de BLEU para Gemma-7B y Llama3-8B con el conjunto de datos en inglés y español}
+\label{fig:subim1}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=9cm]{images/COMET_comparacion_idiomas}
+\caption{Resultados de COMET para Gemma-7B y Llama3-8B con el conjunto de datos en inglés y español}
+\label{fig:subim2}
+\end{subfigure}
+
+\caption{Resultados obtenidos en las métricas de BLEU y COMET con los modelos Gemma-7B y Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32 y 64 y la configuración de $\alpha = 2r$. En verde se observan los resultados con el conjunto de datos en español y en amarillo, en inglés.}
+\label{fig:graficasComparacion}
+\end{figure}
+
+\subsection{Exploración de valores de \textit{alpha}}
+
+En los siguientes experimentos, se ha llevado a cabo una exploración de diferentes configuraciones del parámetro \textit{alpha} utilizando el modelo Llama3-8B. ya que este es el modelo que ha demostrado ofrecer mejores resultados.
+
+De manera similar a los experimentos realizados con el conjunto de datos en español, se han probado diferentes valores de rango: 16, 32, 64, 128 y 256. Para cada valor de rango, se han evaluado las siguientes configuraciones de \textit{alpha}: $\alpha = r/2$, $\alpha = r$ y $\alpha = 2r$.
+
+Los resultados obtenidos se presentan en la Tabla \ref{tab: Llama exploración de alpha inglés}.
+
+\begin{table}[!h]
+\caption{Puntuación de BLEU y COMET para el modelo Llama3-8B con el conjunto de datos en inglés}
 \begin{center}
 \begin{tabular}{ c c | c c }
 	\hline
@@ -1317,8 +1376,10 @@ Para evaluar la influencia del idioma en los resultados de los modelos, se han r
 
 \end{tabular}
 \end{center}
-\label{tab: Llama exploración de alpha}
+\label{tab: Llama exploración de alpha inglés}
 \end{table}
+
+En la Figura \ref{fig:graficasLlama inglés} se presentan los resultados de manera visual.
 
 \begin{figure}
 \begin{subfigure}{0.5\textwidth}
@@ -1332,20 +1393,30 @@ Para evaluar la influencia del idioma en los resultados de los modelos, se han r
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados obtenidos en las métricas de BLEU y COMET conel modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con los datos en inglés.}
-\label{fig:graficasLlama}
+\caption{Resultados obtenidos en las métricas de BLEU y COMET con el modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en inglés.}
+\label{fig:graficasLlama inglés}
 \end{figure}
+
+Si observamos las puntuaciones de BLEU, se puede ver que las tres configuraciones de \textit{alpha} presentan una tendencia ascendente hasta alcanzar su máximo en $r = 128$. Para $r = 256$, los valores de BLEU disminuyen significativamente en los tres casos, de manera similar a lo observado con el conjunto de datos en español. En este caso, la configuración con $r = 128$ y $\alpha = r$ obtiene la mejor puntuación de BLEU, aunque la diferencia con respecto a las otras configuraciones de \textit{alpha} para el mismo valor de $r$ es mínima.
+
+En cuanto al COMET, las tres configuraciones siguen una tendencia comparable a la observada con el conjunto de datos en español. No obstante, se observa un descenso notable en la puntuación de COMET para $r = 256$ y $\alpha = 2r$.
 
 \subsection{Validación del modelo en inglés}
 
-\section{Análisis de errores}
-
 \section{Comparación con otros modelos}
 
+Una vez obtenidos los resultados finales del modelo Llama3-8B, se han realizado pruebas adicionales con el modelo GPT-4 y con la aplicación AsTeRICS Grid para comparar su rendimiento. Todas estas pruebas se han realizado utilizando el conjunto de validación reservado desde el incio de los experimentos.
+
+El modelo GPT-4 fue seleccionado para esta comparación debido a su reputación como uno de los modelos de lenguaje grandes más avanzados y potentes disponibles actualmente. Para evaluar el desempeño de GPT-4, se introdujeron los datos de entrenamiento a través de su interfaz \textit{ChatGPT} mediante \textit{prompting}, y se le solicitó que produjera las frases que se encontraban en el conjunto de validación.
+
+Por otro lado, la aplicación AsTeRISCS Grid ha sido incluida en esta evaluación debido a su relevancia como herramienta de comunicación utilizada en el ámbito de los Sistemas de Comunicación Aumentativa y Alternativa. Esta aplicación es un comunicador electrónico desarrollada por ARASAAC, que incorpora la función de generar frases conjugadas a partir de las palabras clave introducidas por el usuario. Esta conjugación de las frases se realiza mediante una serie de reglas predefinidas.
+
+Los resultados obtenidos con los tres modelos (Llama3-8B. GPT-4 y AsTeRISCS Grid) se presentan en la tabla \ref{tab:comparacionFinal}.
+
 \begin{table}[!h]
-\caption{\textit{Scores} de BLEU y COMET para el modelo Gemma-7B}
+\caption{Puntuaciones de BLEU y COMET de los distintos modelos utilizados}
 \begin{center}
-\begin{tabular}{ c c c }
+\begin{tabular}{ c | c c }
 	\ & BLEU & COMET \\
 	\hline
 	\hline
@@ -1355,9 +1426,14 @@ Para evaluar la influencia del idioma en los resultados de los modelos, se han r
 
 \end{tabular}
 \end{center}
+\label{tab:comparacionFinal}
 \end{table}
 
+Obsevamos que, aunque el modelo entrenado Llama3-8B no alcanza el nivel de rendimiento de GPT-4, sus resultados son notablemente superiores a los de AsTeRICS Grid, una herramienta ampliamente utilizada en el ámbito de los SAAC. Estos resultados sugieren que la integración de modelos de lenguaje grandes podría mejorar significativamente la calidad de las aplicaciones en este campo, proporcionando una alternativa más robusta y efectiva para la generación de frases a partir de las palabras introducidas por los usuarios y mejorando así la calidad de la comunicación de estos.
+
 \subsection{Experimentos con personas}
+
+\section{Análisis de errores}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 CONCLUSIONS                                 %
