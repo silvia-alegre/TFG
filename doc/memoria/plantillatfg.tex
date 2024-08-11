@@ -848,9 +848,9 @@ w_{k1} & w_{k2} & \dots & w_{kd}
 \label{fig:matricesLoRA}
 \end{figure}
 
-LoRA se basa en la idea de la descomposición en rangos de las matrices. El rango de una matriz hace referencia al número de columnas linealmente independientes de esta. Una columna es linealmente dependiente si puede ser obtenida como combinación lineal de otras columnas de la matriz. Esto implica que, si existen columnas linealmente dependientes en la matriz, estas se pueden eliminar sin necesidad de perder información, permitiendo así reducir el tamaño de esta.
+LoRA se basa en la idea de descomponer las matrices de parámetros en componentes de rango bajo. El rango de una matriz se define como el número de columnas linealmente independientes de esta. Una columna es considerada linealmente dependiente si puede ser obtenida como una combinación lineal de otras columnas de la matriz. Esto implica que, si existen columnas linealmente dependientes en la matriz, estas se pueden eliminar sin perder información esencial, permitiendo así reducir el tamaño de esta.
 
-Así, en lugar de optimizar los pesos de la matriz completa, LoRA utiliza lo que se conoce como \textit{low rank decomposition} (en español, descomposición en rango bajo), de manera que la matriz $\bigtriangleup W$ se representa como el producto de dos matrices:
+Así, en lugar de optimizar los pesos de la matriz completa, LoRA utiliza lo que se conoce como \textit{low rank decomposition} (en español, descomposición en rango bajo), de manera que la matriz de cambios $\bigtriangleup W$ se representa como el producto de dos matrices de rango inferior $B$ y $A$:
 
 \begin{equation}
 \bigtriangleup W = B \cdot A =
@@ -867,11 +867,19 @@ a_{r1} & \dots & a_{rk}
 \end{bmatrix}
 \end{equation}
 
-Aquí, la matriz $B$ tiene dimensiones $d x r$, y la matriz A, $r x k$, donde $d$ es el número de filas de la matriz de pesos original, $k$ es el número de columnas y $r$, es un hiperparámetro (denominado \textit{rank} o rango) que se debe determinar.
+Aquí, la matriz $B$ tiene dimensiones $d * r$, y la matriz A, $r * k$. Donde $d$ es el número de filas de la matriz de pesos original, $k$ es el número de columnas y $r$ es un hiperparámetro conocido como \textit{rank} o rango, que debe ser determinado.
 
-Este enfoque proporciona una mayor eficiencia computacional, ya que se está reduciendo el número de elementos en las matrices $A$ y $B$ con respecto a la matriz original. En el entrenamiento, la matriz $A$ se inicializa a partir de una distribución gaussiana, mientras que la matriz $B$ es inicializada a 0. A medida que trascurre el entrenamiento, los pesos se ajustan para adaptar el modelo a la tarea.
+Dada una entrada $x$, la salida del modelo se calcula de la siguiente manera:
 
-En las siguientes secciones presentaremos cuáles son los hiperparámetros que se deben ajustar en un entrenamiento con LoRA.
+\begin{equation}
+y = Wx + \bigtriangleup Wx = Wx + BAx
+\end{equation}
+
+Durante el entrenamiento, la matriz $A$ se inicializa a partir de una distribución gaussiana, mientras que la matriz $B$ es inicializada a 0. A medida que trascurre el entrenamiento, los pesos se ajustan para adaptar el modelo a la tarea. Además, la matriz $\bigtriangleup W$ se escala por $\alpha / r$, donde $\alpha$ es un parámetro adicional que debe ser ajustado y $r$ es el rango mencionado anteriormente. Este escalado controla el impacto de la matriz de cambios $\bigtriangleup W$ aprendida durante el entrenamiento de LoRA en el modelo final.
+
+Este enfoque proporciona una mayor eficiencia computacional al reducir significativamente el número de elementos que deben ajustarse en las matrices $A$ y $B$ en comparación con la matriz de pesos original. 
+
+En las siguientes secciones se presentan los hiperparámetros que deben ajustarse en el entrenamiento con LoRA.
 
 \subsubsection{Rango}
 
@@ -884,17 +892,21 @@ El primer hiperparámetro que se debe determinar en un entrenamiento con LoRA es
 
 \subsubsection{\textit{Alpha}}
 
-\textit{Alpha} es un parámetro que se utiliza para escalar los pesos entrenados, determinando la importancia que se les debe dar a los pesos aprendidos durante el entrenamiento en el modelo. Se debe tener en cuenta lo siguiente:
+El parámetro \textit{alpha} ($\alpha$) se utiliza para escalar la matriz de cambios $\bigtriangleup W$, determinando la importancia relativa que de los pesos aprendidos durante el entrenamiento en comparación con los pesos preexistentes del modelo. Como se mencionó anteriormente, la matriz de cambios $\bigtriangleup W$ se escala por $\alpha / r$ para poder controlar el impacto que esta tiene sobre el modelo final. Por tanto, en cuanto al parámetro $\alpha$ se deben tener en cuenta los siguientes aspectos:
 
 \begin{itemize}
-	\item Si $\alpha = r$, los nuevos pesos serán integrados con los del modelo original en una proporción de 1:1.
-	\item Si $\alpha > r$, se está dando mayor peso a los nuevos parámetros aprendidos. Esto es recomendable únicamente cuando se cuenta con un conjunto de datos de entrenamiento grande y de alta calidad. De lo contrario, al darle más importancia al conocieminto aprendido del nuevo conjunto de datos en lugar de al conociemiento preexistente del modelo, podría resultar en incoherencias.
-	\item Si $\alpha < r$, se prioriza el conocimiento preexistente del modelo sobre el nuevo. Esta configuración es aconsejable cuando el conjunto de datos de entrenamiento es pequeño, pues así se garantiza que el modelo conserve más el conociemiento original.
+	\item Si $\alpha = r$, los nuevos pesos serán integrados con los del modelo original en una proporción de 1:1. Esto implica que los pesos aprendidos tendrán la misma importancia que los pesos del modelo preentrenado.
+	\item Si $\alpha > r$, se está dando mayor peso a los nuevos parámetros aprendidos. Esto es recomendable  cuando se cuenta con un conjunto de datos de entrenamiento grande y de calidad. De lo contrario, al darle más importancia al conocieminto aprendido del nuevo conjunto de datos en lugar de al conociemiento preexistente del modelo, podría resultar en incoherencias.
+	\item Si $\alpha < r$, se prioriza el conocimiento preexistente del modelo sobre el nuevo. Esta configuración es aconsejable cuando el conjunto de datos de entrenamiento es pequeño y los dominios del modelo preexistente y la tarea a realizar son similares, pues así se garantiza que el modelo conserve más el conociemiento original.
 \end{itemize}
 
 \subsubsection{\textit{Dropout}}
 
-El parámetro de \textit{dropout} determina cuál la probabilidad de que uno de los parámetros ajustados en el entrenamiento sea configurado artificialmente a 0 para un lote de entrenamiento específico. Este procedimiento se realiza para evitar problemas de \textit{overfitting}, donde el modelo se ajusta demasiado a los datos de entrenamiento y pierde capacidad de generalización.
+El parámetro de \textit{dropout} determina la probabilidad de que, en cada iteración del entrenamiento, ciertas neuronas de la red sean desactivadas temporalmente, configurándolas artificialmente a 0. Este procedimiento se realiza para prevenir el sobreajuste del modelo, que puede ocurrir cuando este se ajusta demasiado a los datos de entrenamiento, provacando que pierda capacidad de generalización con datos nuevos.
+
+De esta manera, un valor alto de \textit{dropout} significa que un mayor número de neuronas se desactivarán durante el entrenamiento. Sin embargo, si el valor es excesivamente alto, el modelo podría no aprender lo suficiente sobre los datos, ya que se reducen demasiado las neuronas activas. Por otro lado, un valor muy bajo del \textit{dropout} puede llevar a que el modelo pierda capacidad de generalización, ya que es más probable que se sobreajuste a los datos de entrenamiento.
+
+Generalmente, se recomienda utilizar un valor de \textit{dropout} entre 0.05 y 0.5, ajustándolo según el número de parámetros del modelo, el volúmen de datos de entrenamiento y la complejidad del problema.
 
 %Generalmente, se recomienda utilizar un \textit{dropout} de 0.1 para modelos de 7B y 13B parámetros y reducirlo a 0.05 para modelos de 33B y 65B parámetros. Esto ayuda a mantener un equilibrio adecuado entre regularización y capacidad de aprendizaje del modelo.
 
@@ -908,7 +920,7 @@ De todas maneras, es importante tener en cuenta que la inferencia con baja preci
 
 Una de las técnicas de cuantización más utilizadas es la de precisión mixta \cite{micikevicius2018mixedprecisiontraining}. Esta técnica consiste en utilizar una combinación de representaciones de alta y baja precisión dentro del modelo. Por ejemplo, los pesos del modelo pueden estar almacenados en alta precisión, para asegurar la exactitud, mientras que los cálculos durante el entrenamiento se realizan con menor precisión para aumentar la velocidad y reducir el uso de la memoria. Posteriormente, los gradientes calculados en baja precisión se utilizan para actualizar los pesos originales.
 
-Otra técnia ampliamente utilizada es la de cuantización post entrenamiento \cite{xiao2024smoothquantaccurateefficientposttraining}. Esta técnica se aplica después de que los modelos hayan sido completament entrenados utilizando representaciones de alta precisión (en el caso de los modelos de lenguaje grandes preentrenados, después del preentrenamiento). El bojetivo principal es reducir el tamaño del modelo y los requisitos de cálculo para permitir una implementación más eficiente en cuanto a memoria y computación, sin tener que reentrenar el modelo desde cero. De esta manera, los pesos y, a veces, las activaciones del modelo son convertidos a representaciones de menor precisión, generalmente de 8 bits.
+Otra técnia ampliamente utilizada es la de cuantización post entrenamiento \cite{xiao2024smoothquantaccurateefficientposttraining}. Esta técnica se aplica después de que los modelos hayan sido completament entrenados utilizando representaciones de alta precisión (en el caso de los modelos de lenguaje grandes preentrenados, después del preentrenamiento). El objetivo principal es reducir el tamaño del modelo y los requisitos de cálculo para permitir una implementación más eficiente en cuanto a memoria y computación, sin tener que reentrenar el modelo desde cero. De esta manera, los pesos y, a veces, las activaciones del modelo son convertidos a representaciones de menor precisión, generalmente de 8 bits.
 
 \section{Medidas de evaluación} \label{metricas}
 
@@ -950,7 +962,27 @@ BLEU = BP + exp(\sum_{n = 1}^N w_n log p_n)
 
 donde generalmente se utilizan los valores de $N = 4$ y $w_n = \frac{1}{N}$.
 
-AÑADIR LIMITACIONES
+En cuanto a la interpretación, generalmente se considera que un \textit{score} BLEU menor de 30 indica traducciones de mala calidad, entre 30 y 40 sugiere traducciones aceptables, y un \textit{score} de 40 o superior indica un rendimiento bueno. La Tabla \ref{tab: bleu} proporciona una  interpretación detallada de las puntuaciones de BLEU.
+
+\begin{table}[!h]
+\caption{Interpretación de las puntuaciones de BLEU, extraída de \cite{googleTranslate}}
+\begin{center}
+\begin{tabular}{  c | c  }
+	Puntuación BLEU & Interpretación \\
+	\hline
+	< 10 & Casi inútil \\
+	10 - 19 & Resulta difícil captar la esencia \\
+	20-29 & La esencia es clara, pero aparecen errores gramaticales \\
+	30-40 & Comprensible, buenas traducciones \\
+	40-50 & Traducciones de alta calidad \\
+	50-60 & Traducciones de muy alta calidad. adecuadas y fluidas \\
+	>60 & Calidad generalmente mejor que la humana
+\end{tabular}
+\end{center}
+\label{tab: bleu}
+\end{table}
+
+El uso de esta métrica es muy común en tareas de procesamiento de lenguaje natural debido a su facilidad de cálculo y la simplicidad en la interpretación de la puntuación que proporciona, la cual suele alinearse con la evaluación humana. Sin embargo, BLEU presenta algunas limitaciones importantes, principalmente porque su cálculo se basa unicamente en las coincidencias exactas entre las frases generadas y las de referencia, lo que puede limitar su capacidad para capturar variaciones en la formulación del lenguaje. Por esta razón, es aconsejable utilizar también otras métricas que no dependan exclusivamente de coincidencias exactas para obtener una evaluación más completa y precisa de la calidad de las frases generadas.
 
 \subsection{COMET}
 
@@ -973,7 +1005,9 @@ donde $\mu$ es un parámetro entrenable, $E_{x_j}$ es el vector de \textit{embed
 Finalmente, estos \textit{embeddings} son agrupados mediante \textit{average pooling} para obtener una la representación final de cada frase.
 \end{itemize}
 
-Las representaciones obtenidas son las que se utilizan posteriormente para calcular el \textit{score} (en el caso del \textit{estimator model}) o el ranking (en el caso del \textit{translation ranking model}) de las frases.
+Las representaciones obtenidas son las que se utilizan posteriormente para calcular el \textit{score} (en el caso del \textit{estimator model}) o el ranking (en el caso del \textit{translation ranking model}) de las frases. Este cálculo se realiza mediante una red neuronal \textit{feed forward}, entrenada para minimizar el MSE (\textit{Mean Squared Error} o error cuadrático medio). La salida de esta red neuronal es un valor entre 0 y 1 que representa la puntuación de COMET.
+
+La métrica COMET es más compleja de interpretar en comparación con BLEU. Generalmente, se considera que un valor de COMET superior a 80 indica una traducción de alta calidad.
 
 \chapter{Resultados experimentales} \label{cap4}
 
@@ -1161,7 +1195,7 @@ Los resultados muestran que, en todas las configuraciones de rango probadas, el 
 
 Dado que Llama-3 ha demostrado ser superior en las pruebas iniciales, se ha decidido que este será el modelo principal a utilizar en los experimentos posteriores. Esta decisión busca maximizar la calidad de los resultados en los experimentos posteriores.
 
-\subsection{Exploración de los valores de \textit{alpha}}
+\subsection{Exploración de valores de \textit{alpha}}
 
 En esta fase de los experimentos, se ha investigado el impacto del parámetro \textit{alpha} en el rendimiento del modelo. El parámetro \textit{alpha} controla el peso relativo que se le asigna a los parámetros de LoRA en comparación con los parámetros del modelo preentrenado. Así, para esta exploración se han realizado experimentos utilizando diferentes valores para el rango $r$ de LoRA: 16, 32, 64 y 128. Para cada valor de $r$, se han probado tres configuraciones distintas de \textit{alpha}:
 
@@ -1203,7 +1237,7 @@ Los resultados obtenidos se observan en la Tabla \ref{tab: Llama exploración de
 \label{tab: Llama exploración de alpha}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[!h]
 
 \begin{subfigure}{0.5\textwidth}
 \includegraphics[width=0.9\linewidth, height=9cm]{images/llama_BLEU} 
@@ -1216,17 +1250,17 @@ Los resultados obtenidos se observan en la Tabla \ref{tab: Llama exploración de
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados obtenidos en las métricas de BLEU y COMET conel modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32, 64 y 128 y explorando distintos valores de \textit{alpha}.}
+\caption{Resultados obtenidos en las métricas de BLEU y COMET conel modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha}.}
 \label{fig:graficasLlama}
 \end{figure}
 
 En los gráficos de la Figura \ref{fig:graficasLlama} se puede observar visualmente el rendimiento de los diferentes valores de \textit{alpha} en función del parámetro de rango.
 
-En cuanto a la métrica BLEU, los resultados muestran que los experimentos con \textit{alpha} igual a $r/2$ presentan una mayor inestabilidad en comparación con las configuracionies de \textit{alpha} mayores. Los resultados para \textit{alpha} igual a $r$ y \textit{alpha} igual a $2r$ siguen una tendencia más clara y consistente, y en general, muestran un mejor desempeño. Esto sugiere que las configuraciones con valores más altos de \textit{alpha} proporcionan un rendimiento más estable y predecible.
+En cuanto a la métrica BLEU, los resultados muestran que los experimentos con $alpha = r/2$ llegan a su valor óptimo en en r = 64, mientras que con $alpha = r$ y $alpha = 2r$ el valor óptimo se encuentra en r = 128. [ACABAR DE JUSTIFICAR] Esto sugiere que las configuraciones con valores más altos de \textit{alpha} proporcionan un rendimiento más estable y predecible.
+
+%presentan una mayor inestabilidad en comparación con las configuracionies de \textit{alpha} mayores. Los resultados para \textit{alpha} igual a $r$ y \textit{alpha} igual a $2r$ siguen una tendencia más clara y consistente, y en general, muestran un mejor desempeño.
 
 En lo que respecta a la métrica COMET, los resultados muestran que todas las configuraciones de \textit{alpha} se encuentran en un rango de valores de esta métrica similar, sin presentar diferencias notables en su comportamiento.
-
-Para investigar más a fondo, se realizó un experimento adicional con \textit{alpha} igual a $r$ y \textit{alpha} igual a $2r$ utilizando un valor de rango (\textit{r}) de 256. Sin embargo, en este caso, no se observó una tendencia ascendente en el rendimiento.
 
 Así, estos experimentos sugieren que la combinación óptima de parámetros es $r$ igual a 128 con \textit{alpha} igual a $r$.
 
@@ -1243,9 +1277,68 @@ Los resultados obtenidos con esta configuración final han sido los siguientes:
 	\item COMET = 89.15
 \end{itemize}
 
-Aunque los valores obtenidos para BLEU y COMET son ligeramente inferiores a los resultados alcanzados durante la fase de entrenamiento, estos resultados se encuentran dentro de un rango adecuado de las métricas. La disminución en estas puede deberse a la diferencia entre el conjunto de entrenamiento y el conjunto de validación. De todas maneras, los resultados siguen siendo prometedores y reflejan un buen desempeño del modelo en esta tarea.
+Aunque los valores obtenidos para BLEU y COMET son inferiores a los resultados alcanzados durante la fase de entrenamiento, estos resultados se encuentran dentro de un rango adecuado de las métricas. La disminución en estas puede deberse a la diferencia entre el conjunto de entrenamiento y el conjunto de validación. De todas maneras, los resultados siguen siendo prometedores y reflejan un buen desempeño del modelo en esta tarea.
 
 \section{Experimentos realizados con el conjunto en inglés}
+
+Para evaluar la influencia del idioma en los resultados de los modelos, se han replicado los mismos experimentos realizados con el conjunto de datos en español utilizando el conjunto en inglés. En las siguientes secciones se presentan los resultados obtenidos.
+
+\subsection{Experimentos con Gemma y Llama-3}
+
+\subsection{Exploración de valores de \textit{alpha}}
+
+\begin{table}[!h]
+\caption{\textit{Scores} de BLEU y COMET para el modelo Llama3-8B con el conjunto de datos en inglés}
+\begin{center}
+\begin{tabular}{ c c | c c }
+	\hline
+	\textit{Rank} & \textit{Alpha} & BLEU & COMET \\
+	\hline
+	\hline
+	16 & 8 & 57.57 & 90.46 \\
+	16 & 16 & 59.28 & 90.79 \\
+	16 & 32 & 61.84 & 90.86 \\
+	\hline
+	32 & 16 & 58.97 & 91.10 \\
+	32 & 32 & 59.15 & 90.40 \\
+	32 & 64 &  62.22 & 91.12 \\
+	\hline
+	64 & 32 & 60.50 & 90.86\\
+	64 & 64 & 61.80 & 90.87\\
+	64 & 128 & 63.42 & 90.85\\
+	\hline
+	128 & 64 & 63.51 & 90.81\\
+	128 & 128 & 63.53 & 91.02\\
+	128 & 256 & 63.50 & 91.25\\
+	\hline
+	256 & 128 & 61.69 & 90.57\\
+	256 & 256 & 62.98 & 91.01\\
+	256 & 512 & 57.20 & 87.68\\	
+
+\end{tabular}
+\end{center}
+\label{tab: Llama exploración de alpha}
+\end{table}
+
+\begin{figure}
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_BLEU_en} 
+\caption{Resultados de BLEU para Llama3-8B}
+\label{fig:subim1}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_COMET_en}
+\caption{Resultados de COMET para Llama3-8B}
+\label{fig:subim2}
+\end{subfigure}
+
+\caption{Resultados obtenidos en las métricas de BLEU y COMET conel modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con los datos en inglés.}
+\label{fig:graficasLlama}
+\end{figure}
+
+\subsection{Validación del modelo en inglés}
+
+\section{Análisis de errores}
 
 \section{Comparación con otros modelos}
 
@@ -1276,7 +1369,7 @@ Aunque los valores obtenidos para BLEU y COMET son ligeramente inferiores a los 
 
 \section{Objetivos cumplidos}
 
-\section{}
+\section{Propuesta de trabajo futuro}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                BIBLIOGRAFIA                                 %
