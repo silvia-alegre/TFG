@@ -1011,11 +1011,15 @@ La métrica COMET es más compleja de interpretar en comparación con BLEU. Gene
 
 \chapter{Resultados experimentales} \label{cap4}
 
-REESCRIBIR: En este capítulo se presenta el experimento principal de este trabajo, que consiste en el entrenamiento de dos modelos de lenguaje grandes preentrenados: Gemma y Llama-3, enfocados en la tarea específica de generar frases de lenguaje natural a partir de palabras clave en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. A continuación, se detallan los experimentos realizados, las medidas de evaluación empleadas y los resultados obtenidos.
+En este capítulo se presentan los experimentos realizados en este trabajo, los cuales se han llevado a cabo utilizando dos modelos de lenguaje grandes: Gemma y Llama-3. Los experimentos se centraron principalmente en la exploración de los parámetros rango y \textit{alpha} de la adaptación mediante LoRA, con el objetivo de encontrar la configuración que proporcionara los mejores resulados posibles para la tarea de generar frases de lenguaje natural a partir de listas de palabras clave, en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. Tras identificar la mejor configuración, se realizó un experimento adicional utilizando todos los datos de entrenamiento disponibles para evaluar la eficacia de los modelos con un conjunto de datos de validación que no había sido utilizado en fases anteriores. Los experimentos se realizaron con conjuntos de datos en español y en inglés.
+
+Todos los experimentos han sido realizados utilizando Google Collab \footnote{Google Collab es una plataforma  en la nube que permite escribir y ejecutar código Python en \textit{notebooks} interactivos, ofreciendo acceso a recursos de procesamiento como GPUs y TPUs.}.
+
+A continuación, se detallan los experimentos realizados y los resultados obtenidos. También se incluyen comparaciones entre los modelos entrenados y otros sistemas externos como GPT-4, el comunicador electrónico AsTeRISCS Grid, y resultados obtenidos por personas en esta misma tarea.
 
 \section{Conjunto de datos}
 
-Para la realización de los experimentos, se han utilizado dos conjuntos de datos distintos, ambos extraídos del portal de la Universidad de Vigo. Ambos conjuntos contienen frases extraídas de los recursos del Portal Aragonés de la Comunicación Aumentativa y Alternativa, acompañada de la lista de lemas o palabras clave asociadas a cada frase. Estas palabras clave han sido seleccionadas por un grupo de anotadores expertos lingüistas.
+Para la realización de los experimentos, se han utilizado dos conjuntos de datos distintos, ambos extraídos del portal de la Universidad de Vigo. Ambos conjuntos contienen frases extraídas de los recursos del Portal Aragonés de la Comunicación Aumentativa y Alternativa, acompañada de la lista de lemas o palabras clave asociadas a cada frase. Estas palabras clave han sido seleccionadas por un grupo de anotadores expertos lingüistas, y representan las palabras que un usuario introduciría a través de la interfaz de un comunicador electrónico con la intención de generar la frase correspondiente.
 
 El primer conjunto de datos incluye un total de 212 frases, todas ellas en español. El segundo conjunto consta de 260 frases, disponibles tanto en español como en inglés.
 
@@ -1139,7 +1143,7 @@ La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los exper
 
 \section{Experimentos realizados con el conjunto en español}
 
-Los modelos utilizados para los experimentos de este trabajo son los modelos Gemma-7B y Llama3-8B. Ambos modelos están disponibles para su uso libre en el portal de \textit{Hugging Face}.
+Los modelos utilizados para los experimentos de este trabajo son los modelos Gemma-7B y Llama3-8B. Ambos modelos están disponibles para su uso libre en el portal de \textit{Hugging Face} \footnote{\textit{Hugging Face} es una plataforma que ofrece herramientas y modelos de aprendizaje automático, especialmente para el procesamiento de lenguaje natural.}.
 
 Para el entrenamiento de los modelos, se ha  aplicado el método de adaptación LoRA, que se describe en detalle en la sección \ref{lora}. Este método requiere la configuración de dos parámetros clave: el rango ($r$) y el parámetro \textit{alpha}. Dado que estos parámetros pueden influir significativamente en el rendimiento del modelo, se han realizado experimentos variando sus valores para identificar la configuración óptmia que proporciona mejores resultados.
 
@@ -1260,13 +1264,11 @@ Los resultados obtenidos se observan en la Tabla \ref{tab: Llama exploración de
 
 En los gráficos de la Figura \ref{fig:graficasLlama} se puede observar visualmente el rendimiento de los diferentes valores de \textit{alpha} en función del parámetro de rango.
 
-En cuanto a la métrica BLEU, los resultados muestran que los experimentos con $alpha = r/2$ llegan a su valor óptimo en en r = 64, mientras que con $alpha = r$ y $alpha = 2r$ el valor óptimo se encuentra en r = 128. [ACABAR DE JUSTIFICAR] Esto sugiere que las configuraciones con valores más altos de \textit{alpha} proporcionan un rendimiento más estable y predecible.
+En cuanto a la métrica BLEU, los resultados muestran que todas las configuraciones de \textit{alpha} presentan una tendencia ascendente hasta que llegan a su punto máximo, y a continuación empeoran. En el caso de $\alpha = r/2$, su valor óptimo se encuentra en en $r = 64$. En cambio, con $alpha = r$ y $alpha = 2r$ el valor óptimo se encuentra en r = 128. Este comportamiento sugiere que, con $\alpha = r/2$, es decir, dándo más importancia a los parámetros del modelo preentrenado que a los pesos obtenidos con LoRA, el aumento del rango tiene un impacto menor en el rendimiento, ya que no se aprovechan completamente los parámetros libres disponibles con valores de rango superiores a 64. En general, las otras configuraciones de \textit{alpha} muestran un desempeño superior, llegando a su máximo en $r = 128$.
 
-%presentan una mayor inestabilidad en comparación con las configuracionies de \textit{alpha} mayores. Los resultados para \textit{alpha} igual a $r$ y \textit{alpha} igual a $2r$ siguen una tendencia más clara y consistente, y en general, muestran un mejor desempeño.
+En lo que respecta a la métrica COMET, los resultados muestran que todas las configuraciones de \textit{alpha} tienen valores bastante similares, oscilando entre 92.5 y 93.5 sin mostrar diferencias significativas en su comportamiento.
 
-En lo que respecta a la métrica COMET, los resultados muestran que todas las configuraciones de \textit{alpha} se encuentran en un rango de valores de esta métrica similar, sin presentar diferencias notables en su comportamiento.
-
-Así, estos experimentos sugieren que la combinación óptima de parámetros es $r$ igual a 128 con \textit{alpha} igual a $r$.
+Así, tanto los resultados de BLEU coomo de COMET sugieren que la combinación óptima de parámetros es $r = 128$ con $\alpha = r$.
 
 \subsection{Validación del modelo en español}
 
@@ -1322,21 +1324,21 @@ Los resultados muestran que,al igual que con el conjunto de datos en español, e
 
 En la Figura \ref{fig:graficasComparacion} se presentan las puntuaciones de BLEU y COMET de ambos modelos entrenados en los dos idiomas idiomas, con los valores de rango y configuración de \textit{alpha} descritos. Observamos que los resultados para el modelo Llama3-8B en inglés siguen exactamente la misma tendencia que los obtenidos con el conjunto en español, aunque se encuentran ligeramente por debajo. Por otro lado, para el modelo Gemma-7B, los resultados en inglés también son ligeramente inferiores a los del conjunto en español, pero muestran un gran incremento en $r = 32$, superando los valores de las métricas obtenidos con el conjunto en español. En este caso, las tendencias del modelo en inglés y en español no son completamente consistentes.
 
-\begin{figure}
-\begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth, height=9cm]{images/BLEU_comparacion_idiomas} 
-\caption{Resultados de BLEU para Gemma-7B y Llama3-8B con el conjunto de datos en inglés y español}
-\label{fig:subim1}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth, height=9cm]{images/COMET_comparacion_idiomas}
-\caption{Resultados de COMET para Gemma-7B y Llama3-8B con el conjunto de datos en inglés y español}
-\label{fig:subim2}
-\end{subfigure}
+%\begin{figure}
+%\begin{subfigure}{0.5\textwidth}
+%\includegraphics[width=0.9\linewidth, height=9cm]{images/BLEU_comparacion_idiomas} 
+%\caption{Resultados de BLEU para Gemma-7B y Llama3-8B con el conjunto de datos en inglés y español}
+%\label{fig:subim1}
+%\end{subfigure}
+%\begin{subfigure}{0.5\textwidth}
+%\includegraphics[width=0.9\linewidth, height=9cm]{images/COMET_comparacion_idiomas}
+%\caption{Resultados de COMET para Gemma-7B y Llama3-8B con el conjunto de datos en inglés y español}
+%\label{fig:subim2}
+%\end{subfigure}
 
-\caption{Resultados obtenidos en las métricas de BLEU y COMET con los modelos Gemma-7B y Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32 y 64 y la configuración de $\alpha = 2r$. En verde se observan los resultados con el conjunto de datos en español y en amarillo, en inglés.}
-\label{fig:graficasComparacion}
-\end{figure}
+%\caption{Resultados obtenidos en las métricas de BLEU y COMET con los modelos Gemma-7B y Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32 y 64 y la configuración de $\alpha = 2r$. En verde se observan los resultados con el conjunto de datos en español y en amarillo, en inglés.}
+%\label{fig:graficasComparacion}
+%\end{figure}
 
 \subsection{Exploración de valores de \textit{alpha}}
 
@@ -1437,9 +1439,53 @@ Además de las pruebas realizadas con otros modelos, se han realizado también e
 
 A partir de esta información, se les pidió a los participantes que escribieran las frases que consideraban que podrían generarse basándose en los ejemplos proporcionados. Posteriormente, se calcularon las punutaciones de BLEU y COMET para las frases producidas por cada participante, siguiendo el mismo procedimiento utilizado en los experimentos anteriores.
 
-Los resultados obtenidos en estas pruebas se muestran en la Tabla \ref{}
+Los resultados obtenidos en estas pruebas se muestran en la Tabla \ref{tab:experimentosPersonas}
+\begin{table}[!h]
+\caption{Puntuaciones de BLEU y COMET de las personas a las que se le envió la tarea}
+\begin{center}
+\begin{tabular}{ c | c c }
+	\ & BLEU & COMET \\
+	\hline
+	\hline
+	Individuo 1 & 67.95 & 90.26  \\
+	Individuo 2 & 70.13 & 92.07\\
+	Individuo 3 & 70.63 & 92.08 \\
+	Individuo 4 & 62.77 & 90.22 \\
+	Individuo 5 & 62.66 & 88.81 \\
+
+\end{tabular}
+\end{center}
+\label{tab:experimentosPersonas}
+\end{table}
+
+La media de BLEU entre todos los individuos es xx y la de COMET, xx. Los resultados obtenidos por el modelo final de Llama-3 entrenado con el conjunto de datos en español son BLEU = 62.90 y COMET = 89.15. Comparando estos rsultados con los obtenidos por personas, observamos que, aunque el modelo Llama-3 presenta un rendimiento inferior al promedio de los resultados obtenidos por individuos, supera a dos de ellos en términos de BLEU y a uno en términos de COMET.
+
+Esto sugiere que, a pesar de no alcanzar los niveles más altos de rendimiento humano, el modelo logra generar frases que se acercan a los estándares de calidad que se obtendrían si las frases fueran generadas por personas. Este desempeño cercano a los resultados humanos indica que el modelo Llama-3 tiene una capacidad considerable para gnerar frases de manera efectiva y coherente.
 
 \section{Análisis de errores}
+
+En esta sección, se realiza un análisis de los errores más comunes observados en la generación de frases por parte de los modelos. Este análisis tiene como objetivo identificar y comprender los problemas recurrentes en las salidas generadas, proporcionando así una base para futuras mejoras en este.
+
+De las 50 frases del conjunto de validación, 18 fueron generadas exactamente iguales a las frases reales. De las 27 frases con errores, hay 9 cuyo único error está en el tiempo verbal de la frase:
+
+\begin{itemize}
+	\item no, lo, cambiar. Frase real: No lo cambiaré. Frase generada: No lo cambio
+	\item niños, se, reír. Frase real: Los niños se reían. Frase generada: Los niños se ríen.
+\end{itemize}
+
+
+Entre las frases que contienen errores, estos se dividen en los siguientes tipos:
+
+\begin{itemize}
+	\item Errores en los tiempos verbales
+		\subitem [no, lo, cambiar]. Frase real: No lo cambiaré. Frase generada: No lo cambio. 
+		\subitem [niños, se, reír]. Frase real: Los niños se reían. Frase generada: Los niños se ríen.
+	\item Fallos de conjugación
+	\item Falta de alguna preposición o conjunción
+	\item Confusión en el sujeto
+\end{itemize}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 CONCLUSIONS                                 %
@@ -1447,11 +1493,25 @@ Los resultados obtenidos en estas pruebas se muestran en la Tabla \ref{}
 
 \chapter{Conclusiones} \label{cap5}
 
-????? ????????????? ????????????? ????????????? ????????????? ????????????? 
+En este trabajo se ha explorado la posibilidad de adaptar modelos de lenguaje grandes a tareas dentro del ámbito de los sistemas de comunicación aumentativos y alternativos. Se han entrenado dos modelos, Gemma y Llama-3, utilizando un conjunto de datos en español y en inglés, con el objetivo de generar frases gramaticalmente correctas a partir de una serie de listas de palabras clave o lemas. Estas listas de palabras clave simulan las entradas que los usuarios introducirían a través de la interfaz de un comunicador electrónico.
+
+El modelo Llama-3 ha demostrado un rendimiento positivo en este contexto, logrando generar frases bien estructuradas y mostrando resultados muy prometedores y competitivos. Este modelo ha superado a Gemma en términos de precisión y coherencia gramatical. Por su parte, el modelo Gemma ha presentado un rendimiento inferior, lo que sugiere que este modelo tiene una capacidad de adaptación menos efectiva que Llama-3.
+
+Aunque los resultados obtenidos con Llama-3 han sido satisfactorios, se ha observado que el tamaño del conjunto de datos ha impactado el rendimiento de ambos modelos. A pesar de esta limitación, Llama-3 ha demostrado una notable capacidad para adaptarse y generar resultados de calidad.
+
+Estos resultados muestran que los modelos de lenguaje grandes tienen un gran potencial en el campo de la comunicación aumentativa y alternativa. La capacidad de adaptación y el rendimiento prometedor de Llama-3 indican que, con conjuntos de datos más extensos y representativos, estos modelos podrían ofrecer soluciones aún más efectivas para mejorar la comunicación de los usuarios con necesidades específicas.
 
 \section{Objetivos cumplidos}
 
+\section{Legado}
+
+\section{Relación del trabajo desarrollado con los estudios cursados}
+
 \section{Propuesta de trabajo futuro}
+
+- Realizar más repeticiones de los experimentos para conseguir mejores resultados. No se ha podido realizar en este trabajo por el alto coste temporal, computacional y económico.
+
+- Conseguir conjuntos de datos más grandes.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                BIBLIOGRAFIA                                 %
@@ -1477,26 +1537,18 @@ Los resultados obtenidos en estas pruebas se muestran en la Tabla \ref{}
 %                         LA CONFIGURACIO DEL SISTEMA                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Configuració del sistema}
+%\chapter{Configuració del sistema}
 
-????? ????????????? ????????????? ????????????? ????????????? ?????????????
+%\section{Fase d'inicialització}
 
-\section{Fase d'inicialització}
-
-????? ????????????? ????????????? ????????????? ????????????? ?????????????
-
-\section{Identificació de dispositius}
-
-????? ????????????? ????????????? ????????????? ????????????? ?????????????
+%\section{Identificació de dispositius}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               ALTRES  APÈNDIXS                              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\chapter{??? ???????????? ????}
-
-????? ????????????? ????????????? ????????????? ????????????? ????????????? 
+%\chapter{??? ???????????? ????}
 
 
 
