@@ -1291,34 +1291,38 @@ Para evaluar la influencia del idioma en los resultados de los modelos, se han r
 
 Al igual que en los experimentos anteriores, se ha aplicado la adaptación LoRA y se ha llevado a cabo el entrenamiento utilizando \textit{cross-validation} con un total de 10 particiones.
 
-Los resultados obtenidos de estos experimentos se presentan en las siguientes secciones.
+En primer lugar, se han realizado los experimentos para ambos modelos, explorando diferentes valores de $r$ (16, 32 y 64) y utilizando una configuración de \textit{alpha} fija en $\alpha = 2r$.
 
-\subsection{Experimentos con Gemma y Llama-3}
+%Los resultados obtenidos de estos experimentos se presentan en las siguientes secciones.
 
-Al igual que los experimentos realizados con el conjunto de datos en español, el primer experimento con el conjunto en inglés consistió en comparar el rendimiento de los modelos Gemma-7B y Llama3-8B. Para la adaptación con LoRA, se han explorado los valores de rango 16, 32 y 64; manteniendo el parámetro \textit{alpha} a dos veces el valor del rango.
+%\subsection{Experimentos con Gemma y Llama-3}
 
-Los resultados obtenidos se presentan en la tabla \ref{tab: Gemma y Llama inglés}
+%Al igual que los experimentos realizados con el conjunto de datos en español, el primer experimento con el conjunto en inglés consistió en comparar el rendimiento de los modelos Gemma-7B y Llama3-8B. Para la adaptación con LoRA, se han explorado los valores de rango 16, 32 y 64; manteniendo el parámetro \textit{alpha} a dos veces el valor del rango.
 
-\begin{table}[!h]
-\caption{Puntuación de BLEU y COMET para los modelo Gemma-7B y Llama3-8B}
-\begin{center}
-\begin{tabular}{ c c c c c c }
-	\ & \ & Gemma-7B & \ & Llama3-8B & \ \\
-	\hline
-	\textit{Rank} & \textit{Alpha} & BLEU & COMET & BLEU & COMET \\
-	\hline
-	\hline
-	16 & 32 & 52.44 & 88.92 & 61.84 & 90.86 \\
-	\hline
-	32 & 64 & 44.44 & 87.44 & 62.22 & 91.12 \\
-	\hline
-	64 & 128 & 55.21 & 87.82 & 63.42 & 90.85 \\
-	
+%Los resultados obtenidos se presentan en la tabla \ref{tab: Gemma y Llama inglés}
 
+\begin{table}[h]
+\centering
+\begin{tabular}{c  c | c c}
+
+             &  & BLEU & COMET \\ 
+\hline
+\hline
+& & & \\
+ & Llama3  &   66.13   &   93.37    \\
+Español &  &      &       \\
+ & Gemma   &   52.44   &    88.92   \\
+& & & \\
+\hline
+& & &  \\
+ & Llama3  & 62.22    &   91.12    \\
+Inglés &  &      &       \\
+ & Gemma   &  54.23    &    88.88   \\
+& & &  \\
 \end{tabular}
-\end{center}
-\label{tab: Gemma y Llama inglés}
+\caption{Tabla de resultados BLEU y COMET para diferentes configuraciones}
 \end{table}
+
 
 Los resultados muestran que,al igual que con el conjunto de datos en español, el rendimiento del modelo Gemma es significativamente inferior al de el de Llama-3 en todas las configuraciones.
 
@@ -1462,28 +1466,152 @@ La media de BLEU entre todos los individuos es xx y la de COMET, xx. Los resulta
 
 Esto sugiere que, a pesar de no alcanzar los niveles más altos de rendimiento humano, el modelo logra generar frases que se acercan a los estándares de calidad que se obtendrían si las frases fueran generadas por personas. Este desempeño cercano a los resultados humanos indica que el modelo Llama-3 tiene una capacidad considerable para gnerar frases de manera efectiva y coherente.
 
-\section{Análisis de errores}
+\chapter{Análisis de errores}
 
-En esta sección, se realiza un análisis de los errores más comunes observados en la generación de frases por parte de los modelos. Este análisis tiene como objetivo identificar y comprender los problemas recurrentes en las salidas generadas, proporcionando así una base para futuras mejoras en este.
+En este capítulo, se realiza un análisis de los errores más comunes observados en la generación de frases por parte de los modelos. El objetivo de este es identificar y comprender los errores recurrentes en las frases generadas, lo que proporcionará una base para futuras mejoras en el proceso.
 
-De las 50 frases del conjunto de validación, 18 fueron generadas exactamente iguales a las frases reales. De las 27 frases con errores, hay 9 cuyo único error está en el tiempo verbal de la frase:
+\section{Análisis de errores en español}
 
-\begin{itemize}
-	\item no, lo, cambiar. Frase real: No lo cambiaré. Frase generada: No lo cambio
-	\item niños, se, reír. Frase real: Los niños se reían. Frase generada: Los niños se ríen.
-\end{itemize}
-
-
-Entre las frases que contienen errores, estos se dividen en los siguientes tipos:
+En el caso del modelo en español, de las 50 frases del conjunto de validación, 18 fueron generadas correctamente, es decir, de manera idéntica a las frases reales. Esto significa que el modelo generó un total de 27 frases con algún tipo de error. A continuación se enumeran los errores principales que estas presentan:
 
 \begin{itemize}
-	\item Errores en los tiempos verbales
-		\subitem [no, lo, cambiar]. Frase real: No lo cambiaré. Frase generada: No lo cambio. 
-		\subitem [niños, se, reír]. Frase real: Los niños se reían. Frase generada: Los niños se ríen.
-	\item Fallos de conjugación
-	\item Falta de alguna preposición o conjunción
-	\item Confusión en el sujeto
+	\item \textbf{Errores en los tiempos verbales}: se han identificado 9 frases en las que el único error se relaciona con la conjugación del tiempo verbal. Estas frases se presentan en la Tabla \ref{tab:erroresTiempoVerbal}. Se observa que son casos en los que, a partir de las palabras clave introducidas, resulta muy difícil determinar el tiempo verbal correcto de la frase. El modelo tiende a conjugar las frases en presente, ya que es el tiempo verbal más común, aunque en algunas ocasiones las frases deberían estar en pasado. Este error también es frecuente en las generaciones de frases realizadas por personas. La ausencia de pistas claras sobre el tiempo verbal en las palabras clave puede llevar a asumir que el tiempo verbal de la frase debe ser presente.
+	\item \textbf{Falta de preposición}: en 8 frases, los errores se deben a la falta o confusión de alguna preposición. Estos casos se detallan en la Tabla \ref{tab:erroresPreposicion}.
+	\item \textbf{Confusión en el sujeto}: un total de 4 frases presentan errores solamente en el sujeto. Se presentan en la Tabla \ref{tab:erroresSujeto}. Estos errores incluyen la falta del artículo del sujeto debido a que se interpreta el sustantivo como nombre propio.
+	\item \textbf{Error en el número}: solo se ha identificado un caso en el que el error radica en el número gramatical. En este caso las palabras clave son \" niño, jugar, piscina \". A partir de estas, el modelo generó \" El niño juega en la piscina \" en lugar de  \" Los niños juegan en la piscina \", que era la frase real. Dado que las palabras clave no especificaban el número, es comprensible que el modelo asumiera el singular. Este error también fue cometido por todos los participantes humanos en el experimento.
 \end{itemize}
+
+Las 10 frases restantes presentan varios de los errores mencionados u otros problemas sintácticos. Se presentan en la tabla \ref{tab:erroresVariados}.
+
+\begin{table}[!h]
+\caption{Frases generadas por Llama-3 con errores en el tiempo verbal}
+\begin{center}
+\begin{tabular}{ c | c | c }
+	\ Lemmas & Frase generada & Frase real \\
+	\hline
+	\hline
+	 & & \\
+	 no, lo, cambiar & No lo cambio & No lo cambiaré  \\
+	 & & \\
+	niños, se, reír & Los niños se ríen & Los niños se reían\\
+	 & & \\
+	perra, tener, cachorros & La perra tiene cachorros & La perra tuvo cachorros \\
+	 & & \\
+	perro, ir, carretera & El perro va por la carretera & El perro fue por la carretera \\
+	 & & \\
+	cerditos, vivir, feliz & Los cerditos vivieron & Los cerditos viven \\
+	 & felices & felices \\
+	 & & \\
+	su, mamá, se, enfadar & Su mamá se enfada & Su mamá se enfadó \\
+	 & & \\
+	seis, cabritillos, salir, contento & Los seis cabritillos salieron  & Los seis cabritillos salen  \\
+	 & contentos & contentos \\
+	 & & \\
+	policía, poner, un, multa & El policía pone una multa & El policía puso una multa \\
+	 & & \\
+	ver, un, topo, en, otoño & Veo un topo en otoño & Vi un topo en otoño \\
+	 & & \\
+
+\end{tabular}
+\end{center}
+\label{tab:erroresTiempoVerbal}
+\end{table}
+
+\begin{table}[!h]
+\caption{Frases generadas por Llama-3 con errores en preposiciones}
+\begin{center}
+\begin{tabular}{ c | c | c }
+	\ Lemmas & Frase generada & Frase real \\
+	\hline
+	\hline
+	 & & \\
+	dejar, ir, Cenicienta & La madrastra no deja ir & La madrastra no deja ir a \\
+	 & Cenicienta a la fiesta & Cenicienta a la fiesta \\
+	 & & \\
+	Anabel, pintar, papel & Anabel pinta papel & Anabel pinta en el papel \\
+	 & & \\
+	cazador, asustar, lobo & El cazador asustó el lobo & El cazador asustó al lobo \\
+	 & & \\
+	Blancanieves, correr, bosque & Blancanieves corre por  & Blancanieves corre \\
+	 & el bosque & al bosque \\
+	 & & \\
+	yo, dormir, noche & Yo duermo la noche & Yo duermo por la noche \\
+	 & & \\
+	Juan, se, encontrar, un, mago & Juan se encontró un  & Juan se encontró con \\
+	 & mago & un mago \\
+	 & & \\
+	cabritillo, pequeño, estar, reloj & El cabritillo pequeño   & El cabritillo pequeño está  \\
+	 & reloj & en el reloj \\
+	 & & \\
+	tirar, ventana & Tiro la ventana & Las tiro por la ventana \\
+	 & & \\
+
+\end{tabular}
+\end{center}
+\label{tab:erroresPreposicion}
+\end{table}
+
+\begin{table}[!h]
+\caption{Frases generadas por Llama-3 con errores en el sujeto}
+\begin{center}
+\begin{tabular}{ c | c | c }
+	\ Lemmas & Frase generada & Frase real \\
+	\hline
+	\hline
+	 & & \\
+	Ratita, comprar, un, lazo & Ratita compra un lazo & La ratita compra un lazo \\
+	 & & \\
+	papá, abrir, puerta,de, coche, con, llave & Papá abre la puerta del & El papá abre la puerta del \\
+	 & coche con la llave & coche con la llave \\
+	 & & \\
+	Ratita, barrer, su, casita & Ratita barre su casita & La ratita barre su casita \\
+	 & & \\
+	este, ser, Ricitos, de Oro & Él es Ricitos de Oro & Esta es Ricitos de Oro \\
+	 & & \\
+
+\end{tabular}
+\end{center}
+\label{tab:erroresSujeto}
+\end{table}
+
+\begin{table}[!h]
+\caption{Frases generadas por Llama-3 con varios errores}
+\begin{center}
+\begin{tabular}{ c | c | c }
+	\ Lemmas & Frase generada & Frase real \\
+	\hline
+	\hline
+	 & & \\
+	 este, ser, Caperuza, Roja & Este ser Caperuza Roja & Esta es Caperuza Roja  \\
+	 & & \\
+	Reyes, mago, ir, camello & 3 Reyes magos irían & Los Reyes Magos \\
+	 & al camello & van en camello \\
+	 & & \\
+	juan, bajar, planta & Juan baja de la planta & Juan bajó por la planta \\
+	 & & \\
+	planta, llegar, cielo & La planta llega al cielo & La planta llegó hasta el cielo \\
+	 & & \\
+	Caperucita, abuela, ser, feliz & Caperucita es feliz con & Caperucita y la abuela  \\
+	 & su abuela & fueron felices \\
+	 & & \\
+	otro, hija, ser, Saturno & El otro hija sería Saturno & Otra hija era Saturno \\
+	 & & \\
+	a dónde, ir, Caperucita & A dónde ir, Caperucita? & ¿A dónde vas Caperucita? \\
+	 & & \\
+	Papá, Noel, ir, trineo,  & Papá Noel irá con & Papá Noel va en trineo \\
+	con, renos & los renos & con renos \\
+	 & & \\
+	lunes, comer, lentejas & Lunes como lentejas & El lunes comeré lentejas \\
+	 & & \\
+	cerditos, ver, lobo & Cerditos ve el lobo & Los cerditos ven al lobo \\
+	 & & \\
+
+\end{tabular}
+\end{center}
+\label{tab:erroresVariados}
+\end{table}
+
+%\section{Análisis de errores en inglés}
 
 
 
