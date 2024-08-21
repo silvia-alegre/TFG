@@ -129,15 +129,16 @@ Algunos de los comunicadores que existen actualmente en el mercado ya emplean di
 \section{Objetivos}
 
 Los objetivos principales de este proyecto son los siguientes:
+
 \begin{enumerate}
-\item Investigar sobre los enfoques actuales para la generación de frases en el sector de los SAAC.
-\item Adaptar y evaluar modelos de lenguaje grandes de acceso público que son utilizados actualmente para la generación de frases en herramientas SAAC.
-\item Comparar los resultados que se obtienen con los LLMs respecto a otros comunicadores que permiten la generación de frases que se encuentran en el mercado.
+	\item Investigar sobre los distintos tipos de Sistemas de Comunicación Aumentativa y Alternativa (SAAC) disponibles, explorando cómo las herramientas de Aprendizaje Automático e Inteligencia Artificial podrian optimizar su uso.
+	\item Adaptar y evaluar modelos de lenguaje grandes actuales y de acceso público para su implementación  en la generación de frases dentro de herramientas SAAC.
+	\item Realizar una comparación de los resultados obtenidos utilizando LLMs respecto a otros comunicadores SAAC que permiten la generación de frases y que se encuentran actualmente en el mercado.
 \end{enumerate}
 
 \section{Estructura de la memoria}
 
-Este documento está dividido en 5 capítulos. El Capítulo \ref{cap1} proporciona la motivación y los objetivos del trabajo, estableciendo también el contexto de la investigación. El Capítulo \ref{cap2} presenta los conceptos esenciales, comenzando con una visión general del aprendizaje automático y seguido de una explicación detallada de las redes neuronales, tranformers y modelos de lenguaje grandes. En el Capítulo \ref{cap3} se detallan los modelos de lenguaje utilizados, los métodos para su ajuste y adaptación al contexto y las técnicas de evaluación. El Capítulo \ref{cap4} describe los datos utilizados, el entrenamiento de los modelos y los resultados obtenidos. Finalmente, el Capítulo \ref{cap5} ofrece un resumen de los resultados, evalúa los objetivos alcanzados y sugiere posibles direcciones para futuras investigaciones.
+Este documento está dividido en 6 capítulos. El Capítulo \ref{cap1} proporciona la motivación y los objetivos del trabajo, estableciendo también el contexto de la investigación. El Capítulo \ref{cap2} presenta los conceptos esenciales, comenzando con una visión general del aprendizaje automático y seguido de una explicación detallada de las redes neuronales, tranformers y modelos de lenguaje grandes. En el Capítulo \ref{cap3} se detallan los modelos de lenguaje utilizados, los métodos para su ajuste y adaptación al contexto y las técnicas de evaluación. El Capítulo \ref{cap4} describe los datos utilizados, el entrenamiento de los modelos y los resultados obtenidos. El Capítulo \ref{cap5} ofrece un análisis adicional de los resultados obtenidos con el modelo principal de este proyecto, presentando una comparación de resultados con otros modelos, con resultados de individuos humanos y un análisis de los errores más comunes. Finalmente, el Capítulo \ref{cap6} ofrece un resumen de los resultados, evalúa los objetivos alcanzados y sugiere posibles direcciones para futuras investigaciones.
 
 %\section{Notes bibliografiques} %%%%% Opcional
 
@@ -593,25 +594,27 @@ En la siguiente sección se explica cómo se deben introducir los datos de entra
 
 \subsection{\textit{Prompting}}
 
-\textit{Prompting} se refiere al proceso mediante el cual se introducen una secuencia de entrada o \textit{query} al modelo a partir de la cual debe comenzar la tarea de generación de texto. Existen diversas maneras de crear estas \textit{prompts}. Las más utilizadas son las siguientes:
+\textit{Prompting} se refiere al proceso mediante el cual se introduce una secuencia de entrada o \textit{query} al modelo, a partir de la cual debe comenzar la tarea de generación de texto. Existen diversas maneras de crear estas \textit{prompts}. Algunas de las técincas más utilizadas son las siguientes \footnote{Esta  información se ha obtenido de Prompt Engineering Guide \url{www.promptingguide.ai}}:
 
 \begin{itemize}
-	\item \textbf{\textit{Zero-shot prompting}}:
-	\item \textbf{\textit{In-context learning }(ICL)}:
-	\item \textbf{\textit{Chain-of-thought} (CoT)}:
-	\item \textbf{\textit{Self consistency}}:
-	\item \textbf{\textit{Tree of thought} (ToT)}:
+	\item \textbf{\textit{Zero-shot prompting}}: consiste en presentar al modelo la tarea que se desea realizar sin proporcionar ejemplos previos sobre los que pueda basarse. Los modelos de lenguaje grandes han demostrado funcionar bien con este tipo de \textit{prompting} en tareas simples, aunque pueden tener dificultades en tareas más complejas. En estos casos, puede ser recomendable utilizar \textit{few-shot prompting} en su lugar.
+	\item \textbf{\textit{Few-shot prompting}}: en este caso, se en proporciona al modelo un número limitado de ejemplos que muestran cómo realizar la tarea. Esta técnica suele ser bastante efectiva,  pero puede fallar en tareas que requieran un razonamiento complejo.
+	\item \textbf{\textit{Chain-of-thought} (CoT)} \cite{wei2023chainofthoughtpromptingelicitsreasoning}: esta técnica permite realizar un razonamiento más complejo añadiendo pasos intermedios en la \textit{prompt} que muestren el proceso de pensamiento necesario para resolver el problema. Puede combinarse con \textit{few-shot promting} para tener mejor rendimiento en tareas complejas.
+	\item \textbf{\textit{Self-consistency}} \cite{wang2023selfconsistencyimproveschainthought}: consiste en generar diferentes caminos de razonamiento utilizando \textit{few-shot CoT}, y luego seleccionar la respuesta más coherente entre ellos. En esta técnica, el modelo crea varias respuestas posibles y elige la que mejor resuelve el problema.
+	\item \textbf{\textit{Tree of thought} (ToT)}:  es una generalización de \textit{CoT prompting} que se basa en la idea de construir un "árbol de pensamientos". Cada pensamiento de este árbol representa un paso intermedio hacia la solución del problema. El modelo evalúa continuamente el progreso a través de estos pasos intermedios y utiliza algoritmos de búsqueda para explorar los diferentes caminos hacia la solución.
 \end{itemize}
 
-Por ejemplo, para la tarea de responder preguntas, podriamos plantearlo de la siguiente manera:
+\subsection{Generación de respuestas}
 
-En primer lugar, se proporciona al modelo una \textit{prompt} con la pregunta a contestar, con un formato que sugiera que después de la pregunta se espera una respuesta, por ejemplo: 
+Una vez introducida la secuencia de entrada en forma de \textit{prompt} al modelo, este debe generar la secuencia de salida. Como se ha mencionado anteriormente, los modelos de lenguaje grandes se utilizan en tareas de generación de texto condicionado a un fragmento de entrada. Es decir, el modelo debe generar un texto de respuesta que esté condicionado a la \textit{prompt} proporcionada.
+
+Para ilustrar este proceso, supongamos que se le introduce al modelo la siguiente \textit{prompt}:
 
 \begin{displayquote}
 \centerline{"Pregunta: ¿Cuál es la capital de Francia? Respuesta: "}
 \end{displayquote}
 
-A continuación, el modelo calcula la probabilidad para cada palabra $w$ dentro de su vocabulario de que esta sea la palabra que continua la \textit{prompt}:
+A partir de esta, el modelo deberá calcular la probabilidad para cada palabra $w$ dentro de su vocabulario de que esta sea la palabra que continua la \textit{prompt}:
 
 \begin{displayquote}
 \centerline{$P(w|\text{Pregunta: ¿Cuál es la capital de Francia? Respuesta: })$}
@@ -1009,15 +1012,15 @@ Las representaciones obtenidas son las que se utilizan posteriormente para calcu
 
 La métrica COMET es más compleja de interpretar en comparación con BLEU. Generalmente, se considera que un valor de COMET superior a 80 indica una traducción de alta calidad.
 
-\chapter{Resultados experimentales} \label{cap4}
+\chapter{Experimentos realizados} \label{cap4}
 
-En este capítulo se presentan los experimentos realizados en este trabajo, los cuales se han llevado a cabo utilizando dos modelos de lenguaje grandes: Gemma y Llama-3. Los experimentos se centraron principalmente en la exploración de los parámetros rango y \textit{alpha} de la adaptación mediante LoRA, con el objetivo de encontrar la configuración que proporcionara los mejores resulados posibles para la tarea de generar frases de lenguaje natural a partir de listas de palabras clave, en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. Tras identificar la mejor configuración, se realizó un experimento adicional utilizando todos los datos de entrenamiento disponibles para evaluar la eficacia de los modelos con un conjunto de datos de validación que no había sido utilizado en fases anteriores. Los experimentos se realizaron con conjuntos de datos en español y en inglés.
+En este capítulo se presentan los experimentos realizados en este trabajo, los cuales se han llevado a cabo utilizando dos modelos de lenguaje grandes: Gemma y Llama-3. Los experimentos se centraron principalmente en la exploración de los parámetros rango y \textit{alpha} de la adaptación mediante LoRA, con el objetivo de encontrar la configuración que proporcionara los mejores resulados posibles para la tarea de generar frases de lenguaje natural a partir de listas de palabras clave, en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. Tras identificar la mejor configuración, se realizó un experimento adicional utilizando todos los datos de entrenamiento disponibles para evaluar la eficacia de los modelos con un conjunto de datos de validación que no había sido utilizado en fases anteriores. Los experimentos se realizaron con conjuntos de datos en español y, a continuación, se realizaron también con el conjunto de datos en inglés para estudiar el efecto del lenguaje en los resultados.
 
 Todos los experimentos han sido realizados utilizando Google Collab \footnote{Google Collab es una plataforma  en la nube que permite escribir y ejecutar código Python en \textit{notebooks} interactivos, ofreciendo acceso a recursos de procesamiento como GPUs y TPUs.}.
 
 A continuación, se detallan los experimentos realizados y los resultados obtenidos. También se incluyen comparaciones entre los modelos entrenados y otros sistemas externos como GPT-4, el comunicador electrónico AsTeRISCS Grid, y resultados obtenidos por personas en esta misma tarea.
 
-\section{Conjunto de datos}
+\section{Datos utilizados}
 
 Para la realización de los experimentos, se han utilizado dos conjuntos de datos distintos, ambos extraídos del portal de la Universidad de Vigo. Ambos conjuntos contienen frases extraídas de los recursos del Portal Aragonés de la Comunicación Aumentativa y Alternativa, acompañada de la lista de lemas o palabras clave asociadas a cada frase. Estas palabras clave han sido seleccionadas por un grupo de anotadores expertos lingüistas, y representan las palabras que un usuario introduciría a través de la interfaz de un comunicador electrónico con la intención de generar la frase correspondiente.
 
@@ -1085,7 +1088,7 @@ No lo cambiaré.	no, lo, cambiar | I will not change it.	change, it, not
 
 En el segundo conjunto de datos, se encontraron algunos valores nulos en las listas de palabras clave para ciertas frases en español. Estas frases fueron anotadas manualmente para completar la información faltante.
 
-A partir de estos dos conjuntos, se han creado un conjunto de datos para el entrenamiento en español y otro, en inglés.
+A partir de estos dos conjuntos, se han creado un conjunto de datos para el entrenamiento en español y otro, en inglés:
 
 \begin{itemize}
 	\item \textbf{Conjunto en español}: se ha creado a partir de la unión de las frases en español de los dos conjuntos mencionados. Contiene un total de 340 frases, ya que entre los conjuntos originales algunas se encontraban repetidas.
@@ -1145,7 +1148,7 @@ La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los exper
 
 Los modelos utilizados para los experimentos de este trabajo son los modelos Gemma-7B y Llama3-8B. Ambos modelos están disponibles para su uso libre en el portal de \textit{Hugging Face} \footnote{\textit{Hugging Face} es una plataforma que ofrece herramientas y modelos de aprendizaje automático, especialmente para el procesamiento de lenguaje natural.}.
 
-Para el entrenamiento de los modelos, se ha  aplicado el método de adaptación LoRA, que se describe en detalle en la sección \ref{lora}. Este método requiere la configuración de dos parámetros clave: el rango ($r$) y el parámetro \textit{alpha}. Dado que estos parámetros pueden influir significativamente en el rendimiento del modelo, se han realizado experimentos variando sus valores para identificar la configuración óptmia que proporciona mejores resultados.
+Para el entrenamiento de los modelos, se ha  aplicado el método de adaptación LoRA, que se describe en detalle en la sección \ref{lora}. Este método requiere la configuración de dos parámetros clave: el rango y el parámetro \textit{alpha}. Dado que estos parámetros pueden influir significativamente en el rendimiento del modelo, se han realizado experimentos variando sus valores para identificar la configuración óptima que proporciona mejores resultados.
 
 Para garantizar una evaluación robusta y fiable de los modelos, se ha utilizado la técnica de \textit{cross-validation} con 10 particiones. Esto implica dividir el conjunto de datos en 10 partes iguales. En cada iteración, 9 partes se utilizan para entrenar el modelo y la parte restante, para probarlo. Las particiones se han realizado de manera que, al final del proceso, todos los datos hayan sido utilizados tanto para entrenamiento como para prueba, asegurando que cada dato aparezce solo una vez en el conjunto de prueba.
 
@@ -1181,17 +1184,17 @@ La Tabla \ref{tab: Gemma y Llama} presenta los resultados obtenidos de BLEU y CO
 \begin{figure}[h]
 
 \begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth, height=9cm]{images/gemma_llama_BLEU} 
+\includegraphics[width=0.9\linewidth, height=9cm]{images/gemma_llama_BLEU_} 
 \caption{Resultados de BLEU para los modelos Gemma-7B y Llama3-8B}
 \label{fig:subim1}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth, height=9cm]{images/gemma_llama_COMET}
+\includegraphics[width=0.9\linewidth, height=9cm]{images/gemma_llama_COMET_}
 \caption{Resultados de COMET para los modelos Gemma-7B y Llama3-8B}
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados obtenidos en las métricas de BLEU y COMET con los modelos Gemma-7B y Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32 y 64 y un \textit{alpha} igual a dos veces $r$.}
+\caption{Resultados obtenidos en las métricas de BLEU y COMET con los modelos Gemma-7B y Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32 y 64 y $\alpha = 2r$}
 \label{fig:image2}
 \end{figure}
 
@@ -1248,12 +1251,12 @@ Los resultados obtenidos se observan en la Tabla \ref{tab: Llama exploración de
 \begin{figure}[!h]
 
 \begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_BLEU} 
+\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_BLEU_} 
 \caption{Resultados de BLEU para Llama3-8B}
 \label{fig:subim1}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_COMET}
+\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_COMET_}
 \caption{Resultados de COMET para Llama3-8B}
 \label{fig:subim2}
 \end{subfigure}
@@ -1270,7 +1273,7 @@ En lo que respecta a la métrica COMET, los resultados muestran que todas las co
 
 Así, tanto los resultados de BLEU coomo de COMET sugieren que la combinación óptima de parámetros es $r = 128$ con $\alpha = r$.
 
-\subsection{Validación del modelo en español}
+\subsection{Validación del modelo final}
 
 Finalmente, se ha llevado a cabo el entrenamiento del modelo de Llama-3 con la mejor combinación de parámetros obtenidos en los experimentos anteriores: $r$ = 128 y \textit{alpha} = $r$. En este caso, el modelo ha sido entrenado utilizando todo el conjunto de datos disponible para el entrenamiento.
 
@@ -1283,23 +1286,17 @@ Los resultados obtenidos con esta configuración final han sido los siguientes:
 	\item COMET = 89.15
 \end{itemize}
 
-Aunque los valores obtenidos para BLEU y COMET son inferiores a los resultados alcanzados durante la fase de entrenamiento, estos resultados se encuentran dentro de un rango adecuado de las métricas. La disminución en estas puede deberse a la diferencia entre el conjunto de entrenamiento y el conjunto de validación. De todas maneras, los resultados siguen siendo prometedores y reflejan un buen desempeño del modelo en esta tarea.
+Aunque los valores obtenidos para BLEU y COMET son inferiores a los resultados alcanzados durante la fase de experimentación anterior, estos resultados se encuentran dentro de un rango adecuado de las métricas. La disminución en estas puede deberse a la diferencia entre el conjunto de entrenamiento y el conjunto de validación. De todas maneras, los resultados siguen siendo prometedores y reflejan un buen desempeño del modelo en esta tarea.
 
-\section{Experimentos realizados con el conjunto en inglés}
+\section{Experimentos adicionales con el conjunto en inglés}
 
 Para evaluar la influencia del idioma en los resultados de los modelos, se han replicado los mismos experimentos realizados con el conjunto de datos en español utilizando el conjunto en inglés. De nuevo, se han utilizado los modelos Gemma-7B y Llama3-8B disponibles en el portal de \textit{Hugging Face}.
 
 Al igual que en los experimentos anteriores, se ha aplicado la adaptación LoRA y se ha llevado a cabo el entrenamiento utilizando \textit{cross-validation} con un total de 10 particiones.
 
-En primer lugar, se han realizado los experimentos para ambos modelos, explorando diferentes valores de $r$ (16, 32 y 64) y utilizando una configuración de \textit{alpha} fija en $\alpha = 2r$.
+En primer lugar, se han realizado los experimentos para ambos modelos explorando diferentes valores de $r$ (16, 32 y 64) y utilizando una configuración  fija de $\alpha = 2r$. Al igual que con el conjunto en español, los resultados obtenidos con el modelo Gemma son notablemente inferiores a los resultados obtenidos con el modelo Llama-3. El mejor valor de rango resultó ser $r = 32$ en ambos casos. En el caso de Gemma, los valores de BLEU y COMET con esta configuración son de 54.32 y 88.88 respectivamente, mientras que los de Llama-3 son 62.22 y 91.12.
 
-%Los resultados obtenidos de estos experimentos se presentan en las siguientes secciones.
-
-%\subsection{Experimentos con Gemma y Llama-3}
-
-%Al igual que los experimentos realizados con el conjunto de datos en español, el primer experimento con el conjunto en inglés consistió en comparar el rendimiento de los modelos Gemma-7B y Llama3-8B. Para la adaptación con LoRA, se han explorado los valores de rango 16, 32 y 64; manteniendo el parámetro \textit{alpha} a dos veces el valor del rango.
-
-%Los resultados obtenidos se presentan en la tabla \ref{tab: Gemma y Llama inglés}
+En la Tabla \ref{tab:comparacionIdiomas} se muestran los resultados de el mejor valor de rango (entre 16, 32 y 64) con $\alpha = 2r$ para los dos modelos e idiomas. En el caso del modelo en español, es $r = 32$ para ambos modelos y para el conjunto en inglés, $r = 32$ para Llama-3 y $r = 16$ para Gemma
 
 \begin{table}[h]
 \centering
@@ -1309,40 +1306,22 @@ En primer lugar, se han realizado los experimentos para ambos modelos, explorand
 \hline
 \hline
 & & & \\
- & Llama3  &   66.13   &   93.37    \\
+ & Llama3 &   66.13   &   93.37    \\
 Español &  &      &       \\
- & Gemma   &   52.44   &    88.92   \\
+ & Gemma  &   52.44   &    88.92   \\
 & & & \\
 \hline
 & & &  \\
- & Llama3  & 62.22    &   91.12    \\
+ & Llama3 & 62.22    &   91.12    \\
 Inglés &  &      &       \\
- & Gemma   &  54.23    &    88.88   \\
+ & Gemma  &  54.23    &    88.88   \\
 & & &  \\
 \end{tabular}
 \caption{Tabla de resultados BLEU y COMET para diferentes configuraciones}
+\label{tab:comparacionIdiomas}
 \end{table}
 
-
-Los resultados muestran que,al igual que con el conjunto de datos en español, el rendimiento del modelo Gemma es significativamente inferior al de el de Llama-3 en todas las configuraciones.
-
-En la Figura \ref{fig:graficasComparacion} se presentan las puntuaciones de BLEU y COMET de ambos modelos entrenados en los dos idiomas idiomas, con los valores de rango y configuración de \textit{alpha} descritos. Observamos que los resultados para el modelo Llama3-8B en inglés siguen exactamente la misma tendencia que los obtenidos con el conjunto en español, aunque se encuentran ligeramente por debajo. Por otro lado, para el modelo Gemma-7B, los resultados en inglés también son ligeramente inferiores a los del conjunto en español, pero muestran un gran incremento en $r = 32$, superando los valores de las métricas obtenidos con el conjunto en español. En este caso, las tendencias del modelo en inglés y en español no son completamente consistentes.
-
-%\begin{figure}
-%\begin{subfigure}{0.5\textwidth}
-%\includegraphics[width=0.9\linewidth, height=9cm]{images/BLEU_comparacion_idiomas} 
-%\caption{Resultados de BLEU para Gemma-7B y Llama3-8B con el conjunto de datos en inglés y español}
-%\label{fig:subim1}
-%\end{subfigure}
-%\begin{subfigure}{0.5\textwidth}
-%\includegraphics[width=0.9\linewidth, height=9cm]{images/COMET_comparacion_idiomas}
-%\caption{Resultados de COMET para Gemma-7B y Llama3-8B con el conjunto de datos en inglés y español}
-%\label{fig:subim2}
-%\end{subfigure}
-
-%\caption{Resultados obtenidos en las métricas de BLEU y COMET con los modelos Gemma-7B y Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32 y 64 y la configuración de $\alpha = 2r$. En verde se observan los resultados con el conjunto de datos en español y en amarillo, en inglés.}
-%\label{fig:graficasComparacion}
-%\end{figure}
+comentar que gemma en inglés > gemma en español y Llama3 en español > Llama3 en inglés ?
 
 \subsection{Exploración de valores de \textit{alpha}}
 
@@ -1389,12 +1368,12 @@ En la Figura \ref{fig:graficasLlama inglés} se presentan los resultados de mane
 
 \begin{figure}
 \begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_BLEU_en} 
+\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_BLEU_en_} 
 \caption{Resultados de BLEU para Llama3-8B}
 \label{fig:subim1}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_COMET_en}
+\includegraphics[width=0.9\linewidth, height=9cm]{images/llama_COMET_en_}
 \caption{Resultados de COMET para Llama3-8B}
 \label{fig:subim2}
 \end{subfigure}
@@ -1403,13 +1382,34 @@ En la Figura \ref{fig:graficasLlama inglés} se presentan los resultados de mane
 \label{fig:graficasLlama inglés}
 \end{figure}
 
-Si observamos las puntuaciones de BLEU, se puede ver que las tres configuraciones de \textit{alpha} presentan una tendencia ascendente hasta alcanzar su máximo en $r = 128$. Para $r = 256$, los valores de BLEU disminuyen significativamente en los tres casos, de manera similar a lo observado con el conjunto de datos en español. En este caso, la configuración con $r = 128$ y $\alpha = r$ obtiene la mejor puntuación de BLEU, aunque la diferencia con respecto a las otras configuraciones de \textit{alpha} para el mismo valor de $r$ es mínima.
+Al observar las puntuaciones de BLEU, se puede ver que las tres configuraciones de \textit{alpha} presentan una tendencia ascendente hasta alcanzar su máximo en $r = 128$. Para $r = 256$, los valores de BLEU disminuyen significativamente en los tres casos, de manera similar a lo observado con el conjunto de datos en español. En este caso, la configuración con $r = 128$ y $\alpha = r$ obtiene la mejor puntuación de BLEU, aunque la diferencia con respecto a las otras configuraciones de \textit{alpha} para el mismo valor de $r$ es mínima.
 
-En cuanto al COMET, las tres configuraciones siguen una tendencia comparable a la observada con el conjunto de datos en español. No obstante, se observa un descenso notable en la puntuación de COMET para $r = 256$ y $\alpha = 2r$.
+En cuanto a la métrica COMET, las tres configuraciones siguen una tendencia similar a la observada con el conjunto de datos en español. No obstante, se observa un descenso notable en la puntuación de COMET para $r = 256$ y $\alpha = 2r$. El mejor valor de COMET se encuentra en $r = 128$, $\alpha = 2r$.
 
-\subsection{Validación del modelo en inglés}
+Considerando ambas métricas, la mejor configuración es $r = 128$, $\alpha = 2r$, ya que ofrece el mejor valor de COMET junto con un buen rendimiento de BLEU.
 
-\section{Comparación con otros modelos}
+\subsection{Validación del modelo final}
+
+Igual que con el conjunto en español, el experimento final con los datos en inglés ha consistido en el entrenamiento de un modelo Llama-3 utilizando la mejor configuración de parámetros identificada durante la experimentación previa, que fue $r = 128$ y $\alpha = 2r$.
+
+El modelo ha sido entrenado utilizando la totalidad de datos de entrenamiento disponibles. Posteriormente, se ha realizado la validación del modelo utilizando el conjunto de datos de validación que se había reservado desde el inicio de los experimentos. Los resultados obtenidos en las métricas BLEU y COMET han sido los siguientes:
+
+\begin{itemize}
+	\item BLEU = 56.70
+	\item COMET = 87.96
+\end{itemize}
+
+De nuevo, se observa que los resultados obtenidos son inferiores a los obtenidos en los alcanzados en la fase de experimentación anterior.
+
+En general, el rendimiento del modelo en inglés es inferior al del modelo en español. Esto podría deberse a la menor cantidad de datos disponibles en inglés.
+
+\chapter{Análisis posteriores del modelo en español} \label{cap5}
+
+En este capítulo se presentan una serie de análisis y experimentos adicionales que se han llevado a cabo con el objetivo de evaluar de manera más profunda la eficacia del modelo final en español. Este es el modelo Llama-3 con $r = 128$ y $\alpha = r$.
+
+En primer lugar, se ha realizado una comparación del rendimiento del modelo con el modelo GPT-4 y la aplicación de AsTeRISCS Grid, ampliamente utilizada en el ámbito de los SAAC. Además, se han realizado experimentos con particiapantes humanos para verificar si los resultados generados por el modelo son comparables a los obtenidos por personas. Finalmente, se ha realizado un análisis de los errores más comunes cometidos por el modelo, con el fin de identificar áreas de mejora y comprender mejor sus limitaciones.
+
+\section{Comparación con otros modelos} 
 
 Una vez obtenidos los resultados finales del modelo Llama3-8B, se han realizado pruebas adicionales con el modelo GPT-4 y con la aplicación AsTeRICS Grid para comparar su rendimiento. Todas estas pruebas se han realizado utilizando el conjunto de validación reservado desde el incio de los experimentos.
 
@@ -1420,7 +1420,7 @@ Por otro lado, la aplicación AsTeRISCS Grid ha sido incluida en esta evaluació
 Los resultados obtenidos con los tres modelos (Llama3-8B. GPT-4 y AsTeRISCS Grid) se presentan en la tabla \ref{tab:comparacionFinal}.
 
 \begin{table}[!h]
-\caption{Puntuaciones de BLEU y COMET de los distintos modelos utilizados}
+\caption{Puntuaciones de BLEU y COMET de los distintos modelos utilizados para la comparación}
 \begin{center}
 \begin{tabular}{ c | c c }
 	\ & BLEU & COMET \\
@@ -1437,7 +1437,7 @@ Los resultados obtenidos con los tres modelos (Llama3-8B. GPT-4 y AsTeRISCS Grid
 
 Obsevamos que, aunque el modelo entrenado Llama3-8B no alcanza el nivel de rendimiento de GPT-4, sus resultados son notablemente superiores a los de AsTeRICS Grid, una herramienta ampliamente utilizada en el ámbito de los SAAC. Estos resultados sugieren que la integración de modelos de lenguaje grandes podría mejorar significativamente la calidad de las aplicaciones en este campo, proporcionando una alternativa más robusta y efectiva para la generación de frases a partir de las palabras introducidas por los usuarios y mejorando así la calidad de la comunicación de estos.
 
-\subsection{Experimentos con personas}
+\section{Experimentos con personas}
 
 Además de las pruebas realizadas con otros modelos, se han realizado también experimentos con un grupo de personas para poder comparar los resultados obtenidos por el modelo Llama3-8B con producciones humanas. Para ello, se explicó la tarea a un grupo de 5 personas, estudiantes de Ciencia de Datos o Informática con edades comprendidas entre 22 y 26 años. A continuación, se les proporcionó el conjunto de datos de entrenamiento para que pudiesen revisar ejemplos de la realización de la tarea, así como el conjunto de datos de validación sin incluir las frases generadas, solamente con las listas de palabras clave.
 
@@ -1462,17 +1462,22 @@ Los resultados obtenidos en estas pruebas se muestran en la Tabla \ref{tab:exper
 \label{tab:experimentosPersonas}
 \end{table}
 
+\begin{figure}[h]
+\includegraphics[scale = 0.8]{images/comparacion_individuos.png}
+\centering
+\caption{Resultados de BLEU y COMET obtenidos por los individuos y por el modelo en la tarea de generación de frases}
+\label{fig:comparacionIndividuos}
+\end{figure}
+
 La media de BLEU entre todos los individuos es xx y la de COMET, xx. Los resultados obtenidos por el modelo final de Llama-3 entrenado con el conjunto de datos en español son BLEU = 62.90 y COMET = 89.15. Comparando estos rsultados con los obtenidos por personas, observamos que, aunque el modelo Llama-3 presenta un rendimiento inferior al promedio de los resultados obtenidos por individuos, supera a dos de ellos en términos de BLEU y a uno en términos de COMET.
 
 Esto sugiere que, a pesar de no alcanzar los niveles más altos de rendimiento humano, el modelo logra generar frases que se acercan a los estándares de calidad que se obtendrían si las frases fueran generadas por personas. Este desempeño cercano a los resultados humanos indica que el modelo Llama-3 tiene una capacidad considerable para gnerar frases de manera efectiva y coherente.
 
-\chapter{Análisis de errores}
+\section{Análisis de errores}
 
-En este capítulo, se realiza un análisis de los errores más comunes observados en la generación de frases por parte de los modelos. El objetivo de este es identificar y comprender los errores recurrentes en las frases generadas, lo que proporcionará una base para futuras mejoras en el proceso.
+En esta sección se realiza un análisis de los errores más comunes observados en la generación de frases por parte del modelo. El objetivo de este es identificar y comprender los errores recurrentes en las frases generadas, lo que proporcionará una base para futuras mejoras en el proceso.
 
-\section{Análisis de errores en español}
-
-En el caso del modelo en español, de las 50 frases del conjunto de validación, 18 fueron generadas correctamente, es decir, de manera idéntica a las frases reales. Esto significa que el modelo generó un total de 27 frases con algún tipo de error. A continuación se enumeran los errores principales que estas presentan:
+El análisis se ha realizado comparando las frases generadas del conjunto de validación con las frases reales. Se observa que, de las 50 frases del conjunto, 18 fueron generadas correctamente, es decir, de manera idéntica a las frases reales. Esto significa que el modelo generó un total de 27 frases con algún tipo de error. A continuación se enumeran los errores principales que estas presentan:
 
 \begin{itemize}
 	\item \textbf{Errores en los tiempos verbales}: se han identificado 9 frases en las que el único error se relaciona con la conjugación del tiempo verbal. Estas frases se presentan en la Tabla \ref{tab:erroresTiempoVerbal}. Se observa que son casos en los que, a partir de las palabras clave introducidas, resulta muy difícil determinar el tiempo verbal correcto de la frase. El modelo tiende a conjugar las frases en presente, ya que es el tiempo verbal más común, aunque en algunas ocasiones las frases deberían estar en pasado. Este error también es frecuente en las generaciones de frases realizadas por personas. La ausencia de pistas claras sobre el tiempo verbal en las palabras clave puede llevar a asumir que el tiempo verbal de la frase debe ser presente.
@@ -1561,8 +1566,8 @@ Las 10 frases restantes presentan varios de los errores mencionados u otros prob
 	 & & \\
 	Ratita, comprar, un, lazo & Ratita compra un lazo & La ratita compra un lazo \\
 	 & & \\
-	papá, abrir, puerta,de, coche, con, llave & Papá abre la puerta del & El papá abre la puerta del \\
-	 & coche con la llave & coche con la llave \\
+	papá, abrir, puerta, de,  & Papá abre la puerta del & El papá abre la puerta del \\
+	 coche, con, llave & coche con la llave & coche con la llave \\
 	 & & \\
 	Ratita, barrer, su, casita & Ratita barre su casita & La ratita barre su casita \\
 	 & & \\
@@ -1619,7 +1624,7 @@ Las 10 frases restantes presentan varios de los errores mencionados u otros prob
 %                                 CONCLUSIONS                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Conclusiones} \label{cap5}
+\chapter{Conclusiones} \label{cap6}
 
 En este trabajo se ha explorado la posibilidad de adaptar modelos de lenguaje grandes a tareas dentro del ámbito de los sistemas de comunicación aumentativos y alternativos. Se han entrenado dos modelos, Gemma y Llama-3, utilizando un conjunto de datos en español y en inglés, con el objetivo de generar frases gramaticalmente correctas a partir de una serie de listas de palabras clave o lemas. Estas listas de palabras clave simulan las entradas que los usuarios introducirían a través de la interfaz de un comunicador electrónico.
 
@@ -1631,15 +1636,45 @@ Estos resultados muestran que los modelos de lenguaje grandes tienen un gran pot
 
 \section{Objetivos cumplidos}
 
-\section{Legado}
+A lo largo del desarrollo de este trabajo, se han cumplido satisfactoriamente los objetivos propuestos inicialmente:
 
-\section{Relación del trabajo desarrollado con los estudios cursados}
+\begin{enumerate}
+	\item Se ha realizado una investigación sobre diferentes tipos de SAAC y cómo aplicar herramientas de Aprendizaje Automático e Inteligencia Artificial para mejorar su uso.
+	\item Se han adaptado dos modelos de lenguaje grandes de actualidad, Gemma y Llama-3, para la tarea de generación de frases sintácticamente correctas a partir de palabras clave para su uso en comunicadores electrónicos. Tras la realización de los experimentos, se determinó que el modelo Llama-3 ofrece mejores resultados que Gemma. Los resultados obtenidos resultan prometedores.
+	\item Se ha realizado una comparación de los resultados obtenidos con el modelo Llama-3 frente al modelo GPT-4 y el comunicador AsTeRISCS Grid. Aunque el modelo desarrollado en este trabajo no supera el rendimiento de GPT-4, demuestra un rendimiento significativamente superior al de AsTeRISCS Grid, lo que muestra que puede suponer un avance importante en este sector.
+\end{enumerate}
 
 \section{Propuesta de trabajo futuro}
 
-- Realizar más repeticiones de los experimentos para conseguir mejores resultados. No se ha podido realizar en este trabajo por el alto coste temporal, computacional y económico.
+Aunque los resultados en este trabajo son satisfactorios, se han identificado algunas áreas de mejora que no han podido ser abordadas debido a limitaciones de tiempo, recursos computacionales y costos económicos. Así, para continuar la investicación y mejorar los resultados, se proponen las siguientes líneas de trabajo futuro:
 
-- Conseguir conjuntos de datos más grandes.
+\begin{itemize}
+	\item \textbf{Realización de más repeticiones de experimentos}: resultaría interesante realizar más repeticiones de los experimentos realizados para poder obtener resultados más robustos, ya que las variaciones en el entrenamiento pueden influir significativamente en el rendimiento de los modelos. En este proyecto, las limitaciones de tiempo, recursos computacionales y costos económicos han impedido realizar un número más alto de experimentos.
+	\item \textbf{Obtención de conjuntos de datos más grandes}: la apliación de los conjuntos de datos utilizados podría tener un gran impacto positivo en el rendimiento de los modelos de lenguaje. Los conjuntos de datos de los que se disponían eran relativamente pequeños. Un conjunto más grande y diverso permitiría entrenar a los modelos de manera más completa, mejorando su capacidad de generalización y su habilidad para generar frases precisas y apropiadas al contexto.
+\end{itemize}
+
+\section{Legado}
+
+Este trabajo supone una contribución al campo de los Sistemas de Comunicación Aumentativa y Alternativa (SAAC). Se ha demostrado que la adaptación de modelos de lenguaje grandes para la generación de frases a partir de palabras clave permite mejorar significativamente la eficacia de estas herramientas, facilitando una comunicación más natural y coherente para las personas que tienen dificultades en este área.
+
+El código y los datos utilizados están disponibles en el repositorio de GitHub, permitiendo así a otros investigadores reproducir el análisis y trabajo realizado. Toda la documentación relevante está referenciada en la bibliografía.
+
+\section{Relación del trabajo desarrollado con los estudios cursados}
+
+El trabajo desarrollado en este proyecto está estrechamente relacionado con los estudios cursados e integra diferentes competencias y conocimientos adquiridos a lo largo de este. 
+
+En primer lugar, la obtención y transformación de diferentes conjuntos de datos, que es una tarea fundamental de la Ciencia de Datos, han sido necesarios para conseguir los datos para el entrenamiento de los modelos.
+
+El entrenamiento de  modelos de lenguaje grandes, que forma parte del campo del Procesamiento de Lenguaje Natural, se ha basado en conceptos estudiados en la carrera, por ejemplo el \textit{fine-tuning} y la técnica de \textit{cross-validation}.
+
+Se ha profundizado también en técnicas avanzadas como la adaptacion de modelos mediante LoRA, una técnica no vista en profundidad durante la carrera pero que ha sido fundamental para el entrenamiento de los modelos en este proyecto.
+
+Por último, el cálculo de métricas y creación de tablas y gráficas han sido cruciales para la interpretación de resultados. Los conceptos de visualización de datos  aprendidos durante los estudios han resultado muy útiles para presentar de manera clara los resultados obtenidos.
+
+ Para ello han sido muy utiles los conceptos de visualización de datos aprendidos durante los estudios.
+
+En resumen, este proyecto ha permitido aplicar de manera práctica los conocimientos adquiridos en el grado de Ciencia de Datos, desde la preparación de los datos y el entrenamiento de modelos hasta la evaluación y visualización de resultados.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                BIBLIOGRAFIA                                 %
