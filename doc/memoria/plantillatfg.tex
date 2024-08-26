@@ -154,38 +154,37 @@ En este capítulo se abordan los conceptos fundamentales necesarios para compren
 
 \section{Aprendizaje automático}
 
-El aprendizaje automático (ML, por su nombre en inglés, \textit{machine learning}) es una disciplina dentro de la inteligencia artificial que se centra en el desarrollo y estudio de algoritmos y modelos que permiten que los sistemas puedan relizar tareas específicas sin haber sido explícitamente programados para ello. Este término fue acuñado por Arthur Samuel en el año 1959, quien creo uno de los primeros programas exitosos de esta disciplina, conocido como \textit{the Samuel Ckeckers-playing Program} \cite{samuelCheckers} (el programa de juego de damas de Samuel).
+El aprendizaje automático (ML, por su nombre en inglés, \textit{machine learning}) es una disciplina dentro de la inteligencia artificial que se centra en el desarrollo y estudio de algoritmos y modelos que permiten que los sistemas puedan relizar tareas específicas sin haber sido explícitamente programados para ello. Este término fue acuñado por Arthur Samuel en el año 1959, quien creo uno de los primeros programas exitosos en esta área, conocido como \textit{the Samuel Ckeckers-playing Program} \cite{samuelCheckers} (el programa de juego de damas de Samuel).
 
 Tom Mitchell \cite{mitchell1997mcgraw} define el proceso de aprendizaje de los programas en el campo del \textit{machine learning} de la siguiente manera:
 
 \begin{displayquote}
-\textit{"Se dice que un programa aprende de la experiencia $E$ con respecto a alguna clase de tarea $T$, y medida de rendimiento $P$, si su rendimiento en tareas en $T$, medido por $P$, mejora con la experiencia $E$."}
+\textit{"Se dice que un programa aprende de la experiencia $E$ con respecto a alguna clase de tarea $T$, y medida de rendimiento $P$, si su rendimiento en la tarea $T$, medido por $P$, mejora con la experiencia $E$."}
 \end{displayquote}
 
-Aunque la idea principal del aprendizaje automático es esta, econtramos diferentes enfoques dependiendo del tipo de tarea que se quiera llevar a cabo, de la naturaleza de esta, de la medida del rendimiento que se utiliza para evaluar el sistema y del tipo de entrenamiento o experiencia que le proporcionamos a este.
+Aunque la idea principal del aprendizaje automático es esta, econtramos diferentes enfoques dependiendo del tipo de tarea que se quiera llevar a cabo, de la naturaleza de esta, de la medida del rendimiento que se utiliza para evaluar el programa y del tipo de entrenamiento o experiencia que le proporcionamos a este.
 
 Generalmente, los enfoques para el entrenamiento de algoritmos se agrupan en:
 
 \begin{itemize}
-	\item \textbf{Aprendizaje supervisado}, cuyo objetivo es, a partir de unos datos de entrenamiento, encontrar la función $f$ que realice el mejor mapeo posible entre un conjunto de entradas $X$ y sus salidas correspondientes $Y$, de manera que $(X, Y) = (X, f(X))$.
-	\item \textbf{Aprendizaje no supervisado}, que trata de modelar la estructura subyacente de un conjunto de datos para identificar relaciones y patrones, permitiendo así un entendimiento más profundo de los mismos.
-	\item \textbf{Aprendizaje semi-supervisado}, que cae entre el supervisado y el no supervisado y utiliza una porción de datos etiquetados y no etiquetados.
+	\item \textbf{Aprendizaje supervisado}, cuyo objetivo es, a partir de unos datos de entrenamiento, encontrar la función $f$ que realice el mejor mapeo posible entre un conjunto de entradas $X$ y sus salidas correspondientes $Y$, de manera que $(X, Y) = (X, f(X))$. Para ello, se utilizan datos etiquetados, es decir, datos que incluyen tanto las entradas como las salidas correctas asociadas.
+	\item \textbf{Aprendizaje no supervisado}, que trata de modelar la estructura subyacente de un conjunto de datos para identificar relaciones y patrones, permitiendo así un entendimiento más profundo de estos. En este enfoque se utilizan datos no etiquetados.
+	\item \textbf{Aprendizaje semi-supervisado},combina elementos del aprendizaje supervisado y el no supervisado, utilizando tanto datos etiquetados como no etiquetados. Este enfoque permite aprovechar la información disponible en grandes volúmenes de datos no etiquetados, utilizando una cantidad menor de datos etiquetados para guiar el proceso de aprendizaje.
 	\item \textbf{Aprendizaje por refuerzo}, donde el algoritmo aprende a través de retroalimentaciones que va recibiendo, ajustando sus acciones con el objetivo de maximizar una recompensa acumulada a lo largo del tiempo \cite{mirtaheri2022machine}.
 
 \end{itemize}
 
 La tarea principal de este trabajo se llevará a cabo utilizando técnicas de aprendizaje supervisado.
 
-Otro concepto importante dentro del aprendizaje automático es el aprendizaje profundo (\textit{deep learning}). El aprendizaje profundo es subconjunto dentro del aprendizaje automático que emplea algoritmos basados en redes neuronales. Dentro de este encontramos métodos como las redes neuronales profundas, las redes neuronales recurrentes, las redes neuronales convolucionales y los transformers, entre otros. Estos métodos tienen aplicaciones significativas en una gran variedad de ámbitos, entre los que se encuentra el procesamiento de lenguaje natural, disciplina en la que se enmarca este trabajo. En las siguientes secciones explicaremos con detalle los conceptos de redes neuronales y transformers.
+Otro concepto importante dentro del aprendizaje automático es el aprendizaje profundo (\textit{deep learning}). El aprendizaje profundo es un subconjunto dentro del aprendizaje automático que emplea algoritmos basados en redes neuronales. Dentro de este encontramos métodos como las redes neuronales profundas, las redes neuronales recurrentes, las redes neuronales convolucionales y los transformers, entre otros. Estos métodos tienen aplicaciones significativas en una gran variedad de ámbitos, entre los que se encuentra el procesamiento de lenguaje natural, disciplina en la que se enmarca este trabajo. En las siguientes secciones explicaremos con detalle los conceptos de redes neuronales y transformers.
 
-\section{Redes neuronales}
-%https://web.stanford.edu/~jurafsky/slp3/ed3book_jan72023.pdf
+\section{Redes neuronales} \label{redesNeuronales}
 
-El primer modelo de red neuronal artificial fue creado en 1943 por Warren McCulloch y Walter Pitts, y se conoce como \textit{McCulloch-Pitts neuron} \cite{mcculloch1943logical}. Este era un modelo simplificado que imitaba el comportamiento de una neurona natural. Esto dio inicio a un proceso de investigación de las redes neuronales desde dos enfoques distintos: uno centrado en los procesos biológicos del cerebro y otro en la aplicación de las redes neuronales para la inteligencia artificial. Las redes neuronales modernas, aunque inspiradas en estas primeras ideas, han evolucionado significativamente y ya no se basan directamente en las inspiraciones biológicas iniciales.
+Las redes neuronales son un tipo de modelo que se inspira en la estructura y funcionamiento del cerebro humano para procesar información. El primer modelo de red neuronal artificial fue desarrollado en 1943 por Warren McCulloch y Walter Pitts, y se conoce como \textit{McCulloch-Pitts neuron} \cite{mcculloch1943logical}. Este modelo simplificado imitaba el comportamiento de una neurona natural y marcó el inicio de la investigación en redes neuronales. Aunque las redes neuronales modernas se basan en estas ideas iniciales, han evolucionado significativamente y ya no siguen de manera directa las inspiraciones biológicas originales.
 
 Las redes neuronales modernas están compuestas por pequeñas unidades de cómputo conocidas como neuronas o nodos, conectadas entre si a través de enlaces para permitir la transmisión de señales entre estas. Los nodos están organizados en capas, de manera que un nodo en una capa está conectado a todos los nodos de la capa siguiente. Existen tres tipos de capa: capa de entrada (\textit{input layer}), capas ocultas (\textit{hidden layers}) y capa de salida (\textit{output layer}). 
 
-La arquitectura más simple de red neuronal es la de perceptrón. Este tipo de modelo surgió como método para tareas de clasificación binaria, en las que se debe decidir si un determinado \textit{input} pertenece o no a una clase, aunque se amplió para abarcar también tareas de clasificación multiclase. Es un tipo de clasificador lineal, por lo que hace sus predicciones basándose en una función de predicción lineal que combina un conjunto de pesos con el vector de entrada. Este tipo de arquitectura sirve como base para arquitecturas de redes neuronales mucho más complejas.
+La arquitectura más simple de red neuronal es la de perceptrón \cite{RevModPhys.34.123}. Este tipo de modelo surgió como método para la resolución de tareas de clasificación binaria, en las que se debe decidir si una determinada entrada pertenece o no a una clase. Posteriormente se amplió para abarcar también tareas de clasificación multiclase. Es un tipo de clasificador lineal, por lo que hace sus predicciones basándose en funciones de predicción lineales. Este tipo de arquitectura ha servido como base para arquitecturas de redes neuronales mucho más complejas.
 
 \begin{figure}[h]
 	\centering
@@ -215,14 +214,16 @@ La arquitectura más simple de red neuronal es la de perceptrón. Este tipo de m
 \end{figure}
 
 
-Tal y como vemos en la Figura \ref{fig:perceptronSimple}, en la arquitectura de perceptrón simple encontramos solamente una neurona, que toma un vector $x$ como entrada. La neurona calcula la combinación lineal de los elementos del vector $x_1, x_2, ..., x_n$ con los pesos correspondientes $w_1, w_2, ..., w_n$, añadiendo al resultado un valor conocido como umbral o \textit{bias term}:
+Tal y como se observa en la Figura \ref{fig:perceptronSimple}, la arquitectura de perceptrón simple está formada por una única neurona, que toma un vector $x$ como entrada. La neurona calcula la combinación lineal de los elementos del vector $x_1, x_2, ..., x_n$ con los pesos correspondientes $w_1, w_2, ..., w_n$, añadiendo al resultado un valor conocido como umbral o \textit{bias term} $b$. El umbral es una constante que se incorpora para desplazar la función de activación hacia la izquierada o derecha, lo cual puede ser fundamental para el éxito del aprendizaje. Así, la salida producida por la neurona se calcula como:
+
+:
 
  \begin{equation}
 \label{form:calcularZ}
 z = b + \sum_{i = 1}^n w_i x_i
 \end{equation}
 
- A este resultado se le aplica una función $\phi$ conocida como función de activación, y finalmente se devuelve un solo valor $y$ como salida:
+ A este resultado se le aplica una función $\phi$ conocida como función de activación. Finalmente, se devuelve un solo valor $y$ como salida:
 
 \begin{equation}
 y = \phi(z) = 
@@ -232,20 +233,21 @@ y = \phi(z) =
 \end{cases}
 \end{equation}
 
-El entrenamiento de las redes neuronales consiste en ajustar los distintos pesos de la red de manera que produzca las salidas más acertadas posibles. En el caso de las redes de perceptrón, al contar con solamente una neurona, este proceso resulta relativamente sencillo. El primer paso es inicializar el vector de pesos con valores aleatorios y calcular la salida de cada vector de entrada del conjunto de entrenamiento. A continuación, se comprueba si la predicción ha sido correcta. Si no lo ha sido, el vector de pesos se modifica utilizando la siguiente fórmula:
+El entrenamiento de las redes neuronales consiste en ajustar los vectores de pesos de la red de manera que produzca las salidas más acertadas posibles. En el caso de las redes de perceptrón, al contar con solamente una neurona, este proceso resulta relativamente sencillo. El primer paso es inicializar el vector de pesos con valores aleatorios y calcular la salida de cada vector de entrada del conjunto de entrenamiento. A continuación, se comprueba si la predicción ha sido correcta. Si no lo ha sido, el vector de pesos se modifica utilizando la siguiente fórmula:
 
 \begin{equation}
 w = w - \lambda(\hat{y}-y)x
 \end{equation}
 
-donde $\lambda$ es la tasa de aprendizaje, $\hat{y}$ es el \textit{output} predicho por el modelo y $y$ es la clasificación real. Este proceso se puede realizar muestra a muestra (\textit{online}) o para un subconjunto de muestras de entrenamiento (\textit{batch}).
+donde $\lambda$ es el parámetro de tasa de aprendizaje, $\hat{y}$ es el \textit{output} predicho por el modelo y $y$ es la clasificación real. Este proceso se puede realizar muestra a muestra (\textit{online}) o para un subconjunto de muestras de entrenamiento (\textit{batch}).
 
-Así, estos pasos se repiten durante un número determinado de iteraciones o hasta que el modelo converge.
+Así, se repiten estos pasos durante un número determinado de iteraciones o hasta que el modelo converge.
 
-Este modelo de perceptrón tiene una limitación principal: el modelo solo converge si las dos clases en las cuales debe clasificar las muestras son linealmente separables. En caso de que no lo sean, los pesos oscilarán indefinidamente, hasta que el número máximo de iteraciones se alcance. Para solventar esta limitación existen modelos de redes neuronales mucho más complejos, con más neuronas y que utilizan funciones de activación no lineales. El modelo más conocido de este tipo es el de perceptrón multicapa (MLP, por su nombre en inglés: \textit{Multi-Layer Perceptron}).
+La arquitectura de perceptrón simple tiene una limitación principal, y es que este tipo de modelos solo convergen si las clases en las cuales debe clasificar las muestras son linealmente separables. En caso de que no lo sean, los pesos oscilarán indefinidamente, hasta que el número máximo de iteraciones se alcance. Para solventar esta limitación existen modelos de redes neuronales más complejos, con más neuronas y que utilizan funciones de activación no lineales. El modelo más conocido de este tipo es el de perceptrón multicapa (MLP, por su nombre en inglés \textit{multi-layer perceptron}).
 
 \subsection{Perceptrón multicapa} \label{perceptronmulticapa}
-El modelo de perceptrón multicapa es una evolución del modelo de perceptrón simple que tiene como objetivo el poder resolver problemas no lineales. La idea principal detrás de este modelo es la combinación de varios perceptrones simples en una única arquitectura más compleja. En esta arquitectura podemos encontrar un número elevado de neuronas, conectadas entre sí y organizadas en capas. Encontramos tres tipos de capas: una capa de entrada (\textit{input layer}), una o más capas ocultas (\textit{hidden layers}) y una capa de salida (\textit{output layer}) (ver Figura \ref{fig:perceptronMulticapa}).
+
+El modelo de perceptrón multicapa es una evolución del modelo de perceptrón simple que tiene como objetivo poder resolver problemas no lineales. La idea principal detrás de este modelo es la combinación de varios perceptrones simples en una única arquitectura más compleja. En esta arquitectura podemos encontrar un número elevado de neuronas, conectadas entre sí y organizadas en capas. Encontramos tres tipos de capas: una capa de entrada (\textit{input layer}), una o más capas ocultas (\textit{hidden layers}) y una capa de salida (\textit{output layer}) (ver Figura \ref{fig:perceptronMulticapa}).
 
 \begin{figure}[h]
     \centering
@@ -316,33 +318,37 @@ El modelo de perceptrón multicapa es una evolución del modelo de perceptrón s
     \label{fig:perceptronMulticapa}	
 \end{figure}
 
-Cada una de las neuronas de una capa está conectada a todas las neuronas de la capa siguiente, y cada uno de los enlaces tiene asociado un peso $w$. De manera similar al modelo de perceptrón simple, los datos se introducen en el modelo en forma de vector a través de la capa de entrada. El ajuste de pesos en el entrenamiento del modelo de perceptrón multicapa se realiza mediante el algoritmo de retropropagación (en inglés, \textit{backpropagation algorithm}) \cite{Rojas1996}. El algoritmo de retropropagación se puede desglosar en cuatro fases:
+Cada una de las neuronas de una capa está conectada a todas las neuronas de la capa siguiente, y cada uno de los enlaces tiene asociado un peso $w$. De manera similar al modelo de perceptrón simple, los datos se introducen en el modelo en forma de vector a través de la capa de entrada. El ajuste de pesos en el entrenamiento del modelo de perceptrón multicapa se realiza mediante el algoritmo de retropropagación (en inglés, \textit{backpropagation algorithm}) \cite{Rojas1996}. El algoritmo de retropropagación consta de cuatro fases:
 
 \begin{enumerate}
-	\item \textbf{Computación hacia adelante (\textit{feed-forward})}: se realiza una pasada hacia adelante a través de la red, desde la capa de entrada hasta la capa de salida. En esta fase, se calculan las salidas de las neuronas utilizando la Ecuación \ref{form:calcularZ} y aplicando sobre este resultado una función de activación no lineal, por ejemplo la función sigmoide, la tangente hiperbólica (\textit{tanh}) o la rectificada lineal (\textit{ReLU}). El uso de este tipo de funciones permite que el modelo pueda aplicarse a problemas no lineales. Al llegar a a la capa de salida, se calcula la predicción final del modelo.
+	\item \textbf{Computación hacia adelante (\textit{feed-forward})}: se realiza una pasada hacia adelante a través de la red, desde la capa de entrada hasta la capa de salida. En esta fase, se calculan las salidas de las neuronas utilizando la Ecuación \ref{form:calcularZ} y aplicando sobre este resultado una función de activación no lineal. Algunas de las funciones de activación no lineales más utilizadas son la función sigmoide, la tangente hiperbólica (\textit{tanh}) o la rectificada lineal (\textit{ReLU}). El uso de este tipo de funciones permite que el modelo pueda aplicarse a problemas no lineales. Al llegar a a la capa de salida, se calcula la predicción final del modelo.
 	\item \textbf{Retropropagación en la capa de salida}: a continuación, se calcula el error en la capa de salida comparando las predicciones del modelo con los valores reales. Posteriormente, se calculan los gradientes del error respecto a los pesos de esta capa.
 	\item \textbf{Retropropagación en las capas ocultas}: utilizando los gradientes obtenidos en la capa de salida, el error se propaga hacia atrás a través de las capas ocultas, ajustando los gradientes del error respecto a los pesos en cada una de estas.
 	\item \textbf{Actualización de los pesos}: finalmente, se actualizan los pesos de la red utilizando los gradientes calculados en las fases anteriores mediante el método de descenso de gradiente u otro algoritmo de optimización similar.
 \end{enumerate}
 
-Este proceso se repite de manera iterativa hasta alcanzar el número máximo de iteracoines o hasta que el modelo converge.
+Este proceso se repite de manera iterativa hasta alcanzar el número máximo de iteraciones o hasta que el modelo converge.
 
 \subsection{Redes neuronales para secuencias de texto}
 
 % Probabilistic neural networks (book1)
 
-El procesamiento de secuencias de texto utilizando redes neuronales es una técnica fundamental en el campo del procesamiento de lenguaje natural. Dado que las redes neuronales operan utilizando vectores numéricos, es necesario transformar las secuencias de texto en vectores antes de poder procesarlas. Este proceso se realiza en varias etapas, que se detallan a continuación:
+El procesamiento de secuencias de texto utilizando redes neuronales es una técnica fundamental en el campo del procesamiento de lenguaje natural. Dado que las redes neuronales operan utilizando vectores numéricos, es necesario transformar las secuencias de texto en vectores de este tipo antes de poder procesarlas. Este proceso se realiza en varias etapas, que se detallan a continuación:
 
 \begin{enumerate}
-	\item \textbf{Tokenización y conversión a índices}: el primer paso consiste en convertir la frase en una secuencia de palabras o tokens. Una vez obtenida la lista de tokens, se asigna a cada uno un número que servirá como índice.
-	\item \textbf{Transformación de palabras en vectores}: los índices numéricos se transforman en vectores utilizando \textit{embeddings}. Los \textit{embeddings} son representaciones vectoriales densas que capturan las características semánticas de las palabras.
-	\item \textbf{Creación de la matriz de \textit{embeddings}}: una vez que se han obtenido los vectores asociados a cada una de las palabras, se puede construir una matriz de \textit{embeddings} que representa la frase completa. Esta matriz facilita la entrada secuencial de los vectores en la red neuronal.
+	\item \textbf{Tokenización y conversión a índices}: el primer paso consiste en descomponer la frase en una secuencia de palabras o tokens. Una vez obtenida la lista de tokens, se asigna a cada uno un número que sirve como índice en un vocabulario.
+	\item \textbf{Transformación de palabras en vectores}: los índices numéricos se convierten en vectores utilizando \textit{embeddings}. Los \textit{embeddings} son representaciones vectoriales densas que capturan las características semánticas de las palabras.
+	\item \textbf{Creación de la matriz de \textit{embeddings}}: una vez que se han generado los vectores asociados a cada token, se puede construir una matriz de \textit{embeddings} que representa la frase completa. Esta matriz facilita la entrada secuencial de los vectores en la red neuronal.
 \end{enumerate}
 
-Cada palabra en la secuencia de texto es procesada por la red neuronal de manera secuencial. En la siguiente sección se presentan las redes neuronales recurrentes (RNNs), un tipo de red neuronal que es ampliamente utlizado para el procesamiento de secuencias de texto.
+De esta manera, se consigue una representación en forma de vectores numéricos de las secuencias de texto, de manera que estas puedan ser procesadas por la red neuronal.
+
+En la siguiente sección se presentan las redes neuronales recurrentes (RNNs), un tipo de red neuronal que es ampliamente utlizado para el procesamiento de secuencias de texto, y los modelos \textit{encoder-decoder}.
 
 \subsubsection{Redes neuronales recurrentes (RNN)} \label{rnn}
-Las redes neuronales recurrentes (en inglés, \textit{recurrent neural networks} (RNN)) son un tipo de red neuronal que mapean desde un conjunto de entrada a otro de salida de manera que la predicción $y_t$ depende no solo de la de entrada $x_t$ sino también del estado oculto del sistema, $h_t$ \cite{murphy2022probabilistic}. El estado oculto $h_t$ es una representación interna de la red en el momento de tiempo $t$ que captura información relevante que ha sido procesada anteriormente. Se actualiza con el tiempo a medida que se procesan los datos. Este tipo de modelos se pueden utilizar para la generación, clasificación y traducción de texto.
+Las redes neuronales recurrentes (RNN, por sus siglas en inglés \textit{recurrent neural networks}) son un tipo de red neuronal diseñadas para procesar secuencias de texto teniendo en cuenta la información aprendida en etapas anteriores. Esto se consigue mediante el mantenimiento de una variable de estado oculto $h_t$, que permite que la predicción$y_t$ depende tanto de la de entrada actual $x_t$ como del estado oculto \cite{murphy2022probabilistic}. El estado oculto $h_t$ es una representación interna de la red en el momento de tiempo $t$, que captura información relevante que ha sido procesada anteriormente y se actualiza a medida que se procesan nuevas entradas.
+
+Las RNNs son útiles para tareas como generación de texto, clasificación y traducción de secuencias, ya que pueden capturar dependencias a lo largo del tiempo dentro de los datos secuenciales.
 
 El proceso que siguen este tipo de redes es el siguiente. En primer lugar, se inicializa la red con un estado oculto $h_0$, que puede ser un vector de ceros o una inicialización aprendida. Para cada elemento en la secuencia de entrada, la red actualiza su estado oculto y produce una salida. Así, en el momento de tiempo t, la entrada $x_t$ y el estado oculto previo $h_{t-1}$ se combinan para generar el nuevo estado oculto $h_t$. Este se calcula utilizando la fórmula:
 
@@ -353,10 +359,10 @@ h_t = f(W_hh_{t-1} + W_xx_t + b_h)
 donde $W_h$ y $W_x$ son las matrices de pesos asociadas al estado oculto y a las entradas respectivamente, $f$ es una función no lineal y $b_h$ es un vector de sesgos. La salida $y_t$ se obtiene a partir del estado oculto $h_t$:
 
 \begin{equation}
-y_t = g(W_yh_t + b_y)
+y_t = \phi(W_yh_t + b_y)
 \end{equation}
 
-donde $W_y$ es una matriz de pesos, $g$ es la función de activación y $b_y$ es un vector de sesgos \cite{sutskever2014sequencesequencelearningneural}.
+donde $W_y$ es una matriz de pesos, $\phi$ es la función de activación y $b_y$ es un vector de sesgos \cite{sutskever2014sequencesequencelearningneural}.
 
 El proceso se repite para cada elemento de la secuencia de entrada, propagando así la información relevante anterior a través de los estados ocultos.
 
@@ -365,30 +371,29 @@ Uno de los principales problemas de las RNN es la dificultad para recordar infor
 %\subsubsection{Redes neuronales convolucionales (CNN)}
 %El funcionamiento de las redes neuronales convolucionales (\textit{convolutional neural networks (CNN)} se basa en el calculo de una función de un vecindario local para cada una de las entradas utilizando pesos compartidos. Son una buena alternativa a las redes neuronales recurrentes, pues son sustancialmente más sencillas de entrenar, ya que no necesitan mantener el estado oculto a largo plazo. Se pueden utilizar en tareas de clasificación y de generación de texto.
 
-\subsection{Arquitectura \textit{encoder-decoder}} \label{encdec}
+\subsection{Modelos \textit{encoder-decoder}} \label{encdec}
 
-Los modelos \textit{encoder-decoder}, también conocidos como modelos \textit{seq2seq} (\textit{sequence-to-sequence}) son modelos capaces de generar secuencias de salida contextualmente apropiadas y de longitud arbitraria a partir de una secuencia de entrada. Estos modelos pueden generar secuencias de salida de longitud variable a partir de secuencias de entrada también de longitud variable, es decir, secuencias con longitudes distintas en la entrada y la salida.
-Son modelos ampliamente utilizados en tareas como el resumen de textos, la respuesta a preguntas, el diálogo y la traducción automática \cite{jurafsky2023speech}.
+Los modelos \textit{encoder-decoder}, también conocidos como modelos \textit{seq2seq} (\textit{sequence-to-sequence}) son modelos capaces de generar secuencias de salida contextualmente apropiadas a partir de las secuencias de entrada. Estos modelos son capaces de manejar secuencias de longitud variable tanto en la entrada como en la salida. Son modelos ampliamente utilizados en tareas como el resumen de textos, la respuesta a preguntas, la generación de diálogo y la traducción automática \cite{jurafsky2023speech}.
 
-Este tipo de modelos están formados por dos componentes principales: el \textit{encoder} (en español, codificador) y el \textit{decoder} (decodificador). El \textit{encoder} es la primera parte del modelo. Se encarga de mapear las secuencias de entrada a una representación intermedia contextualizada $h$ en forma de vector. Este vector $h$ captura la información relevante de cada elemento de la secuencia de entrada y sus contextos. A continuación, el \textit{decoder} toma el vector de contexto $h$ y, a partir de este, genera la secuencia de salida. Además, el \textit{decoder} puede tener en cuenta también los estados del \textit{encoder} gracias al mecanismo de atención, que se explicará en detalle en la sección \ref{atencion} \cite{sriram2017coldfusiontrainingseq2seq}.
+Este tipo de modelos están formados por dos componentes principales: el \textit{encoder} (en español, codificador) y el \textit{decoder} (decodificador). El \textit{encoder} es la primera parte del modelo. Se encarga de transformar las secuencias de entrada a una representación intermedia $h$. Este vector $h$ captura la información relevante de cada elemento de la secuencia de entrada y sus contextos. A continuación, el \textit{decoder} toma el vector de contexto $h$ y, a partir de este, genera la secuencia de salida. Además, el \textit{decoder} puede tener en cuenta también los estados del \textit{encoder} gracias al mecanismo de atención, que se explica en detalle en la Sección \ref{atencion} \cite{sriram2017coldfusiontrainingseq2seq}.
 
-Esta arquitectura se puede implementar utilizando diversos tipos de redes neuronales, incluyendo los transformers, como veremos en la sección \ref{transformers}, o las redes neuronales recurrentes.
+Esta arquitectura se puede implementar utilizando diversos tipos de redes neuronales, incluyendo los transformers, presentados en la Sección \ref{transformers}, o las redes neuronales recurrentes, vistas en el apartado anterior.
 
 \subsection{Atención} \label{atencion}
 
-Tal y como se ha explicado en las secciones anteriores, en las redes neuronales clásicas, el cálculo de cada capa se realiza mediante una combinación lineal de los vectores de entrada y los correspondientes pesos, seguida de la aplicación de una función de activación. Esta operación se representa matemáticamente como $Z = \phi(XW)$, donde $X$ es el vector de entrada, $W$ es el vector de pesos, $\phi$ es la función de activación y $Z$ son las salidas producidas en las capas \cite{murphy2022probabilistic}. 
+Tal y como se explicó en la Sección \ref{redesNeuronales}, en las redes neuronales clásicas, el cálculo en cada capa se realiza mediante la combinación lineal de los vectores de entrada y los correspondientes pesos, seguida de la aplicación sobre este resultado de una función de activación. Esta operación se puede representar matemáticamente como $Z = \phi(XW)$, donde $X$ es la matriz formada por los vectores de entrada, $W$ la matriz de pesos, $\phi$ es la función de activación y $Z$ son las salidas de las capas \cite{murphy2022probabilistic}. 
 
-Sin embargo, los modelos de redes neuronales pueden volverse aún más flexibles y potentes si permitimos que los pesos dependan de los \textit{inputs}. Esta interacción multiplicativa, donde los pesos son dinámicos y dependen de las entradas, se conoce como mecanismo de atención. Formalmente, puede expresarse como $Z = \phi(XW(X))$.
+Esta aproximación tiene limitaciones en términos de flexibilidad y capacidad de manejar datos complejos. El mecanismo de atención mejora esto al permitir que los pesos de la red dependan dinámicamente de los datos de entrada. Así, en lugar de utilizar una matriz de pesos fija, el mecanismo de atención ajusta los pesos en función de las características de cada entrada, lo que proporciona una forma más flexible de moldear las relaciones entre la entrada y la salida. Formalmente, esto puede expresarse como $Z = \phi(XW(X))$. Aquí la matriz de pesos ya no es fija, sino que se adapta dinámicamente a la entrada $X$. Esta adaptación permite que el modelo enfoque su atención en diferentes partes de la entrada para cada salida, mejorando su capacidad para capturar información relevante y mejorando su precisión.
 
 De manera más general, el mecanismo de atención puede describirse mediante la fórmula $Z = \phi(VW(Q, K))$. En este contexto:
 
 \begin{itemize}
-\item $Q$ (\textit{queries}) es un conjunto derivado de $X$ que describe qué es lo que busca cada palabra, es decir, con qué otro tipo de palabras puede estar relacionada.
-\item $K$ (\textit{keys}) es otro conjunto derivado de $X$ que se usa para describir cuáles son las propiedades de las palabras.
-\item $V$ (\textit{values}) es un conjunto también derivado de $X$ que describe cómo cada entrada debe ser transmitida hasta la salida.
+\item $Q$ (\textit{queries} o consultas) es un conjunto de vectores derivados de $X$ que representan lo que cada palabra "busca" en otras palabras de la secuencia, es decir, con qué otro tipo de palabras puede estar relacionada.
+\item $K$ (\textit{keys} o claves) es otro conjunto de vectores también derivado de $X$ que describe las propiedades de cada palabra.
+\item $V$ (\textit{values} o valores) es otro conjunto de vectores derivado de $X$ que contiene la información que cada palabra transmite hacia la salida.
 \end{itemize}
 
-Los vectores de \textit{queries}, \textit{keys} y valores se obtienen procesando las palabras mediante tres redes neuronales independientes.
+Estos vectores de \textit{queries}, \textit{keys} y \textit{values} se obtienen procesando las palabras a través de tres redes neuronales independientes.
 
 Cuando se utiliza la atención para calcular una salida $z_i$, se utiliza la \textit{query} $q_i$ correspondiente  y se compara con cada una de las claves $k_j$ de todas las otras palabras de la secuencia, calculando cuál es su nivel de relación con cada una. Esto se realiza mediante el producto escalar entre el vector \textit{query} y los vectores \textit{key} de las otras palabras de la secuencia, de la siguiente manera:
 
@@ -396,7 +401,7 @@ Cuando se utiliza la atención para calcular una salida $z_i$, se utiliza la \te
 \alpha_{ij} = softmax(q_i \cdot k_j)
 \end{equation}
 
-Se utiliza la función \textit{softmax} para normalizar los resultados y poder así crear el correspondiente vector de pesos. Así, el resultado se representa como $\alpha_{ij}$ y debe cumplir las siguientes condiciones:
+Se utiliza la función \textit{softmax} para normalizar los resultados y poder así crear el correspondiente vector. El resultado se representa como $\alpha_{ij}$ y debe cumplir las siguientes condiciones:
 
 \begin{equation}
 0 \le \alpha_{ij} \le 1
@@ -412,17 +417,17 @@ El coeficiente $\alpha_{ij}$ determina cuánto peso se debe dar a cada valor $v_
 z_i = \sum_j\alpha_{ij}v_j
 \end{equation}
 
-Este enfoque permite que los \textit{outputs} del modelo sean una combinación dinámica ponderada de los \textit{inputs}, lo que hace que este tipo de sistemas sean mucho más efectivos para una amplia gama de tareas, como la traducción automática, el resumen de textos o la generación de texto entre otros. \cite{murphy2022probabilistic, jurafsky2023speech}
+Este enfoque permite que los las salidas del modelo sean una combinación dinámica ponderada de las entradas, lo que hace que este tipo de sistemas sean mucho más efectivos para una amplia gama de tareas, como la traducción automática, el resumen de textos o la generación de texto entre otros \cite{murphy2022probabilistic, jurafsky2023speech}.
 
 \section{Transformers} \label{transformers}
 
-En esta sección presentaremos la arquitectura de transformers. Los modelos basados en transformers emplean una arquitectura \textit{encoder-decoder} que utiliza el mecanismo de atención, descrito en la sección anterior. La arquitectura de los transformers fue introducida en el artículo "\textit{Attention is All You Need"} \cite{vaswani2023attentionneed}, publicado en 2017. Esta supuso una gran revolución en diversas áreas del aprendizaje automático por su capacidad para manejar de manera efectiva secuencias largas y complejas \cite{dai2019transformerxlattentivelanguagemodels}. Actualmente, hay una gran cantidad de modelos basados en esta arquitectura que se utilizan en el área del procesamiento de lenguaje natural.
+En esta sección se presenta la arquitectura de transformer. Los modelos basados en transformers emplean una arquitectura \textit{encoder-decoder} que utiliza el mecanismo de atención, descrito en la sección anterior. Esta arquitectura fue introducida en el artículo ``\textit{Attention is All You Need}´´ \cite{vaswani2023attentionneed}, publicado en el año 2017, y ha supuesto una gran revolución en diversas áreas del aprendizaje automático por su capacidad para manejar de manera efectiva secuencias largas y complejas \cite{dai2019transformerxlattentivelanguagemodels}. Actualmente, hay una gran cantidad de modelos basados en esta arquitectura que se utilizan en el área del procesamiento de lenguaje natural.
 
 \subsection{Estructura del Transformer}
 
-Tal y como se ha mencionado anteriormente, la arquitectura de transformers utiliza el modelo \textit{encoder-decoder} introducido en la sección \ref{encdec}. En este caso, se utilizan un total de seis bloques de \textit{encoder} y seis de \textit{decoder}, cada uno de los cuales contiene varias capas y mecanismos que facilitan el procesamiento eficiente de las secuencias de datos.
+Tal y como se ha mencionado anteriormente, la arquitectura de transformers utiliza el modelo \textit{encoder-decoder} introducido en la Sección \ref{encdec}. En la estructura del transformer original se utiliza un total de seis bloques de \textit{encoder} y seis de \textit{decoder}, cada uno de los cuales contiene varias capas y mecanismos que facilitan el procesamiento eficiente de las secuencias de datos.
 
-En general, los transformers utilizan tres tipos de capas: capas lineales simples, capas de \textit{multi-head attention} y capas donde encontramos redes neuronales de tipo \textit{feed forward}. En la figura \ref{fig:transformers} encontramos el esquema de la estructura de los \textit{encoders} y  \textit{decoders}. Tal y como se puede observar, el \textit{encoder} está formado por una primera capa de \textit{multi-head attention} y, a continuación, una red neuronal de tipo \textit{feedforward} completamente conectada, además de las capas de normalización que encontramos después de estas. Por lo que respecta al \textit{decoder}, lo conforman dos capas de autoatención y una red neuronal, también con capas de normalización después de estas. \cite{jurafsky2023speech, multiheaddotproduct}
+En general, los transformers utilizan tres tipos de capas: capas lineales simples, capas de \textit{multi-head attention} y capas donde encontramos redes neuronales de tipo \textit{feed-forward}. En la Figura \ref{fig:transformers} encontramos el esquema de la estructura de los \textit{encoders} y  \textit{decoders}. Tal y como se puede observar, el \textit{encoder} está formado por una primera capa de \textit{multi-head attention} y, a continuación, una red neuronal de tipo \textit{feed-forward} completamente conectada, además de las capas de normalización que encontramos después de estas. Por lo que respecta al \textit{decoder}, lo conforman dos capas de autoatención y una red neuronal, también con capas de normalización después de estas \cite{jurafsky2023speech, multiheaddotproduct}.
 
 \begin{figure}[h]
     \centering
@@ -514,12 +519,12 @@ En general, los transformers utilizan tres tipos de capas: capas lineales simple
     \label{fig:transformers}
 \end{figure}
 
-La idea principal del transformer es, a lo largo de esta serie de capas, poder construir representaciones contextualizadas cada vez más acertadas de los significados de las palabras o \textit{tokens} de las secuencias de entrada. Así, en las distintas capas del transformer, para obtener la representación de una palabra, se combina la información de la representación obtenida en la capa anterior con la información de las representaciones de las palabras vecinas. El objetivo es producir la versión contextualizada de cada palabra, representando lo que significa esta en el contexto particular en que se encuentra. \cite{jurafsky2023speech}
+La idea principal del transformer es, a lo largo de esta serie de capas, poder construir representaciones contextualizadas cada vez más precisas de los significados de las palabras o tokens de las secuencias de entrada. Así, en las distintas capas del transformer, para obtener la representación de una palabra, se combina la información de la representación obtenida en la capa anterior con la información de las representaciones de las palabras vecinas. El objetivo es producir la versión contextualizada de cada palabra, representando lo que significa esta en el contexto particular en que se encuentra \cite{jurafsky2023speech}.
 
 A continuación se explica con más detalle los procesos que ocurren dentro de cada capa.
 
 \subsection{Capas de \textit{multi-head attention}}
-Las capas de \textit{multi-head attention} suponen la verdadera innovación de la arquitectura de transformers \cite{jurafsky2023speech}, pues es en estas donde el modelo aplica el mecanismo de atención.  En el caso de los transformers, se utiliza una variación del mecanismo de atención explicado en la sección \ref{atencion}. Esta variación se conoce como \textit{scaled dot-product attention}. Igual que en el mecanismo general de atención, se utilizan tres matrices: la matriz de \textit{queries} $Q$, la de claves $K$ (por su nombre en inglés, \textit{keys}) y la de valores $V$ (\textit{values}). En este caso, el valor de atención se calcula utilizando la siguiente fórmula:
+Las capas de \textit{multi-head attention} suponen la verdadera innovación de la arquitectura de transformers \cite{jurafsky2023speech}, pues es en estas donde el modelo aplica el mecanismo de atención.  En este caso, se utiliza una variación del mecanismo de atención explicado en la Sección \ref{atencion}. Esta variación se conoce como \textit{scaled dot-product attention}. Igual que en el mecanismo general de atención, se utilizan tres matrices: la matriz de \textit{queries} $Q$, la de claves $K$ y la de valores $V$. En este caso, el valor de atención se calcula utilizando la siguiente fórmula:
 
 \begin{equation}
 A(Q, K, V) = softmax(\frac{QK^t}{\sqrt{d_k}})
@@ -527,35 +532,35 @@ A(Q, K, V) = softmax(\frac{QK^t}{\sqrt{d_k}})
 
 donde $d_k$ es la dimensión del estado oculto de la fuente.
 
-Como vemos, el cambio respecto al cálculo de atención descrito en la sección \ref{atencion} reside en que en este caso se añade el factor $\frac{1}{\sqrt{d_k}}$, que se utiliza para escalar el resultado obtenido, y conseguir así que las gradientes sean más estables, ya que si la secuencia de entrada fuera muy larga, la función \textit{softmax} puede devolver gradientes extremadamente pequeños, cosa que podria dificultar al modelo realizar un aprendizaje eficiente. \cite{multiheaddotproduct}
+Como vemos, el cambio respecto al cálculo de atención descrito en la Sección \ref{atencion} reside en que en este caso se añade el factor $\frac{1}{\sqrt{d_k}}$, que se utiliza para escalar el resultado obtenido, y conseguir así que las gradientes sean más estables, ya que si la secuencia de entrada fuera muy larga, la función \textit{softmax} puede devolver gradientes extremadamente pequeños, cosa que podria dificultar al modelo realizar un aprendizaje eficiente. \cite{multiheaddotproduct}
 
-Aunque esta forma de cálculo de la atención es empleada por los transformers, estos no se quedan solamente en este concepto, sino que van un paso más allá y utilizan un tipo de atención algo más complejo conocido como \textit{multi-head attention}. Este proceso consiste en calcular distintas atenciones sobre las mismas \textit{queries} y pares clave-valor. Se utiliza este tipo de atención ya que las distintas palabras dentro de la secuencia de texto pueden estar relacionadas entre sí de muchas maneras distintas de manera simultánea. Capturar todas estas relaciones entre palabras es muy complicado si se utiliza un solo valor de atención.
+De todas maneras, los transformers no se quedan solamente en este concepto, sino que van un paso más allá y utilizan un tipo de atención algo más complejo conocido como \textit{multi-head attention}. Este proceso consiste en calcular distintas atenciones sobre las mismas \textit{queries} y pares clave-valor. Se utiliza este tipo de atención ya que las distintas palabras dentro de la secuencia de texto pueden estar relacionadas entre sí de muchas maneras distintas de manera simultánea. Capturar todas estas relaciones entre palabras es muy complicado si se utiliza un solo valor de atención.
 
-Así, en las capas de \textit{multi-head attention} encontramos distintas capas de atención conocidas como \textit{heads} (cabezas), que calculan valores de atención de manera paralela. Cada una de estas tiene un conjunto distinto de parámetros que se aprende durante el entrenamiento, con los cuales hará el cálculo de atención entre las palabras de entrada. Utilizando parámetros distintos en cada cabeza se consigue que cada una se centre en aspectos distintos de las relaciones entre las palabras. El cálculo de atención para una cabeza $i$ se realiza mediante la siguiente fórmula:
+Así, en las capas de \textit{multi-head attention} encontramos distintas capas de atención conocidas como \textit{heads} (cabezas), que calculan valores distintos de atención de manera paralela. Cada una de estas tiene un conjunto distinto de parámetros que se aprende durante el entrenamiento, con los cuales hará el cálculo de atención entre las palabras de entrada. Utilizando parámetros distintos en cada cabeza se consigue que cada una se centre en aspectos distintos de las relaciones entre las palabras. El cálculo de atención para una cabeza $i$ se realiza mediante la siguiente fórmula:
 
 \begin{equation}
 H_i = A(QW_i^Q, KW_i^K, VW_i^V)
 \end{equation}
 
-Donde $W_i^Q$, $W_i^K$ y $W_i^V$ son las matrices de parámtetros asociadas a la \textit{query}, clave y valor respectivamente de la cabeza $i$. El valor de \textit{multi-head attention} se obtiene mediante la concatenación de los resultados de las cabezas. Para un total de $h$ cabezas de atención:
+Donde $W_i^Q$, $W_i^K$ y $W_i^V$ son las matrices de parámtetros asociadas a las \textit{queries}, claves y valores, respectivamente, de la cabeza $i$. El valor de \textit{multi-head attention} se obtiene mediante la concatenación de los resultados de las cabezas. Para un total de $h$ cabezas de atención:
 
 \begin{equation}
 MultiHead(Q, K, V) = (H_1 \oplus H_2 \oplus ... \oplus H_h)W_O
 \end{equation}
 
-La matriz de parámetros $W_O$ proyecta la concatenación de los resultados de las $h$ cabezas de vuelta al subespacio original. \cite{cordonnier2021multiheadattentioncollaborateinstead, multiheaddotproduct, jurafsky2023speech}
+La matriz de parámetros $W_O$ proyecta la concatenación de los resultados de las $h$ cabezas de vuelta al subespacio original \cite{cordonnier2021multiheadattentioncollaborateinstead, multiheaddotproduct, jurafsky2023speech}.
 
-\subsection{Capas de redes \textit{Feed Forward}}
+\subsection{Capas de redes \textit{feed-forward}}
 
-Las capas \textit{feed forward} en la arquitectura de transformers están compuestas por redes neuronales independientes de tipo \textit{feed forward} (en español, redes de propagación hacia adelante). Este tipo de red neuronal es equivalente al modelo de perceptrón multicapa descrito en la Sección  \ref{perceptronmulticapa}.
+Las capas \textit{feed-forward} en la arquitectura de transformers están compuestas por redes neuronales independientes de tipo \textit{feed-forward} (en español, redes de propagación hacia adelante). Este tipo de red neuronal es equivalente al modelo de perceptrón multicapa descrito en la Sección  \ref{perceptronmulticapa}.
 
-Así, una red neuronal de tipo \textit{feed forward} es una red multicapa en la que, a diferencia de las redes neuronales recurrentes (RNN) explicadas en la sección \ref{rnn}, las conexiones entre neuronas no pueden formar ciclos. Esto implica que las señales siempre se propagan en una única dirección: desde la capa de entrada, a través de las capas ocultas, hacia la capa de salida. En la arquitectura de transformers, estas redes están completamente conectadas, lo que significa que las neuronas de una capa reciben las salidas de todas las neuronas de la capa anterior y envían sus salidas a todas las neuronas de la capa siguiente. Además, típicamente contienen solamente una capa oculta.
+Así, una red neuronal de tipo \textit{feed forward} es una red multicapa en la que las conexiones entre neuronas no pueden formar ciclos. Esto implica que las señales siempre se propagan en una única dirección: desde la capa de entrada, a través de las capas ocultas, hacia la capa de salida. En la arquitectura de transformers, estas redes están completamente conectadas, lo que significa que las neuronas de una capa reciben las salidas de todas las neuronas de la capa anterior y envían sus salidas a todas las neuronas de la capa siguiente. Además, típicamente contienen solamente una capa oculta.
 
 En los transformers, estas capas complementan las salidas de la capa de atención. Mientras que la capa de atención procesa cada palabra de la secuencia relacionandola con las demás palabras, las capas \textit{feed forward} procesan cada palabra de manera independiente. Este procesamiento independiente es crucial para mejorar la representación de las características extraídas de la capa de atención.
 
 \subsection{Capas de normalización}
 
-Las capas de normalización se encuentran detrás de tanto las capas de atención como las de redes \textit{forward}. En ellas se aplica el proceso de normalización de capas (en inglés, \textit{layer normalization} o \textit{layer norm} \cite{ba2016layernormalization}). Este tipo de normalización se utiliza para mejorar el rendimiento del entrenamiento de redes neuronales profundas, manteniendo los valores de la capa oculta dentro de un rango que facilita el entrenamiento basado en gradientes.
+Las capas de normalización se encuentran detrás de tanto las capas de atención como las de redes \textit{feed-forward}. En ellas se aplica el proceso de normalización de capas (en inglés, \textit{layer normalization} o \textit{layer norm} \cite{ba2016layernormalization}). Este tipo de normalización se utiliza para mejorar el rendimiento del entrenamiento de redes neuronales profundas, manteniendo los valores de la capa oculta dentro de un rango que facilita el entrenamiento basado en gradientes.
 
 El proceso de normalización de capas toma como entrada un vector para cada palabra de la secuencia, y devuelve este mismo vector normalizado. El primer paso en el proceso es calcular la media $\mu$ y la desviación típica $\sigma$ del vector, de la siguiente manera:
 
@@ -586,9 +591,9 @@ z = g\hat{x} + b
 
 \section{Modelos de lenguaje grandes} \label{modelosLenguajeGrandes}
 
-Los modelos de lenguaje grandes (en inglés, \textit{Large Language Models} o LLM) representan una de las innovaciones más significativas en el campo del procesamiento de lenguaje natural. Estos modelos están basados en redes neuronales profundas, y generalmente utilizan la arquitectura de transformers. Estos modelos cuentan con miles de millones de parámetros, y pueden ser entrenados con enormes cantidades de texto, lo que hace que sean capaces de procesar y generar lenguaje humano con una gran fluidez, naturalidad y corrección.
+Los modelos de lenguaje grandes (LLM por su nombre en inglés, \textit{large language models}) representan una de las innovaciones más significativas en el campo del procesamiento de lenguaje natural. Estos modelos están basados en redes neuronales profundas, y generalmente utilizan la arquitectura de transformers. Estos modelos cuentan con miles de millones de parámetros, y pueden ser entrenados con enormes cantidades de texto, lo que hace que sean capaces de procesar y generar lenguaje humano con una gran fluidez, naturalidad y corrección.
 
-Las tareas sobre las que se aplican son casos de generación condicional, es decir, generación de texto condicionado a un fragmento de entrada, conocido como \textit{prompt}. Los LLMs son modelos que están diseñados fundamentalmente para predecir la siguiente palabra de una secuencia de palabras \cite{jurafsky2023speech}. Aunque el ámbito de tareas sobre el que se pueden aplicar los LLMs pueda parecer reducido, la realidad es que la gran mayoría de tareas en el ámbito de NLP pueden ser enfocadas desde un punto de vista de generación condicional.
+Las tareas sobre las que se aplican son casos de generación condicional, es decir, generación de texto condicionado a un fragmento de entrada, conocido como \textit{prompt}. Así, los LLMs son modelos que están diseñados fundamentalmente para predecir la siguiente palabra de una secuencia de palabras \cite{jurafsky2023speech}. Aunque el ámbito de tareas sobre el que se pueden aplicar los LLMs pueda parecer reducido, la realidad es que la gran mayoría de tareas en el ámbito de NLP pueden ser enfocadas desde un punto de vista de generación condicional.
 
 En la siguiente sección se explica cómo se deben introducir los datos de entrada al modelo mediante \textit{prompting}.
 
