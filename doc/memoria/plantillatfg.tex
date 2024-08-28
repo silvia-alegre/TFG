@@ -42,6 +42,7 @@
 \usepackage{csquotes}
 \usepackage{caption}
 \usepackage{subcaption}
+\newcommand{\mycomment}[1]{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        DADES DEL TREBALL                                    %
@@ -532,7 +533,7 @@ A(Q, K, V) = softmax(\frac{QK^t}{\sqrt{d_k}})
 
 donde $d_k$ es la dimensión del estado oculto de la fuente.
 
-Como vemos, el cambio respecto al cálculo de atención descrito en la Sección \ref{atencion} reside en que en este caso se añade el factor $\frac{1}{\sqrt{d_k}}$, que se utiliza para escalar el resultado obtenido, y conseguir así que las gradientes sean más estables, ya que si la secuencia de entrada fuera muy larga, la función \textit{softmax} puede devolver gradientes extremadamente pequeños, cosa que podria dificultar al modelo realizar un aprendizaje eficiente. \cite{multiheaddotproduct}
+Como vemos, el cambio respecto al cálculo de atención descrito en la Sección \ref{atencion} reside en que en este caso se añade el factor $\frac{1}{\sqrt{d_k}}$, que se utiliza para escalar el resultado obtenido, y conseguir así que las gradientes sean más estables, ya que si la secuencia de entrada fuera muy larga, la función \textit{softmax} puede devolver gradientes extremadamente pequeños, cosa que podria dificultar al modelo realizar un aprendizaje eficiente \cite{multiheaddotproduct}.
 
 De todas maneras, los transformers no se quedan solamente en este concepto, sino que van un paso más allá y utilizan un tipo de atención algo más complejo conocido como \textit{multi-head attention}. Este proceso consiste en calcular distintas atenciones sobre las mismas \textit{queries} y pares clave-valor. Se utiliza este tipo de atención ya que las distintas palabras dentro de la secuencia de texto pueden estar relacionadas entre sí de muchas maneras distintas de manera simultánea. Capturar todas estas relaciones entre palabras es muy complicado si se utiliza un solo valor de atención.
 
@@ -599,7 +600,7 @@ En la siguiente sección se explica cómo se deben introducir los datos de entra
 
 \subsection{\textit{Prompting}}
 
-\textit{Prompting} se refiere al proceso mediante el cual se introduce una secuencia de entrada o \textit{query} al modelo, a partir de la cual debe comenzar la tarea de generación de texto. Existen diversas maneras de crear estas \textit{prompts}. Algunas de las técincas más utilizadas son las siguientes \footnote{Esta  información se ha obtenido de Prompt Engineering Guide \url{www.promptingguide.ai}}:
+\textit{Prompting} se refiere al proceso mediante el cual se introduce una secuencia de entrada o \textit{query} al modelo, a partir de la cual debe comenzar la tarea de generación de texto. Existen diversas maneras de crear estas \textit{prompts}. Algunas de las técnicas más utilizadas son las siguientes \footnote{Esta  información se ha obtenido de Prompt Engineering Guide \url{www.promptingguide.ai}}:
 
 \begin{itemize}
 	\item \textbf{\textit{Zero-shot prompting}}: consiste en presentar al modelo la tarea que se desea realizar sin proporcionar ejemplos previos sobre los que pueda basarse. Los modelos de lenguaje grandes han demostrado funcionar bien con este tipo de \textit{prompting} en tareas simples, aunque pueden tener dificultades en tareas más complejas. En estos casos, puede ser recomendable utilizar \textit{few-shot prompting} en su lugar.
@@ -726,7 +727,7 @@ Existen cuatro tipos principales de arquitecturas de los LLMs:
 
 \chapter{Adaptación y evaluación de modelos de lenguaje grandes} \label{cap3}
 
-En este capítulo se presentan los modelos de lenguaje grandes utilizados en este trabajo. Además, se aborda cómo podemos adaptar estos modelos preentrenados para realizar tareas  específicas, explorando las diferentes estrategias y enfoques disponibles. Se hará especial incapié en el método PEFT  (\textit{parameter-efficient fine-tuning}), centrándonos concretamente en LoRA (\textit{Low-Rank Adaptation}), que es uno de sus tipos de enfoque.
+En este capítulo se presentan los modelos de lenguaje grandes utilizados en este trabajo. Además, se aborda cómo podemos adaptar estos modelos preentrenados para realizar tareas  específicas, explorando las diferentes estrategias y enfoques disponibles. Se hará especial hincapié en el método PEFT  (\textit{parameter-efficient fine-tuning}), centrándonos concretamente en LoRA (\textit{Low-Rank Adaptation}), que es uno de sus tipos de enfoque.
 
 \section{Modelos de lenguaje utilizados} \label{modelosUtilizados}
 
@@ -759,7 +760,7 @@ Concretamente, en este trabajo se utilizará el modelo Llama-3.
 
 \subsubsection{Modelos GPT}
 
-Los modelos GPT (\textit{Generative Pre-trained Transformer}) han sido desarrollados por la compañía \textit{OpenAI}, y son una de las familias de modelos de lenguaje de código abierto más utilizadas actualmente, especialmente debido a su interfaz de ChatGPT, que ofrece un diseño intuitivo para dar respuesta a preguntas realizadas por los usuarios. En este trabajo se utilizará específicamente el modelo GPT-4.
+Los modelos GPT (\textit{Generative Pre-trained Transformer}) han sido desarrollados por la compañía \textit{OpenAI}, y son una de las familias de modelos de lenguaje de más utilizadas actualmente, especialmente debido a su interfaz de ChatGPT, que ofrece un diseño intuitivo para dar respuesta a preguntas realizadas por los usuarios. En este trabajo se utilizará específicamente el modelo GPT-4.
 
 El modelo GPT-4 \cite{openai2024gpt4technicalreport} es el último de la serie de modelos GPT. La principal innovación de este respecto a sus predecesores es que es un modelo multimodal. Esto significa que, además de aceptar entradas en formato de texto, también es capaz de procesar y analizar imágenes, lo que amplía significativamente su aplicabilidad en una gran variedad de tareas. GPT-4 puede alcanzar resultados a nivel humano en una amplia gama de tareas, tanto en ámbitos profesionales como académicos.
 
@@ -769,7 +770,7 @@ Al contrario que los modelos anteriores, este modelo no será reentrenado para s
 
 \section{Ajuste de LLMs}
 
-Tal y como se ha mencionado en la sección \ref{pretrainedLLM}, los LLMs preentrenados son modelos entrenados con grandes cantidades de datos genéricos que no han sido todavía ajustados para la realización de ninguna tarea específica. Por lo tanto, para aplicarlos a tareas concretas, es necesario ajustar estos modelos para adaptarlos a los requisitos específicos de cada tarea. Generalmente, para adaptar los modelos se utilizan técnicas de \textit{transfer learning}.
+Tal y como se ha mencionado en la Sección \ref{modelosUtilizados}, los LLMs preentrenados son modelos entrenados con grandes cantidades de datos genéricos que no han sido todavía ajustados para la realización de ninguna tarea específica. Por lo tanto, para aplicarlos a tareas concretas, es necesario ajustar estos modelos para adaptarlos a los requisitos específicos de cada tarea. Generalmente, para adaptar los modelos se utilizan técnicas de \textit{transfer learning}.
 
 \subsection{Aprendizaje por transferencia}
 
@@ -802,7 +803,7 @@ El método de ajuste basado en adaptadores funciona añadiendo módulos específ
 
 Los módulos de los adaptadores deben cumplir con dos propiedades esenciales: contener un número reducido de parámetros y tener una incialización cercana a la identidad. los adaptadores deben ser pequeños en comparación con las capas del modelo original para asegurar que el modelo crezca de manera controlada al añadir nuevas tareas. La inicialización cercana a la unidad es necesaria para mantener la estabilidad del entrenamiento. De esta manera, el modelo original no se verá afectado al inicio del entrenamiento. Durante este, los adaptadores pueden activarse para cambiar la distribución de las activaciones en la red. Además, los módulos pueden ignorarse si no son necesarios. Si la incialización se desviara demasiado de la identidad, el modelo podria fallar durante el entrenamiento \cite{houlsby2019parameterefficienttransferlearningnlp}.
 
-En el ámbito del procesamiento de lenguaje natural, los adaptadores generalmente se insertan como módulos entre las capas del modelo. En el caso de la arquitectura de transformers, la idea es insertar dos redes neuronales MLP poco profundas como cuello de botella dentro de cada uno de los bloques del transformer: una después de la capa de \textit{multi-head attention} y otra, después de la capa de red \textit{feed forward}. Estas redes MLP deben tener lo que se conoce como \textit{skip connections}, es decir, conexiones que permiten saltarse capas inermedias, para permitir la incialización de las redes como identidad \cite{murphy2022probabilistic}.
+En el ámbito del procesamiento de lenguaje natural, los adaptadores generalmente se insertan como módulos entre las capas del modelo. En el caso de la arquitectura de transformers, la idea es insertar dos redes neuronales MLP poco profundas como cuello de botella dentro de cada uno de los bloques del transformer: una después de la capa de \textit{multi-head attention} y otra, después de la capa de red \textit{feed forward}. Estas redes MLP deben tener lo que se conoce como \textit{skip connections}, es decir, conexiones que permiten saltarse capas intermedias, para permitir la inicialización de las redes como identidad \cite{murphy2022probabilistic}.
 
 %Para la realización de este trabajo, se utilizará este método de ajuste basado en adaptadores, añadiendo específicamente módulos de PEFT (\textit{parameter-efficient fine-tuning}) y LoRA (\textit{Low-Rank Adaptation}).
 
@@ -858,24 +859,24 @@ w_{k1} & w_{k2} & \dots & w_{kd}
 
 LoRA se basa en la idea de descomponer las matrices de parámetros en componentes de rango bajo. El rango de una matriz se define como el número de columnas linealmente independientes de esta. Una columna es considerada linealmente dependiente si puede ser obtenida como una combinación lineal de otras columnas de la matriz. Esto implica que, si existen columnas linealmente dependientes en la matriz, estas se pueden eliminar sin perder información esencial, permitiendo así reducir el tamaño de esta.
 
-Así, en lugar de optimizar los pesos de la matriz completa, LoRA utiliza lo que se conoce como \textit{low rank decomposition} (en español, descomposición en rango bajo), de manera que la matriz de cambios $\bigtriangleup W$ se representa como el producto de dos matrices de rango inferior $B$ y $A$:
+Así, en lugar de optimizar los pesos de la matriz completa, LoRA utiliza lo que se conoce como \textit{low rank decomposition} (en español, descomposición en rango bajo), de manera que la matriz de cambios $\bigtriangleup W$ se representa como el producto de dos matrices de rango bajo $B$ y $A$:
 
 \begin{equation}
 \bigtriangleup W = B \cdot A =
 \begin{bmatrix}
 b_{11} & \dots & b_{1r} \\
 \vdots &  \vdots & \vdots \\
-b_{d1} & \dots & b_{dr}
+b_{k1} & \dots & b_{kr}
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
-a_{11} & \dots & a_{1k} \\
+a_{11} & \dots & a_{1d} \\
 \vdots & \vdots & \vdots \\
-a_{r1} & \dots & a_{rk}
+a_{r1} & \dots & a_{rd}
 \end{bmatrix}
 \end{equation}
 
-Aquí, la matriz $B$ tiene dimensiones $d * r$, y la matriz A, $r * k$. Donde $d$ es el número de filas de la matriz de pesos original, $k$ es el número de columnas y $r$ es un hiperparámetro conocido como \textit{rank} o rango, que debe ser determinado.
+Aquí, la matriz $B$ tiene dimensiones $k * r$, y la matriz A, $r * d$. Donde $k$ es el número de columnas de la matriz de pesos original, $d$ es el número de filas,  y $r$ es un hiperparámetro conocido como \textit{rank} o rango, que debe ser determinado.
 
 Dada una entrada $x$, la salida del modelo se calcula de la siguiente manera:
 
@@ -891,7 +892,7 @@ En las siguientes secciones se presentan los hiperparámetros que deben ajustars
 
 \subsubsection{Rango}
 
-El primer hiperparámetro que se debe determinar en un entrenamiento con LoRA es el rango (\textit{rank}, $r$). Este representa el rango de la matriz de parámetros original. Su valor exacto es desconocido, por lo que se deberá seleccionar al inicio del entrenamientol. Idealmente, $r$ debe ser lo más pequeño posible, pero aún debe ser suficiente para capturar la información esencial. Se debe tener en cuenta que:
+El primer hiperparámetro que se debe determinar en un entrenamiento con LoRA es el rango (\textit{rank}, $r$). Este representa el rango de la matriz de parámetros original. Su valor exacto es desconocido, por lo que se deberá seleccionar al inicio del entrenamiento. Idealmente, $r$ debe ser lo más pequeño posible, pero aún debe ser suficiente para capturar la información esencial. Se debe tener en cuenta que:
 
 \begin{itemize}
 	\item Si $r$ es demasiado pequeño, la matriz se reduce excesivamente, eliminando columnas que no son linealmente dependientes y, por tanto, perdiendo información necesaria.
@@ -900,17 +901,17 @@ El primer hiperparámetro que se debe determinar en un entrenamiento con LoRA es
 
 \subsubsection{\textit{Alpha}}
 
-El parámetro \textit{alpha} ($\alpha$) se utiliza para escalar la matriz de cambios $\bigtriangleup W$, determinando la importancia relativa que de los pesos aprendidos durante el entrenamiento en comparación con los pesos preexistentes del modelo. Como se mencionó anteriormente, la matriz de cambios $\bigtriangleup W$ se escala por $\alpha / r$ para poder controlar el impacto que esta tiene sobre el modelo final. Por tanto, en cuanto al parámetro $\alpha$ se deben tener en cuenta los siguientes aspectos:
+El parámetro \textit{alpha} ($\alpha$) se utiliza para escalar la matriz de cambios $\bigtriangleup W$, determinando la importancia relativa de los pesos aprendidos durante el entrenamiento en comparación con los pesos preexistentes del modelo. Como se mencionó anteriormente, la matriz de cambios $\bigtriangleup W$ se escala por $\alpha / r$ para poder controlar el impacto que esta tiene sobre el modelo final. Por tanto, en cuanto al parámetro $\alpha$ se deben tener en cuenta los siguientes aspectos:
 
 \begin{itemize}
 	\item Si $\alpha = r$, los nuevos pesos serán integrados con los del modelo original en una proporción de 1:1. Esto implica que los pesos aprendidos tendrán la misma importancia que los pesos del modelo preentrenado.
-	\item Si $\alpha > r$, se está dando mayor peso a los nuevos parámetros aprendidos. Esto es recomendable  cuando se cuenta con un conjunto de datos de entrenamiento grande y de calidad. De lo contrario, al darle más importancia al conocieminto aprendido del nuevo conjunto de datos en lugar de al conociemiento preexistente del modelo, podría resultar en incoherencias.
+	\item Si $\alpha > r$, se está dando mayor peso a los nuevos parámetros aprendidos. Esto es recomendable  cuando se cuenta con un conjunto de datos de entrenamiento grande y de calidad. De lo contrario, al darle más importancia a lo aprendido a partir del nuevo conjunto de datos en lugar de al conociemiento preexistente del modelo, podría resultar en incoherencias.
 	\item Si $\alpha < r$, se prioriza el conocimiento preexistente del modelo sobre el nuevo. Esta configuración es aconsejable cuando el conjunto de datos de entrenamiento es pequeño y los dominios del modelo preexistente y la tarea a realizar son similares, pues así se garantiza que el modelo conserve más el conociemiento original.
 \end{itemize}
 
 \subsubsection{\textit{Dropout}}
 
-El parámetro de \textit{dropout} determina la probabilidad de que, en cada iteración del entrenamiento, ciertas neuronas de la red sean desactivadas temporalmente, configurándolas artificialmente a 0. Este procedimiento se realiza para prevenir el sobreajuste del modelo, que puede ocurrir cuando este se ajusta demasiado a los datos de entrenamiento, provacando que pierda capacidad de generalización con datos nuevos.
+El parámetro de \textit{dropout} determina la probabilidad de que, en cada iteración del entrenamiento, ciertas neuronas de la red sean desactivadas temporalmente, configurándolas artificialmente a 0. Este procedimiento se realiza para prevenir el sobreajuste del modelo, que puede ocurrir cuando este se ajusta demasiado a los datos de entrenamiento, provocando que pierda capacidad de generalización con datos nuevos.
 
 De esta manera, un valor alto de \textit{dropout} significa que un mayor número de neuronas se desactivarán durante el entrenamiento. Sin embargo, si el valor es excesivamente alto, el modelo podría no aprender lo suficiente sobre los datos, ya que se reducen demasiado las neuronas activas. Por otro lado, un valor muy bajo del \textit{dropout} puede llevar a que el modelo pierda capacidad de generalización, ya que es más probable que se sobreajuste a los datos de entrenamiento.
 
@@ -928,7 +929,7 @@ De todas maneras, es importante tener en cuenta que la inferencia con baja preci
 
 Una de las técnicas de cuantización más utilizadas es la de precisión mixta \cite{micikevicius2018mixedprecisiontraining}. Esta técnica consiste en utilizar una combinación de representaciones de alta y baja precisión dentro del modelo. Por ejemplo, los pesos del modelo pueden estar almacenados en alta precisión, para asegurar la exactitud, mientras que los cálculos durante el entrenamiento se realizan con menor precisión para aumentar la velocidad y reducir el uso de la memoria. Posteriormente, los gradientes calculados en baja precisión se utilizan para actualizar los pesos originales.
 
-Otra técnia ampliamente utilizada es la de cuantización post entrenamiento \cite{xiao2024smoothquantaccurateefficientposttraining}. Esta técnica se aplica después de que los modelos hayan sido completament entrenados utilizando representaciones de alta precisión (en el caso de los modelos de lenguaje grandes preentrenados, después del preentrenamiento). El objetivo principal es reducir el tamaño del modelo y los requisitos de cálculo para permitir una implementación más eficiente en cuanto a memoria y computación, sin tener que reentrenar el modelo desde cero. De esta manera, los pesos y, a veces, las activaciones del modelo son convertidos a representaciones de menor precisión, generalmente de 8 bits.
+Otra técnica ampliamente utilizada es la de cuantización post entrenamiento \cite{xiao2024smoothquantaccurateefficientposttraining}. Esta técnica se aplica después de que los modelos hayan sido completament entrenados utilizando representaciones de alta precisión (en el caso de los modelos de lenguaje grandes preentrenados, después del preentrenamiento). El objetivo principal es reducir el tamaño del modelo y los requisitos de cálculo para permitir una implementación más eficiente en cuanto a memoria y computación, sin tener que reentrenar el modelo desde cero. De esta manera, los pesos y, a veces, las activaciones del modelo son convertidos a representaciones de menor precisión, generalmente de 8 bits.
 
 \section{Medidas de evaluación} \label{metricas}
 
@@ -960,7 +961,7 @@ BP =
 \end{cases}
 \end{equation}
 
-donde $c$ es la longitud de la frase candidatas generadas por el m odelo y $r$ es la longitud de la frase de referencia.
+donde $c$ es la longitud de la frase candidatas generadas por el modelo y $r$ es la longitud de la frase de referencia.
 
 Finalmente, el valor de BLEU se obtiene combinando estas precisiones de n-gramas modificadas a través de diferentes valores de n:
 
@@ -1019,9 +1020,7 @@ La métrica COMET es más compleja de interpretar en comparación con BLEU. Gene
 
 \chapter{Experimentos realizados} \label{cap4}
 
-En este capítulo se presentan los experimentos realizados en este trabajo, los cuales se han llevado a cabo utilizando dos modelos de lenguaje grandes: Gemma y Llama-3. Los experimentos se centraron principalmente en la exploración de los parámetros rango y \textit{alpha} de la adaptación mediante LoRA, con el objetivo de encontrar la configuración que proporcionara los mejores resulados posibles para la tarea de generar frases de lenguaje natural a partir de listas de palabras clave, en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. Tras identificar la mejor configuración, se realizó un experimento adicional utilizando todos los datos de entrenamiento disponibles para evaluar la eficacia de los modelos con un conjunto de datos de validación que no había sido utilizado en fases anteriores. Los experimentos se realizaron con conjuntos de datos en español y, a continuación, se realizaron también con el conjunto de datos en inglés para estudiar el efecto del lenguaje en los resultados.
-
-Todos los experimentos han sido realizados utilizando Google Collab \footnote{Google Collab es una plataforma  en la nube que permite escribir y ejecutar código Python en \textit{notebooks} interactivos, ofreciendo acceso a recursos de procesamiento como GPUs y TPUs.}.
+En este capítulo se presentan los experimentos realizados en este trabajo, los cuales se han llevado a cabo utilizando dos modelos de lenguaje grandes: Gemma y Llama-3. Los experimentos se centraron principalmente en la exploración de los parámetros rango y \textit{alpha} de la adaptación mediante LoRA, con el objetivo de encontrar la configuración que proporcionara los mejores resulados posibles para la tarea de generar frases de lenguaje natural a partir de listas de palabras clave, en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. Tras identificar la mejor configuración, se realizó un experimento adicional utilizando todos los datos de entrenamiento disponibles para evaluar la eficacia de los modelos con un conjunto de datos de test que no había sido utilizado en fases anteriores. Los experimentos se realizaron con conjuntos de datos en español y, a continuación, se realizaron también con el conjunto de datos en inglés para estudiar el efecto del lenguaje en los resultados. Todos los experimentos han sido realizados utilizando Google Colab \footnote{Google Colab es una plataforma  en la nube que permite escribir y ejecutar código Python en \textit{notebooks} interactivos, ofreciendo acceso a recursos de procesamiento como GPUs y TPUs.}.
 
 A continuación, se detallan los experimentos realizados y los resultados obtenidos. También se incluyen comparaciones entre los modelos entrenados y otros sistemas externos como GPT-4, el comunicador electrónico AsTeRISCS Grid, y resultados obtenidos por personas en esta misma tarea.
 
@@ -1029,78 +1028,62 @@ A continuación, se detallan los experimentos realizados y los resultados obteni
 
 Para la realización de los experimentos, se han utilizado dos conjuntos de datos distintos, ambos extraídos del portal de la Universidad de Vigo. Ambos conjuntos contienen frases extraídas de los recursos del Portal Aragonés de la Comunicación Aumentativa y Alternativa, acompañada de la lista de lemas o palabras clave asociadas a cada frase. Estas palabras clave han sido seleccionadas por un grupo de anotadores expertos lingüistas, y representan las palabras que un usuario introduciría a través de la interfaz de un comunicador electrónico con la intención de generar la frase correspondiente.
 
-El primer conjunto de datos incluye un total de 212 frases, todas ellas en español. El segundo conjunto consta de 260 frases, disponibles tanto en español como en inglés.
+El primer conjunto de datos incluye un total de 212 frases, todas ellas en español. En la Tabla \ref{tab: ejemplosEspañol} se presentan algunos ejemplos de frases de este conjunto para ilustrar su formato. El segundo conjunto consta de 260 frases, disponibles tanto en español como en inglés. Se presentan ejemplos de este conjunto en la Tabla \ref{tab: ejemplosInglés}.
 
-A continuación, se presentan algunos ejemplos de frases del primer conjunto de datos para ilustrar su formato:
+\begin{table}[!h]
+\caption{Ejemplos de frases del conjunto de datos en español}
+\begin{center}
+\begin{tabular}{ | c | }
+\hline
+	\\
+	El policía puso una multa. | policía, poner, un, multa \\
+	\\
+	El lobo quiere comerlo. | lobo, querer, comer, lo \\
+	\\
+	La niña escribe en la arena. | niña, escribir, arena \\
+	\\
+	Los niños juegan en la piscina. | niño, jugar, piscina \\
+	\\
+	Los cerditos viven felices. | cerditos, vivir, feliz \\
+	\\
+\hline
+\end{tabular}
+\end{center}
+\label{tab: ejemplosEspañol}
+\end{table}
 
-%\begin{center}
-%\begin{tabular}{ | c | }
-%\hline
-	%El policía puso una multa. | policía, poner, un, multa \\
-	%El lobo quiere comerlo. | lobo, querer, comer, lo \\
-	%La niña escribe en la arena. | niña, escribir, arena \\
-	%Los niños juegan en la piscina. | niño, jugar, piscina \\
-	%Los cerditos viven felices. | cerditos, vivir, feliz \\
-%\hline
-%\end{tabular}
-%\end{center}
-
-%\noindent\rule{15cm}{0.4pt}
-
-\begin{displayquote}
-
-El policía puso una multa. | policía, poner, un, multa
-
-El lobo quiere comerlo. | lobo, querer, comer, lo
-
-La niña escribe en la arena. | niña, escribir, arena
-
-Los niños juegan en la piscina. | niño, jugar, piscina
-
-Los cerditos viven felices. | cerditos, vivir, feliz
-
-\end{displayquote}
-
-%\noindent\rule{15cm}{0.4pt}
-
-En cuanto al segundo conjunto de datos, se incluyen ejemplos bilingües:
-
-%\begin{center}
-%\begin{tabular}{ | c | }
-%\hline
-	%Su mamá se enfadó.	su, mamá, se, enfadar | His mother got angry.	his, mother, get, angry \\
-	%Pili ha metido un gol.	Pili, haber, meter, un, gol | Pili has scored a goal.	Pili, score, a, goal \\
-	%La Luna está en el cielo.	Luna, estar, cielo | The moon is in the sky.	moon, be, sky \\
-	%Juan encontró un castillo.	Juan, encontrar, castillo | Juan found a castle.	Juan, find, a, castle \\
-	%No lo cambiaré.	no, lo, cambiar | I will not change it.	change, it, not  \\
-%\hline
-%\end{tabular}
-%\end{center}
-
-\begin{displayquote}
-
-Su mamá se enfadó.	su, mamá, se, enfadar | His mother got angry.	his, mother, get, angry
-
-Pili ha metido un gol.	Pili, haber, meter, un, gol | Pili has scored a goal.	Pili, score, a, goal 
-
-La Luna está en el cielo.	Luna, estar, cielo | The moon is in the sky.	moon, be, sky 
-
-Juan encontró un castillo.	Juan, encontrar, castillo | Juan found a castle.	Juan, find, a, castle 
-
-No lo cambiaré.	no, lo, cambiar | I will not change it.	change, it, not  
-
-\end{displayquote}
+\begin{table}[!h]
+\caption{Ejemplos de frases del conjunto de datos en inglés}
+\begin{center}
+\begin{tabular}{ | c | }
+\hline
+	\\
+	Su mamá se enfadó.	su, mamá, se, enfadar | His mother got angry.	his, mother, get, angry \\
+	\\
+	Pili ha metido un gol.	Pili, haber, meter, un, gol | Pili has scored a goal.	Pili, score, a, goal \\
+	\\
+	La Luna está en el cielo.	Luna, estar, cielo | The moon is in the sky.	moon, be, sky \\
+	\\
+	Juan encontró un castillo.	Juan, encontrar, castillo | Juan found a castle.	Juan, find, a, castle \\
+	\\
+	No lo cambiaré.	no, lo, cambiar | I will not change it.	change, it, not \\
+	\\
+\hline
+\end{tabular}
+\end{center}
+\label{tab: ejemplosInglés}
+\end{table}
 
 En el segundo conjunto de datos, se encontraron algunos valores nulos en las listas de palabras clave para ciertas frases en español. Estas frases fueron anotadas manualmente para completar la información faltante.
 
-A partir de estos dos conjuntos, se han creado un conjunto de datos para el entrenamiento en español y otro, en inglés:
+A partir de estos dos conjuntos, se ha creado un conjunto de datos para los experimentos en español y otro, en inglés:
 
 \begin{itemize}
 	\item \textbf{Conjunto en español}: se ha creado a partir de la unión de las frases en español de los dos conjuntos mencionados. Contiene un total de 340 frases, ya que entre los conjuntos originales algunas se encontraban repetidas.
 	\item \textbf {Conjunto en inglés}: se ha creado a partir de las frases en inglés del segundo conjunto de datos, por lo que contiene un total de 260 frases.
 \end{itemize}
 
-\subsection{Transformación de los datos}
+\subsection{Preprocesamiento de los datos}
 
 Tal y como se explicó en la Sección \ref{modelosLenguajeGrandes}, para introducir los datos en el modelo de lenguaje es necesario que estos tengan una estructura de \textit{prompt}, que indique al modelo que esperamos una determinada respuesta de él.
 
@@ -1120,7 +1103,7 @@ Lemmas: policía poner un multa
 Phrase: El policía puso una multa.
 \end{displayquote}
 
-Esta será la manera en que los datos entren al modelo durante el entrenamiento. Para los datos de test, se introducirán con el mismo formato pero sin incluir la frase que generan las palabras clave, pues esta debe ser generada por el modelos:
+Esta será la manera en que los datos entren al modelo durante el entrenamiento. Durante la inferencia, se introducirán con el mismo formato pero sin incluir la frase que generan las palabras clave, pues esta debe ser generada por el modelo:
 
 \begin{displayquote}
 Lemmas: policía poner un multa
@@ -1128,11 +1111,9 @@ Lemmas: policía poner un multa
 Phrase:
 \end{displayquote}
 
-\subsection{Partición de los datos en entrenamiento, test y validación}
+\subsection{Partición de los datos en entrenamiento, validación y test}
 
-Para evaluar los modelos, se utilizará la técnica de \textit{cross-validation}, que consiste en realizar diferentes particiones de los datos en conjuntos de entrenamiento y test, entrenando y evaluando cada partición por separado. Por esta razón, los datos se han dividido en un conjunto de entrenamiento y test para \textit{cross-validation} y un conjunto de validación.
-
-Los datos de validación no serán utilizados para el entrenamiento del modelo, y se utilizarán para la comparación final de resultados entre los modelos. El conjunto de datos de validación ha sido seleccionado de manera aleatoria entre las frases que no presentaban valores nulos.
+Para evaluar los modelos, se utilizará la técnica de \textit{cross-validation}, que consiste en realizar diferentes particiones de los datos en conjuntos de entrenamiento y validación, entrenando y evaluando de manera independiente cada partición. Por esta razón, los datos se han dividido en un conjunto de entrenamiento y validación para \textit{cross-validation} y un conjunto adicional de test. Este último no se utilizará durante la fase de entrenamiento, sino exclusivamente para la comparación final de resultados entre los modelos. El conjunto de datos de test ha sido seleccionado de manera aleatoria considerando solo las frases que no presentaban valores nulos.
 
 La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los experimentos en español y en inglés:
 
@@ -1153,20 +1134,22 @@ La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los exper
 
 Los modelos utilizados para los experimentos de este trabajo son los modelos Gemma-7B y Llama3-8B. Ambos modelos están disponibles para su uso libre en el portal de \textit{Hugging Face} \footnote{\textit{Hugging Face} es una plataforma que ofrece herramientas y modelos de aprendizaje automático, especialmente para el procesamiento de lenguaje natural.}.
 
-Para el entrenamiento de los modelos, se ha  aplicado el método de adaptación LoRA, que se describe en detalle en la sección \ref{lora}. Este método requiere la configuración de dos parámetros clave: el rango y el parámetro \textit{alpha}. Dado que estos parámetros pueden influir significativamente en el rendimiento del modelo, se han realizado experimentos variando sus valores para identificar la configuración óptima que proporciona mejores resultados.
+[JUSTIFICAR ELECCIÓN MODELOS: Justifica la elección de estos modelos por razones computacionales (coste temporal y uso de memoria GPU)]
 
-Para garantizar una evaluación robusta y fiable de los modelos, se ha utilizado la técnica de \textit{cross-validation} con 10 particiones. Esto implica dividir el conjunto de datos en 10 partes iguales. En cada iteración, 9 partes se utilizan para entrenar el modelo y la parte restante, para probarlo. Las particiones se han realizado de manera que, al final del proceso, todos los datos hayan sido utilizados tanto para entrenamiento como para prueba, asegurando que cada dato aparezce solo una vez en el conjunto de prueba.
+Para el entrenamiento de los modelos, se ha  aplicado el método de adaptación LoRA, que se describe en detalle en la sección \ref{lora}. Este método requiere la configuración de dos parámetros clave: el rango y el \textit{alpha}. Dado que estos parámetros pueden influir significativamente en el rendimiento del modelo, se han realizado experimentos variando sus valores para identificar la configuración óptima que proporciona mejores resultados.
+
+Para garantizar una evaluación robusta y fiable de los modelos, se ha utilizado la técnica de \textit{cross-validation} con 10 particiones. Esto implica dividir el conjunto de datos en 10 partes iguales. En cada iteración, 9 partes se utilizan para entrenar el modelo y la parte restante, para validarlo. Las particiones se han realizado de manera que, al final del proceso, todos los datos hayan sido utilizados tanto para entrenamiento como para validación, asegurando que cada dato aparezce solo una vez en el conjunto de validación.
 
 Se ha entrenado un modelo independiente para cada una de las 10 particiones. Una vez completado el entrenamiento y realizadas las predicciones de estos 10 modelos, se han combinado las predicciones de todos ellos en un solo conjunto de predicciones para calcular las métricas de rendimiento. Las métricas utilizadas para la evaluación son las métricas BLEU y COMET, ambas descritas en la Sección \ref{metricas}.
 
 \subsection{Primeros experimentos con Gemma y Llama-3}
 
-En los primeros experimentos realizados, se ha comparado el rendimiento de los modelos Gemma-7B y Llama3-8B para evaluar cómo se comportan bajo diferentes configuraciones. El enfoque principal fue explorar el impacto del parámetro de rango en la adaptación LoRA, manteniendo un valor fijo para el parámetro \textit{alpha}. Este enfoque sigue la práctica común de fijar el parámetro \textit{alpha} a dos veces el valor del rango. Los valores de rango explorados han sido 16, 32 y 64.
+En los primeros experimentos realizados, se ha comparado el rendimiento de los modelos Gemma-7B y Llama3-8B para evaluar cómo se comportan bajo diferentes configuraciones. El enfoque principal fue explorar el impacto del parámetro de rango en la adaptación LoRA, manteniendo un valor fijo para el parámetro \textit{alpha}.
 
-La Tabla \ref{tab: Gemma y Llama} presenta los resultados obtenidos de BLEU y COMET.
+La Tabla \ref{tab: Gemma y Llama} presenta los resultados obtenidos de BLEU y COMET mediante validación cruzada en 10 bloques sobre el conjunto de datos en español. Por restricciones computacionales, se ha explorado un conjunto limitado de valores de rango: 16, 32 y 64; y se ha adoptado la práctica común de fijar el parámetro \textit{alpha} a dos veces el valor del rango \cite{}.
 
 \begin{table}[!h]
-\caption{Puntuación de BLEU y COMET para los modelo Gemma-7B y Llama3-8B}
+\caption{BLEU y COMET para los modelo Gemma-7B y Llama3-8B}
 \begin{center}
 \begin{tabular}{ c c c c c c }
 	\ & \ & Gemma-7B & \ & Llama3-8B & \ \\
@@ -1186,26 +1169,9 @@ La Tabla \ref{tab: Gemma y Llama} presenta los resultados obtenidos de BLEU y CO
 \label{tab: Gemma y Llama}
 \end{table}
 
-\begin{figure}[h]
+Los resultados de la Tabla \ref{tab: Gemma y Llama} muestran que, en todas las configuraciones de rango probadas, el modelo Gemma presenta un rendimiento consistentemente inferior respecto al modelo Llama-3. Esta diferencia de rendimiento sugiere que Llama-3 puede ser más efectivo para las tareas evaluadas.
 
-\begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth, height=9cm]{images/gemma_llama_BLEU_} 
-\caption{Resultados de BLEU para los modelos Gemma-7B y Llama3-8B}
-\label{fig:subim1}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth, height=9cm]{images/gemma_llama_COMET_}
-\caption{Resultados de COMET para los modelos Gemma-7B y Llama3-8B}
-\label{fig:subim2}
-\end{subfigure}
-
-\caption{Resultados obtenidos en las métricas de BLEU y COMET con los modelos Gemma-7B y Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32 y 64 y $\alpha = 2r$}
-\label{fig:image2}
-\end{figure}
-
-Los resultados muestran que, en todas las configuraciones de rango probadas, el modelo Gemma presenta un rendimiento consistentemente inferior respecto al modelo Llama-3. Esta diferencia de rendimiento sugiere que Llama-3 puede ser más efectivo para las tareas evaluadas.
-
-Dado que Llama-3 ha demostrado ser superior en las pruebas iniciales, se ha decidido que este será el modelo principal a utilizar en los experimentos posteriores. Esta decisión busca maximizar la calidad de los resultados en los experimentos posteriores.
+Dado que Llama-3 ha demostrado ser superior en las pruebas iniciales, se ha decidido que este será el modelo principal a utilizar en los experimentos posteriores. Esta decisión busca maximizar la calidad de los resultados en los experimentos posteriores dadas nuestras capacidades computacionales limitadas.
 
 \subsection{Exploración de valores de \textit{alpha}}
 
@@ -1217,8 +1183,9 @@ En esta fase de los experimentos, se ha investigado el impacto del parámetro \t
 	\item \textbf{\textit{alpha} = 2r}: en esta configuración, \textit{alpha} es el doble del valor del rango. De esta manera, se da más peso a los parámetros aprendidos durante el entrenamiento con LoRA que a los del modelo preentrenado.
 \end{enumerate}
 
-Los resultados obtenidos se observan en la Tabla \ref{tab: Llama exploración de alpha}.
+Las gráficas de la Figura \ref{fig:graficasLlama} presentan en el eje x los valores de rango explorados. En el eje y, la gráfica de la izquierda muestra los valores de BLEU, mientras que la de la derecha indica los valores de COMET. Cada una de las curvas en la gráfica corresponde a una configuración diferente de \textit{alpha}. 
 
+\mycomment{
 \begin{table}[!h]
 \caption{Puntuación de BLEU y COMET para el modelo Llama3-8B}
 \begin{center}
@@ -1252,6 +1219,7 @@ Los resultados obtenidos se observan en la Tabla \ref{tab: Llama exploración de
 \end{center}
 \label{tab: Llama exploración de alpha}
 \end{table}
+}
 
 \begin{figure}[!h]
 
@@ -1266,23 +1234,21 @@ Los resultados obtenidos se observan en la Tabla \ref{tab: Llama exploración de
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados obtenidos en las métricas de BLEU y COMET conel modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha}.}
+\caption{Resultados obtenidos en las métricas BLEU y COMET con el modelo Llama3-8B tras ser entrenado mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha}.}
 \label{fig:graficasLlama}
 \end{figure}
 
-En los gráficos de la Figura \ref{fig:graficasLlama} se puede observar visualmente el rendimiento de los diferentes valores de \textit{alpha} en función del parámetro de rango.
+En cuanto a la métrica BLEU, los resultados muestran que todas las configuraciones de \textit{alpha} siguen una tendencia ascendente hasta alcanzar su punto máximo, y a continuación disminuyen la puntuación. En el caso de $\alpha = r/2$, su valor óptimo se alcanza en en $r = 64$. En cambio, con $alpha = r$ y $alpha = 2r$ el valor óptimo se encuentra en r = 128. Este comportamiento sugiere que, cuando $\alpha = r/2$, es decir, cuando se da mayor importancia a los parámetros del modelo preentrenado que a los pesos ajustados con LoRA, el aumento del rango tiene un impacto limitado en el rendimiento, ya que no se aprovechan completamente los parámetros libres disponibles con valores de rango superiores a 64. En general, las otras configuraciones de \textit{alpha} muestran un desempeño superior, alcanzando su máximo en $r = 128$.
 
-En cuanto a la métrica BLEU, los resultados muestran que todas las configuraciones de \textit{alpha} presentan una tendencia ascendente hasta que llegan a su punto máximo, y a continuación empeoran. En el caso de $\alpha = r/2$, su valor óptimo se encuentra en en $r = 64$. En cambio, con $alpha = r$ y $alpha = 2r$ el valor óptimo se encuentra en r = 128. Este comportamiento sugiere que, con $\alpha = r/2$, es decir, dándo más importancia a los parámetros del modelo preentrenado que a los pesos obtenidos con LoRA, el aumento del rango tiene un impacto menor en el rendimiento, ya que no se aprovechan completamente los parámetros libres disponibles con valores de rango superiores a 64. En general, las otras configuraciones de \textit{alpha} muestran un desempeño superior, llegando a su máximo en $r = 128$.
+En lo que respecta a la métrica COMET, los resultados muestran que todas las configuraciones de \textit{alpha} tienen valores muy similares, oscilando entre 92.5 y 93.5, y sin mostrar diferencias significativas en su comportamiento.
 
-En lo que respecta a la métrica COMET, los resultados muestran que todas las configuraciones de \textit{alpha} tienen valores bastante similares, oscilando entre 92.5 y 93.5 sin mostrar diferencias significativas en su comportamiento.
-
-Así, tanto los resultados de BLEU coomo de COMET sugieren que la combinación óptima de parámetros es $r = 128$ con $\alpha = r$.
+Así, tanto los resultados de BLEU como de COMET sugieren que la combinación óptima de parámetros es $r = 128$ con $\alpha = r$.
 
 \subsection{Validación del modelo final}
 
-Finalmente, se ha llevado a cabo el entrenamiento del modelo de Llama-3 con la mejor combinación de parámetros obtenidos en los experimentos anteriores: $r$ = 128 y \textit{alpha} = $r$. En este caso, el modelo ha sido entrenado utilizando todo el conjunto de datos disponible para el entrenamiento.
+Finalmente, se ha llevado a cabo el entrenamiento del modelo de Llama-3 con la mejor combinación de parámetros obtenidos en los experimentos anteriores: $r$ = 128 y \textit{alpha} = $r$. En este caso, el modelo ha sido entrenado utilizando todo el conjunto de datos disponible para el experimento de validación cruzada.
 
-Una vez completado el entrenamiento, se ha realizado la validación del modelo utilizando el conjunto de datos reservado específicamente para validación. De esta manera, se ha evaluado el desempeño del modelo en datos que no habían sido vistos por el modelo en ninguna fase de entrenamiento, lo que proporciona una medida de su capacidad de generalización.
+Una vez completado el entrenamiento, se ha realizado la evaluación del modelo utilizando el conjunto de datos reservado específicamente para evaluación. De esta manera, se ha evaluado el desempeño del modelo en datos que no habían sido vistos por el modelo en ninguna fase de entrenamiento, lo que proporciona una medida de su capacidad de generalización.
 
 Los resultados obtenidos con esta configuración final han sido los siguientes:
 
@@ -1297,11 +1263,11 @@ Aunque los valores obtenidos para BLEU y COMET son inferiores a los resultados a
 
 Para evaluar la influencia del idioma en los resultados de los modelos, se han replicado los mismos experimentos realizados con el conjunto de datos en español utilizando el conjunto en inglés. De nuevo, se han utilizado los modelos Gemma-7B y Llama3-8B disponibles en el portal de \textit{Hugging Face}.
 
-Al igual que en los experimentos anteriores, se ha aplicado la adaptación LoRA y se ha llevado a cabo el entrenamiento utilizando \textit{cross-validation} con un total de 10 particiones.
+Al igual que en los experimentos anteriores, se ha aplicado la adaptación LoRA y se ha llevado a cabo el entrenamiento utilizando validación cruzada con un total de 10 particiones.
 
 En primer lugar, se han realizado los experimentos para ambos modelos explorando diferentes valores de $r$ (16, 32 y 64) y utilizando una configuración  fija de $\alpha = 2r$. Al igual que con el conjunto en español, los resultados obtenidos con el modelo Gemma son notablemente inferiores a los resultados obtenidos con el modelo Llama-3. El mejor valor de rango resultó ser $r = 32$ en ambos casos. En el caso de Gemma, los valores de BLEU y COMET con esta configuración son de 54.32 y 88.88 respectivamente, mientras que los de Llama-3 son 62.22 y 91.12.
 
-En la Tabla \ref{tab:comparacionIdiomas} se muestran los resultados de el mejor valor de rango (entre 16, 32 y 64) con $\alpha = 2r$ para los dos modelos e idiomas. En el caso del modelo en español, es $r = 32$ para ambos modelos y para el conjunto en inglés, $r = 32$ para Llama-3 y $r = 16$ para Gemma
+En la Tabla \ref{tab:comparacionIdiomas} se muestran los resultados del mejor valor de rango (entre 16, 32 y 64) con $\alpha = 2r$ para los dos modelos e idiomas. En el caso del modelo en español, es $r = 32$ para ambos modelos y para el conjunto en inglés, $r = 32$ para Llama-3 y $r = 16$ para Gemma
 
 \begin{table}[h]
 \centering
@@ -1330,12 +1296,13 @@ comentar que gemma en inglés > gemma en español y Llama3 en español > Llama3 
 
 \subsection{Exploración de valores de \textit{alpha}}
 
-En los siguientes experimentos, se ha llevado a cabo una exploración de diferentes configuraciones del parámetro \textit{alpha} utilizando el modelo Llama3-8B. ya que este es el modelo que ha demostrado ofrecer mejores resultados.
+En los siguientes experimentos, se ha llevado a cabo una exploración de diferentes configuraciones del parámetro \textit{alpha} utilizando el modelo Llama3-8B, ya que este es el modelo que ha demostrado ofrecer mejores resultados.
 
 De manera similar a los experimentos realizados con el conjunto de datos en español, se han probado diferentes valores de rango: 16, 32, 64, 128 y 256. Para cada valor de rango, se han evaluado las siguientes configuraciones de \textit{alpha}: $\alpha = r/2$, $\alpha = r$ y $\alpha = 2r$.
 
 Los resultados obtenidos se presentan en la Tabla \ref{tab: Llama exploración de alpha inglés}.
 
+\mycomment{
 \begin{table}[!h]
 \caption{Puntuación de BLEU y COMET para el modelo Llama3-8B con el conjunto de datos en inglés}
 \begin{center}
@@ -1368,6 +1335,7 @@ Los resultados obtenidos se presentan en la Tabla \ref{tab: Llama exploración d
 \end{center}
 \label{tab: Llama exploración de alpha inglés}
 \end{table}
+}
 
 En la Figura \ref{fig:graficasLlama inglés} se presentan los resultados de manera visual.
 
@@ -1486,12 +1454,6 @@ El análisis se ha realizado comparando las frases generadas del conjunto de val
 
 \begin{itemize}
 	\item \textbf{Errores en los tiempos verbales}: se han identificado 9 frases en las que el único error se relaciona con la conjugación del tiempo verbal. Estas frases se presentan en la Tabla \ref{tab:erroresTiempoVerbal}. Se observa que son casos en los que, a partir de las palabras clave introducidas, resulta muy difícil determinar el tiempo verbal correcto de la frase. El modelo tiende a conjugar las frases en presente, ya que es el tiempo verbal más común, aunque en algunas ocasiones las frases deberían estar en pasado. Este error también es frecuente en las generaciones de frases realizadas por personas. La ausencia de pistas claras sobre el tiempo verbal en las palabras clave puede llevar a asumir que el tiempo verbal de la frase debe ser presente.
-	\item \textbf{Falta de preposición}: en 8 frases, los errores se deben a la falta o confusión de alguna preposición. Estos casos se detallan en la Tabla \ref{tab:erroresPreposicion}.
-	\item \textbf{Confusión en el sujeto}: un total de 4 frases presentan errores solamente en el sujeto. Se presentan en la Tabla \ref{tab:erroresSujeto}. Estos errores incluyen la falta del artículo del sujeto debido a que se interpreta el sustantivo como nombre propio.
-	\item \textbf{Error en el número}: solo se ha identificado un caso en el que el error radica en el número gramatical. En este caso las palabras clave son \" niño, jugar, piscina \". A partir de estas, el modelo generó \" El niño juega en la piscina \" en lugar de  \" Los niños juegan en la piscina \", que era la frase real. Dado que las palabras clave no especificaban el número, es comprensible que el modelo asumiera el singular. Este error también fue cometido por todos los participantes humanos en el experimento.
-\end{itemize}
-
-Las 10 frases restantes presentan varios de los errores mencionados u otros problemas sintácticos. Se presentan en la tabla \ref{tab:erroresVariados}.
 
 \begin{table}[!h]
 \caption{Frases generadas por Llama-3 con errores en el tiempo verbal}
@@ -1507,25 +1469,13 @@ Las 10 frases restantes presentan varios de los errores mencionados u otros prob
 	 & & \\
 	perra, tener, cachorros & La perra tiene cachorros & La perra tuvo cachorros \\
 	 & & \\
-	perro, ir, carretera & El perro va por la carretera & El perro fue por la carretera \\
-	 & & \\
-	cerditos, vivir, feliz & Los cerditos vivieron & Los cerditos viven \\
-	 & felices & felices \\
-	 & & \\
-	su, mamá, se, enfadar & Su mamá se enfada & Su mamá se enfadó \\
-	 & & \\
-	seis, cabritillos, salir, contento & Los seis cabritillos salieron  & Los seis cabritillos salen  \\
-	 & contentos & contentos \\
-	 & & \\
-	policía, poner, un, multa & El policía pone una multa & El policía puso una multa \\
-	 & & \\
-	ver, un, topo, en, otoño & Veo un topo en otoño & Vi un topo en otoño \\
-	 & & \\
 
 \end{tabular}
 \end{center}
 \label{tab:erroresTiempoVerbal}
 \end{table}
+
+	\item \textbf{Falta de preposición}: en 8 frases, los errores se deben a la falta o confusión de alguna preposición. Estos casos se detallan en la Tabla \ref{tab:erroresPreposicion}.
 
 \begin{table}[!h]
 \caption{Frases generadas por Llama-3 con errores en preposiciones}
@@ -1535,31 +1485,21 @@ Las 10 frases restantes presentan varios de los errores mencionados u otros prob
 	\hline
 	\hline
 	 & & \\
-	dejar, ir, Cenicienta & La madrastra no deja ir & La madrastra no deja ir a \\
-	 & Cenicienta a la fiesta & Cenicienta a la fiesta \\
-	 & & \\
-	Anabel, pintar, papel & Anabel pinta papel & Anabel pinta en el papel \\
-	 & & \\
-	cazador, asustar, lobo & El cazador asustó el lobo & El cazador asustó al lobo \\
+	yo, dormir, noche & Yo duermo la noche & Yo duermo por la noche \\
 	 & & \\
 	Blancanieves, correr, bosque & Blancanieves corre por  & Blancanieves corre \\
 	 & el bosque & al bosque \\
 	 & & \\
-	yo, dormir, noche & Yo duermo la noche & Yo duermo por la noche \\
-	 & & \\
 	Juan, se, encontrar, un, mago & Juan se encontró un  & Juan se encontró con \\
 	 & mago & un mago \\
-	 & & \\
-	cabritillo, pequeño, estar, reloj & El cabritillo pequeño   & El cabritillo pequeño está  \\
-	 & reloj & en el reloj \\
-	 & & \\
-	tirar, ventana & Tiro la ventana & Las tiro por la ventana \\
 	 & & \\
 
 \end{tabular}
 \end{center}
 \label{tab:erroresPreposicion}
 \end{table}
+
+	\item \textbf{Confusión en el sujeto}: un total de 4 frases presentan errores solamente en el sujeto. Se presentan en la Tabla \ref{tab:erroresSujeto}. Estos errores incluyen la falta del artículo del sujeto debido a que se interpreta el sustantivo como nombre propio.
 
 \begin{table}[!h]
 \caption{Frases generadas por Llama-3 con errores en el sujeto}
@@ -1576,13 +1516,16 @@ Las 10 frases restantes presentan varios de los errores mencionados u otros prob
 	 & & \\
 	Ratita, barrer, su, casita & Ratita barre su casita & La ratita barre su casita \\
 	 & & \\
-	este, ser, Ricitos, de Oro & Él es Ricitos de Oro & Esta es Ricitos de Oro \\
-	 & & \\
 
 \end{tabular}
 \end{center}
 \label{tab:erroresSujeto}
 \end{table}
+
+	\item \textbf{Error en el número}: solo se ha identificado un caso en el que el error radica en el número gramatical. En este caso las palabras clave son \" niño, jugar, piscina \". A partir de estas, el modelo generó \" El niño juega en la piscina \" en lugar de  \" Los niños juegan en la piscina \", que era la frase real. Dado que las palabras clave no especificaban el número, es comprensible que el modelo asumiera el singular. Este error también fue cometido por todos los participantes humanos en el experimento.
+\end{itemize}
+
+Las 10 frases restantes presentan varios de los errores mencionados u otros problemas sintácticos. Se presentan en la tabla \ref{tab:erroresVariados}.
 
 \begin{table}[!h]
 \caption{Frases generadas por Llama-3 con varios errores}
@@ -1597,23 +1540,8 @@ Las 10 frases restantes presentan varios de los errores mencionados u otros prob
 	Reyes, mago, ir, camello & 3 Reyes magos irían & Los Reyes Magos \\
 	 & al camello & van en camello \\
 	 & & \\
-	juan, bajar, planta & Juan baja de la planta & Juan bajó por la planta \\
-	 & & \\
-	planta, llegar, cielo & La planta llega al cielo & La planta llegó hasta el cielo \\
-	 & & \\
 	Caperucita, abuela, ser, feliz & Caperucita es feliz con & Caperucita y la abuela  \\
 	 & su abuela & fueron felices \\
-	 & & \\
-	otro, hija, ser, Saturno & El otro hija sería Saturno & Otra hija era Saturno \\
-	 & & \\
-	a dónde, ir, Caperucita & A dónde ir, Caperucita? & ¿A dónde vas Caperucita? \\
-	 & & \\
-	Papá, Noel, ir, trineo,  & Papá Noel irá con & Papá Noel va en trineo \\
-	con, renos & los renos & con renos \\
-	 & & \\
-	lunes, comer, lentejas & Lunes como lentejas & El lunes comeré lentejas \\
-	 & & \\
-	cerditos, ver, lobo & Cerditos ve el lobo & Los cerditos ven al lobo \\
 	 & & \\
 
 \end{tabular}
