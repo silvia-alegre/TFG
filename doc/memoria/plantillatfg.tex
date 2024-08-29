@@ -636,10 +636,10 @@ El proceso puede seguir hasta que lleguemos al número de palabras deseadas.
 
 Inicialmente, este cálculo de probabilidades se realizaba de manera secuencial, basando las predicciones en las distribuciones de probabilidad de las palabras dentro de un texto. Actualmente se utiliza la arquitectura de transformers, que permite procesar grandes cantidades de texto de manera eficiente y proporciona predicciones mucho más acertadas, pues tiene en cuenta el contexto en el que se encuentran las palabras y las relaciones entre estas \cite{burtsev2023working}.
 
-Existen distintos enfoques para la selección de cuál es la palabra que sigue en la secuencia. Uno de los métodos más simples es utilizar el algoritmo de \textit{greedy decoding} \cite{gu2017trainablegreedydecodingneural}. El algoritmo \textit{greedy decoding} consiste en elegir la palabra con la probabilidad condicional más alta hasta el momento en cada instante.
+Existen distintos enfoques para la selección de cuál es la palabra que sigue en la secuencia. Uno de los métodos más simples es utilizar el algoritmo de \textit{greedy decoding} \cite{gu2017trainablegreedydecodingneural}. El algoritmo \textit{greedy decoding} consiste en elegir la palabra $d$ con la probabilidad condicional más alta hasta el momento en cada instante.
 
 \begin{equation}
-\hat{w}_i = argmax_{w \in V} P(w | \{w_1, w_2, ..., w_{i-1}\})
+\hat{d}_i = argmax_{d \in V} P(d | \{d_1, d_2, ..., d_{i-1}\})
 \end{equation}
 
 Con el tiempo se ha descubierto que este método llega a resultados subóptimos, pues al elegir siempre la palabra que es más probable que ocurra, tiende a generar textos excesivamente genéricos y repetitivos.
@@ -647,7 +647,7 @@ Con el tiempo se ha descubierto que este método llega a resultados subóptimos,
 Existe una extension de este algoritmo conocida como \textit{beam search}, la cual ha demostrado ser más efectiva, sobretodo en tareas de traducción automática. La diferencia entre el algoritmo \textit{greedy decoding} y este, es que el \textit{beam search}, en lugar de quedarse solamente con la palabra con mayor probabilidad y crear una única respuesta, el algoritmo guarda $K > 1$ posibles respuestas (hipótesis) durante la decodificación. Así, en cada iteración, el algoritmo elige las K hipótesis con mayor \textit{score}:
 
 \begin{equation}
-p(w_1, w_2, ..., w_N) = \prod_{i = 1}^{N} p(w_i \mid w_1, w_2, ..., w_{i-1})
+p(d_1, d_2, ..., d_N) = \prod_{i = 1}^{N} p(d_i \mid d_1, d_2, ..., d_{i-1})
 \end{equation}
 
 Cuando estas se terminan de generar, selecciona la hipótesis con mayor probabilidad.
@@ -674,10 +674,10 @@ Donde $\mathbb{1}$ es la función característica, que indica si una palabra est
 
 \subsubsection{\textit{Nucleus sampling}}
 
-El algoritmo de \textit{nucleus sampling} \cite{holtzman2020curiouscaseneuraltext}, también conocido como \textit{top-p sampling} también sigue la idea de eliminar de la distribución las palabras menos probables. Sin embargo, en lugar de seleccionar un número fijo de palabras, lo que hace es mantener el porcentaje $p$ más importante de la muestra. Así, dada una distribución $P(x |x_{1:i-1})$, las \textit{top-p} palabras del vocabulario $V^{(p)} \subset V$ se definen como el conjunto más pequeño que cumpla:
+El algoritmo de \textit{nucleus sampling} \cite{holtzman2020curiouscaseneuraltext}, también conocido como \textit{top-p sampling} también sigue la idea de eliminar de la distribución las palabras menos probables. Sin embargo, en lugar de seleccionar un número fijo de palabras, lo que hace es mantener el conjunto de palabras más probables que acumulan una masa de probabilidad $p$. Así, dada una distribución $P(x |x_{1:i-1})$, las \textit{top-p} palabras del vocabulario $V^{(p)} \subset V$ se definen como el conjunto más pequeño que cumpla:
 
 \begin{equation}
-\sum_{x \in V^{(p)}} P(x | x_{1:i-1}) \ge p
+\sum_{d \in V^{(p)}} P(d | d_{1:i-1}) \ge p
 \end{equation}
 
 Al medir la probabilidad acumulada en lugar de un número fijo de palabras, se espera que esta medida sea más robusta incluso en contextos diversos, que podrían tener resultados muy distintos si se usara un número fijo de palabras. De nuevo, tras seleccionar el subconjunto de palabras del vocabulario se deben normalizar sus probabilidades.
@@ -685,10 +685,10 @@ Al medir la probabilidad acumulada en lugar de un número fijo de palabras, se e
 Las probabilidades normalizadas de cada palabra en el vocabulario se pueden calcular como:
 
 \begin{equation}
-\hat{p}_i = \frac{p'_i}{\sum_{j = 1}^{|V|} p'_j}
+\hat{p}_i = \frac{p'_i}{\sum_{j:d_j \in V^{(p)}} p'_j}
 \end{equation}
 
-Donde $p'_i = p_i * \mathbb{1}\{\sum_{j = 1}^{i-1}p_j < P\}$ \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
+Donde $p'_i = p_i * \mathbb{1}\{ d_i \in V^{(p)} \}$ \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
 
 \subsubsection{\textit{Tempered sampling}}
 
@@ -701,10 +701,10 @@ En el algoritmo de \textit{tempered sampling} \cite{nadeem2020systematiccharacte
 Además, existe una variación de este algoritmo que se conoce como \textit{tempered top-k sampling}, el cual combina las transformaciones definidas por el algoritmo \textit{tempered sampling} y el \textit{top-k}. Así, la probabilidad normalizada se calcula:
 
 \begin{equation}
-\hat{p}_i = \frac{p'_i}{\sum_{j = 1}{|V|}p'_j}
+\hat{p}_i = \frac{p'_i}{\sum_{j = 1}^{V^{(k)}}p'_j}
 \end{equation}
 
-donde $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
+donde $V^{(k)}$ es el conjunto de las $k$ palabras más probables y $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
 
 %En las siguientes secciones se presentan algunos de los modelos de lenguaje grandes más utilizados actualmente.
 
@@ -712,7 +712,7 @@ donde $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
 
 %Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLMs preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
 
-%Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo GPT-4  \cite{openai2024gpt4technicalreport}, desarrollado por \textit{OpenAI}, Gemma \cite{gemmateam2024gemmaopenmodelsbased}, desarrollado por Google, y Llama-3, desarrollado por Meta. Estos tres modelos se explicarán en detalle en la sección \ref{modelosUtilizados}
+%Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo GPT-4  \cite{openai2024gpt4technicalreport}, desarrollado por \textit{OpenAI}, Gemma \cite{gemmateam2024gemmaopenmodelsbased}, desarrollado por Google, y Llama3, desarrollado por Meta. Estos tres modelos se explicarán en detalle en la sección \ref{modelosUtilizados}
 
 \subsection{Arquitecturas de los LLMs}
 
@@ -733,7 +733,7 @@ En este capítulo se presentan los modelos de lenguaje grandes utilizados en est
 
 Para la realización de este trabajo se utilizarán modelos de lenguaje grandes preentrenados. Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLMs preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
 
-Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo Gemma, desarrollado por Google, Llama-3, desarrollado por Meta, y los modelos GPT, desarrollados por la compañía \textit{OpenAI},. Estos tres modelos se explicarán en detalle en las siguientes secciones.
+Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo Gemma, desarrollado por Google, Llama3, desarrollado por Meta, y los modelos GPT, desarrollados por la compañía \textit{OpenAI},. Estos tres modelos se explicarán en detalle en las siguientes secciones.
 
 \subsubsection{Gemma}
 
@@ -756,7 +756,7 @@ En cuanto a su arquitectura, al igual que Gemma, está basada en el modelo de \t
 
 LLaMA incorpora también optimizaciones para reducir el tiempo de entrenamiento. Una de estas es la implementación eficiente del \textit{causal multi-head attention}, que consiste en no guardar los valores de los pesos de atención ni calcular los \textit{scores} entre claves y valores que están ocultas en la tarea, reduciendo así el coste computacional. Otra optimización es la reducción de las activaciones recalculadas mediante \textit{checkpointing}, de manera que se guardan las activaciones costosas de calcular implementando manualmente la función hacia atrás para las capas transformadoras.
 
-Concretamente, en este trabajo se utilizará el modelo Llama-3.
+Concretamente, en este trabajo se utilizará el modelo Llama3.
 
 \subsubsection{Modelos GPT}
 
@@ -1020,7 +1020,7 @@ La métrica COMET es más compleja de interpretar en comparación con BLEU. Gene
 
 \chapter{Experimentos realizados} \label{cap4}
 
-En este capítulo se presentan los experimentos realizados en este trabajo, los cuales se han llevado a cabo utilizando dos modelos de lenguaje grandes: Gemma y Llama-3. Los experimentos se centraron principalmente en la exploración de los parámetros rango y \textit{alpha} de la adaptación mediante LoRA, con el objetivo de encontrar la configuración que proporcionara los mejores resulados posibles para la tarea de generar frases de lenguaje natural a partir de listas de palabras clave, en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. Tras identificar la mejor configuración, se realizó un experimento adicional utilizando todos los datos de entrenamiento disponibles para evaluar la eficacia de los modelos con un conjunto de datos de test que no había sido utilizado en fases anteriores. Los experimentos se realizaron con conjuntos de datos en español y, a continuación, se realizaron también con el conjunto de datos en inglés para estudiar el efecto del lenguaje en los resultados. Todos los experimentos han sido realizados utilizando Google Colab \footnote{Google Colab es una plataforma  en la nube que permite escribir y ejecutar código Python en \textit{notebooks} interactivos, ofreciendo acceso a recursos de procesamiento como GPUs y TPUs.}.
+En este capítulo se presentan los experimentos realizados en este trabajo, los cuales se han llevado a cabo utilizando dos modelos de lenguaje grandes: Gemma y Llama3. Los experimentos se centraron principalmente en la exploración de los parámetros rango y \textit{alpha} de la adaptación mediante LoRA, con el objetivo de encontrar la configuración que proporcionara los mejores resulados posibles para la tarea de generar frases de lenguaje natural a partir de listas de palabras clave, en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. Tras identificar la mejor configuración, se realizó un experimento adicional utilizando todos los datos de entrenamiento disponibles para evaluar la eficacia de los modelos con un conjunto de datos de test que no había sido utilizado en fases anteriores. Los experimentos se realizaron con conjuntos de datos en español y, a continuación, se realizaron también con el conjunto de datos en inglés para estudiar el efecto del lenguaje en los resultados. Todos los experimentos han sido realizados utilizando Google Colab \footnote{Google Colab es una plataforma  en la nube que permite escribir y ejecutar código Python en \textit{notebooks} interactivos, ofreciendo acceso a recursos de procesamiento como GPUs y TPUs.}.
 
 A continuación, se detallan los experimentos realizados y los resultados obtenidos. También se incluyen comparaciones entre los modelos entrenados y otros sistemas externos como GPT-4, el comunicador electrónico AsTeRISCS Grid, y resultados obtenidos por personas en esta misma tarea.
 
@@ -1142,7 +1142,7 @@ Para garantizar una evaluación robusta y fiable de los modelos, se ha utilizado
 
 Se ha entrenado un modelo independiente para cada una de las 10 particiones. Una vez completado el entrenamiento y realizadas las predicciones de estos 10 modelos, se han combinado las predicciones de todos ellos en un solo conjunto de predicciones para calcular las métricas de rendimiento. Las métricas utilizadas para la evaluación son las métricas BLEU y COMET, ambas descritas en la Sección \ref{metricas}.
 
-\subsection{Primeros experimentos con Gemma y Llama-3}
+\subsection{Primeros experimentos con Gemma y Llama3}
 
 En los primeros experimentos realizados, se ha comparado el rendimiento de los modelos Gemma-7B y Llama3-8B para evaluar cómo se comportan bajo diferentes configuraciones. El enfoque principal fue explorar el impacto del parámetro de rango en la adaptación LoRA, manteniendo un valor fijo para el parámetro \textit{alpha}.
 
@@ -1169,9 +1169,9 @@ La Tabla \ref{tab: Gemma y Llama} presenta los resultados obtenidos de BLEU y CO
 \label{tab: Gemma y Llama}
 \end{table}
 
-Los resultados de la Tabla \ref{tab: Gemma y Llama} muestran que, en todas las configuraciones de rango probadas, el modelo Gemma presenta un rendimiento consistentemente inferior respecto al modelo Llama-3. Esta diferencia de rendimiento sugiere que Llama-3 puede ser más efectivo para las tareas evaluadas.
+Los resultados de la Tabla \ref{tab: Gemma y Llama} muestran que, en todas las configuraciones de rango probadas, el modelo Gemma presenta un rendimiento consistentemente inferior respecto al modelo Llama3. Esta diferencia de rendimiento sugiere que Llama3 puede ser más efectivo para las tareas evaluadas.
 
-Dado que Llama-3 ha demostrado ser superior en las pruebas iniciales, se ha decidido que este será el modelo principal a utilizar en los experimentos posteriores. Esta decisión busca maximizar la calidad de los resultados en los experimentos posteriores dadas nuestras capacidades computacionales limitadas.
+Dado que Llama3 ha demostrado ser superior en las pruebas iniciales, se ha decidido que este será el modelo principal a utilizar en los experimentos posteriores. Esta decisión busca maximizar la calidad de los resultados en los experimentos posteriores dadas nuestras capacidades computacionales limitadas.
 
 \subsection{Exploración de valores de \textit{alpha}}
 
@@ -1183,7 +1183,7 @@ En esta fase de los experimentos, se ha investigado el impacto del parámetro \t
 	\item \textbf{\textit{alpha} = 2r}: en esta configuración, \textit{alpha} es el doble del valor del rango. De esta manera, se da más peso a los parámetros aprendidos durante el entrenamiento con LoRA que a los del modelo preentrenado.
 \end{enumerate}
 
-Las gráficas de la Figura \ref{fig:graficasLlama} presentan en el eje x los valores de rango explorados. En el eje y, la gráfica de la izquierda muestra los valores de BLEU, mientras que la de la derecha indica los valores de COMET. Cada una de las curvas en la gráfica corresponde a una configuración diferente de \textit{alpha}. 
+Las gráficas de la Figura \ref{fig:graficasLlama} presentan en el eje horizontal los valores de rango explorados. En el eje vertical, la gráfica de la izquierda muestra los valores de BLEU, mientras que la de la derecha indica los valores de COMET. Cada una de las curvas en la gráfica corresponde a una configuración diferente de \textit{alpha}. 
 
 \mycomment{
 \begin{table}[!h]
@@ -1234,7 +1234,7 @@ Las gráficas de la Figura \ref{fig:graficasLlama} presentan en el eje x los val
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados obtenidos en las métricas BLEU y COMET con el modelo Llama3-8B tras ser entrenado mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha}.}
+\caption{Resultados obtenidos en las métricas BLEU y COMET con el modelo Llama3-8B tras ser entrenado mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en español.}
 \label{fig:graficasLlama}
 \end{figure}
 
@@ -1246,7 +1246,7 @@ Así, tanto los resultados de BLEU como de COMET sugieren que la combinación ó
 
 \subsection{Validación del modelo final}
 
-Finalmente, se ha llevado a cabo el entrenamiento del modelo de Llama-3 con la mejor combinación de parámetros obtenidos en los experimentos anteriores: $r$ = 128 y \textit{alpha} = $r$. En este caso, el modelo ha sido entrenado utilizando todo el conjunto de datos disponible para el experimento de validación cruzada.
+Finalmente, se ha llevado a cabo el entrenamiento del modelo de Llama3 con la mejor combinación de parámetros obtenidos en los experimentos anteriores: $r$ = 128 y \textit{alpha} = $r$. En este caso, el modelo ha sido entrenado utilizando todo el conjunto de datos disponible para el experimento de validación cruzada.
 
 Una vez completado el entrenamiento, se ha realizado la evaluación del modelo utilizando el conjunto de datos reservado específicamente para evaluación. De esta manera, se ha evaluado el desempeño del modelo en datos que no habían sido vistos por el modelo en ninguna fase de entrenamiento, lo que proporciona una medida de su capacidad de generalización.
 
@@ -1265,9 +1265,9 @@ Para evaluar la influencia del idioma en los resultados de los modelos, se han r
 
 Al igual que en los experimentos anteriores, se ha aplicado la adaptación LoRA y se ha llevado a cabo el entrenamiento utilizando validación cruzada con un total de 10 particiones.
 
-En primer lugar, se han realizado los experimentos para ambos modelos explorando diferentes valores de $r$ (16, 32 y 64) y utilizando una configuración  fija de $\alpha = 2r$. Al igual que con el conjunto en español, los resultados obtenidos con el modelo Gemma son notablemente inferiores a los resultados obtenidos con el modelo Llama-3. El mejor valor de rango resultó ser $r = 32$ en ambos casos. En el caso de Gemma, los valores de BLEU y COMET con esta configuración son de 54.32 y 88.88 respectivamente, mientras que los de Llama-3 son 62.22 y 91.12.
+En primer lugar, se han realizado los experimentos para ambos modelos explorando diferentes valores de $r$ (16, 32 y 64) y utilizando una configuración  fija de $\alpha = 2r$. Al igual que con el conjunto en español, los resultados obtenidos con el modelo Gemma son notablemente inferiores a los resultados obtenidos con el modelo Llama3. El mejor valor de rango resultó ser $r = 32$ en ambos casos. En el caso de Gemma, los valores de BLEU y COMET con esta configuración son de 54.32 y 88.88 respectivamente, mientras que los de Llama3 son 62.22 y 91.12.
 
-En la Tabla \ref{tab:comparacionIdiomas} se muestran los resultados del mejor valor de rango (entre 16, 32 y 64) con $\alpha = 2r$ para los dos modelos e idiomas. En el caso del modelo en español, es $r = 32$ para ambos modelos y para el conjunto en inglés, $r = 32$ para Llama-3 y $r = 16$ para Gemma
+En la Tabla \ref{tab:comparacionIdiomas} se muestran los mejores resultados obtenidos de BLEU y COMET para cada modelo e idioma. Se han tenido en cuenta lose experimentos realizados con los valores de rango 16, 32 y 64 y la configuración de $\alpha = 2r$. En el caso de los experimentos en español, el mejor valor de rango entre estos es $r = 32$ para ambos modelos. Para el conjunto en inglés es $r = 32$ para Llama3 y $r = 16$ para Gemma.
 
 \begin{table}[h]
 \centering
@@ -1288,19 +1288,15 @@ Inglés &  &      &       \\
  & Gemma  &  54.23    &    88.88   \\
 & & &  \\
 \end{tabular}
-\caption{Tabla de resultados BLEU y COMET para diferentes configuraciones}
+\caption{Mejores resultados de BLEU y COMET en los experimentos de ambos idiomas y modelos}
 \label{tab:comparacionIdiomas}
 \end{table}
-
-comentar que gemma en inglés > gemma en español y Llama3 en español > Llama3 en inglés ?
 
 \subsection{Exploración de valores de \textit{alpha}}
 
 En los siguientes experimentos, se ha llevado a cabo una exploración de diferentes configuraciones del parámetro \textit{alpha} utilizando el modelo Llama3-8B, ya que este es el modelo que ha demostrado ofrecer mejores resultados.
 
 De manera similar a los experimentos realizados con el conjunto de datos en español, se han probado diferentes valores de rango: 16, 32, 64, 128 y 256. Para cada valor de rango, se han evaluado las siguientes configuraciones de \textit{alpha}: $\alpha = r/2$, $\alpha = r$ y $\alpha = 2r$.
-
-Los resultados obtenidos se presentan en la Tabla \ref{tab: Llama exploración de alpha inglés}.
 
 \mycomment{
 \begin{table}[!h]
@@ -1337,7 +1333,7 @@ Los resultados obtenidos se presentan en la Tabla \ref{tab: Llama exploración d
 \end{table}
 }
 
-En la Figura \ref{fig:graficasLlama inglés} se presentan los resultados de manera visual.
+Las gráficas de la Figura \ref{fig:graficasLlama inglés} ilustran en el eje horizontal los valores de rango que han sido explorados. En el eje vertical, la gráfica de la izquierda muestra los valores de BLEU, mientras que la de la derecha presenta los valores de COMET. Cada una de las curvas representadas en las gráficas corresponde a una configuración diferente de \textit{alpha}.
 
 \begin{figure}
 \begin{subfigure}{0.5\textwidth}
@@ -1351,7 +1347,7 @@ En la Figura \ref{fig:graficasLlama inglés} se presentan los resultados de mane
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados obtenidos en las métricas de BLEU y COMET con el modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en inglés.}
+\caption{Resultados obtenidos en las métricas de BLEU y COMET con el modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ = 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en inglés.}
 \label{fig:graficasLlama inglés}
 \end{figure}
 
@@ -1363,7 +1359,7 @@ Considerando ambas métricas, la mejor configuración es $r = 128$, $\alpha = 2r
 
 \subsection{Validación del modelo final}
 
-Igual que con el conjunto en español, el experimento final con los datos en inglés ha consistido en el entrenamiento de un modelo Llama-3 utilizando la mejor configuración de parámetros identificada durante la experimentación previa, que fue $r = 128$ y $\alpha = 2r$.
+Igual que con el conjunto en español, el experimento final con los datos en inglés ha consistido en el entrenamiento de un modelo Llama3 utilizando la mejor configuración de parámetros identificada durante la experimentación previa, que fue $r = 128$ y $\alpha = 2r$.
 
 El modelo ha sido entrenado utilizando la totalidad de datos de entrenamiento disponibles. Posteriormente, se ha realizado la validación del modelo utilizando el conjunto de datos de validación que se había reservado desde el inicio de los experimentos. Los resultados obtenidos en las métricas BLEU y COMET han sido los siguientes:
 
@@ -1378,7 +1374,7 @@ En general, el rendimiento del modelo en inglés es inferior al del modelo en es
 
 \chapter{Análisis posteriores del modelo en español} \label{cap5}
 
-En este capítulo se presentan una serie de análisis y experimentos adicionales que se han llevado a cabo con el objetivo de evaluar de manera más profunda la eficacia del modelo final en español. Este es el modelo Llama-3 con $r = 128$ y $\alpha = r$.
+En este capítulo se presentan una serie de análisis y experimentos adicionales que se han llevado a cabo con el objetivo de evaluar de manera más profunda la eficacia del modelo final en español. Este es el modelo Llama3 con $r = 128$ y $\alpha = r$.
 
 En primer lugar, se ha realizado una comparación del rendimiento del modelo con el modelo GPT-4 y la aplicación de AsTeRISCS Grid, ampliamente utilizada en el ámbito de los SAAC. Además, se han realizado experimentos con particiapantes humanos para verificar si los resultados generados por el modelo son comparables a los obtenidos por personas. Finalmente, se ha realizado un análisis de los errores más comunes cometidos por el modelo, con el fin de identificar áreas de mejora y comprender mejor sus limitaciones.
 
@@ -1386,11 +1382,11 @@ En primer lugar, se ha realizado una comparación del rendimiento del modelo con
 
 Una vez obtenidos los resultados finales del modelo Llama3-8B, se han realizado pruebas adicionales con el modelo GPT-4 y con la aplicación AsTeRICS Grid para comparar su rendimiento. Todas estas pruebas se han realizado utilizando el conjunto de validación reservado desde el incio de los experimentos.
 
-El modelo GPT-4 fue seleccionado para esta comparación debido a su reputación como uno de los modelos de lenguaje grandes más avanzados y potentes disponibles actualmente. Para evaluar el desempeño de GPT-4, se introdujeron los datos de entrenamiento a través de su interfaz \textit{ChatGPT} mediante \textit{prompting}, y se le solicitó que produjera las frases que se encontraban en el conjunto de validación.
+El modelo GPT-4 fue seleccionado para esta comparación debido a su reconocimiento como uno de los modelos de lenguaje grandes más avanzados y potentes disponibles actualmente. Para evaluar su desempeño, se introdujeron los datos de entrenamiento a través de su interfaz \textit{ChatGPT} mediante la técnica de \textit{prompting}, y se le solicitó que generara las frases que se encontraban en el conjunto de test. Es importante destacar que este modelo es significativamente más grande en comparación con Llama3, ya que cuenta con 1.8 trillones de parámetros. Además, no podemos determinar con certeza si GPT-4 ha tenido acceso previo a los datos de test, ya que estos se encuentran accesibles libremente en internet. GPT-4 ha sido entrenado con una gran cantidad de información recopilada de internet, aunque los detalles específicos sobre qué datos han sido utilizados para su entrenamiento no han sido publicados.
 
 Por otro lado, la aplicación AsTeRISCS Grid ha sido incluida en esta evaluación debido a su relevancia como herramienta de comunicación utilizada en el ámbito de los Sistemas de Comunicación Aumentativa y Alternativa. Esta aplicación es un comunicador electrónico desarrollada por ARASAAC, que incorpora la función de generar frases conjugadas a partir de las palabras clave introducidas por el usuario. Esta conjugación de las frases se realiza mediante una serie de reglas predefinidas.
 
-Los resultados obtenidos con los tres modelos (Llama3-8B. GPT-4 y AsTeRISCS Grid) se presentan en la tabla \ref{tab:comparacionFinal}.
+La Tabla \ref{tab:comparacionFinal} presenta los resultados de BLEU y COMET obtenidos con los tres modelos (Llama3-8B, GPT-4 y AsTeRISCS Grid).
 
 \begin{table}[!h]
 \caption{Puntuaciones de BLEU y COMET de los distintos modelos utilizados para la comparación}
@@ -1399,7 +1395,7 @@ Los resultados obtenidos con los tres modelos (Llama3-8B. GPT-4 y AsTeRISCS Grid
 	\ & BLEU & COMET \\
 	\hline
 	\hline
-	Llama-3 & 62.90 & 89.15  \\
+	Llama3 & 62.90 & 89.15  \\
 	GPT-4 & 66.36 & 92.51\\
 	AsTeRICS Grid & 26.89 & 78.36 \\
 
@@ -1416,7 +1412,9 @@ Además de las pruebas realizadas con otros modelos, se han realizado también e
 
 A partir de esta información, se les pidió a los participantes que escribieran las frases que consideraban que podrían generarse basándose en los ejemplos proporcionados. Posteriormente, se calcularon las punutaciones de BLEU y COMET para las frases producidas por cada participante, siguiendo el mismo procedimiento utilizado en los experimentos anteriores.
 
-Los resultados obtenidos en estas pruebas se muestran en la Tabla \ref{tab:experimentosPersonas}
+La Figura \ref{fig:comparacionIndividuos} presenta en el eje horizontal los valores de BLEU y en el vertical, los valores de COMET. Los puntos marcados por triángulos representan los resultados obtenidos por los distintos indiviudos, y el punto marcado con un círculo representa los resultados del modelo.
+
+\mycomment{
 \begin{table}[!h]
 \caption{Puntuaciones de BLEU y COMET de las personas a las que se le envió la tarea}
 \begin{center}
@@ -1434,6 +1432,7 @@ Los resultados obtenidos en estas pruebas se muestran en la Tabla \ref{tab:exper
 \end{center}
 \label{tab:experimentosPersonas}
 \end{table}
+}
 
 \begin{figure}[h]
 \includegraphics[scale = 0.8]{images/comparacion_individuos.png}
@@ -1442,9 +1441,11 @@ Los resultados obtenidos en estas pruebas se muestran en la Tabla \ref{tab:exper
 \label{fig:comparacionIndividuos}
 \end{figure}
 
-La media de BLEU entre todos los individuos es xx y la de COMET, xx. Los resultados obtenidos por el modelo final de Llama-3 entrenado con el conjunto de datos en español son BLEU = 62.90 y COMET = 89.15. Comparando estos rsultados con los obtenidos por personas, observamos que, aunque el modelo Llama-3 presenta un rendimiento inferior al promedio de los resultados obtenidos por individuos, supera a dos de ellos en términos de BLEU y a uno en términos de COMET.
+% La media de BLEU entre todos los individuos es xx y la de COMET, xx. 
 
-Esto sugiere que, a pesar de no alcanzar los niveles más altos de rendimiento humano, el modelo logra generar frases que se acercan a los estándares de calidad que se obtendrían si las frases fueran generadas por personas. Este desempeño cercano a los resultados humanos indica que el modelo Llama-3 tiene una capacidad considerable para gnerar frases de manera efectiva y coherente.
+Los resultados obtenidos por el modelo final de Llama3 entrenado con el conjunto de datos en español son BLEU = 62.90 y COMET = 89.15. Comparando estos resultados con los obtenidos por personas, observamos que, aunque el modelo Llama3 presenta un rendimiento inferior al promedio de los resultados obtenidos por individuos, supera a dos de ellos en términos de BLEU y a uno en términos de COMET.
+
+Esto sugiere que, a pesar de no alcanzar los niveles más altos de rendimiento humano, el modelo logra generar frases que se acercan a los estándares de calidad que se obtendrían si las frases fueran generadas por personas. Este desempeño cercano a los resultados humanos indica que el modelo Llama3 tiene una capacidad considerable para gnerar frases de manera efectiva y coherente.
 
 \section{Análisis de errores}
 
@@ -1453,10 +1454,10 @@ En esta sección se realiza un análisis de los errores más comunes observados 
 El análisis se ha realizado comparando las frases generadas del conjunto de validación con las frases reales. Se observa que, de las 50 frases del conjunto, 18 fueron generadas correctamente, es decir, de manera idéntica a las frases reales. Esto significa que el modelo generó un total de 27 frases con algún tipo de error. A continuación se enumeran los errores principales que estas presentan:
 
 \begin{itemize}
-	\item \textbf{Errores en los tiempos verbales}: se han identificado 9 frases en las que el único error se relaciona con la conjugación del tiempo verbal. Estas frases se presentan en la Tabla \ref{tab:erroresTiempoVerbal}. Se observa que son casos en los que, a partir de las palabras clave introducidas, resulta muy difícil determinar el tiempo verbal correcto de la frase. El modelo tiende a conjugar las frases en presente, ya que es el tiempo verbal más común, aunque en algunas ocasiones las frases deberían estar en pasado. Este error también es frecuente en las generaciones de frases realizadas por personas. La ausencia de pistas claras sobre el tiempo verbal en las palabras clave puede llevar a asumir que el tiempo verbal de la frase debe ser presente.
+	\item \textbf{Errores en los tiempos verbales}: se han identificado 9 frases en las que el único error se relaciona con la conjugación del tiempo verbal. En la Tabla \ref{tab:erroresTiempoVerbal} se presentan tres ejemplos de frases con este tipo de error. Se observa que son casos en los que, a partir de las palabras clave introducidas, resulta muy difícil determinar el tiempo verbal correcto de la frase. El modelo tiende a conjugar las frases en presente, ya que es el tiempo verbal más común, aunque en algunas ocasiones las frases deberían estar en pasado o en futuro. Este error también es frecuente en las generaciones de frases realizadas por personas. La ausencia de pistas claras sobre el tiempo verbal en las palabras clave puede llevar a asumir que el tiempo verbal de la frase debe ser presente.
 
 \begin{table}[!h]
-\caption{Frases generadas por Llama-3 con errores en el tiempo verbal}
+\caption{Frases generadas por Llama3 con errores en el tiempo verbal}
 \begin{center}
 \begin{tabular}{ c | c | c }
 	\ Lemmas & Frase generada & Frase real \\
@@ -1475,10 +1476,10 @@ El análisis se ha realizado comparando las frases generadas del conjunto de val
 \label{tab:erroresTiempoVerbal}
 \end{table}
 
-	\item \textbf{Falta de preposición}: en 8 frases, los errores se deben a la falta o confusión de alguna preposición. Estos casos se detallan en la Tabla \ref{tab:erroresPreposicion}.
+	\item \textbf{Falta de preposición}: en 8 frases, los errores se deben a la falta o confusión de alguna preposición. Se detallan ejemplos de este caso en la Tabla \ref{tab:erroresPreposicion}.
 
 \begin{table}[!h]
-\caption{Frases generadas por Llama-3 con errores en preposiciones}
+\caption{Frases generadas por Llama3 con errores en preposiciones}
 \begin{center}
 \begin{tabular}{ c | c | c }
 	\ Lemmas & Frase generada & Frase real \\
@@ -1499,10 +1500,10 @@ El análisis se ha realizado comparando las frases generadas del conjunto de val
 \label{tab:erroresPreposicion}
 \end{table}
 
-	\item \textbf{Confusión en el sujeto}: un total de 4 frases presentan errores solamente en el sujeto. Se presentan en la Tabla \ref{tab:erroresSujeto}. Estos errores incluyen la falta del artículo del sujeto debido a que se interpreta el sustantivo como nombre propio.
+	\item \textbf{Confusión en el sujeto}: un total de 4 frases presentan errores solamente en el sujeto. Los ejemplos de este caso se presentan en la Tabla \ref{tab:erroresSujeto}. Estos errores incluyen la falta del artículo del sujeto debido a que se interpreta el sustantivo como nombre propio.
 
 \begin{table}[!h]
-\caption{Frases generadas por Llama-3 con errores en el sujeto}
+\caption{Frases generadas por Llama3 con errores en el sujeto}
 \begin{center}
 \begin{tabular}{ c | c | c }
 	\ Lemmas & Frase generada & Frase real \\
@@ -1522,13 +1523,13 @@ El análisis se ha realizado comparando las frases generadas del conjunto de val
 \label{tab:erroresSujeto}
 \end{table}
 
-	\item \textbf{Error en el número}: solo se ha identificado un caso en el que el error radica en el número gramatical. En este caso las palabras clave son \" niño, jugar, piscina \". A partir de estas, el modelo generó \" El niño juega en la piscina \" en lugar de  \" Los niños juegan en la piscina \", que era la frase real. Dado que las palabras clave no especificaban el número, es comprensible que el modelo asumiera el singular. Este error también fue cometido por todos los participantes humanos en el experimento.
+	\item \textbf{Error en el número}: solo se ha identificado un caso en el que el error radica en el número gramatical. En este caso las palabras clave son `` niño, jugar, piscina ´´. A partir de estas, el modelo generó `` El niño juega en la piscina ´´ en lugar de  `` Los niños juegan en la piscina ´´, que era la frase real. Dado que las palabras clave no especificaban el número, es comprensible que el modelo asumiera el singular. Este error también fue cometido por todos los participantes humanos en el experimento.
 \end{itemize}
 
-Las 10 frases restantes presentan varios de los errores mencionados u otros problemas sintácticos. Se presentan en la tabla \ref{tab:erroresVariados}.
+Las 10 frases restantes presentan varios de los errores mencionados u otros problemas sintácticos. En la tabla \ref{tab:erroresVariados} se presentan tres ejemplos de frases con distintos errores.
 
 \begin{table}[!h]
-\caption{Frases generadas por Llama-3 con varios errores}
+\caption{Frases generadas por Llama3 con varios errores}
 \begin{center}
 \begin{tabular}{ c | c | c }
 	\ Lemmas & Frase generada & Frase real \\
@@ -1559,13 +1560,13 @@ Las 10 frases restantes presentan varios de los errores mencionados u otros prob
 
 \chapter{Conclusiones} \label{cap6}
 
-En este trabajo se ha explorado la posibilidad de adaptar modelos de lenguaje grandes a tareas dentro del ámbito de los sistemas de comunicación aumentativos y alternativos. Se han entrenado dos modelos, Gemma y Llama-3, utilizando un conjunto de datos en español y en inglés, con el objetivo de generar frases gramaticalmente correctas a partir de una serie de listas de palabras clave o lemas. Estas listas de palabras clave simulan las entradas que los usuarios introducirían a través de la interfaz de un comunicador electrónico.
+En este trabajo se ha explorado la posibilidad de adaptar modelos de lenguaje grandes a tareas dentro del ámbito de los sistemas de comunicación aumentativos y alternativos. Se han entrenado dos modelos, Gemma y Llama3, utilizando un conjunto de datos en español y en inglés, con el objetivo de generar frases gramaticalmente correctas a partir de una serie de listas de palabras clave o lemas. Estas listas de palabras clave simulan las entradas que los usuarios introducirían a través de la interfaz de un comunicador electrónico.
 
-El modelo Llama-3 ha demostrado un rendimiento positivo en este contexto, logrando generar frases bien estructuradas y mostrando resultados muy prometedores y competitivos. Este modelo ha superado a Gemma en términos de precisión y coherencia gramatical. Por su parte, el modelo Gemma ha presentado un rendimiento inferior, lo que sugiere que este modelo tiene una capacidad de adaptación menos efectiva que Llama-3.
+El modelo Llama3 ha demostrado un rendimiento positivo en este contexto, logrando generar frases bien estructuradas y mostrando resultados muy prometedores y competitivos. Este modelo ha superado a Gemma en términos de precisión y coherencia gramatical. Por su parte, el modelo Gemma ha presentado un rendimiento inferior, lo que sugiere que este modelo tiene una capacidad de adaptación menos efectiva que Llama3.
 
-Aunque los resultados obtenidos con Llama-3 han sido satisfactorios, se ha observado que el tamaño del conjunto de datos ha impactado el rendimiento de ambos modelos. A pesar de esta limitación, Llama-3 ha demostrado una notable capacidad para adaptarse y generar resultados de calidad.
+Aunque los resultados obtenidos con Llama3 han sido satisfactorios, se ha observado que el tamaño del conjunto de datos ha impactado el rendimiento de ambos modelos. A pesar de esta limitación, Llama3 ha demostrado una notable capacidad para adaptarse y generar resultados de calidad.
 
-Estos resultados muestran que los modelos de lenguaje grandes tienen un gran potencial en el campo de la comunicación aumentativa y alternativa. La capacidad de adaptación y el rendimiento prometedor de Llama-3 indican que, con conjuntos de datos más extensos y representativos, estos modelos podrían ofrecer soluciones aún más efectivas para mejorar la comunicación de los usuarios con necesidades específicas.
+Estos resultados muestran que los modelos de lenguaje grandes tienen un gran potencial en el campo de la comunicación aumentativa y alternativa. La capacidad de adaptación y el rendimiento prometedor de Llama3 indican que, con conjuntos de datos más extensos y representativos, estos modelos podrían ofrecer soluciones aún más efectivas para mejorar la comunicación de los usuarios con necesidades específicas.
 
 \section{Objetivos cumplidos}
 
@@ -1573,8 +1574,8 @@ A lo largo del desarrollo de este trabajo, se han cumplido satisfactoriamente lo
 
 \begin{enumerate}
 	\item Se ha realizado una investigación sobre diferentes tipos de SAAC y cómo aplicar herramientas de Aprendizaje Automático e Inteligencia Artificial para mejorar su uso.
-	\item Se han adaptado dos modelos de lenguaje grandes de actualidad, Gemma y Llama-3, para la tarea de generación de frases sintácticamente correctas a partir de palabras clave para su uso en comunicadores electrónicos. Tras la realización de los experimentos, se determinó que el modelo Llama-3 ofrece mejores resultados que Gemma. Los resultados obtenidos resultan prometedores.
-	\item Se ha realizado una comparación de los resultados obtenidos con el modelo Llama-3 frente al modelo GPT-4 y el comunicador AsTeRISCS Grid. Aunque el modelo desarrollado en este trabajo no supera el rendimiento de GPT-4, demuestra un rendimiento significativamente superior al de AsTeRISCS Grid, lo que muestra que puede suponer un avance importante en este sector.
+	\item Se han adaptado dos modelos de lenguaje grandes de actualidad, Gemma y Llama3, para la tarea de generación de frases sintácticamente correctas a partir de palabras clave para su uso en comunicadores electrónicos. Tras la realización de los experimentos, se determinó que el modelo Llama3 ofrece mejores resultados que Gemma. Los resultados obtenidos resultan prometedores.
+	\item Se ha realizado una comparación de los resultados obtenidos con el modelo Llama3 frente al modelo GPT-4 y el comunicador AsTeRISCS Grid. Aunque el modelo desarrollado en este trabajo no supera el rendimiento de GPT-4, demuestra un rendimiento significativamente superior al de AsTeRISCS Grid, lo que muestra que puede suponer un avance importante en este sector.
 \end{enumerate}
 
 \section{Propuesta de trabajo futuro}
@@ -1583,7 +1584,7 @@ Aunque los resultados en este trabajo son satisfactorios, se han identificado al
 
 \begin{itemize}
 	\item \textbf{Realización de más repeticiones de experimentos}: resultaría interesante realizar más repeticiones de los experimentos realizados para poder obtener resultados más robustos, ya que las variaciones en el entrenamiento pueden influir significativamente en el rendimiento de los modelos. En este proyecto, las limitaciones de tiempo, recursos computacionales y costos económicos han impedido realizar un número más alto de experimentos.
-	\item \textbf{Obtención de conjuntos de datos más grandes}: la apliación de los conjuntos de datos utilizados podría tener un gran impacto positivo en el rendimiento de los modelos de lenguaje. Los conjuntos de datos de los que se disponían eran relativamente pequeños. Un conjunto más grande y diverso permitiría entrenar a los modelos de manera más completa, mejorando su capacidad de generalización y su habilidad para generar frases precisas y apropiadas al contexto.
+	\item \textbf{Obtención de conjuntos de datos más grandes}: la aplicación de los conjuntos de datos utilizados podría tener un gran impacto positivo en el rendimiento de los modelos de lenguaje. Los conjuntos de datos de los que se disponían eran relativamente pequeños. Un conjunto más grande y diverso permitiría entrenar a los modelos de manera más completa, mejorando su capacidad de generalización y su habilidad para generar frases precisas y apropiadas al contexto.
 \end{itemize}
 
 \section{Legado}
