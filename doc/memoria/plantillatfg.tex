@@ -1022,8 +1022,6 @@ La métrica COMET es más compleja de interpretar en comparación con BLEU. Gene
 
 En este capítulo se presentan los experimentos realizados en este trabajo, los cuales se han llevado a cabo utilizando dos modelos de lenguaje grandes: Gemma y Llama3. Los experimentos se centraron principalmente en la exploración de los parámetros rango y \textit{alpha} de la adaptación mediante LoRA, con el objetivo de encontrar la configuración que proporcionara los mejores resulados posibles para la tarea de generar frases de lenguaje natural a partir de listas de palabras clave, en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. Tras identificar la mejor configuración, se realizó un experimento adicional utilizando todos los datos de entrenamiento disponibles para evaluar la eficacia de los modelos con un conjunto de datos de test que no había sido utilizado en fases anteriores. Los experimentos se realizaron con conjuntos de datos en español y, a continuación, se realizaron también con el conjunto de datos en inglés para estudiar el efecto del lenguaje en los resultados. Todos los experimentos han sido realizados utilizando Google Colab \footnote{Google Colab es una plataforma  en la nube que permite escribir y ejecutar código Python en \textit{notebooks} interactivos, ofreciendo acceso a recursos de procesamiento como GPUs y TPUs.}.
 
-A continuación, se detallan los experimentos realizados y los resultados obtenidos. También se incluyen comparaciones entre los modelos entrenados y otros sistemas externos como GPT-4, el comunicador electrónico AsTeRISCS Grid, y resultados obtenidos por personas en esta misma tarea.
-
 \section{Datos utilizados}
 
 Para la realización de los experimentos, se han utilizado dos conjuntos de datos distintos, ambos extraídos del portal de la Universidad de Vigo. Ambos conjuntos contienen frases extraídas de los recursos del Portal Aragonés de la Comunicación Aumentativa y Alternativa, acompañada de la lista de lemas o palabras clave asociadas a cada frase. Estas palabras clave han sido seleccionadas por un grupo de anotadores expertos lingüistas, y representan las palabras que un usuario introduciría a través de la interfaz de un comunicador electrónico con la intención de generar la frase correspondiente.
@@ -1033,7 +1031,7 @@ El primer conjunto de datos incluye un total de 212 frases, todas ellas en espa�
 \begin{table}[!h]
 \caption{Ejemplos de frases del conjunto de datos en español}
 \begin{center}
-\begin{tabular}{ | c | }
+\begin{tabular}{ | l | }
 \hline
 	\\
 	El policía puso una multa. | policía, poner, un, multa \\
@@ -1055,7 +1053,7 @@ El primer conjunto de datos incluye un total de 212 frases, todas ellas en espa�
 \begin{table}[!h]
 \caption{Ejemplos de frases del conjunto de datos en inglés}
 \begin{center}
-\begin{tabular}{ | c | }
+\begin{tabular}{ | l | }
 \hline
 	\\
 	Su mamá se enfadó.	su, mamá, se, enfadar | His mother got angry.	his, mother, get, angry \\
@@ -1087,7 +1085,7 @@ A partir de estos dos conjuntos, se ha creado un conjunto de datos para los expe
 
 Tal y como se explicó en la Sección \ref{modelosLenguajeGrandes}, para introducir los datos en el modelo de lenguaje es necesario que estos tengan una estructura de \textit{prompt}, que indique al modelo que esperamos una determinada respuesta de él.
 
-Por esta razón, las frases y sus correspondientes palabras clave han sido transformadas a formato \textit{prompt} para crear los conjuntos de datos. Tanto el conjunto de frases en español como el de frases en inglés contienen una sola columna de tipo texto, que siguen el formato que se muestra en la Tabla \ref{tab: formatoPrompt}
+Por esta razón, las frases y sus correspondientes palabras clave han sido transformadas a formato \textit{prompt} para crear los conjuntos de datos. Tanto el conjunto de frases en español como el de frases en inglés contienen una sola columna de tipo texto, que siguen el formato que se muestra en la Tabla \ref{tab: formatoPrompt}. En la Tabla \ref{tab: ejemploPrompt} se muestra un ejemplo de frase en el formato \textit{prompt} definido.
 
 \begin{table}[!h]
 \caption{Formato \textit{prompt} de los datos.}
@@ -1104,8 +1102,6 @@ Por esta razón, las frases y sus correspondientes palabras clave han sido trans
 \end{center}
 \label{tab: formatoPrompt}
 \end{table}
-
-En la Tabla \ref{tab: ejemploPrompt} se muestra un ejemplo de frase en el formato \textit{prompt} definido.
 
 \begin{table}[!h]
 \caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido.}
@@ -1124,7 +1120,7 @@ En la Tabla \ref{tab: ejemploPrompt} se muestra un ejemplo de frase en el format
 \end{table}
 
 
-Esta será la manera en que los datos entren al modelo durante el entrenamiento. Durante la inferencia, se introducirán con el mismo formato pero sin incluir la frase que generan las palabras clave, pues esta debe ser generada por el modelo. En la Tabla  \ref{tab: formatoInferencia} se presenta un ejemplo de este formato.
+El formato que se presenta en la Tabla \ref{tab: formatoPrompt} es la manera en que los datos entran al modelo durante el entrenamiento. Durante la inferencia, se introducirán con el mismo formato pero sin incluir la frase que generan las palabras clave, pues esta debe ser generada por el modelo. En la Tabla \ref{tab: formatoInferencia} se presenta un ejemplo de este formato.
 
 \begin{table}[!h]
 \caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido para la inferencia.}
@@ -1146,16 +1142,16 @@ Esta será la manera en que los datos entren al modelo durante el entrenamiento.
 
 Para evaluar los modelos, se utilizará la técnica de \textit{cross-validation}, que consiste en realizar diferentes particiones de los datos en conjuntos de entrenamiento y validación, entrenando y evaluando de manera independiente cada partición. Por esta razón, los datos se han dividido en un conjunto de entrenamiento y validación para \textit{cross-validation} y un conjunto adicional de test. Este último no se utilizará durante la fase de entrenamiento, sino exclusivamente para la comparación final de resultados entre los modelos. El conjunto de datos de test ha sido seleccionado de manera aleatoria considerando solo las frases que no presentaban valores nulos.
 
-La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los experimentos en español y en inglés:
+La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los experimentos en español y en inglés, tanto para el entrenamiento de los modelos como para su posterior evaluación.
 
 \begin{table}[!h]
-\caption{Número de frases para validación y entrenamiento de los conjuntos de datos en español y en inglés}
+\caption{Número de frases para entrenamiento y test de los conjuntos de datos en español y en inglés}
 \begin{center}
 \begin{tabular}{  c || c  c  }
 	\ & Conjunto en español & Conjunto en inglés \\
 	\hline
-	Entrenamiento-Test & 290 & 220 \\
-	Validación & 50 & 40
+	Datos de entrenamiento & 290 & 220 \\
+	Datos de test & 50 & 40
 \end{tabular}
 \end{center}
 \label{tab:frases}
