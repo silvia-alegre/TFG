@@ -598,7 +598,7 @@ Las tareas sobre las que se aplican son casos de generación condicional, es dec
 
 En la siguiente sección se explica cómo se deben introducir los datos de entrada al modelo mediante \textit{prompting}.
 
-\subsection{\textit{Prompting}}
+\subsection{\textit{Prompting}} \label{prompting}
 
 \textit{Prompting} se refiere al proceso mediante el cual se introduce una secuencia de entrada o \textit{query} al modelo, a partir de la cual debe comenzar la tarea de generación de texto. Existen diversas maneras de crear estas \textit{prompts}. Algunas de las técnicas más utilizadas son las siguientes \footnote{Esta  información se ha obtenido de Prompt Engineering Guide \url{www.promptingguide.ai}}:
 
@@ -1087,29 +1087,60 @@ A partir de estos dos conjuntos, se ha creado un conjunto de datos para los expe
 
 Tal y como se explicó en la Sección \ref{modelosLenguajeGrandes}, para introducir los datos en el modelo de lenguaje es necesario que estos tengan una estructura de \textit{prompt}, que indique al modelo que esperamos una determinada respuesta de él.
 
-Por esta razón, las frases y sus correspondientes palabras clave han sido transformadas a formato \textit{prompt} para crear los conjuntos de datos. Tanto el conjunto de frases en español como el de frases en inglés contienen una sola columna de tipo texto, que siguen el siguiente formato:
+Por esta razón, las frases y sus correspondientes palabras clave han sido transformadas a formato \textit{prompt} para crear los conjuntos de datos. Tanto el conjunto de frases en español como el de frases en inglés contienen una sola columna de tipo texto, que siguen el formato que se muestra en la Tabla \ref{tab: formatoPrompt}
 
-\begin{displayquote}
-Lemmas: [lista de palabras clave]
+\begin{table}[!h]
+\caption{Formato \textit{prompt} de los datos.}
+\begin{center}
+\begin{tabular}{ | l | }
+\hline
+	\\
+	Lemmas: [lista de palabras clave] \\
+	\\
+	Phrase: [frase generada] \\
+	\\
+\hline
+\end{tabular}
+\end{center}
+\label{tab: formatoPrompt}
+\end{table}
 
-Phrase: [frase generada]
-\end{displayquote}
+En la Tabla \ref{tab: ejemploPrompt} se muestra un ejemplo de frase en el formato \textit{prompt} definido.
 
-Por ejemplo:
+\begin{table}[!h]
+\caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido.}
+\begin{center}
+\begin{tabular}{ | l | }
+\hline
+	\\
+	Lemmas: policía, poner, un, multa \\
+	\\
+	Phrase: El policía puso una multa. \\
+	\\
+\hline
+\end{tabular}
+\end{center}
+\label{tab: ejemploPrompt}
+\end{table}
 
-\begin{displayquote}
-Lemmas: policía poner un multa
 
-Phrase: El policía puso una multa.
-\end{displayquote}
+Esta será la manera en que los datos entren al modelo durante el entrenamiento. Durante la inferencia, se introducirán con el mismo formato pero sin incluir la frase que generan las palabras clave, pues esta debe ser generada por el modelo. En la Tabla  \ref{tab: formatoInferencia} se presenta un ejemplo de este formato.
 
-Esta será la manera en que los datos entren al modelo durante el entrenamiento. Durante la inferencia, se introducirán con el mismo formato pero sin incluir la frase que generan las palabras clave, pues esta debe ser generada por el modelo:
-
-\begin{displayquote}
-Lemmas: policía poner un multa
-
-Phrase:
-\end{displayquote}
+\begin{table}[!h]
+\caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido para la inferencia.}
+\begin{center}
+\begin{tabular}{ | l | }
+\hline
+	\\
+	Lemmas: policía, poner, un, multa \\
+	\\
+	Phrase: \\
+	\\
+\hline
+\end{tabular}
+\end{center}
+\label{tab: formatoInferencia}
+\end{table}
 
 \subsection{Partición de los datos en entrenamiento, validación y test}
 
@@ -1130,11 +1161,17 @@ La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los exper
 \label{tab:frases}
 \end{table}
 
-\section{Experimentos realizados con el conjunto en español}
+\section{Modelos de lenguaje utilizados}
 
-Los modelos utilizados para los experimentos de este trabajo son los modelos Gemma-7B y Llama3-8B. Ambos modelos están disponibles para su uso libre en el portal de \textit{Hugging Face} \footnote{\textit{Hugging Face} es una plataforma que ofrece herramientas y modelos de aprendizaje automático, especialmente para el procesamiento de lenguaje natural.}.
+Los modelos utilizados para los experimentos de este trabajo son los modelos Gemma-7B y Llama3-8B. La selección de estos modelos se fundamenta en varios criterios, tanto computacionales como de accesibilidad y confiabilidad. En primer lugar, Gemma-7B y Llama3-8B son modelos actuales desarrollados por empresas grandes y reconocidas en el ámbito tecnológico, lo que garantiza su calidad y fiabilidad. Al ser modelos recientes, están diseñados aprovechando las útimas técnicas en aprendizaje automático, asegurando un rendimiento competitivo.
 
-[JUSTIFICAR ELECCIÓN MODELOS: Justifica la elección de estos modelos por razones computacionales (coste temporal y uso de memoria GPU)]
+Desde el punto de vista computacional y de accesibilidad, estos modelos son adecuados para los recursos disponibles en este trabajo ya que se encuentran disponibles en \textit{Hugging Face} \footnote{\textit{Hugging Face} es una plataforma que ofrece herramientas y modelos de aprendizaje automático, especialmente para el procesamiento de lenguaje natural.} y pueden ser utilizados con las GPUs disponibles en Google Colab. Para facilitar su ejecución en este entorno, se ha relizado un proceso de cuantización, optimizando su uso en condiciones de recursos limitados.
+
+Google Colab proporciona acceso gratuito a la GPU T4 de NVIDIA. Sin embargo, algunos experimentos exigieron recursos más potentes, lo que hizo necesario utilizar una cuenta de pago para acceder a GPUs de mayor capacidad. Las GPUs disponibles con cuenta de pago en Colab son la L4 y A100, ambas de NVIDIA.
+
+Así, para los experimentos con valores de $r < 64$, se ha utilizado la GPU gratuita T4, con tiempos de ejecución de entre 30 minutos y 1 hora. La diferencia en los tiempos de ejecución depende del modelo utilizado y de los parámetros específicos ($\alpha$ y $r$). Estos experimentos pudieron ser paralelizados utilizando múltiples cuentas gratuitas de Colab, permitiendo realizar varios experimentos simultáneamente. En total, se llevaron a cabo 6 experimentos de este tipo con Llama3-8B y 2 con Gemma-7B para cada idioma.
+
+Para los experimentos con $r \ge 64$, fue necesario utilizar las GPUs accesibles mediante cuenta de pago. Con estas GPUs, los tiempos de ejecución se redujeron significativamente, variando entre 10 y 25 minutos. Estos experimentos fueron ejecutados de manera secuencial, realizando 10 experimentos para Llama3-8B y 2 para Gemma-7B para cada idioma.
 
 Para el entrenamiento de los modelos, se ha  aplicado el método de adaptación LoRA, que se describe en detalle en la sección \ref{lora}. Este método requiere la configuración de dos parámetros clave: el rango y el \textit{alpha}. Dado que estos parámetros pueden influir significativamente en el rendimiento del modelo, se han realizado experimentos variando sus valores para identificar la configuración óptima que proporciona mejores resultados.
 
@@ -1142,7 +1179,7 @@ Para garantizar una evaluación robusta y fiable de los modelos, se ha utilizado
 
 Se ha entrenado un modelo independiente para cada una de las 10 particiones. Una vez completado el entrenamiento y realizadas las predicciones de estos 10 modelos, se han combinado las predicciones de todos ellos en un solo conjunto de predicciones para calcular las métricas de rendimiento. Las métricas utilizadas para la evaluación son las métricas BLEU y COMET, ambas descritas en la Sección \ref{metricas}.
 
-\subsection{Primeros experimentos con Gemma y Llama3}
+\section{Experimentos realizados con el conjunto en español}
 
 En los primeros experimentos realizados, se ha comparado el rendimiento de los modelos Gemma-7B y Llama3-8B para evaluar cómo se comportan bajo diferentes configuraciones. El enfoque principal fue explorar el impacto del parámetro de rango en la adaptación LoRA, manteniendo un valor fijo para el parámetro \textit{alpha}.
 
@@ -1259,6 +1296,49 @@ Los resultados obtenidos con esta configuración final han sido los siguientes:
 
 Aunque los valores obtenidos para BLEU y COMET son inferiores a los resultados alcanzados durante la fase de experimentación anterior, estos resultados se encuentran dentro de un rango adecuado de las métricas. La disminución en estas puede deberse a la diferencia entre el conjunto de entrenamiento y el conjunto de validación. De todas maneras, los resultados siguen siendo prometedores y reflejan un buen desempeño del modelo en esta tarea.
 
+\subsection{Comparación con los resultados obtenidos mediante \textit{prompting}}
+
+Se ha realizado un experimento adicional para evaluar el modelo Llama3-8B sin entrenamiento previo, con el objetivo de medir la mejora de este tras ser entrenado con el conjunto de datos de entrenamiento. Para ello, se introdujeron al modelo algunos datos específicos mediante
+ \textit{prompting}, empleando las técnicas descritas en la Sección \ref{prompting} de \textit{zero-shot prompting} y \textit{few-shot prompting}.
+
+\subsubsection{\textit{Zero-shot prompting}}
+
+En el experimento de \textit{zero-shot prompting}, se introdujeron un total de 15 frases utilizando el formato defindo para la inferencia descrito en la Tabla \ref{tab: formatoInferencia}. Los resultados obtenidos de BLEU y COMET fueron 22.05 y 74.88, respectivamente.
+
+Los resultados muestran que el modelo no comprende adecuadamente la tarea en la mayoría de los casos. Se identificaron tres tipos de respuesta:
+
+\begin{enumerate}
+	\item \textbf{Repetición de las palabras clave}: en la m ayoría de casos el modelo se limita a repetir las palabras clave que fueron introducidas, ya sea de manera exactamente igual o con pequeñas modificaciones, como la eliminación de comas, la adición de comillas o el uso de mayúscula en ciertas palabras.
+	\item \textbf{Frases sin sentido o sin relación con las palabras clave}: en otros casos, el modelo genera frases utilizando las palabras clave pero que no tienen sentido, o incluso frases que no guardan relación con las palabras introducidas. Por ejemplo, para las palabras clave ``domingo, de, ramos, ir, ver, borriquita´´ el modelo generó la frase ``Veremos de ir de ramos de la borriquita´´ y para las palabras clave ``cabritilos, ser, feliz´´, generó ``Hace dos años que no veo a mi amigo´´. 
+	\item \textbf{Frases similares a las esperadas}: en algunas ocasiones el modelo sí que genera frases que coinciden con las reales o que son similares a estas. Por ejemplo, para los lemas ``caracol, se, poner, triste´´ generó correctamente la frase ``El caracol se puso triste´´, y para  ``niño, saltar, cama´´ generó ``Un niño salta sobre la cama´´, que, aunque no es idéntica a la frase real ``Los niños saltan en la cama´´, refleja que el modelo comprendió la tarea.
+\end{enumerate}
+
+\subsubsection{\textit{Few-shot prompting}}
+
+Para la técnica de \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de palabras clave con sus correspondientes frases generadas, evaluándose nuevamente sobre 15 frases. Los resultados obtenidos de BLEU y COMET fueron de 27.29 y 83.59, respectivamente.
+
+En este caso, el modelo demostró una mejor comprensión de la tarea, generando resultados que, en la mayoría de casos, se acercan más a los reales en comparación con el  \textit{zero-shot prompting}. Sin embargo, presenta mayor cantidad de errores que el modelo entrenado con datos específicos. Algunos de estos errores incluyen cambios en el orden de las palabras, como en el caso de ``caer, sal, al, mantel´´, donde el modelo generó ``El mantel cae a la sal´´, cuando debería haber generado ``Cayó sal al mantel´´. Otro ejemplo es para las palabras ``domingo, de, ramos, ir, ver, borriquita´´, que generan la frase ``El domingo de ramos vamos a ver la borriquita´´, pero el modelo generó ``EL domingo vamos a ver la borriquita de los ramos´´. También se observaron casos en los que el modelo añadió palabras que no estaban en la lista de palabras clave. Por ejemplo, para las palabras clave ``lobo, querer, comer, lo´´ el modelo generó ``Lo que el lobo quiere comer es un cerdo´´, aunque la palabra ``cerdo´´ no se encontraba en la lista de palabras clave proporcionadas, por lo que no debería aparecer en la frase.
+
+La Tabla \ref{tab:promptingEspañol} resume los resultados obtenidos con las técnicas de \textit{zero-shot prompting} y \textit{few-shot prompting}  y también los resultados del modelo final de Llama3 entrenado mediante LoRA
+
+\begin{table}[!h]
+\caption{BLEU y COMET del modelo Llama3 utilizado mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en español.}
+\begin{center}
+\begin{tabular}{ c | c c }
+	\ & BLEU & COMET \\
+	\hline
+	\hline
+	\textit{Zero-shot prompting} & 22.05 & 74.88  \\
+	\textit{Few-shot prompting} & 27.29 & 83.59 \\
+	Modelo final entrenado con LoRA & 62.90 & 89.15 \\
+
+\end{tabular}
+\end{center}
+\label{tab:promptingEspañol}
+\end{table}
+
+Los resultados demuestran que el entrenamiento realizado al modelo mediante LoRA proporciona una mejora significativa en el rendimiento en comparación con las técnicas de \textit{prompting}. Tanto el \textit{zero-shot prompting} como el \textit{few-shot prompting} muestran limitaciones en la comprensión de la tarea, que son superadas cuando el modelo es entrenado con datos específicos. El modelo entrenado mediante LoRA alcanza resultados mejores en las métricas BLEU y COMET, lo que confirma que el entrenamiento con datos específicos representa una mejora sutancial.
+
 \section{Experimentos adicionales con el conjunto en inglés}
 
 Para evaluar la influencia del idioma en los resultados de los modelos, se han replicado los mismos experimentos realizados con el conjunto de datos en español utilizando el conjunto en inglés. De nuevo, se han utilizado los modelos Gemma-7B y Llama3-8B disponibles en el portal de \textit{Hugging Face}.
@@ -1372,6 +1452,34 @@ De nuevo, se observa que los resultados obtenidos son inferiores a los obtenidos
 
 En general, el rendimiento del modelo en inglés es inferior al del modelo en español. Esto podría deberse a la menor cantidad de datos disponibles en inglés.
 
+\subsection{Comparación con los resultados obtenidos mediante \textit{prompting}}
+
+Al igual que con el modelo en español, se ha llevado a cabo un experimento adicional para evaluar el rendimiento del modelo Llama3-8B en inglés sin entrenamiento previo, con el fin de medir la mejora obtenida tras el entrenamiento. Para ello, se han empleado las técnicas de \textit{zero-shot prompting} y \textit{few-shot prompting}, siguiendo el mismo procedimiento que con los datos en español.
+
+Para la evaluación con \textit{zero-shot prompting}, se introdujeron 15 frases sin proporcionar previamente ejemplos de la tarea a realizar. En este caso, el modelo mostró un rendimiento muy bajo, generando en la mayoría de casos una repetición de las palabras clave o texto sin sentido. Por ejemplo, para las palabras clave ``girl, listen, music´´ el modelo generó ``2nd + 2nd + 2nd´´. Los resultados obtenidos de BLEU y COMET fueron 6.17 y 57.27, respectivamente.
+
+Para la técnica de \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de listas de palabras clave con sus correspondientes frases, evaluándolo nuevamente sobre 15 frases. En este caso el modelo mostró un rendimiento mucho mejor, obteniendo los resultados de 57.18 en BLEU y 90.24 en COMET. Utilizando esta técnica el modelo es capaz de captar cómo debe realizar la tarea.
+
+La Tabla \ref{tab:promptingInglés} muestra los resultados de BLEU y COMET obtenidos con ambas técnicas, así como los resultados del modelo final Llama3 entrenado mediante LoRA con el conjunto de datos de entrenamiento en inglés.
+
+\begin{table}[!h]
+\caption{BLEU y COMET del modelo Llama3 utilizado mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en inglés.}
+\begin{center}
+\begin{tabular}{ c | c c }
+	\ & BLEU & COMET \\
+	\hline
+	\hline
+	\textit{Zero-shot prompting} & 6.17 & 57.27  \\
+	\textit{Few-shot prompting} & 57.18 & 90.24 \\
+	Modelo final entrenado con LoRA & 56.17 & 87.96 \\
+
+\end{tabular}
+\end{center}
+\label{tab:promptingInglés}
+\end{table}
+
+Los resultados indican que, aunque el desempeño de \textit{zero-shot prompting} es muy bajos, la técnica de \textit{few-shot prompting} logra una gran eficacia. De hecho, los resultados obtenidos con esta técnica son superiores a los obtenidos con el modelo entrenado mediante LoRA. Esto podría deberse a una posible limitación en la calidad del conjunto de datos en inglés utilizado para el entrenamiento.
+
 \chapter{Análisis posteriores del modelo en español} \label{cap5}
 
 En este capítulo se presentan una serie de análisis y experimentos adicionales que se han llevado a cabo con el objetivo de evaluar de manera más profunda la eficacia del modelo final en español. Este es el modelo Llama3 con $r = 128$ y $\alpha = r$.
@@ -1445,7 +1553,7 @@ La Figura \ref{fig:comparacionIndividuos} presenta en el eje horizontal los valo
 
 Los resultados obtenidos por el modelo final de Llama3 entrenado con el conjunto de datos en español son BLEU = 62.90 y COMET = 89.15. Comparando estos resultados con los obtenidos por personas, observamos que, aunque el modelo Llama3 presenta un rendimiento inferior al promedio de los resultados obtenidos por individuos, supera a dos de ellos en términos de BLEU y a uno en términos de COMET.
 
-Esto sugiere que, a pesar de no alcanzar los niveles más altos de rendimiento humano, el modelo logra generar frases que se acercan a los estándares de calidad que se obtendrían si las frases fueran generadas por personas. Este desempeño cercano a los resultados humanos indica que el modelo Llama3 tiene una capacidad considerable para gnerar frases de manera efectiva y coherente.
+Esto sugiere que, a pesar de no alcanzar los niveles más altos de rendimiento humano, el modelo logra generar frases que se acercan a los estándares de calidad que se obtendrían si las frases fueran generadas por personas. Este desempeño cercano a los resultados humanos indica que el modelo Llama3 tiene una capacidad considerable para generar frases de manera efectiva y coherente.
 
 \section{Análisis de errores}
 
