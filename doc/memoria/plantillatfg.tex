@@ -102,7 +102,7 @@ Augmentative and Alternative Communication (AAC) systems are vital tools for fac
 
 \chapter{Introducción} \label{cap1}
 
-En este trabajo se explora cómo los modelos de lenguaje grandes (LLMs) pueden ser aplicados en el campo de los Sistemas Aumentativos y Alternativos de Comunicación (SAAC) para la generación de frases de lenguaje natural a partir de palabras clave para su uso en comunicadores electrónicos. Para ello, se entrenarán y evaluarán algunos de los LLMs más destacados en la actualidad.
+En este trabajo se explora cómo los modelos de lenguaje grandes (LLM) pueden ser aplicados en el campo de los Sistemas Aumentativos y Alternativos de Comunicación (SAAC) para la generación de frases de lenguaje natural a partir de palabras clave para su uso en comunicadores electrónicos. Para ello, se entrenarán y evaluarán algunos de los LLM más destacados en la actualidad.
 
 En este primer capítulo se presenta la motivación que impulsa el estudio y los objetivos principales del trabajo, así como una visión general de la estructura que sigue el documento.
 
@@ -127,14 +127,14 @@ En este trabajo nos centraremos en los comunicadores electrónicos. Los comunica
 
 Aunque los comunicadores electrónicos son herramientas verdaderamente útiles para mejorar la comunicación de las personas, presentan ciertas limitaciones. Una de las principales es la dificultad para formar frases complejas y gramaticalmente correctas, ya que, para facilitar y simplificar su uso, estos sistemas suelen incluir solamente palabras clave en su forma básica, sin distinguir número, género o tiempo verbal, cosa que restringe en gran medida la fluidez y expresividad de la comunicación.
 
-Algunos de los comunicadores que existen actualmente en el mercado ya emplean diferentes métodos para abordar este problema, pero existe todavía un amplio margen de mejora. Las recientes innoviaciones en el campo de la inteligencia artificial y el procesamiento de lenguaje natural ofrecen nuevas oportunidades para superar estas limitaciones. En particular, los modelos de lenguaje grandes (LLMs) tienen un gran potencial para transformar el uso de estos sistemas, pudiendo proporcionar una generación de texto mucho más natural.
+Algunos de los comunicadores que existen actualmente en el mercado ya emplean diferentes métodos para abordar este problema, pero existe todavía un amplio margen de mejora. Las recientes innovaciones en el campo de la inteligencia artificial y el procesamiento de lenguaje natural ofrecen nuevas oportunidades para superar estas limitaciones. En particular, los modelos de lenguaje grandes tienen un gran potencial para transformar el uso de estos sistemas, pudiendo proporcionar una generación de texto mucho más natural.
 
 \section{Objetivos}
 
 Los objetivos principales de este proyecto son los siguientes:
 
 \begin{enumerate}
-	\item Investigar sobre los distintos tipos de Sistemas de Comunicación Aumentativa y Alternativa (SAAC) disponibles, explorando cómo las herramientas de aprendizaje automático e inteligencia artificial podrian optimizar su uso.
+	\item Investigar sobre los distintos tipos de Sistemas de Comunicación Aumentativa y Alternativa (SAAC) disponibles, explorando cómo las herramientas de aprendizaje automático e inteligencia artificial podrían optimizar su uso.
 	\item Adaptar y evaluar modelos de lenguaje grandes actuales y de acceso público para su implementación  en la generación de frases dentro de herramientas SAAC.
 	\item Realizar una comparación de los resultados obtenidos utilizando LLMs respecto a otros comunicadores SAAC que permiten la generación de frases y que se encuentran actualmente en el mercado.
 \end{enumerate}
@@ -153,11 +153,11 @@ Este documento está dividido en 6 capítulos. El Capítulo \ref{cap1} proporcio
 
 \chapter{Fundamentos}\label{cap2}
 
-En este capítulo se abordan los conceptos fundamentales necesarios para comprender el funcionamiento de los modelos de lenguaje grandes. En primer lugar, se presenta una visión general del aprendizaje automático, seguido de una explicación detallada sobre las redes neuronales, con un efoque particular en su aplicación en el procesamiento de texto. A continuación, se explora la arquitectura de los transformers y se presentan los modelos de lenguaje grandes, explicando detalladamente su funcionamiento.
+En este capítulo se abordan los conceptos fundamentales necesarios para comprender el funcionamiento de los modelos de lenguaje grandes. En primer lugar, se presenta una visión general del aprendizaje automático, seguido de una explicación detallada sobre las redes neuronales, con un enfoque particular en su aplicación en el procesamiento de texto. A continuación, se explora la arquitectura de los transformers y se presentan los modelos de lenguaje grandes, explicando detalladamente su funcionamiento.
 
 \section{Aprendizaje automático}
 
-El aprendizaje automático (ML, por su nombre en inglés, \textit{machine learning}) es una disciplina dentro de la inteligencia artificial que se centra en el desarrollo y estudio de algoritmos y modelos que permiten que los sistemas puedan relizar tareas específicas sin haber sido explícitamente programados para ello. Este término fue acuñado por Arthur Samuel en el año 1959, quien creo uno de los primeros programas exitosos en esta área, conocido como \textit{the Samuel Ckeckers-playing Program} \cite{samuelCheckers} (el programa de juego de damas de Samuel).
+El aprendizaje automático (ML, por su nombre en inglés, \textit{machine learning}) es una disciplina dentro de la inteligencia artificial que se centra en el desarrollo y estudio de algoritmos y modelos que permiten que los sistemas puedan realizar tareas específicas sin haber sido explícitamente programados para ello. Este término fue acuñado por Arthur Samuel en el año 1959, quien creo uno de los primeros programas exitosos en esta área, conocido como \textit{the Samuel Ckeckers-playing Program} \cite{samuelCheckers} (el programa de juego de damas de Samuel).
 
 Tom Mitchell \cite{mitchell1997mcgraw} define el proceso de aprendizaje de los programas en el campo del \textit{machine learning} de la siguiente manera:
 
@@ -165,14 +165,14 @@ Tom Mitchell \cite{mitchell1997mcgraw} define el proceso de aprendizaje de los p
 \textit{"Se dice que un programa aprende de la experiencia $E$ con respecto a alguna clase de tarea $T$, y medida de rendimiento $P$, si su rendimiento en la tarea $T$, medido por $P$, mejora con la experiencia $E$."}
 \end{displayquote}
 
-Aunque la idea principal del aprendizaje automático es esta, econtramos diferentes enfoques dependiendo del tipo de tarea que se quiera llevar a cabo, de la naturaleza de esta, de la medida del rendimiento que se utiliza para evaluar el programa y del tipo de entrenamiento o experiencia que le proporcionamos a este.
+Aunque la idea principal del aprendizaje automático es esta, encontramos diferentes enfoques dependiendo del tipo de tarea que se quiera llevar a cabo, de la naturaleza de esta, de la medida del rendimiento que se utiliza para evaluar el programa y del tipo de entrenamiento o experiencia que le proporcionamos a este.
 
 Generalmente, los enfoques para el entrenamiento de algoritmos se agrupan en:
 
 \begin{itemize}
 	\item \textbf{Aprendizaje supervisado}, cuyo objetivo es, a partir de unos datos de entrenamiento, encontrar la función $f$ que realice el mejor mapeo posible entre un conjunto de entradas $X$ y sus salidas correspondientes $Y$, de manera que $(X, Y) = (X, f(X))$. Para ello, se utilizan datos etiquetados, es decir, datos que incluyen tanto las entradas como las salidas correctas asociadas.
 	\item \textbf{Aprendizaje no supervisado}, que trata de modelar la estructura subyacente de un conjunto de datos para identificar relaciones y patrones, permitiendo así un entendimiento más profundo de estos. En este enfoque se utilizan datos no etiquetados.
-	\item \textbf{Aprendizaje semi-supervisado},combina elementos del aprendizaje supervisado y el no supervisado, utilizando tanto datos etiquetados como no etiquetados. Este enfoque permite aprovechar la información disponible en grandes volúmenes de datos no etiquetados, utilizando una cantidad menor de datos etiquetados para guiar el proceso de aprendizaje.
+	\item \textbf{Aprendizaje semisupervisado}, combina elementos del aprendizaje supervisado y el no supervisado, utilizando tanto datos etiquetados como no etiquetados. Este enfoque permite aprovechar la información disponible en grandes volúmenes de datos no etiquetados, utilizando una cantidad menor de datos etiquetados para guiar el proceso de aprendizaje.
 	\item \textbf{Aprendizaje por refuerzo}, donde el algoritmo aprende a través de retroalimentaciones que va recibiendo, ajustando sus acciones con el objetivo de maximizar una recompensa acumulada a lo largo del tiempo \cite{mirtaheri2022machine}.
 
 \end{itemize}
@@ -185,9 +185,9 @@ Otro concepto importante dentro del aprendizaje automático es el aprendizaje pr
 
 Las redes neuronales son un tipo de modelo que se inspira en la estructura y funcionamiento del cerebro humano para procesar información. El primer modelo de red neuronal artificial fue desarrollado en 1943 por Warren McCulloch y Walter Pitts, y se conoce como \textit{McCulloch-Pitts neuron} \cite{mcculloch1943logical}. Este modelo simplificado imitaba el comportamiento de una neurona natural y marcó el inicio de la investigación en redes neuronales. Aunque las redes neuronales modernas se basan en estas ideas iniciales, han evolucionado significativamente y ya no siguen de manera directa las inspiraciones biológicas originales.
 
-Las redes neuronales modernas están compuestas por pequeñas unidades de cómputo conocidas como neuronas o nodos, conectadas entre si a través de enlaces para permitir la transmisión de señales entre estas. Los nodos están organizados en capas, de manera que un nodo en una capa está conectado a todos los nodos de la capa siguiente. Existen tres tipos de capa: capa de entrada (\textit{input layer}), capas ocultas (\textit{hidden layers}) y capa de salida (\textit{output layer}). 
+Las redes neuronales modernas están compuestas por pequeñas unidades de cómputo conocidas como neuronas o nodos, conectadas entre sí a través de enlaces para permitir la transmisión de señales entre estas. Los nodos están organizados en capas, de manera que un nodo en una capa está conectado a todos los nodos de la capa siguiente. Existen tres tipos de capa: capa de entrada (\textit{input layer}), capas ocultas (\textit{hidden layers}) y capa de salida (\textit{output layer}). 
 
-La arquitectura más simple de red neuronal es la de perceptrón \cite{RevModPhys.34.123}. Este tipo de modelo surgió como método para la resolución de tareas de clasificación binaria, en las que se debe decidir si una determinada entrada pertenece o no a una clase. Posteriormente se amplió para abarcar también tareas de clasificación multiclase. Es un tipo de clasificador lineal, por lo que hace sus predicciones basándose en funciones de predicción lineales. Este tipo de arquitectura ha servido como base para arquitecturas de redes neuronales mucho más complejas.
+La arquitectura más simple de red neuronal es la de perceptrón \cite{RevModPhys.34.123}. Este tipo de modelo surgió como método para la resolución de tareas de clasificación binaria, en las que se debe decidir si una determinada entrada pertenece o no a una clase. Posteriormente, se amplió para abarcar también tareas de clasificación multiclase. Es un tipo de clasificador lineal, por lo que hace sus predicciones basándose en funciones de predicción lineales. Este tipo de arquitectura ha servido como base para arquitecturas de redes neuronales mucho más complejas.
 
 \begin{figure}[h]
 	\centering
@@ -217,9 +217,7 @@ La arquitectura más simple de red neuronal es la de perceptrón \cite{RevModPhy
 \end{figure}
 
 
-Tal y como se observa en la Figura \ref{fig:perceptronSimple}, la arquitectura de perceptrón simple está formada por una única neurona, que toma un vector $x$ como entrada. La neurona calcula la combinación lineal de los elementos del vector $x_1, x_2, ..., x_n$ con los pesos correspondientes $w_1, w_2, ..., w_n$, añadiendo al resultado un valor conocido como umbral o \textit{bias term} $b$. El umbral es una constante que se incorpora para desplazar la función de activación hacia la izquierada o derecha, lo cual puede ser fundamental para el éxito del aprendizaje. Así, la salida producida por la neurona se calcula como:
-
-:
+Tal y como se observa en la Figura \ref{fig:perceptronSimple}, la arquitectura de perceptrón simple está formada por una única neurona, que toma un vector $x$ como entrada. La neurona calcula la combinación lineal de los elementos del vector $x_1, x_2, ..., x_n$ con los pesos correspondientes $w_1, w_2, ..., w_n$, añadiendo al resultado un valor conocido como umbral o \textit{bias term} $b$. El umbral es una constante que se incorpora para desplazar la función de activación hacia la izquierda o derecha, lo cual puede ser fundamental para el éxito del aprendizaje. Así, la salida producida por la neurona se calcula como:
 
  \begin{equation}
 \label{form:calcularZ}
@@ -324,7 +322,7 @@ El modelo de perceptrón multicapa es una evolución del modelo de perceptrón s
 Cada una de las neuronas de una capa está conectada a todas las neuronas de la capa siguiente, y cada uno de los enlaces tiene asociado un peso $w$. De manera similar al modelo de perceptrón simple, los datos se introducen en el modelo en forma de vector a través de la capa de entrada. El ajuste de pesos en el entrenamiento del modelo de perceptrón multicapa se realiza mediante el algoritmo de retropropagación (en inglés, \textit{backpropagation algorithm}) \cite{Rojas1996}. El algoritmo de retropropagación consta de cuatro fases:
 
 \begin{enumerate}
-	\item \textbf{Computación hacia adelante (\textit{feed-forward})}: se realiza una pasada hacia adelante a través de la red, desde la capa de entrada hasta la capa de salida. En esta fase, se calculan las salidas de las neuronas utilizando la Ecuación \ref{form:calcularZ} y aplicando sobre este resultado una función de activación no lineal. Algunas de las funciones de activación no lineales más utilizadas son la función sigmoide, la tangente hiperbólica (\textit{tanh}) o la rectificada lineal (\textit{ReLU}). El uso de este tipo de funciones permite que el modelo pueda aplicarse a problemas no lineales. Al llegar a a la capa de salida, se calcula la predicción final del modelo.
+	\item \textbf{Computación hacia adelante (\textit{feed-forward})}: se realiza una pasada hacia adelante a través de la red, desde la capa de entrada hasta la capa de salida. En esta fase, se calculan las salidas de las neuronas utilizando la Ecuación \ref{form:calcularZ} y aplicando sobre este resultado una función de activación no lineal. Algunas de las funciones de activación no lineales más utilizadas son la función sigmoide, la tangente hiperbólica (\textit{tanh}) o la rectificada lineal (\textit{ReLU}). El uso de este tipo de funciones permite que el modelo pueda aplicarse a problemas no lineales. Al llegar a la capa de salida, se calcula la predicción final del modelo.
 	\item \textbf{Retropropagación en la capa de salida}: a continuación, se calcula el error en la capa de salida comparando las predicciones del modelo con los valores reales. Posteriormente, se calculan los gradientes del error respecto a los pesos de esta capa.
 	\item \textbf{Retropropagación en las capas ocultas}: utilizando los gradientes obtenidos en la capa de salida, el error se propaga hacia atrás a través de las capas ocultas, ajustando los gradientes del error respecto a los pesos en cada una de estas.
 	\item \textbf{Actualización de los pesos}: finalmente, se actualizan los pesos de la red utilizando los gradientes calculados en las fases anteriores mediante el método de descenso de gradiente u otro algoritmo de optimización similar.
@@ -346,12 +344,12 @@ El procesamiento de secuencias de texto utilizando redes neuronales es una técn
 
 De esta manera, se consigue una representación en forma de vectores numéricos de las secuencias de texto, de manera que estas puedan ser procesadas por la red neuronal.
 
-En la siguiente sección se presentan las redes neuronales recurrentes (RNNs), un tipo de red neuronal que es ampliamente utlizado para el procesamiento de secuencias de texto, y los modelos \textit{encoder-decoder}.
+En la siguiente sección se presentan las redes neuronales recurrentes (RNN), un tipo de red neuronal que es ampliamente utilizado para el procesamiento de secuencias de texto, y los modelos \textit{encoder-decoder}.
 
 \subsubsection{Redes neuronales recurrentes (RNN)} \label{rnn}
-Las redes neuronales recurrentes (RNN, por sus siglas en inglés \textit{recurrent neural networks}) son un tipo de red neuronal diseñadas para procesar secuencias de texto teniendo en cuenta la información aprendida en etapas anteriores. Esto se consigue mediante el mantenimiento de una variable de estado oculto $h_t$, que permite que la predicción$y_t$ depende tanto de la de entrada actual $x_t$ como del estado oculto \cite{murphy2022probabilistic}. El estado oculto $h_t$ es una representación interna de la red en el momento de tiempo $t$, que captura información relevante que ha sido procesada anteriormente y se actualiza a medida que se procesan nuevas entradas.
+Las redes neuronales recurrentes (RNN, por sus siglas en inglés \textit{recurrent neural networks}) son un tipo de red neuronal diseñadas para procesar secuencias de texto teniendo en cuenta la información aprendida en etapas anteriores. Esto se consigue mediante el mantenimiento de una variable de estado oculto $h_t$, que permite que la predicción $y_t$ depende tanto de la de entrada actual $x_t$ como del estado oculto \cite{murphy2022probabilistic}. El estado oculto $h_t$ es una representación interna de la red en el momento de tiempo $t$, que captura información relevante que ha sido procesada anteriormente y se actualiza a medida que se procesan nuevas entradas.
 
-Las RNNs son útiles para tareas como generación de texto, clasificación y traducción de secuencias, ya que pueden capturar dependencias a lo largo del tiempo dentro de los datos secuenciales.
+Las RNN son útiles para tareas como generación de texto, clasificación y traducción de secuencias, ya que pueden capturar dependencias a lo largo del tiempo dentro de los datos secuenciales.
 
 El proceso que siguen este tipo de redes es el siguiente. En primer lugar, se inicializa la red con un estado oculto $h_0$, que puede ser un vector de ceros o una inicialización aprendida. Para cada elemento en la secuencia de entrada, la red actualiza su estado oculto y produce una salida. Así, en el momento de tiempo t, la entrada $x_t$ y el estado oculto previo $h_{t-1}$ se combinan para generar el nuevo estado oculto $h_t$. Este se calcula utilizando la fórmula:
 
@@ -369,10 +367,7 @@ donde $W_y$ es una matriz de pesos, $\phi$ es la función de activación y $b_y$
 
 El proceso se repite para cada elemento de la secuencia de entrada, propagando así la información relevante anterior a través de los estados ocultos.
 
-Uno de los principales problemas de las RNN es la dificultad para recordar información a largo plazo, pues se ha comprobado que, si el modelo es entrenado con secuencias de entrada largas, la importancia de las primeras palabras que son procesadas tiende a ir perdiendose a medida que se procesa el resto de la secuencia. Esto limita la capacidad de este tipo de redes para capturar dependencias a largo plazo en secuencias largas.
-
-%\subsubsection{Redes neuronales convolucionales (CNN)}
-%El funcionamiento de las redes neuronales convolucionales (\textit{convolutional neural networks (CNN)} se basa en el calculo de una función de un vecindario local para cada una de las entradas utilizando pesos compartidos. Son una buena alternativa a las redes neuronales recurrentes, pues son sustancialmente más sencillas de entrenar, ya que no necesitan mantener el estado oculto a largo plazo. Se pueden utilizar en tareas de clasificación y de generación de texto.
+Uno de los principales problemas de las RNN es la dificultad para recordar información a largo plazo, pues se ha comprobado que, si el modelo es entrenado con secuencias de entrada largas, la importancia de las primeras palabras que son procesadas tiende a ir perdiéndose a medida que se procesa el resto de la secuencia. Esto limita la capacidad de este tipo de redes para capturar dependencias a largo plazo en secuencias largas.
 
 \subsection{Modelos \textit{encoder-decoder}} \label{encdec}
 
@@ -535,7 +530,7 @@ A(Q, K, V) = softmax(\frac{QK^t}{\sqrt{d_k}})
 
 donde $d_k$ es la dimensión del estado oculto de la fuente.
 
-Como vemos, el cambio respecto al cálculo de atención descrito en la Sección \ref{atencion} reside en que en este caso se añade el factor $\frac{1}{\sqrt{d_k}}$, que se utiliza para escalar el resultado obtenido, y conseguir así que las gradientes sean más estables, ya que si la secuencia de entrada fuera muy larga, la función \textit{softmax} puede devolver gradientes extremadamente pequeños, cosa que podria dificultar al modelo realizar un aprendizaje eficiente \cite{multiheaddotproduct}.
+Como vemos, el cambio respecto al cálculo de atención descrito en la Sección \ref{atencion} reside en que en este caso se añade el factor $\frac{1}{\sqrt{d_k}}$, que se utiliza para escalar el resultado obtenido, y conseguir así que las gradientes sean más estables, ya que si la secuencia de entrada fuera muy larga, la función \textit{softmax} puede devolver gradientes extremadamente pequeños, cosa que podría dificultar al modelo realizar un aprendizaje eficiente \cite{multiheaddotproduct}.
 
 De todas maneras, los transformers no se quedan solamente en este concepto, sino que van un paso más allá y utilizan un tipo de atención algo más complejo conocido como \textit{multi-head attention}. Este proceso consiste en calcular distintas atenciones sobre las mismas \textit{queries} y pares clave-valor. Se utiliza este tipo de atención ya que las distintas palabras dentro de la secuencia de texto pueden estar relacionadas entre sí de muchas maneras distintas de manera simultánea. Capturar todas estas relaciones entre palabras es muy complicado si se utiliza un solo valor de atención.
 
@@ -545,7 +540,7 @@ Así, en las capas de \textit{multi-head attention} encontramos distintas capas 
 H_i = A(QW_i^Q, KW_i^K, VW_i^V)
 \end{equation}
 
-Donde $W_i^Q$, $W_i^K$ y $W_i^V$ son las matrices de parámtetros asociadas a las \textit{queries}, claves y valores, respectivamente, de la cabeza $i$. El valor de \textit{multi-head attention} se obtiene mediante la concatenación de los resultados de las cabezas. Para un total de $h$ cabezas de atención:
+donde $W_i^Q$, $W_i^K$ y $W_i^V$ son las matrices de parámetros asociadas a las \textit{queries}, claves y valores, respectivamente, de la cabeza $i$. El valor de \textit{multi-head attention} se obtiene mediante la concatenación de los resultados de las cabezas. Para un total de $h$ cabezas de atención:
 
 \begin{equation}
 MultiHead(Q, K, V) = (H_1 \oplus H_2 \oplus ... \oplus H_h)W_O
@@ -559,7 +554,7 @@ Las capas \textit{feed-forward} en la arquitectura de transformers están compue
 
 Así, una red neuronal de tipo \textit{feed forward} es una red multicapa en la que las conexiones entre neuronas no pueden formar ciclos. Esto implica que las señales siempre se propagan en una única dirección: desde la capa de entrada, a través de las capas ocultas, hacia la capa de salida. En la arquitectura de transformers, estas redes están completamente conectadas, lo que significa que las neuronas de una capa reciben las salidas de todas las neuronas de la capa anterior y envían sus salidas a todas las neuronas de la capa siguiente. Además, típicamente contienen solamente una capa oculta.
 
-En los transformers, estas capas complementan las salidas de la capa de atención. Mientras que la capa de atención procesa cada palabra de la secuencia relacionandola con las demás palabras, las capas \textit{feed forward} procesan cada palabra de manera independiente. Este procesamiento independiente es crucial para mejorar la representación de las características extraídas de la capa de atención.
+En los transformers, estas capas complementan las salidas de la capa de atención. Mientras que la capa de atención procesa cada palabra de la secuencia relacionándola con las demás palabras, las capas \textit{feed forward} procesan cada palabra de manera independiente. Este procesamiento independiente es crucial para mejorar la representación de las características extraídas de la capa de atención.
 
 \subsection{Capas de normalización}
 
@@ -587,11 +582,6 @@ Finalmente, se introducen parámetros de \textit{bias} $b$ y \textit{gain} $g$:
 z = g\hat{x} + b
 \end{equation}
 
-%\section{Procesamiento del lenguaje natural} \label{nlp}
-
-%El procesamiento de lenguaje natural (NLP, por su nombre en inglés \textit{Natural Language Processing}) es una rama de la inteligencia artificial que se ocupa del desarrollo de algoritmos y modelos para la realización de tareas relacionadas con el lenguaje humano. Más específicamente, involucra tareas como el modelado de lenguaje, clasificación de textos, recuperación y extracción de información, resumen de textos o traducción automática entre otras. \cite{alma997066713303706} 
-
-
 \section{Modelos de lenguaje grandes} \label{modelosLenguajeGrandes}
 
 Los modelos de lenguaje grandes (LLM por su nombre en inglés, \textit{large language models}) representan una de las innovaciones más significativas en el campo del procesamiento de lenguaje natural. Estos modelos están basados en redes neuronales profundas, y generalmente utilizan la arquitectura de transformers. Estos modelos cuentan con miles de millones de parámetros, y pueden ser entrenados con enormes cantidades de texto, lo que hace que sean capaces de procesar y generar lenguaje humano con una gran fluidez, naturalidad y corrección.
@@ -606,7 +596,7 @@ En la siguiente sección se explica cómo se deben introducir los datos de entra
 
 \begin{itemize}
 	\item \textbf{\textit{Zero-shot prompting}}: consiste en presentar al modelo la tarea que se desea realizar sin proporcionar ejemplos previos sobre los que pueda basarse. Los modelos de lenguaje grandes han demostrado funcionar bien con este tipo de \textit{prompting} en tareas simples, aunque pueden tener dificultades en tareas más complejas. En estos casos, puede ser recomendable utilizar \textit{few-shot prompting} en su lugar.
-	\item \textbf{\textit{Few-shot prompting}}: en este caso, se en proporciona al modelo un número limitado de ejemplos que muestran cómo realizar la tarea. Esta técnica suele ser bastante efectiva,  pero puede fallar en tareas que requieran un razonamiento complejo.
+	\item \textbf{\textit{Few-shot prompting}}: en este caso, se proporciona al modelo un número limitado de ejemplos que muestran cómo realizar la tarea. Esta técnica suele ser bastante efectiva,  pero puede fallar en tareas que requieran un razonamiento complejo.
 	\item \textbf{\textit{Chain-of-thought} (CoT)} \cite{wei2023chainofthoughtpromptingelicitsreasoning}: esta técnica permite realizar un razonamiento más complejo añadiendo pasos intermedios en la \textit{prompt} que muestren el proceso de pensamiento necesario para resolver el problema. Puede combinarse con \textit{few-shot promting} para tener mejor rendimiento en tareas complejas.
 	\item \textbf{\textit{Self-consistency}} \cite{wang2023selfconsistencyimproveschainthought}: consiste en generar diferentes caminos de razonamiento utilizando \textit{few-shot CoT}, y luego seleccionar la respuesta más coherente entre ellos. En esta técnica, el modelo crea varias respuestas posibles y elige la que mejor resuelve el problema.
 	\item \textbf{\textit{Tree of thought} (ToT)}:  es una generalización de \textit{CoT prompting} que se basa en la idea de construir un "árbol de pensamientos". Cada pensamiento de este árbol representa un paso intermedio hacia la solución del problema. El modelo evalúa continuamente el progreso a través de estos pasos intermedios y utiliza algoritmos de búsqueda para explorar los diferentes caminos hacia la solución.
@@ -622,13 +612,13 @@ Para ilustrar este proceso, supongamos que se le introduce al modelo la siguient
 \centerline{"Pregunta: ¿Cuál es la capital de Francia? Respuesta: "}
 \end{displayquote}
 
-A partir de esta, el modelo deberá calcular la probabilidad para cada palabra $w$ dentro de su vocabulario de que esta sea la palabra que continua la \textit{prompt}:
+A partir de esta, el modelo deberá calcular la probabilidad para cada palabra $w$ dentro de su vocabulario de que esta sea la palabra que continúa la \textit{prompt}:
 
 \begin{displayquote}
 \centerline{$P(w|\text{Pregunta: ¿Cuál es la capital de Francia? Respuesta: })$}
 \end{displayquote}
 
-Los vocabularios en los LLMs se refieren al conjunto de palabras sobre las que trabajan. Así, habiendo calculado las probabilidades para todas las posibles palabras, encontraremos algunas con probabilidades más altas, entre las cuales debería encontrarse la palabra \textit{París}, que es la respuesta a la pregunta. El modelo deberia seleccionar esta palabra y, si se quiere generar una respuesta más larga, se calcula la siguiente probabilidad:
+Los vocabularios en los LLMs se refieren al conjunto de palabras sobre las que trabajan. Así, habiendo calculado las probabilidades para todas las posibles palabras, encontraremos algunas con probabilidades más altas, entre las cuales debería encontrarse la palabra \textit{París}, que es la respuesta a la pregunta. El modelo debería seleccionar esta palabra y, si se quiere generar una respuesta más larga, se calcula la siguiente probabilidad:
 
 \begin{displayquote}
 \centerline{$P(w|\text{Pregunta: ¿Cuál es la capital de Francia? Respuesta: París})$}
@@ -636,7 +626,7 @@ Los vocabularios en los LLMs se refieren al conjunto de palabras sobre las que t
 
 El proceso puede seguir hasta que lleguemos al número de palabras deseadas.
 
-Inicialmente, este cálculo de probabilidades se realizaba de manera secuencial, basando las predicciones en las distribuciones de probabilidad de las palabras dentro de un texto. Actualmente se utiliza la arquitectura de transformers, que permite procesar grandes cantidades de texto de manera eficiente y proporciona predicciones mucho más acertadas, pues tiene en cuenta el contexto en el que se encuentran las palabras y las relaciones entre estas \cite{burtsev2023working}.
+Inicialmente, este cálculo de probabilidades se realizaba de manera secuencial, basando las predicciones en las distribuciones de probabilidad de las palabras dentro de un texto. Actualmente, se utiliza la arquitectura de transformers, que permite procesar grandes cantidades de texto de manera eficiente y proporciona predicciones mucho más acertadas, pues tiene en cuenta el contexto en el que se encuentran las palabras y las relaciones entre estas \cite{burtsev2023working}.
 
 Existen distintos enfoques para la selección de cuál es la palabra que sigue en la secuencia. Uno de los métodos más simples es utilizar el algoritmo de \textit{greedy decoding} \cite{gu2017trainablegreedydecodingneural}. El algoritmo \textit{greedy decoding} consiste en elegir la palabra $d$ con la probabilidad condicional más alta hasta el momento en cada instante.
 
@@ -646,7 +636,7 @@ Existen distintos enfoques para la selección de cuál es la palabra que sigue e
 
 Con el tiempo se ha descubierto que este método llega a resultados subóptimos, pues al elegir siempre la palabra que es más probable que ocurra, tiende a generar textos excesivamente genéricos y repetitivos.
 
-Existe una extension de este algoritmo conocida como \textit{beam search}, la cual ha demostrado ser más efectiva, sobretodo en tareas de traducción automática. La diferencia entre el algoritmo \textit{greedy decoding} y este, es que el \textit{beam search}, en lugar de quedarse solamente con la palabra con mayor probabilidad y crear una única respuesta, el algoritmo guarda $K > 1$ posibles respuestas (hipótesis) durante la decodificación. Así, en cada iteración, el algoritmo elige las K hipótesis con mayor \textit{score}:
+Existe una extensión de este algoritmo conocida como \textit{beam search}, la cual ha demostrado ser más efectiva, sobre todo en tareas de traducción automática. La diferencia entre el algoritmo \textit{greedy decoding} y este, es que el \textit{beam search}, en lugar de quedarse solamente con la palabra con mayor probabilidad y crear una única respuesta, el algoritmo guarda $K > 1$ posibles respuestas (hipótesis) durante la decodificación. Así, en cada iteración, el algoritmo elige las K hipótesis con mayor \textit{score}:
 
 \begin{equation}
 p(d_1, d_2, ..., d_N) = \prod_{i = 1}^{N} p(d_i \mid d_1, d_2, ..., d_{i-1})
@@ -708,14 +698,6 @@ Además, existe una variación de este algoritmo que se conoce como \textit{temp
 
 donde $V^{(k)}$ es el conjunto de las $k$ palabras más probables y $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
 
-%En las siguientes secciones se presentan algunos de los modelos de lenguaje grandes más utilizados actualmente.
-
-%\subsection{Modelos de Lenguaje Grande Preentrenados (\textit{Pre-trained LLMs})} \label{pretrainedLLM}
-
-%Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLMs preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
-
-%Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo GPT-4  \cite{openai2024gpt4technicalreport}, desarrollado por \textit{OpenAI}, Gemma \cite{gemmateam2024gemmaopenmodelsbased}, desarrollado por Google, y Llama3, desarrollado por Meta. Estos tres modelos se explicarán en detalle en la sección \ref{modelosUtilizados}
-
 \subsection{Arquitecturas de los LLMs}
 
 Existen cuatro tipos principales de arquitecturas de los LLMs:
@@ -723,7 +705,7 @@ Existen cuatro tipos principales de arquitecturas de los LLMs:
 \begin{itemize}
 	\item \textbf{Arquitectura \textit{encoder-decoder}}: esta es la arquitectura explicada en la Sección \ref{encdec}, sobre la cual se basa también la arquitectura de transformers original, presentada en la Sección \ref{transformers}. Tal y como se explicó, consta de un codificador que se encarga de procesar la entrada de texto, transformándola a una representación interna que captura el significado y contexto del texto original. A continuación, el decodificador utiliza esta representación para generar el texto de salida.
 	\item \textbf{Arquitectura \textit{encoder-only}}: en esta arquitectura se utiliza únicamente el componente de codificador del modelo \textit{encoder-decoder}. Así, en este enfoque, el codificador crea una representación detallada de la entrada de texto, que puede ser utilizada posteriormente para tareas de comprensión del lenguaje, como la clasificación de texto o la extracción de información.
-	\item \textbf{Arquitectura \textit{decoder-only}}: esta arquitectura utiliza únicamente el componente del decodificador. De esta manera, el modelo se entrena para generar texto de manera autoregresiva, es decir, prediciendo cada palabra o token en función de los tokens generados anteriormente. Este enfoque es adecuado para tareas que requieren generación continua de texto, como la completación de frases y la generación de contenido \cite{liu2018generatingwikipediasummarizinglong}.
+	\item \textbf{Arquitectura \textit{decoder-only}}: esta arquitectura utiliza únicamente el componente del decodificador. De esta manera, el modelo se entrena para generar texto de manera autorregresiva, es decir, prediciendo cada palabra o token en función de los tokens generados anteriormente. Este enfoque es adecuado para tareas que requieren generación continua de texto, como la completación de frases y la generación de contenido \cite{liu2018generatingwikipediasummarizinglong}.
 	\item \textbf{Arquitectura \textit{Mixture of Experts} (MoE)}: introduce un enfoque en el que se utilizan varios expertos especializados para mejorar la eficiencia y el rendimiento del modelo. En lugar de activar todos los parámetros del modelo para cada tarea, solo un subconjunto de expertos se activa en función de la entrada específica. Este enfoque permite una mayor eficiencia en el procesamiento y optimiza el uso de los recursos computacionales.
 \end{itemize}
 
@@ -735,17 +717,17 @@ En este capítulo se presentan los modelos de lenguaje grandes utilizados en est
 
 Para la realización de este trabajo se utilizarán modelos de lenguaje grandes preentrenados. Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLMs preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
 
-Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo Gemma, desarrollado por Google, Llama3, desarrollado por Meta, y los modelos GPT, desarrollados por la compañía \textit{OpenAI},. Estos tres modelos se explicarán en detalle en las siguientes secciones.
+Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo Gemma, desarrollado por Google, Llama3, desarrollado por Meta, y los modelos GPT, desarrollados por la compañía \textit{OpenAI}. Estos tres modelos se explicarán en detalle en las siguientes secciones.
 
 \subsubsection{Gemma}
 
-Gemma \cite{gemmateam2024gemmaopenmodelsbased} es un modelo de código abierto desarrollado por Google, basado en sus modelos privados Gemini \cite{geminiteam2024geminifamilyhighlycapable}. Existen dos versiones de este modelo: uno con 7 billones de parámetros (modelo 7B), para despliegue en GPU y TPU, y otro con 2 billones (modelo 2B), diseñada para su uso en CPU. El modelo 7B está entrenado con 6T \textit {tokens}, mientras que el 2B, con 3T. En ambos casos, los datos son principalmente en inglés y provienen de documentos web, documentos mátemáticos y código. Su entrenamiento se ha realizado mediante \textit{fine-tuning}, utilizando la técnica de  \textit{Reinforcement Learning from Human Feedback} (RLHF) \cite{christiano2023deepreinforcementlearninghuman}.
+Gemma \cite{gemmateam2024gemmaopenmodelsbased} es un modelo de código abierto desarrollado por Google, basado en sus modelos privados Gemini \cite{geminiteam2024geminifamilyhighlycapable}. Existen dos versiones de este modelo: uno con 7 billones de parámetros (modelo 7B), para despliegue en GPU y TPU, y otro con 2 billones (modelo 2B), diseñada para su uso en CPU. El modelo 7B está entrenado con 6T \textit {tokens}, mientras que el 2B, con 3T. En ambos casos, los datos son principalmente en inglés y provienen de documentos web, documentos matemáticos y código. Su entrenamiento se ha realizado mediante \textit{fine-tuning}, utilizando la técnica de  \textit{Reinforcement Learning from Human Feedback} (RLHF) \cite{christiano2023deepreinforcementlearninghuman}.
 
 En cuanto a su arquitectura, esta está basada en el modelo de \textit{transformer decoder only}, pero incorpora varias mejoras significativas:
 
 \begin{itemize}
 	\item \textbf{\textit{Multi-Query Attention}} \cite{shazeer2019fasttransformerdecodingwritehead}: es una variación de \textit{multi-head attention} que permite que varias cabezas de las capas de atención compartan las mismas claves y valores, mejorando así la eficiencia computacional.
-	\item \textbf{\textit{Rotary Position Embeddings (RoPE)}} \cite{su2023roformerenhancedtransformerrotary}: este tipo de \textit{embeddings} mejora la representación de las posicones relativas en la secuencia, ya que se basan en la distancia relativa entre los \textit{tokens}.
+	\item \textbf{\textit{Rotary Position Embeddings (RoPE)}} \cite{su2023roformerenhancedtransformerrotary}: este tipo de \textit{embeddings} mejora la representación de las posiciones relativas en la secuencia, ya que se basan en la distancia relativa entre los \textit{tokens}.
 	\item \textbf{\textit{GeGLU activations}} \cite{shazeer2020gluvariantsimprovetransformer}: en lugar de utilizar la función de activación ReLU, se utiliza la función GeGLU, la cual ha demostrado mejorar el rendimiento del modelo en tareas de generación de texto.
 	\item \textbf{Pre-normalización con RMSNorm} \cite{zhang2019rootmeansquarelayer}: se normaliza la entrada a cada una de las capas con RMSNorm para estabilizar el entrenamiento. Este tipo de normalización es más eficiente que la de la arquitectura de transformers original.
 \end{itemize}
@@ -787,27 +769,25 @@ Existen cuatro enfoques principales dentro del aprendizaje por transferencia: ap
 \begin{itemize}
 	\item \textbf{Aprendizaje basado en instancias}: la idea principal es utilizar una combinación de modelos preentrenados en el dominio fuente para etiquetar los datos no etiquetados del dominio objetivo. Para ello, se asignan pesos a los modelos del dominio fuente en función de su similitud con el dominio objetivo. Los resultados de los modelos se ponderan según estos pesos para estimar las etiquetas de los datos no etiquetados del dominio objetivo. Finalmente, se construye el modelo del dominio objetivo a partir de los datos etiquetados de este y las etiquetas estimadas.
 	\item \textbf{Aprendizaje basado en características}: en este enfoque, se crean nuevos modelos específicos para las tareas, y se incorpora en estos las representaciones obtenidas con el modelo preentrenado, añadiéndolas como características adicionales. De esta manera, el modelo preentrenado sirve como punto de partida para el modelo específico. Utilizando las características extraídas del modelo preentrenado, el modelo específico puede transferir el conocimiento general obtenido por este al contexto del dominio específico de la tarea. Dentro de este enfoque, existen dos variantes: asimétrico y simétrico  \cite{9134370}. En el enfoque asimétrico, se transforma las características extraídas por el modelo preentrenado para que se ajusten a las del dominio objetivo. Por el contrario, en el simétrico lo que se hace es buscar un espacio común de características latentes y transformar tanto las características del dominio fuente como del objetivo en una nueva representación de características.
-	\item \textbf{Aprendizaje basado en parámetros}: consiste en modificar y reentrenar el modelo preentrenado para la tarea en particular, ajustando directamente sus parámetros. De esta manera, el modelo conserva el conocimiento general obtenido en el preentrenamiento y, tras la modificación y reentrenamiento, aprende nuevo conocimiento específico de la tarea.
+	\item \textbf{Aprendizaje basado en parámetros}: consiste en modificar y reentrenar el modelo preentrenado para la tarea en particular, ajustando directamente sus parámetros. De esta manera, el modelo conserva el conocimiento general obtenido en el pre entrenamiento y, tras la modificación y reentrenamiento, aprende nuevo conocimiento específico de la tarea.
 	\item \textbf{Aprendizaje basado en relaciones}: este enfoque se centra principalmente en los problemas de dominios relacionales, transfiriendo la lógica de relaciones o reglas aprendidas en el dominio fuente al dominio objetivo. Estos métodos buscan preservar y adaptar las relaciones entre entidades para resolver tareas en el nuevo dominio.
 \end{itemize}
 
-Para los experimentos de este trabajo, se realizará la adaptación de los modelos de lenguaje preentrenados mediante aprendizaje por tranferencia basado en parámetros. Específicamente, se utilizará la técnica de \textit{fine-tuning}.
+Para los experimentos de este trabajo, se realizará la adaptación de los modelos de lenguaje preentrenados mediante aprendizaje por transferencia basado en parámetros. Específicamente, se utilizará la técnica de \textit{fine-tuning}.
 
 \section{\textit{Fine-tuning}}
 
-El \textit{fine-tuning} es una técnica detro del aprendizaje por transferencia basado en parámetros que consiste en ajustar los parámetros del modelo preentrenado utilizando para su entrenamiento un conjunto de datos adaptado a la tarea sobre la que se va a utilizar el modelo.
+El \textit{fine-tuning} es una técnica dentro del aprendizaje por transferencia basado en parámetros que consiste en ajustar los parámetros del modelo preentrenado utilizando para su entrenamiento un conjunto de datos adaptado a la tarea sobre la que se va a utilizar el modelo.
 
 El principal inconveniente del método de \textit{fine-tuning} es que puede ser un proceso muy lento, ya que es necesario ajustar todos los parámetros del modelo preentrenado, los cuales suelen ser numerosos. Existe un enfoque alternativo en el que se mantiene el modelo preentrenado intacto, y se añaden unos pocos parámetros adicionales que modifican su comportamiento interno para adaptarlo a la tarea específica. Durante el entrenamiento, solamente es necesario ajustar estos nuevos parámetros. Esta idea se conoce como adaptadores.
 
 \subsection{Adaptadores}
 
-El método de ajuste basado en adaptadores funciona añadiendo módulos específicos a un modelo preentrenado, de manera que durante el entrenamiento de este para alguna tarea específica se actualizan únicamente los parámetros de estos módulos, y no los del modelo completo. De esta manera, se incorporan solo unos pocos parámetros entrenables para cada nueva tarea, lo que permite un alto grado de compartición de parámetros \cite{he2021effectivenessadapterbasedtuningpretrained}. Este enfoque puede ser utilizado como alternativa al \textit{fine-tuning} completo del modelo, ya que, se ha demostrado que ambos métodos ofrecen un rendmiento comparable, siendo el ajuste con adaptadores mucho más eficientes en términos del número parámetros \cite{houlsby2019parameterefficienttransferlearningnlp, stickland2019bertpalsprojectedattention}.
+El método de ajuste basado en adaptadores funciona añadiendo módulos específicos a un modelo preentrenado, de manera que durante el entrenamiento de este para alguna tarea específica se actualizan únicamente los parámetros de estos módulos, y no los del modelo completo. De esta manera, se incorporan solo unos pocos parámetros entrenables para cada nueva tarea, lo que permite un alto grado de compartición de parámetros \cite{he2021effectivenessadapterbasedtuningpretrained}. Este enfoque puede ser utilizado como alternativa al \textit{fine-tuning} completo del modelo, ya que, se ha demostrado que ambos métodos ofrecen un rendimiento comparable, siendo el ajuste con adaptadores mucho más eficientes en términos del número parámetros \cite{houlsby2019parameterefficienttransferlearningnlp, stickland2019bertpalsprojectedattention}.
 
-Los módulos de los adaptadores deben cumplir con dos propiedades esenciales: contener un número reducido de parámetros y tener una incialización cercana a la identidad. los adaptadores deben ser pequeños en comparación con las capas del modelo original para asegurar que el modelo crezca de manera controlada al añadir nuevas tareas. La inicialización cercana a la unidad es necesaria para mantener la estabilidad del entrenamiento. De esta manera, el modelo original no se verá afectado al inicio del entrenamiento. Durante este, los adaptadores pueden activarse para cambiar la distribución de las activaciones en la red. Además, los módulos pueden ignorarse si no son necesarios. Si la incialización se desviara demasiado de la identidad, el modelo podria fallar durante el entrenamiento \cite{houlsby2019parameterefficienttransferlearningnlp}.
+Los módulos de los adaptadores deben cumplir con dos propiedades esenciales: contener un número reducido de parámetros y tener una inicialización cercana a la identidad. Los adaptadores deben ser pequeños en comparación con las capas del modelo original para asegurar que el modelo crezca de manera controlada al añadir nuevas tareas. La inicialización cercana a la unidad es necesaria para mantener la estabilidad del entrenamiento. De esta manera, el modelo original no se verá afectado al inicio del entrenamiento. Durante este, los adaptadores pueden activarse para cambiar la distribución de las activaciones en la red. Además, los módulos pueden ignorarse si no son necesarios. Si la inicialización se desviara demasiado de la identidad, el modelo podría fallar durante el entrenamiento \cite{houlsby2019parameterefficienttransferlearningnlp}.
 
 En el ámbito del procesamiento de lenguaje natural, los adaptadores generalmente se insertan como módulos entre las capas del modelo. En el caso de la arquitectura de transformers, la idea es insertar dos redes neuronales MLP poco profundas como cuello de botella dentro de cada uno de los bloques del transformer: una después de la capa de \textit{multi-head attention} y otra, después de la capa de red \textit{feed forward}. Estas redes MLP deben tener lo que se conoce como \textit{skip connections}, es decir, conexiones que permiten saltarse capas intermedias, para permitir la inicialización de las redes como identidad \cite{murphy2022probabilistic}.
-
-%Para la realización de este trabajo, se utilizará este método de ajuste basado en adaptadores, añadiendo específicamente módulos de PEFT (\textit{parameter-efficient fine-tuning}) y LoRA (\textit{Low-Rank Adaptation}).
 
 \section{\textit{Parameter-efficient fine-tuning} (PEFT)}
 
@@ -907,8 +887,8 @@ El parámetro \textit{alpha} ($\alpha$) se utiliza para escalar la matriz de cam
 
 \begin{itemize}
 	\item Si $\alpha = r$, los nuevos pesos serán integrados con los del modelo original en una proporción de 1:1. Esto implica que los pesos aprendidos tendrán la misma importancia que los pesos del modelo preentrenado.
-	\item Si $\alpha > r$, se está dando mayor peso a los nuevos parámetros aprendidos. Esto es recomendable  cuando se cuenta con un conjunto de datos de entrenamiento grande y de calidad. De lo contrario, al darle más importancia a lo aprendido a partir del nuevo conjunto de datos en lugar de al conociemiento preexistente del modelo, podría resultar en incoherencias.
-	\item Si $\alpha < r$, se prioriza el conocimiento preexistente del modelo sobre el nuevo. Esta configuración es aconsejable cuando el conjunto de datos de entrenamiento es pequeño y los dominios del modelo preexistente y la tarea a realizar son similares, pues así se garantiza que el modelo conserve más el conociemiento original.
+	\item Si $\alpha > r$, se está dando mayor peso a los nuevos parámetros aprendidos. Esto es recomendable  cuando se cuenta con un conjunto de datos de entrenamiento grande y de calidad. De lo contrario, al darle más importancia a lo aprendido a partir del nuevo conjunto de datos en lugar de al conocimiento preexistente del modelo, podría resultar en incoherencias.
+	\item Si $\alpha < r$, se prioriza el conocimiento preexistente del modelo sobre el nuevo. Esta configuración es aconsejable cuando el conjunto de datos de entrenamiento es pequeño y los dominios del modelo preexistente y la tarea a realizar son similares, pues así se garantiza que el modelo conserve más el conocimiento original.
 \end{itemize}
 
 \subsubsection{\textit{Dropout}}
@@ -917,21 +897,19 @@ El parámetro de \textit{dropout} determina la probabilidad de que, en cada iter
 
 De esta manera, un valor alto de \textit{dropout} significa que un mayor número de neuronas se desactivarán durante el entrenamiento. Sin embargo, si el valor es excesivamente alto, el modelo podría no aprender lo suficiente sobre los datos, ya que se reducen demasiado las neuronas activas. Por otro lado, un valor muy bajo del \textit{dropout} puede llevar a que el modelo pierda capacidad de generalización, ya que es más probable que se sobreajuste a los datos de entrenamiento.
 
-Generalmente, se recomienda utilizar un valor de \textit{dropout} entre 0.05 y 0.5, ajustándolo según el número de parámetros del modelo, el volúmen de datos de entrenamiento y la complejidad del problema.
-
-%Generalmente, se recomienda utilizar un \textit{dropout} de 0.1 para modelos de 7B y 13B parámetros y reducirlo a 0.05 para modelos de 33B y 65B parámetros. Esto ayuda a mantener un equilibrio adecuado entre regularización y capacidad de aprendizaje del modelo.
+Generalmente, se recomienda utilizar un valor de \textit{dropout} entre 0.05 y 0.5, ajustándolo según el número de parámetros del modelo, el volumen de datos de entrenamiento y la complejidad del problema.
 
 \section{Cuantización}
 
-La creciente complejidad de la arquitectura de los modelos de lenguaje grandes hace que se requiera una gran cantidad de recursos computacionales y de memoria para su implementación y utilización. Este requerimiento intensivo de recursos presenta un desafío significativo, especialmente en entornos con limitaciones en el hardware. Por esta razón, en estos contextos es esencial hacer uso de técnicas que permitan la ejecución eficiente de los modelos, sin compromenter sustancialmente su rendimiento. Una de las técnicas más efectivas en este contexto es la cuantización.
+La creciente complejidad de la arquitectura de los modelos de lenguaje grandes hace que se requiera una gran cantidad de recursos computacionales y de memoria para su implementación y utilización. Este requerimiento intensivo de recursos presenta un desafío significativo, especialmente en entornos con limitaciones en el hardware. Por esta razón, en estos contextos es esencial hacer uso de técnicas que permitan la ejecución eficiente de los modelos, sin comprometer sustancialmente su rendimiento. Una de las técnicas más efectivas en este contexto es la cuantización.
 
 La cuantización es un proceso que consiste en convertir los valores de alta  precisión de un modelo, representados normalmente en punto flotante de 32 o 64 bits, a representaciones de menor precisión, generalmente enteros de 8 o 16 bits \cite{choukroun2019low}. Este mapeo de valores continuos de alta precisión a niveles discretos proporciona una gran mejora en términos de computación y memoria, ya que los requisitos de almacenamiento de un modelo de baja precisión son sustancialmente menores que los de uno de alta precisión. Además, también se pueden observar mejoras en cuanto al consumo de energía, los requisitos de ancho de banda de la memoria y la complejidad computacional.
 
-De todas maneras, es importante tener en cuenta que la inferencia con baja precisión de bits puede conllevar a una pérdida de precisión en la tarea. Esta pérdida de precisión puede compensarse mediante varias técnicas.
+De todas maneras, es importante tener en cuenta que la inferencia con baja precisión de bits puede conllevar una pérdida de precisión en la tarea. Esta pérdida de precisión puede compensarse mediante varias técnicas.
 
 Una de las técnicas de cuantización más utilizadas es la de precisión mixta \cite{micikevicius2018mixedprecisiontraining}. Esta técnica consiste en utilizar una combinación de representaciones de alta y baja precisión dentro del modelo. Por ejemplo, los pesos del modelo pueden estar almacenados en alta precisión, para asegurar la exactitud, mientras que los cálculos durante el entrenamiento se realizan con menor precisión para aumentar la velocidad y reducir el uso de la memoria. Posteriormente, los gradientes calculados en baja precisión se utilizan para actualizar los pesos originales.
 
-Otra técnica ampliamente utilizada es la de cuantización post entrenamiento \cite{xiao2024smoothquantaccurateefficientposttraining}. Esta técnica se aplica después de que los modelos hayan sido completament entrenados utilizando representaciones de alta precisión (en el caso de los modelos de lenguaje grandes preentrenados, después del preentrenamiento). El objetivo principal es reducir el tamaño del modelo y los requisitos de cálculo para permitir una implementación más eficiente en cuanto a memoria y computación, sin tener que reentrenar el modelo desde cero. De esta manera, los pesos y, a veces, las activaciones del modelo son convertidos a representaciones de menor precisión, generalmente de 8 bits.
+Otra técnica ampliamente utilizada es la de cuantización post entrenamiento \cite{xiao2024smoothquantaccurateefficientposttraining}. Esta técnica se aplica después de que los modelos hayan sido completamente entrenados utilizando representaciones de alta precisión (en el caso de los modelos de lenguaje grandes preentrenados, después del pre entrenamiento). El objetivo principal es reducir el tamaño del modelo y los requisitos de cálculo para permitir una implementación más eficiente en cuanto a memoria y computación, sin tener que reentrenar el modelo desde cero. De esta manera, los pesos y, a veces, las activaciones del modelo son convertidos a representaciones de menor precisión, generalmente de 8 bits.
 
 \section{Medidas de evaluación} \label{metricas}
 
@@ -943,7 +921,7 @@ En este trabajo, utilizaremos las métricas de BLEU y COMET para la evaluación 
 
 BLEU (\textit{Bilingual Evaluation Understudy}) \cite{papineni-etal-2002-bleu} es una de las métricas más utilizadas actualmente para la evaluación de modelos en el campo del procesamiento de lenguaje natural. Esta métrica se basa en la premisa de que una frase generada por un modelo es mejor cuanto más se parezca a la frase que habría sido generada por una persona. Para poder calcularla, se necesita el conjunto de frases generadas por el modelo y un conjunto de frases de referencia reales generadas por personas.
 
-El enfoque de BLEU consiste en utilizar una media ponderada de las coincidencias entre la frase generada por el modelo y las frases de referencia reales. Para ello, BLEU calcula la precisión modificada de n-gramas ($p_n$) entre las frase de referencia y la frase generada por el modelo. Para calcular esta precisión modificada, primero se cuentan cuántos n-gramas de la frase generada por el modelo coinciden con los n-gramas de las frases de referencia. Este conteo se realiza utilizando los \textit{clipped n-gram counts}, que limitan la cantidad de veces que un n-grama en particular puede ser contado, basado en su frecuencia en las frases de referencia. A continuación, se suma el total de estos n-gramas limitados para todas las frases candidatas generadas por el modelo.
+El enfoque de BLEU consiste en utilizar una media ponderada de las coincidencias entre la frase generada por el modelo y las frases de referencia reales. Para ello, BLEU calcula la precisión modificada de n-gramas ($p_n$) entre las frases de referencia y la frase generada por el modelo. Para calcular esta precisión modificada, primero se cuentan cuántos n-gramas de la frase generada por el modelo coinciden con los n-gramas de las frases de referencia. Este conteo se realiza utilizando los \textit{clipped n-gram counts}, que limitan la cantidad de veces que un n-grama en particular puede ser contado, basado en su frecuencia en las frases de referencia. A continuación, se suma el total de estos n-gramas limitados para todas las frases candidatas generadas por el modelo.
 
 El cálculo de $p_n$ se formaliza de la siguiente manera:
 
@@ -986,14 +964,14 @@ En cuanto a la interpretación, generalmente se considera que un \textit{score} 
 	20-29 & La esencia es clara, pero aparecen errores gramaticales \\
 	30-40 & Comprensible, buenas traducciones \\
 	40-50 & Traducciones de alta calidad \\
-	50-60 & Traducciones de muy alta calidad. adecuadas y fluidas \\
+	50-60 & Traducciones de muy alta calidad, adecuadas y fluidas \\
 	>60 & Calidad generalmente mejor que la humana
 \end{tabular}
 \end{center}
 \label{tab: bleu}
 \end{table}
 
-El uso de esta métrica es muy común en tareas de procesamiento de lenguaje natural debido a su facilidad de cálculo y la simplicidad en la interpretación de la puntuación que proporciona, la cual suele alinearse con la evaluación humana. Sin embargo, BLEU presenta algunas limitaciones importantes, principalmente porque su cálculo se basa unicamente en las coincidencias exactas entre las frases generadas y las de referencia, lo que puede limitar su capacidad para capturar variaciones en la formulación del lenguaje. Por esta razón, es aconsejable utilizar también otras métricas que no dependan exclusivamente de coincidencias exactas para obtener una evaluación más completa y precisa de la calidad de las frases generadas.
+El uso de esta métrica es muy común en tareas de procesamiento de lenguaje natural debido a su facilidad de cálculo y la simplicidad en la interpretación de la puntuación que proporciona, la cual suele alinearse con la evaluación humana. Sin embargo, BLEU presenta algunas limitaciones importantes, principalmente porque su cálculo se basa únicamente en las coincidencias exactas entre las frases generadas y las de referencia, lo que puede limitar su capacidad para capturar variaciones en la formulación del lenguaje. Por esta razón, es aconsejable utilizar también otras métricas que no dependan exclusivamente de coincidencias exactas para obtener una evaluación más completa y precisa de la calidad de las frases generadas.
 
 \subsection{COMET}
 
@@ -1004,7 +982,7 @@ COMET se presenta en dos tipos de arquitecturas: el \textit{estimator model} y \
 Ambos modelos están formados por dos componentes principales:
 
 \begin{itemize}
-	\item \textbf{\textit{Cross-lingual encoder}}: es un modelo pre-entrenado multilingüe, por ejemplo BERT, XLM o XLM-RoBERTa. Estos modelos contienen varias capas de codificación de \textit{transformer} que generan representaciones (\textit{embeddings}) de las secuencias de entrada. En el caso de COMET, estas secuencias serán las frases originales, las frases generadas por el modelo y las frases de referencia. Así, el codificador mapea todas estas a un mismo espacio de características, de manera que es posible hacer comparaciones más precisas.
+	\item \textbf{\textit{Cross-lingual encoder}}: es un modelo preentrenado multilingüe, por ejemplo BERT, XLM o XLM-RoBERTa. Estos modelos contienen varias capas de codificación de \textit{transformer} que generan representaciones (\textit{embeddings}) de las secuencias de entrada. En el caso de COMET, estas secuencias serán las frases originales, las frases generadas por el modelo y las frases de referencia. Así, el codificador mapea todas estas a un mismo espacio de características, de manera que es posible hacer comparaciones más precisas.
 	\item \textbf{\textit{Pooling layer}}: es una capa de agrupamiento que toma los \textit{embeddings} más importantes generados por las capas del codificador y los combina en una única representación fija $e_{x_j}$. Esta representación se calcula como:
 
 \begin{equation}
@@ -1022,7 +1000,7 @@ La métrica COMET es más compleja de interpretar en comparación con BLEU. Gene
 
 \chapter{Experimentos realizados} \label{cap4}
 
-En este capítulo se presentan los experimentos realizados en este trabajo, los cuales se han llevado a cabo utilizando dos modelos de lenguaje grandes: Gemma y Llama3. Los experimentos se centraron principalmente en la exploración de los parámetros rango y \textit{alpha} de la adaptación mediante LoRA, con el objetivo de encontrar la configuración que proporcionara los mejores resulados posibles para la tarea de generar frases de lenguaje natural a partir de listas de palabras clave, en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. Tras identificar la mejor configuración, se realizó un experimento adicional utilizando todos los datos de entrenamiento disponibles para evaluar la eficacia de los modelos con un conjunto de datos de test que no había sido utilizado en fases anteriores. Los experimentos se realizaron con conjuntos de datos en español y, a continuación, se realizaron también con el conjunto de datos en inglés para estudiar el efecto del lenguaje en los resultados. Todos los experimentos han sido realizados utilizando Google Colab \footnote{Google Colab es una plataforma  en la nube que permite escribir y ejecutar código Python en \textit{notebooks} interactivos, ofreciendo acceso a recursos de procesamiento como GPUs y TPUs.}.
+En este capítulo se presentan los experimentos realizados en este trabajo, los cuales se han llevado a cabo utilizando dos modelos de lenguaje grandes: Gemma y Llama3. Los experimentos se centraron principalmente en la exploración de los parámetros rango y \textit{alpha} de la adaptación mediante LoRA, con el objetivo de encontrar la configuración que proporcionara los mejores resultados posibles para la tarea de generar frases de lenguaje natural a partir de listas de palabras clave, en el contexto de los Sistemas de Comunicación Aumentativa y Alternativa. Tras identificar la mejor configuración, se realizó un experimento adicional utilizando todos los datos de entrenamiento disponibles para evaluar la eficacia de los modelos con un conjunto de datos de test que no había sido utilizado en fases anteriores. Los experimentos se realizaron con conjuntos de datos en español y, a continuación, se realizaron también con el conjunto de datos en inglés para estudiar el efecto del lenguaje en los resultados. Todos los experimentos han sido realizados utilizando Google Colab \footnote{Google Colab es una plataforma  en la nube que permite escribir y ejecutar código Python en \textit{notebooks} interactivos, ofreciendo acceso a recursos de procesamiento como GPUs y TPUs.}.
 
 \section{Datos utilizados}
 
@@ -1142,7 +1120,7 @@ El formato que se presenta en la Tabla \ref{tab: formatoPrompt} es la manera en 
 
 \subsection{Partición de los datos en entrenamiento, validación y test}
 
-Para evaluar los modelos, se utilizará la técnica de \textit{cross-validation}, que consiste en realizar diferentes particiones de los datos en conjuntos de entrenamiento y validación, entrenando y evaluando de manera independiente cada partición. Por esta razón, los datos se han dividido en un conjunto de entrenamiento y validación para \textit{cross-validation} y un conjunto adicional de test. Este último no se utilizará durante la fase de entrenamiento, sino exclusivamente para la comparación final de resultados entre los modelos. El conjunto de datos de test ha sido seleccionado de manera aleatoria considerando solo las frases que no presentaban valores nulos.
+Para evaluar los modelos, se utilizará la técnica de \textit{cross-validation}, que consiste en realizar diferentes particiones de los datos en conjuntos de entrenamiento y validación, entrenando y evaluando de manera independiente cada partición. Por esta razón, los datos se han dividido en un conjunto de entrenamiento y validación para \textit{cross-validation} y un conjunto adicional de test. Este último no se utilizará durante la fase de entrenamiento, sino exclusivamente para la comparación final de resultados entre los modelos. El conjunto de datos de test ha sido seleccionado de manera aleatoria, considerando solo las frases que no presentaban valores nulos.
 
 La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los experimentos en español y en inglés, tanto para el entrenamiento de los modelos como para su posterior evaluación.
 
@@ -1159,21 +1137,21 @@ La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los exper
 \label{tab:frases}
 \end{table}
 
-\section{Modelos de lenguaje utilizados}
+\section{Modelos de lenguaje utilizados y método de entrenamiento}
 
-Los modelos utilizados para los experimentos de este trabajo son los modelos Gemma-7B y Llama3-8B. La selección de estos modelos se fundamenta en varios criterios, tanto computacionales como de accesibilidad y confiabilidad. En primer lugar, Gemma-7B y Llama3-8B son modelos actuales desarrollados por empresas grandes y reconocidas en el ámbito tecnológico, lo que garantiza su calidad y fiabilidad. Al ser modelos recientes, están diseñados aprovechando las útimas técnicas en aprendizaje automático, asegurando un rendimiento competitivo.
+Los modelos utilizados para los experimentos de este trabajo son los modelos Gemma-7B y Llama3-8B. La selección de estos modelos se fundamenta en varios criterios, tanto computacionales como de accesibilidad y confiabilidad. En primer lugar, Gemma-7B y Llama3-8B son modelos actuales desarrollados por empresas grandes y reconocidas en el ámbito tecnológico, lo que garantiza su calidad y fiabilidad. Al ser modelos recientes, están diseñados aprovechando las últimas técnicas en aprendizaje automático, asegurando un rendimiento competitivo.
 
-Desde el punto de vista computacional y de accesibilidad, estos modelos son adecuados para los recursos disponibles en este trabajo ya que se encuentran disponibles en \textit{Hugging Face} \footnote{\textit{Hugging Face} es una plataforma que ofrece herramientas y modelos de aprendizaje automático, especialmente para el procesamiento de lenguaje natural.} y pueden ser utilizados con las GPUs disponibles en Google Colab. Para facilitar su ejecución en este entorno, se ha relizado un proceso de cuantización, optimizando su uso en condiciones de recursos limitados.
+Desde el punto de vista computacional y de accesibilidad, estos modelos son adecuados para los recursos disponibles en este trabajo, ya que se encuentran disponibles en \textit{Hugging Face} \footnote{\textit{Hugging Face} es una plataforma que ofrece herramientas y modelos de aprendizaje automático, especialmente para el procesamiento de lenguaje natural.} y pueden ser utilizados con las GPU disponibles en Google Colab. Para facilitar su ejecución en este entorno, se ha relizado un proceso de cuantización, optimizando su uso en condiciones de recursos limitados.
 
-Google Colab proporciona acceso gratuito a la GPU T4 de NVIDIA. Sin embargo, algunos experimentos exigieron recursos más potentes, lo que hizo necesario utilizar una cuenta de pago para acceder a GPUs de mayor capacidad. Las GPUs disponibles con cuenta de pago en Colab son la L4 y A100, ambas de NVIDIA.
+Google Colab proporciona acceso gratuito a la GPU T4 de NVIDIA. Sin embargo, algunos experimentos exigieron recursos más potentes, lo que hizo necesario utilizar una cuenta de pago para acceder a GPU de mayor capacidad. Las GPU disponibles con cuenta de pago en Colab son la L4 y A100, ambas de NVIDIA.
 
 Así, para los experimentos con valores de $r < 64$, se ha utilizado la GPU gratuita T4, con tiempos de ejecución de entre 30 minutos y 1 hora. La diferencia en los tiempos de ejecución depende del modelo utilizado y de los parámetros específicos ($\alpha$ y $r$). Estos experimentos pudieron ser paralelizados utilizando múltiples cuentas gratuitas de Colab, permitiendo realizar varios experimentos simultáneamente. En total, se llevaron a cabo 6 experimentos de este tipo con Llama3-8B y 2 con Gemma-7B para cada idioma.
 
-Para los experimentos con $r \ge 64$, fue necesario utilizar las GPUs accesibles mediante cuenta de pago. Con estas GPUs, los tiempos de ejecución se redujeron significativamente, variando entre 10 y 25 minutos. Estos experimentos fueron ejecutados de manera secuencial, realizando 10 experimentos para Llama3-8B y 2 para Gemma-7B para cada idioma.
+Para los experimentos con $r \ge 64$, fue necesario utilizar las GPU accesibles mediante cuenta de pago. Con estas GPU, los tiempos de ejecución se redujeron significativamente, variando entre 10 y 25 minutos. Estos experimentos fueron ejecutados de manera secuencial, realizando 10 experimentos para Llama3-8B y 2 para Gemma-7B para cada idioma.
 
-Para el entrenamiento de los modelos, se ha  aplicado el método de adaptación LoRA, que se describe en detalle en la sección \ref{lora}. Este método requiere la configuración de dos parámetros clave: el rango y el \textit{alpha}. Dado que estos parámetros pueden influir significativamente en el rendimiento del modelo, se han realizado experimentos variando sus valores para identificar la configuración óptima que proporciona mejores resultados.
+Para el entrenamiento de los modelos, se ha  aplicado el método de adaptación LoRA, que se describe en detalle en la Sección \ref{lora}. Este método requiere la configuración de dos parámetros clave: el rango y el \textit{alpha}. Dado que estos parámetros pueden influir significativamente en el rendimiento del modelo, se han realizado experimentos variando sus valores para identificar la configuración óptima que proporciona mejores resultados.
 
-Para garantizar una evaluación robusta y fiable de los modelos, se ha utilizado la técnica de \textit{cross-validation} con 10 particiones. Esto implica dividir el conjunto de datos en 10 partes iguales. En cada iteración, 9 partes se utilizan para entrenar el modelo y la parte restante, para validarlo. Las particiones se han realizado de manera que, al final del proceso, todos los datos hayan sido utilizados tanto para entrenamiento como para validación, asegurando que cada dato aparezce solo una vez en el conjunto de validación.
+Para garantizar una evaluación robusta y fiable de los modelos, se ha utilizado la técnica de \textit{cross-validation} con 10 particiones. Esto implica dividir el conjunto de datos en 10 partes iguales. En cada iteración, 9 partes se utilizan para entrenar el modelo y la parte restante, para validarlo. Las particiones se han realizado de manera que, al final del proceso, todos los datos hayan sido utilizados tanto para entrenamiento como para validación, asegurando que cada dato aparece solo una vez en el conjunto de validación.
 
 Se ha entrenado un modelo independiente para cada una de las 10 particiones. Una vez completado el entrenamiento y realizadas las predicciones de estos 10 modelos, se han combinado las predicciones de todos ellos en un solo conjunto de predicciones para calcular las métricas de rendimiento. Las métricas utilizadas para la evaluación son las métricas BLEU y COMET, ambas descritas en la Sección \ref{metricas}.
 
@@ -1273,7 +1251,7 @@ Las gráficas de la Figura \ref{fig:graficasLlama} presentan en el eje horizonta
 \label{fig:graficasLlama}
 \end{figure}
 
-En cuanto a la métrica BLEU, los resultados muestran que todas las configuraciones de \textit{alpha} siguen una tendencia ascendente hasta alcanzar su punto máximo, y a continuación disminuyen la puntuación. En el caso de $\alpha = r/2$, su valor óptimo se alcanza en en $r = 64$. En cambio, con $alpha = r$ y $alpha = 2r$ el valor óptimo se encuentra en r = 128. Este comportamiento sugiere que, cuando $\alpha = r/2$, es decir, cuando se da mayor importancia a los parámetros del modelo preentrenado que a los pesos ajustados con LoRA, el aumento del rango tiene un impacto limitado en el rendimiento, ya que no se aprovechan completamente los parámetros libres disponibles con valores de rango superiores a 64. En general, las otras configuraciones de \textit{alpha} muestran un desempeño superior, alcanzando su máximo en $r = 128$.
+En cuanto a la métrica BLEU, los resultados muestran que todas las configuraciones de \textit{alpha} siguen una tendencia ascendente hasta alcanzar su punto máximo, y a continuación disminuyen la puntuación. En el caso de $\alpha = r/2$, su valor óptimo se alcanza en en $r = 64$. En cambio, con $\alpha = r$ y $\alpha = 2r$ el valor óptimo se encuentra en r = 128. Este comportamiento sugiere que, cuando $\alpha = r/2$, es decir, cuando se da mayor importancia a los parámetros del modelo preentrenado que a los pesos ajustados con LoRA, el aumento del rango tiene un impacto limitado en el rendimiento, ya que no se aprovechan completamente los parámetros libres disponibles con valores de rango superiores a 64. En general, las otras configuraciones de $\alpha$ muestran un desempeño superior, alcanzando su máximo en $r = 128$.
 
 En lo que respecta a la métrica COMET, los resultados muestran que todas las configuraciones de \textit{alpha} tienen valores muy similares, oscilando entre 92.5 y 93.5, y sin mostrar diferencias significativas en su comportamiento.
 
@@ -1281,7 +1259,7 @@ Así, tanto los resultados de BLEU como de COMET sugieren que la combinación ó
 
 \subsection{Validación del modelo final}
 
-Finalmente, se ha llevado a cabo el entrenamiento del modelo de Llama3 con la mejor combinación de parámetros obtenidos en los experimentos anteriores: $r$ = 128 y \textit{alpha} = $r$. En este caso, el modelo ha sido entrenado utilizando todo el conjunto de datos disponible para el experimento de validación cruzada.
+Finalmente, se ha llevado a cabo el entrenamiento del modelo de Llama3 con la mejor combinación de parámetros obtenidos en los experimentos anteriores: $r$ = 128 y $\alpha = r$. En este caso, el modelo ha sido entrenado utilizando todo el conjunto de datos disponible para el experimento de validación cruzada.
 
 Una vez completado el entrenamiento, se ha realizado la evaluación del modelo utilizando el conjunto de datos reservado específicamente para evaluación. De esta manera, se ha evaluado el desempeño del modelo en datos que no habían sido vistos por el modelo en ninguna fase de entrenamiento, lo que proporciona una medida de su capacidad de generalización.
 
@@ -1306,8 +1284,8 @@ En el experimento de \textit{zero-shot prompting}, se introdujeron un total de 1
 Los resultados muestran que el modelo no comprende adecuadamente la tarea en la mayoría de los casos. Se identificaron tres tipos de respuesta:
 
 \begin{enumerate}
-	\item \textbf{Repetición de las palabras clave}: en la m ayoría de casos el modelo se limita a repetir las palabras clave que fueron introducidas, ya sea de manera exactamente igual o con pequeñas modificaciones, como la eliminación de comas, la adición de comillas o el uso de mayúscula en ciertas palabras.
-	\item \textbf{Frases sin sentido o sin relación con las palabras clave}: en otros casos, el modelo genera frases utilizando las palabras clave pero que no tienen sentido, o incluso frases que no guardan relación con las palabras introducidas. Por ejemplo, para las palabras clave ``domingo, de, ramos, ir, ver, borriquita´´ el modelo generó la frase ``Veremos de ir de ramos de la borriquita´´ y para las palabras clave ``cabritilos, ser, feliz´´, generó ``Hace dos años que no veo a mi amigo´´. 
+	\item \textbf{Repetición de las palabras clave}: en la mayoría de casos el modelo se limita a repetir las palabras clave que fueron introducidas, ya sea de manera exactamente igual o con pequeñas modificaciones, como la eliminación de comas, la adición de comillas o el uso de mayúscula en ciertas palabras.
+	\item \textbf{Frases sin sentido o sin relación con las palabras clave}: en otros casos, el modelo genera frases utilizando las palabras clave pero que no tienen sentido, o incluso frases que no guardan relación con las palabras introducidas. Por ejemplo, para las palabras clave ``domingo, de, ramos, ir, ver, borriquita´´ el modelo generó la frase ``Veremos de ir de ramos de la borriquita´´ y para las palabras clave ``cabritillos, ser, feliz´´, generó ``Hace dos años que no veo a mi amigo´´. 
 	\item \textbf{Frases similares a las esperadas}: en algunas ocasiones el modelo sí que genera frases que coinciden con las reales o que son similares a estas. Por ejemplo, para los lemas ``caracol, se, poner, triste´´ generó correctamente la frase ``El caracol se puso triste´´, y para  ``niño, saltar, cama´´ generó ``Un niño salta sobre la cama´´, que, aunque no es idéntica a la frase real ``Los niños saltan en la cama´´, refleja que el modelo comprendió la tarea.
 \end{enumerate}
 
@@ -1317,7 +1295,7 @@ Para la técnica de \textit{few-shot prompting}, se proporcionaron al modelo cin
 
 En este caso, el modelo demostró una mejor comprensión de la tarea, generando resultados que, en la mayoría de casos, se acercan más a los reales en comparación con el  \textit{zero-shot prompting}. Sin embargo, presenta mayor cantidad de errores que el modelo entrenado con datos específicos. Algunos de estos errores incluyen cambios en el orden de las palabras, como en el caso de ``caer, sal, al, mantel´´, donde el modelo generó ``El mantel cae a la sal´´, cuando debería haber generado ``Cayó sal al mantel´´. Otro ejemplo es para las palabras ``domingo, de, ramos, ir, ver, borriquita´´, que generan la frase ``El domingo de ramos vamos a ver la borriquita´´, pero el modelo generó ``EL domingo vamos a ver la borriquita de los ramos´´. También se observaron casos en los que el modelo añadió palabras que no estaban en la lista de palabras clave. Por ejemplo, para las palabras clave ``lobo, querer, comer, lo´´ el modelo generó ``Lo que el lobo quiere comer es un cerdo´´, aunque la palabra ``cerdo´´ no se encontraba en la lista de palabras clave proporcionadas, por lo que no debería aparecer en la frase.
 
-La Tabla \ref{tab:promptingEspañol} resume los resultados obtenidos con las técnicas de \textit{zero-shot prompting} y \textit{few-shot prompting}  y también los resultados del modelo final de Llama3 entrenado mediante LoRA
+La Tabla \ref{tab:promptingEspañol} resume los resultados obtenidos con las técnicas de \textit{zero-shot prompting} y \textit{few-shot prompting}  y también los resultados del modelo final de Llama3 entrenado mediante LoRA.
 
 \begin{table}[!h]
 \caption{BLEU y COMET del modelo Llama3 utilizado mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en español.}
@@ -1335,7 +1313,7 @@ La Tabla \ref{tab:promptingEspañol} resume los resultados obtenidos con las té
 \label{tab:promptingEspañol}
 \end{table}
 
-Los resultados demuestran que el entrenamiento realizado al modelo mediante LoRA proporciona una mejora significativa en el rendimiento en comparación con las técnicas de \textit{prompting}. Tanto el \textit{zero-shot prompting} como el \textit{few-shot prompting} muestran limitaciones en la comprensión de la tarea, que son superadas cuando el modelo es entrenado con datos específicos. El modelo entrenado mediante LoRA alcanza resultados mejores en las métricas BLEU y COMET, lo que confirma que el entrenamiento con datos específicos representa una mejora sutancial.
+Los resultados demuestran que el entrenamiento realizado al modelo mediante LoRA proporciona una mejora significativa en el rendimiento en comparación con las técnicas de \textit{prompting}. Tanto el \textit{zero-shot prompting} como el \textit{few-shot prompting} muestran limitaciones en la comprensión de la tarea, que son superadas cuando el modelo es entrenado con datos específicos. El modelo entrenado mediante LoRA alcanza resultados mejores en las métricas BLEU y COMET, lo que confirma que el entrenamiento con datos específicos representa una mejora sustancial.
 
 \section{Experimentos adicionales con el conjunto en inglés}
 
@@ -1345,7 +1323,7 @@ Al igual que en los experimentos anteriores, se ha aplicado la adaptación LoRA 
 
 En primer lugar, se han realizado los experimentos para ambos modelos explorando diferentes valores de $r$ (16, 32 y 64) y utilizando una configuración  fija de $\alpha = 2r$. Al igual que con el conjunto en español, los resultados obtenidos con el modelo Gemma son notablemente inferiores a los resultados obtenidos con el modelo Llama3. El mejor valor de rango resultó ser $r = 32$ en ambos casos. En el caso de Gemma, los valores de BLEU y COMET con esta configuración son de 54.32 y 88.88 respectivamente, mientras que los de Llama3 son 62.22 y 91.12.
 
-En la Tabla \ref{tab:comparacionIdiomas} se muestran los mejores resultados obtenidos de BLEU y COMET para cada modelo e idioma. Se han tenido en cuenta lose experimentos realizados con los valores de rango 16, 32 y 64 y la configuración de $\alpha = 2r$. En el caso de los experimentos en español, el mejor valor de rango entre estos es $r = 32$ para ambos modelos. Para el conjunto en inglés es $r = 32$ para Llama3 y $r = 16$ para Gemma.
+En la Tabla \ref{tab:comparacionIdiomas} se muestran los mejores resultados obtenidos de BLEU y COMET para cada modelo e idioma. Se han tenido en cuenta los experimentos realizados con los valores de rango 16, 32 y 64 y la configuración de $\alpha = 2r$. En el caso de los experimentos en español, el mejor valor de rango entre estos es $r = 32$ para ambos modelos. Para el conjunto en inglés es $r = 32$ para Llama3 y $r = 16$ para Gemma.
 
 \begin{table}[h]
 \centering
@@ -1456,7 +1434,7 @@ Al igual que con el modelo en español, se ha llevado a cabo un experimento adic
 
 Para la evaluación con \textit{zero-shot prompting}, se introdujeron 15 frases sin proporcionar previamente ejemplos de la tarea a realizar. En este caso, el modelo mostró un rendimiento muy bajo, generando en la mayoría de casos una repetición de las palabras clave o texto sin sentido. Por ejemplo, para las palabras clave ``girl, listen, music´´ el modelo generó ``2nd + 2nd + 2nd´´. Los resultados obtenidos de BLEU y COMET fueron 6.17 y 57.27, respectivamente.
 
-Para la técnica de \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de listas de palabras clave con sus correspondientes frases, evaluándolo nuevamente sobre 15 frases. En este caso el modelo mostró un rendimiento mucho mejor, obteniendo los resultados de 57.18 en BLEU y 90.24 en COMET. Utilizando esta técnica el modelo es capaz de captar cómo debe realizar la tarea.
+Para la técnica de \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de listas de palabras clave con sus correspondientes frases, evaluándolo nuevamente sobre 15 frases. En este caso el modelo mostró un rendimiento mucho mejor, obteniendo los resultados de 57.18 en BLEU y 90.24 en COMET. Utilizando esta técnica, el modelo es capaz de captar cómo debe realizar la tarea.
 
 La Tabla \ref{tab:promptingInglés} muestra los resultados de BLEU y COMET obtenidos con ambas técnicas, así como los resultados del modelo final Llama3 entrenado mediante LoRA con el conjunto de datos de entrenamiento en inglés.
 
@@ -1482,15 +1460,15 @@ Los resultados indican que, aunque el desempeño de \textit{zero-shot prompting}
 
 En este capítulo se presentan una serie de análisis y experimentos adicionales que se han llevado a cabo con el objetivo de evaluar de manera más profunda la eficacia del modelo final en español. Este es el modelo Llama3 con $r = 128$ y $\alpha = r$.
 
-En primer lugar, se ha realizado una comparación del rendimiento del modelo con el modelo GPT-4 y la aplicación de AsTeRISCS Grid, ampliamente utilizada en el ámbito de los SAAC. Además, se han realizado experimentos con particiapantes humanos para verificar si los resultados generados por el modelo son comparables a los obtenidos por personas. Finalmente, se ha realizado un análisis de los errores más comunes cometidos por el modelo, con el fin de identificar áreas de mejora y comprender mejor sus limitaciones.
+En primer lugar, se ha realizado una comparación del rendimiento del modelo con el modelo GPT-4 y la aplicación de AsTeRISCS Grid, ampliamente utilizada en el ámbito de los SAAC. Además, se han realizado experimentos con participantes humanos para verificar si los resultados generados por el modelo son comparables a los obtenidos por personas. Finalmente, se ha realizado un análisis de los errores más comunes cometidos por el modelo, con el fin de identificar áreas de mejora y comprender mejor sus limitaciones.
 
 \section{Comparación con otros modelos} 
 
-Una vez obtenidos los resultados finales del modelo Llama3-8B, se han realizado pruebas adicionales con el modelo GPT-4 y con la aplicación AsTeRICS Grid para comparar su rendimiento. Todas estas pruebas se han realizado utilizando el conjunto de validación reservado desde el incio de los experimentos.
+Una vez obtenidos los resultados finales del modelo Llama3-8B, se han realizado pruebas adicionales con el modelo GPT-4 y con la aplicación AsTeRICS Grid para comparar su rendimiento. Todas estas pruebas se han realizado utilizando el conjunto de test reservado desde el inicio de los experimentos.
 
 El modelo GPT-4 fue seleccionado para esta comparación debido a su reconocimiento como uno de los modelos de lenguaje grandes más avanzados y potentes disponibles actualmente. Para evaluar su desempeño, se introdujeron los datos de entrenamiento a través de su interfaz \textit{ChatGPT} mediante la técnica de \textit{prompting}, y se le solicitó que generara las frases que se encontraban en el conjunto de test. Es importante destacar que este modelo es significativamente más grande en comparación con Llama3, ya que cuenta con 1.8 trillones de parámetros. Además, no podemos determinar con certeza si GPT-4 ha tenido acceso previo a los datos de test, ya que estos se encuentran accesibles libremente en internet. GPT-4 ha sido entrenado con una gran cantidad de información recopilada de internet, aunque los detalles específicos sobre qué datos han sido utilizados para su entrenamiento no han sido publicados.
 
-Por otro lado, la aplicación AsTeRISCS Grid ha sido incluida en esta evaluación debido a su relevancia como herramienta de comunicación utilizada en el ámbito de los Sistemas de Comunicación Aumentativa y Alternativa. Esta aplicación es un comunicador electrónico desarrollada por ARASAAC, que incorpora la función de generar frases conjugadas a partir de las palabras clave introducidas por el usuario. Esta conjugación de las frases se realiza mediante una serie de reglas predefinidas.
+Por otro lado, la aplicación AsTeRISCS Grid ha sido incluida en esta evaluación debido a su relevancia como herramienta de comunicación utilizada en el ámbito de los Sistemas de Comunicación Aumentativa y Alternativa. Esta aplicación es un comunicador electrónico desarrollado por ARASAAC, que incorpora la función de generar frases conjugadas a partir de las palabras clave introducidas por el usuario. Esta conjugación de las frases se realiza mediante una serie de reglas predefinidas.
 
 La Tabla \ref{tab:comparacionFinal} presenta los resultados de BLEU y COMET obtenidos con los tres modelos (Llama3-8B, GPT-4 y AsTeRISCS Grid).
 
@@ -1510,15 +1488,15 @@ La Tabla \ref{tab:comparacionFinal} presenta los resultados de BLEU y COMET obte
 \label{tab:comparacionFinal}
 \end{table}
 
-Obsevamos que, aunque el modelo entrenado Llama3-8B no alcanza el nivel de rendimiento de GPT-4, sus resultados son notablemente superiores a los de AsTeRICS Grid, una herramienta ampliamente utilizada en el ámbito de los SAAC. Estos resultados sugieren que la integración de modelos de lenguaje grandes podría mejorar significativamente la calidad de las aplicaciones en este campo, proporcionando una alternativa más robusta y efectiva para la generación de frases a partir de las palabras introducidas por los usuarios y mejorando así la calidad de la comunicación de estos.
+Observamos que, aunque el modelo entrenado Llama3-8B no alcanza el nivel de rendimiento de GPT-4, sus resultados son notablemente superiores a los de AsTeRICS Grid, una herramienta ampliamente utilizada en el ámbito de los SAAC. Estos resultados sugieren que la integración de modelos de lenguaje grandes podría mejorar significativamente la calidad de las aplicaciones en este campo, proporcionando una alternativa más robusta y efectiva para la generación de frases a partir de las palabras introducidas por los usuarios y mejorando así la calidad de la comunicación de estos.
 
 \section{Experimentos con personas}
 
 Además de las pruebas realizadas con otros modelos, se han realizado también experimentos con un grupo de personas para poder comparar los resultados obtenidos por el modelo Llama3-8B con producciones humanas. Para ello, se explicó la tarea a un grupo de 5 personas, estudiantes de Ciencia de Datos o Informática con edades comprendidas entre 22 y 26 años. A continuación, se les proporcionó el conjunto de datos de entrenamiento para que pudiesen revisar ejemplos de la realización de la tarea, así como el conjunto de datos de validación sin incluir las frases generadas, solamente con las listas de palabras clave.
 
-A partir de esta información, se les pidió a los participantes que escribieran las frases que consideraban que podrían generarse basándose en los ejemplos proporcionados. Posteriormente, se calcularon las punutaciones de BLEU y COMET para las frases producidas por cada participante, siguiendo el mismo procedimiento utilizado en los experimentos anteriores.
+A partir de esta información, se les pidió a los participantes que escribieran las frases que consideraban que podrían generarse basándose en los ejemplos proporcionados. Posteriormente, se calcularon las puntuaciones de BLEU y COMET para las frases producidas por cada participante, siguiendo el mismo procedimiento utilizado en los experimentos anteriores.
 
-La Figura \ref{fig:comparacionIndividuos} presenta en el eje horizontal los valores de BLEU y en el vertical, los valores de COMET. Los puntos marcados por triángulos representan los resultados obtenidos por los distintos indiviudos, y el punto marcado con un círculo representa los resultados del modelo.
+La Figura \ref{fig:comparacionIndividuos} presenta en el eje horizontal los valores de BLEU y en el vertical, los valores de COMET. Los puntos marcados por triángulos representan los resultados obtenidos por los distintos individuos, y el punto marcado con un círculo representa los resultados del modelo.
 
 \mycomment{
 \begin{table}[!h]
@@ -1546,8 +1524,6 @@ La Figura \ref{fig:comparacionIndividuos} presenta en el eje horizontal los valo
 \caption{Resultados de BLEU y COMET obtenidos por los individuos y por el modelo en la tarea de generación de frases}
 \label{fig:comparacionIndividuos}
 \end{figure}
-
-% La media de BLEU entre todos los individuos es xx y la de COMET, xx. 
 
 Los resultados obtenidos por el modelo final de Llama3 entrenado con el conjunto de datos en español son BLEU = 62.90 y COMET = 89.15. Comparando estos resultados con los obtenidos por personas, observamos que, aunque el modelo Llama3 presenta un rendimiento inferior al promedio de los resultados obtenidos por individuos, supera a dos de ellos en términos de BLEU y a uno en términos de COMET.
 
@@ -1632,7 +1608,7 @@ El análisis se ha realizado comparando las frases generadas del conjunto de val
 	\item \textbf{Error en el número}: solo se ha identificado un caso en el que el error radica en el número gramatical. En este caso las palabras clave son `` niño, jugar, piscina ´´. A partir de estas, el modelo generó `` El niño juega en la piscina ´´ en lugar de  `` Los niños juegan en la piscina ´´, que era la frase real. Dado que las palabras clave no especificaban el número, es comprensible que el modelo asumiera el singular. Este error también fue cometido por todos los participantes humanos en el experimento.
 \end{itemize}
 
-Las 10 frases restantes presentan varios de los errores mencionados u otros problemas sintácticos. En la tabla \ref{tab:erroresVariados} se presentan tres ejemplos de frases con distintos errores.
+Las 10 frases restantes presentan varios de los errores mencionados u otros problemas sintácticos. En la Tabla \ref{tab:erroresVariados} se presentan tres ejemplos de frases con distintos errores.
 
 \begin{table}[!h]
 \caption{Frases generadas por Llama3 con varios errores}
@@ -1686,7 +1662,7 @@ A lo largo del desarrollo de este trabajo, se han cumplido satisfactoriamente lo
 
 \section{Propuesta de trabajo futuro}
 
-Aunque los resultados en este trabajo son satisfactorios, se han identificado algunas áreas de mejora que no han podido ser abordadas debido a limitaciones de tiempo, recursos computacionales y costos económicos. Así, para continuar la investicación y mejorar los resultados, se proponen las siguientes líneas de trabajo futuro:
+Aunque los resultados en este trabajo son satisfactorios, se han identificado algunas áreas de mejora que no han podido ser abordadas debido a limitaciones de tiempo, recursos computacionales y costos económicos. Así, para continuar la investigación y mejorar los resultados, se proponen las siguientes líneas de trabajo futuro:
 
 \begin{itemize}
 	\item \textbf{Realización de más repeticiones de experimentos}: resultaría interesante realizar más repeticiones de los experimentos realizados para poder obtener resultados más robustos, ya que las variaciones en el entrenamiento pueden influir significativamente en el rendimiento de los modelos. En este proyecto, las limitaciones de tiempo, recursos computacionales y costos económicos han impedido realizar un número más alto de experimentos.
@@ -1695,7 +1671,7 @@ Aunque los resultados en este trabajo son satisfactorios, se han identificado al
 
 \section{Legado}
 
-Este trabajo supone una contribución al campo de los Sistemas de Comunicación Aumentativa y Alternativa (SAAC). Se ha demostrado que la adaptación de modelos de lenguaje grandes para la generación de frases a partir de palabras clave permite mejorar significativamente la eficacia de estas herramientas, facilitando una comunicación más natural y coherente para las personas que tienen dificultades en este área.
+Este trabajo supone una contribución al campo de los Sistemas de Comunicación Aumentativa y Alternativa (SAAC). Se ha demostrado que la adaptación de modelos de lenguaje grandes para la generación de frases a partir de palabras clave permite mejorar significativamente la eficacia de estas herramientas, facilitando una comunicación más natural y coherente para las personas que tienen dificultades en esta área.
 
 El código y los datos utilizados están disponibles en el repositorio de GitHub, permitiendo así a otros investigadores reproducir el análisis y trabajo realizado. Toda la documentación relevante está referenciada en la bibliografía.
 
@@ -1707,11 +1683,9 @@ En primer lugar, la obtención y transformación de diferentes conjuntos de dato
 
 El entrenamiento de  modelos de lenguaje grandes, que forma parte del campo del Procesamiento de Lenguaje Natural, se ha basado en conceptos estudiados en la carrera, por ejemplo el \textit{fine-tuning} y la técnica de \textit{cross-validation}.
 
-Se ha profundizado también en técnicas avanzadas como la adaptacion de modelos mediante LoRA, una técnica no vista en profundidad durante la carrera pero que ha sido fundamental para el entrenamiento de los modelos en este proyecto.
+Se ha profundizado también en técnicas avanzadas como la adaptación de modelos mediante LoRA, una técnica no vista en profundidad durante la carrera pero que ha sido fundamental para el entrenamiento de los modelos en este proyecto.
 
 Por último, el cálculo de métricas y creación de tablas y gráficas han sido cruciales para la interpretación de resultados. Los conceptos de visualización de datos  aprendidos durante los estudios han resultado muy útiles para presentar de manera clara los resultados obtenidos.
-
- Para ello han sido muy utiles los conceptos de visualización de datos aprendidos durante los estudios.
 
 En resumen, este proyecto ha permitido aplicar de manera práctica los conocimientos adquiridos en el grado de Ciencia de Datos, desde la preparación de los datos y el entrenamiento de modelos hasta la evaluación y visualización de resultados.
 
