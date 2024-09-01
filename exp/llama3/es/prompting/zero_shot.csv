@@ -1,16 +1,61 @@
-lemmas,real phrase,generated phrases
-"caer, sal, a, mantel",Cayó sal al mantel,caer en la sal a un hombre que tiene un mantel
-"ogro, se, ir",El ogro se fue,A ogro se irá
-"alcalde, no, querer, pagar, flautista",El alcalde no quiso pagar al flautista,El alcalde no quería pagar al flautista
-"cabritillos, ser, feliz",Los cabritillos fueron felices,Hace dos años que no veo a mi amigo
-"lobo, querer, comer, lo",El lobo quiere comerlos,lobo querer comer lo
-"Reyes, mago, ir, camello",Los Reyes magos van en camello,"""Reyes, mago, ir, camello"""
-"caracol, Ramó, no, saber, como, vestir, se",El caracol Ramón no sabe como vestirse,"caracol, Ramó, no, saber, como, vestir, se"
-"tomar, este, tomate",Toma este tomate,tomar este tomate
-"pájaro, nadar, por, mar",El pájaro nada por el mar,El pájaro se puso a nadar en el mar
-"qué, llevar, cesta, ?",¿Qué llevas en la cesta?,¿Qué llevas en la cesta?
-"domingo, de, ramos, ir, ver, borriquita",El domingo de ramos vamos a ver la borriquita,Veremos de ir de ramos de la borriquita
-"lobo, querer, comer, lo",El lobo quiere comerlo,Lobo querer comer lo
-"gato, mirar, pez",El gato mira el pez,El gato mira el pez
-"caracol, se, poner, triste",El caracol se puso triste,El caracol se puso triste
-"niños, saltar, cama",Los niños saltan en la cama,Un niño salta sobre la cama
+lemmas,real phrases,generated phrases
+"cerditos, vivir, feliz",Los cerditos viven felices.,"Vivir es un privilegio, ser feliz es una opción"
+"Juan, se, encontrar, un, mago",Juan se encontró con un mago.,"Juan, se, encuentra, un, mago."
+"cabritillo, pequeño, estar, reloj",El cabritillo pequeño está en el reloj.,Un reloj pequeño puede estar en una casa de cabritillo
+"otro, hija, ser, Saturno",Otra hija era Saturno.,¿Sabes por qué Saturno tiene solo 62 lunes?
+"Reyes, mago, ir, camello",Los Reyes Magos van en camello.,Un rey mago montado en un camello
+"policía, poner, un, multa",El policía puso una multa.,La policía pone multas a los conductores que no respetan las normas
+"ratita, comprar, un, lazo",La ratita compra un lazo.,Un ratita compró un lazo para su mamá
+"lunes, comer, lentejas",El lunes comeré lentejas.,Lentejas lunes lentejas lunes lentejas lunes
+"este, ser, Ricitos, de, Oro",Esta es Ricitos de Oro.,"Ricitos de Oro, serás mi compañero en la búsqueda"
+"planta, llegar, cielo",La planta llegó hasta el cielo.,Llegar a la planta del cielo
+"cerdito, correr, rápido",El cerdito corre rápido.,"Cerdito, corre rápido"
+"mamá, meter, piedras, en, barriga",Mamá mete piedras en la barriga.,MAMÁ METE LAS PIEDRAS EN LA BARRIGA
+"tirar, ventana",Las tiró por la ventana.,Tirar la ventana para que entre el aire fresco
+"niño, jugar, piscina",Los niños juegan en la piscina.,El niño juega en la piscina
+"Laura, Malena, ser, gemelo",Laura y Malena son gemelas.,"Laura, Malena, ser, gemelo, es la frase"
+"qué, llevar, cesta, ?",¿qué llevas en la cesta?,¿Qué llevas en la cesta?
+"a, dónde, ir, Caperucita",¿a dónde vas Caperucita?,"Caperucita, Caperucita, dónde vas?"
+"no, lo, cambiar",No lo cambiaré.,¿Sabes por qué no me gusta el agua?
+"me, gustar, churros, relleno",Me gustan los churros rellenos.,Me gustan los churros rellenos.
+"niños, se, reír",Los niños se reían.,"se
+           niños
+           reír
+           se
+           niños"
+"juan, bajar, planta",Juan bajó por la planta.,"Juan bajar planta
+"
+"yo, escribir, un, carta, para, Reyes, mago",Yo escribo una carta para los Reyes Magos.,"Lemas: yo, escribir, un, carta, para, Reyes"
+"perro, ir, carretera",El perro fue por la carretera.,"""perro ir carretera"""
+"niño, pesca, un, pez, pequeñito",El niño pesca un pez pequeñito.,"El niño pescaba un pez pequeñito."
+"ver, un, topo, en, otoño",Vi un topo en otoño.,"ver
+           un
+           topo
+           en
+           otoño"
+"ratita, barrer, su, casita",La ratita barre su casita.," ""La ratita barrer su casita"""
+"seis, cabritillos, salir, contento",Los seis cabritillos salen contentos.,"Voy a salir de aquí, a la cabaña"
+"madrastra, no, dejar, ir, Cenicienta, a, fiesta",La madrastra no deja ir a Cenicienta a la fiesta.,"Cenicienta, ir a la fiesta de tu madrastra"
+"todos, quedar, sorprendido, de, su, disfraz, tan, bonito",Todos quedaron sorprendidos de su disfraz tan bonito.,"Lemas: todos, quedar, sorprendido, de, su, disfraz, tan, bonito"
+"reyes, mago, traer, regalo",Los reyes magos traen regalo.,Un rey mago trajo un regalo a la casa del señor
+"mamá, me, decir, hola, por, mañana",Mamá me dice hola por la mañana.,"Mamá, me dice que mañana me voy a comprar un nuevo carro."
+"cerditos, ver, lobo",Los cerditos ven al lobo.,"Un día, un lobo se acercó a la puerta"
+"amigos, de, bruja, lo, ver, bailar",Los amigos de la bruja lo vieron bailar.,te gusta bailar con la luna llena
+"su, mamá, se, enfadar",Su mamá se enfadó.,¿Qué sucedió? ¿Qué pasó?
+"perra, tener, cachorros",La perra tuvo cachorros.,"""Tengo dos perras y tres cachorros."""
+"lobo, llegar, primero",El lobo llegó primero.,"Lobo primero, Lobo primero, Lobo primero, Lobo primero"
+"papá, leer, un, cuento, a, niña, en, cama",El papá lee un cuento a la niña en la cama.,"papá, lee, un, cuento, a, la, niña, en, cama"
+"Ricitos, de, Oro, dormir, cama",Ricitos de Oro duerme en la cama.,"En el bosque de Ricitos de Oro, hay una cama"
+"caracol, Ramó, no, saber, como, vestir, se",El caracol Ramón no sabe como vestirse.,"Lemas: caracol, Ramó, no, saber, como, vestir, se"
+"Anabel, pintar, papel",Anabel pinta en el papel.,Pintar el papel con un lápiz de color rojo
+"papá, abrir, puerta, de, coche, con, llave",El papá abre la puerta del coche con la llave.,"papá, abrir, puerta, de, coche, con, llave"
+"cazador, asustar, lobo",El cazador asustó al lobo.,¡Cuidado! ¡El lobo está en la puerta!
+"Papá, Noel, ir, trineo, con, renos",Papá Noel va en trineo con renos.,"Papá, ir con Noel, trineo, con, renos"
+"este, ser, Caperuza, Roja",Esta es Caperucita Roja.,"Caperuza Roja, Caperuza Roja"
+"Blancanieves, correr, bosque",Blancanieves corre al bosque,"En el bosque, hay un bosque, y hay un bosque"
+"me, doler, colmillo",Me duele el colmillo.,Me dolerán los colmillos de los perros.
+"mamá, oso, coger, plato, mediano",Mamá oso coge el plato mediano.,"Mamá, ¿cómo se llama el oso?"
+"yo, dormir, noche",Yo duermo por la noche.,"Lemas: yo, dormir, noche
+           Frase:"
+"ese, señor, ir, pasear, a, pinar",Ese señor va a pasear al pinar.,¿Pasear a ir a pinar?
+"Caperucita, abuela, ser, feliz",Caperucita y la abuela fueron felices.,"Caperucita, abuela, ser, feliz"

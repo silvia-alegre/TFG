@@ -1270,30 +1270,12 @@ Los resultados obtenidos con esta configuración final han sido los siguientes:
 	\item COMET = 89.15
 \end{itemize}
 
-Aunque los valores obtenidos para BLEU y COMET son inferiores a los resultados alcanzados durante la fase de experimentación anterior, estos resultados se encuentran dentro de un rango adecuado de las métricas. La disminución en estas puede deberse a la diferencia entre el conjunto de entrenamiento y el conjunto de validación. De todas maneras, los resultados siguen siendo prometedores y reflejan un buen desempeño del modelo en esta tarea.
+Aunque los valores obtenidos para BLEU y COMET son inferiores a los resultados alcanzados durante la fase de experimentación anterior, estos resultados se encuentran dentro de un rango adecuado de las métricas. En la mayoría de casos, el modelo genera frases que se ajustan bien a las palabras clave proporcionadas, aunque a veces presenta errores relacionados con los tiempos verbales u otras pequeñas confusiones. La disminución en las métricas puede deberse a la diferencia entre el conjunto de entrenamiento y el conjunto de validación. A pesar de esto, los resultados siguen siendo prometedores y reflejan un buen desempeño del modelo en esta tarea.
 
 \subsection{Comparación con los resultados obtenidos mediante \textit{prompting}}
 
 Se ha realizado un experimento adicional para evaluar el modelo Llama3-8B sin entrenamiento previo, con el objetivo de medir la mejora de este tras ser entrenado con el conjunto de datos de entrenamiento. Para ello, se introdujeron al modelo algunos datos específicos mediante
- \textit{prompting}, empleando las técnicas descritas en la Sección \ref{prompting} de \textit{zero-shot prompting} y \textit{few-shot prompting}.
-
-\subsubsection{\textit{Zero-shot prompting}}
-
-En el experimento de \textit{zero-shot prompting}, se introdujeron un total de 15 frases utilizando el formato defindo para la inferencia descrito en la Tabla \ref{tab: formatoInferencia}. Los resultados obtenidos de BLEU y COMET fueron 22.05 y 74.88, respectivamente.
-
-Los resultados muestran que el modelo no comprende adecuadamente la tarea en la mayoría de los casos. Se identificaron tres tipos de respuesta:
-
-\begin{enumerate}
-	\item \textbf{Repetición de las palabras clave}: en la mayoría de casos el modelo se limita a repetir las palabras clave que fueron introducidas, ya sea de manera exactamente igual o con pequeñas modificaciones, como la eliminación de comas, la adición de comillas o el uso de mayúscula en ciertas palabras.
-	\item \textbf{Frases sin sentido o sin relación con las palabras clave}: en otros casos, el modelo genera frases utilizando las palabras clave pero que no tienen sentido, o incluso frases que no guardan relación con las palabras introducidas. Por ejemplo, para las palabras clave ``domingo, de, ramos, ir, ver, borriquita´´ el modelo generó la frase ``Veremos de ir de ramos de la borriquita´´ y para las palabras clave ``cabritillos, ser, feliz´´, generó ``Hace dos años que no veo a mi amigo´´. 
-	\item \textbf{Frases similares a las esperadas}: en algunas ocasiones el modelo sí que genera frases que coinciden con las reales o que son similares a estas. Por ejemplo, para los lemas ``caracol, se, poner, triste´´ generó correctamente la frase ``El caracol se puso triste´´, y para  ``niño, saltar, cama´´ generó ``Un niño salta sobre la cama´´, que, aunque no es idéntica a la frase real ``Los niños saltan en la cama´´, refleja que el modelo comprendió la tarea.
-\end{enumerate}
-
-\subsubsection{\textit{Few-shot prompting}}
-
-Para la técnica de \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de palabras clave con sus correspondientes frases generadas, evaluándose nuevamente sobre 15 frases. Los resultados obtenidos de BLEU y COMET fueron de 27.29 y 83.59, respectivamente.
-
-En este caso, el modelo demostró una mejor comprensión de la tarea, generando resultados que, en la mayoría de casos, se acercan más a los reales en comparación con el  \textit{zero-shot prompting}. Sin embargo, presenta mayor cantidad de errores que el modelo entrenado con datos específicos. Algunos de estos errores incluyen cambios en el orden de las palabras, como en el caso de ``caer, sal, al, mantel´´, donde el modelo generó ``El mantel cae a la sal´´, cuando debería haber generado ``Cayó sal al mantel´´. Otro ejemplo es para las palabras ``domingo, de, ramos, ir, ver, borriquita´´, que generan la frase ``El domingo de ramos vamos a ver la borriquita´´, pero el modelo generó ``EL domingo vamos a ver la borriquita de los ramos´´. También se observaron casos en los que el modelo añadió palabras que no estaban en la lista de palabras clave. Por ejemplo, para las palabras clave ``lobo, querer, comer, lo´´ el modelo generó ``Lo que el lobo quiere comer es un cerdo´´, aunque la palabra ``cerdo´´ no se encontraba en la lista de palabras clave proporcionadas, por lo que no debería aparecer en la frase.
+ \textit{prompting}, empleando las técnicas descritas en la Sección \ref{prompting} de \textit{zero-shot prompting} y \textit{few-shot prompting}. La evaluación de estos experimentos se ha realizado utilizando el conjunto reservado para test.
 
 La Tabla \ref{tab:promptingEspañol} resume los resultados obtenidos con las técnicas de \textit{zero-shot prompting} y \textit{few-shot prompting}  y también los resultados del modelo final de Llama3 entrenado mediante LoRA.
 
@@ -1304,8 +1286,8 @@ La Tabla \ref{tab:promptingEspañol} resume los resultados obtenidos con las té
 	\ & BLEU & COMET \\
 	\hline
 	\hline
-	\textit{Zero-shot prompting} & 22.05 & 74.88  \\
-	\textit{Few-shot prompting} & 27.29 & 83.59 \\
+	\textit{Zero-shot prompting} & 7.17 & 63.69  \\
+	\textit{Few-shot prompting} & 47.35 & 87.93 \\
 	Modelo final entrenado con LoRA & 62.90 & 89.15 \\
 
 \end{tabular}
@@ -1313,7 +1295,17 @@ La Tabla \ref{tab:promptingEspañol} resume los resultados obtenidos con las té
 \label{tab:promptingEspañol}
 \end{table}
 
-Los resultados demuestran que el entrenamiento realizado al modelo mediante LoRA proporciona una mejora significativa en el rendimiento en comparación con las técnicas de \textit{prompting}. Tanto el \textit{zero-shot prompting} como el \textit{few-shot prompting} muestran limitaciones en la comprensión de la tarea, que son superadas cuando el modelo es entrenado con datos específicos. El modelo entrenado mediante LoRA alcanza resultados mejores en las métricas BLEU y COMET, lo que confirma que el entrenamiento con datos específicos representa una mejora sustancial.
+En el caso de \textit{zero-shot prompting}, los resultados son realmente bajos y muestran que el modelo no comprende adecuadamente la tarea en la mayoría de los casos. Se identificaron tres tipos de respuesta:
+
+\begin{enumerate}
+	\item \textbf{Repetición de las palabras clave}: en la mayoría de casos el modelo se limita a repetir las palabras clave que fueron introducidas, ya sea de manera exactamente igual o con pequeñas modificaciones, como la eliminación de comas, la adición de comillas o el uso de mayúscula en ciertas palabras.
+	\item \textbf{Frases sin sentido o sin relación con las palabras clave}: en otros casos, el modelo genera frases utilizando las palabras clave pero que no tienen sentido, o incluso frases que no guardan relación con las palabras introducidas. Por ejemplo, para las palabras clave ``mamá, me, decir, hola, por, mañana´´ el modelo generó la frase ``Mamá, me dice que mañana me voy a comprar un nuevo carro.´´ y para las palabras clave ``no, lo, cambiar´´, generó ``¿Sabes por qué no me gusta el agua?´´.  También hay ocasiones en las que el modelo utiliza las palabras clave para generar las frases pero añade también palabras que no están en la lista de palabras introducidas, generando frases que divagan y no son correctas. Por ejemplo, para las palabras clave ``policía, poner, un, multa´´, la frase esperada era ``El policía puso una multa´´, pero el modelo generó ``La policía pone multas a los conductores que no respetan las normas.´´.
+	\item \textbf{Frases similares a las esperadas}: en algunas ocasiones el modelo sí que genera frases que coinciden con las reales o que son similares a estas. Por ejemplo, para los lemas ``qué, llevar, cesta, ?´´ generó correctamente la frase ``¿Qué llevas en la cesta?´´, y para  ``niño, jugar, piscina´´ generó ``El niño juega en la piscina´´, que, aunque no es idéntica a la frase real ``Los niños juegan en la piscina.´´, refleja que el modelo comprendió la tarea.
+\end{enumerate}
+
+Para la técnica de \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de palabras clave con sus correspondientes frases generadas. En este caso, el modelo demostró una mejor comprensión de la tarea, generando resultados que, en la mayoría de casos, se acercan más a los reales en comparación con el  \textit{zero-shot prompting}. Sin embargo, presenta mayor cantidad de errores que el modelo entrenado con datos específicos. Algunos de estos errores incluyen cambios en el orden de las palabras, como en el caso de ``mamá, oso, coger, plato, mediano´´, donde el modelo generó ``La mamá coge el plato del oso medio.´´, cuando debería haber generado ``Mamá oso coge el plato mediano.´´. También se observaron casos en los que el modelo añadió palabras que no estaban en la lista de palabras clave. Por ejemplo, para las palabras clave ``este, ser, Caperuza, Roja´´ el modelo generó ``Esta caperucita roja se llamaba María.´´, aunque las palabras ``llamar´´ y ``María´´ no se encontraba en la lista de palabras clave proporcionadas, por lo que no deberían aparecer en la frase.
+
+Los resultados presentados en la Tabla \ref{tab:promptingEspañol} indican que, aunque el \textit{few-shot prompting} produce resultados razonablemente buenos, el entrenamiento realizado al modelo mediante LoRA sí que proporciona una mejora en el rendimiento en comparación con las técnicas de \textit{prompting}. El uso del modelo mediante \textit{zero-shot prompting} presenta grandes limitaciones de comprensión de la tarea. Aunque el \textit{few-shot prompting} mejora los resultados, aún persisten problemas de comprensión en ciertos casos. El modelo entrenado mediante LoRA alcanza resultados mejores en las métricas BLEU y COMET, lo que confirma que el entrenamiento con datos específicos ofrece una mejora frente a los otros.
 
 \section{Experimentos adicionales con el conjunto en inglés}
 
@@ -1424,17 +1416,11 @@ El modelo ha sido entrenado utilizando la totalidad de datos de entrenamiento di
 	\item COMET = 87.96
 \end{itemize}
 
-De nuevo, se observa que los resultados obtenidos son inferiores a los obtenidos en los alcanzados en la fase de experimentación anterior.
-
-En general, el rendimiento del modelo en inglés es inferior al del modelo en español. Esto podría deberse a la menor cantidad de datos disponibles en inglés.
+De nuevo, se observa que los resultados obtenidos son inferiores a los obtenidos en los alcanzados en la fase de experimentación anterior. En general, el rendimiento del modelo en inglés es inferior al del modelo en español, cosa que podría deberse a la menor cantidad de datos disponibles en inglés. A pesar de esto, el modelo genera frases muy similares a las reales en la gran mayoría de casos.
 
 \subsection{Comparación con los resultados obtenidos mediante \textit{prompting}}
 
-Al igual que con el modelo en español, se ha llevado a cabo un experimento adicional para evaluar el rendimiento del modelo Llama3-8B en inglés sin entrenamiento previo, con el fin de medir la mejora obtenida tras el entrenamiento. Para ello, se han empleado las técnicas de \textit{zero-shot prompting} y \textit{few-shot prompting}, siguiendo el mismo procedimiento que con los datos en español.
-
-Para la evaluación con \textit{zero-shot prompting}, se introdujeron 15 frases sin proporcionar previamente ejemplos de la tarea a realizar. En este caso, el modelo mostró un rendimiento muy bajo, generando en la mayoría de casos una repetición de las palabras clave o texto sin sentido. Por ejemplo, para las palabras clave ``girl, listen, music´´ el modelo generó ``2nd + 2nd + 2nd´´. Los resultados obtenidos de BLEU y COMET fueron 6.17 y 57.27, respectivamente.
-
-Para la técnica de \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de listas de palabras clave con sus correspondientes frases, evaluándolo nuevamente sobre 15 frases. En este caso el modelo mostró un rendimiento mucho mejor, obteniendo los resultados de 57.18 en BLEU y 90.24 en COMET. Utilizando esta técnica, el modelo es capaz de captar cómo debe realizar la tarea.
+Al igual que con el modelo en español, se ha llevado a cabo un experimento adicional para evaluar el rendimiento del modelo Llama3-8B en inglés sin entrenamiento previo, con el fin de medir la mejora obtenida tras el entrenamiento. Para ello, se han empleado las técnicas de \textit{zero-shot prompting} y \textit{few-shot prompting}, siguiendo el mismo procedimiento que con los datos en español. Estos experimentos se han evaluado sobre el conjunto en inglés reservado para test.
 
 La Tabla \ref{tab:promptingInglés} muestra los resultados de BLEU y COMET obtenidos con ambas técnicas, así como los resultados del modelo final Llama3 entrenado mediante LoRA con el conjunto de datos de entrenamiento en inglés.
 
@@ -1445,8 +1431,8 @@ La Tabla \ref{tab:promptingInglés} muestra los resultados de BLEU y COMET obten
 	\ & BLEU & COMET \\
 	\hline
 	\hline
-	\textit{Zero-shot prompting} & 6.17 & 57.27  \\
-	\textit{Few-shot prompting} & 57.18 & 90.24 \\
+	\textit{Zero-shot prompting} & 15.36 & 65.80  \\
+	\textit{Few-shot prompting} & 55.22 & 88.68 \\
 	Modelo final entrenado con LoRA & 56.17 & 87.96 \\
 
 \end{tabular}
@@ -1454,7 +1440,11 @@ La Tabla \ref{tab:promptingInglés} muestra los resultados de BLEU y COMET obten
 \label{tab:promptingInglés}
 \end{table}
 
-Los resultados indican que, aunque el desempeño de \textit{zero-shot prompting} es muy bajos, la técnica de \textit{few-shot prompting} logra una gran eficacia. De hecho, los resultados obtenidos con esta técnica son superiores a los obtenidos con el modelo entrenado mediante LoRA. Esto podría deberse a una posible limitación en la calidad del conjunto de datos en inglés utilizado para el entrenamiento.
+Al igual que en el caso del modelo en español, los resultados obtenidos con \textit{zero-shot prompting} son significativamente inferiores a los de las otras técnicas, indicando que el modelo tiene grandes problemas para comprender la tarea adecuadamente. En la mayoría de los casos, el modelo se limita a repetir los lemas introducidos, a veces con ligeras variaciones. En muy pocas ocasiones la frase generada por el modelo se asemeja a la frase real.
+
+En el caso del \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de listas de palabras clave con sus correspondientes frases. El modelo muestra un rendimiento mucho mejor, demostrando que es capaz de comprender el objetivo de la tarea. Sin embargo, en algunas ocasiones el modelo añade palabras que no aparecían en la lista de palabras clave. Por ejemplo, para las palabras clave ``snail, become, sad´´, el modelo generó ``The snail becomes sad because of the rain.´´, aunque la palabra ``rain´´ no estaba en el listado. De todas maneras, el modelo generó frases cercanas a las frases reales en la mayoría de ocasiones. Los errores cometidos son similares a los del modelo entrenado con LoRA, y la puntuación de COMET obtenida con \textit{few-shot prompting} es ligeramente superior a la del modelo entrenado con datos específicos.
+
+Así, los resultados de la Tabla \ref{tab:promptingInglés} indican que, aunque el desempeño de \textit{zero-shot prompting} es muy bajo, la \textit{few-shot prompting} resulta muy eficaz. Los resultados obtenidos con esta técnica son muy similares a los obtenidos con el modelo entrenado mediante LoRA en términos de BLEU, y superiores en cuanto a COMET. Esto podría sugerir una posible limitación en la calidad del conjunto de datos en inglés utilizado para el entrenamiento.
 
 \chapter{Análisis posteriores del modelo en español} \label{cap5}
 
