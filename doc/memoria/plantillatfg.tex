@@ -110,7 +110,7 @@ En este primer capítulo se presenta la motivación que impulsa el estudio y los
 
 La comunicación y el lenguaje son dos pilares fundamentales de la sociedad actual, pues constituyen la base de las relaciones interpersonales, permitiendo el intercambio de ideas e información. Gracias a ello podemos transmitir a los demás nuestros pensamientos, emociones y necesidades, permitiéndonos participar en la vida en sociedad. Sin embargo, para algunas personas el hecho de comunicarse de manera satisfactoria puede suponer un gran desafío. En estos casos, los Sistemas Aumentativos y Alternativos de Comunicación (SAAC) juegan un papel crucial.
 
-Tal y como se explica en el portal del Centro Aragonés para la Comunicación Aumentativa y Alternativa (ARASAAC) \footnote{\url{https://arasaac.org}}, "\textit{los Sistemas Aumentativos y Alternativos de Comunicación (SAAC) son formas de expresión diferentes del lenguaje hablado que tienen como objetivo aumentar el nivel de expresión (aumentativo) y/o compensar (alternativo) las dificultades de comunicación que presentan algunas personas en este área}” \cite{arasaac}.
+Tal y como se explica en el portal del Centro Aragonés para la Comunicación Aumentativa y Alternativa (ARASAAC) \footnote{ARASAAC es un proyecto colaborativo impulsado por el Gobierno de Aragón desde 2007 que ofrece recursos gratuitos y materiales adaptados para mejorar la comunicación y accessibilidad cognitiva de personas que presentan dificultades en estas áreas. Son especialmente conocidos por su banco de pictogramas, ampliamente utilizado en todo el mundo por profesionales, familias y educadores, y ha sido nominado a numerosos premios por su impacto y contribución. Más información en \url{https://arasaac.org}.}, "\textit{los Sistemas Aumentativos y Alternativos de Comunicación (SAAC) son formas de expresión diferentes del lenguaje hablado que tienen como objetivo aumentar el nivel de expresión (aumentativo) y/o compensar (alternativo) las dificultades de comunicación que presentan algunas personas en este área}” \cite{arasaac}.
 
 Existen diversas razones por las cuales una persona podría necesitar utilizar un SAAC. Entre ellas encontramos la parálisis cerebral, la discapacidad intelectual, los trastornos del espectro autista, algunas enfermedades neurológicas, las distrofias musculares o las afasias.
 
@@ -1247,7 +1247,7 @@ Las gráficas de la Figura \ref{fig:graficasLlama} presentan en el eje horizonta
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados obtenidos en las métricas BLEU y COMET con el modelo Llama3-8B tras ser entrenado mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en español.}
+\caption{Resultados de BLEU y COMET obtenidos con el modelo Llama3-8B tras ser entrenado mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en español.}
 \label{fig:graficasLlama}
 \end{figure}
 
@@ -1403,7 +1403,7 @@ Las gráficas de la Figura \ref{fig:graficasLlama inglés} ilustran en el eje ho
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados obtenidos en las métricas de BLEU y COMET con el modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ = 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en inglés.}
+\caption{Resultados de BLEU y COMET obtenidos con el modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ = 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en inglés.}
 \label{fig:graficasLlama inglés}
 \end{figure}
 
@@ -1468,7 +1468,7 @@ Una vez obtenidos los resultados finales del modelo Llama3-8B, se han realizado 
 
 El modelo GPT-4 fue seleccionado para esta comparación debido a su reconocimiento como uno de los modelos de lenguaje grandes más avanzados y potentes disponibles actualmente. Para evaluar su desempeño, se introdujeron los datos de entrenamiento a través de su interfaz \textit{ChatGPT} mediante la técnica de \textit{prompting}, y se le solicitó que generara las frases que se encontraban en el conjunto de test. Es importante destacar que este modelo es significativamente más grande en comparación con Llama3, ya que cuenta con 1.8 trillones de parámetros. Además, no podemos determinar con certeza si GPT-4 ha tenido acceso previo a los datos de test, ya que estos se encuentran accesibles libremente en internet. GPT-4 ha sido entrenado con una gran cantidad de información recopilada de internet, aunque los detalles específicos sobre qué datos han sido utilizados para su entrenamiento no han sido publicados.
 
-Por otro lado, la aplicación AsTeRISCS Grid ha sido incluida en esta evaluación debido a su relevancia como herramienta de comunicación utilizada en el ámbito de los Sistemas de Comunicación Aumentativa y Alternativa. Esta aplicación es un comunicador electrónico desarrollado por ARASAAC, que incorpora la función de generar frases conjugadas a partir de las palabras clave introducidas por el usuario. Esta conjugación de las frases se realiza mediante una serie de reglas predefinidas.
+Por otro lado, la aplicación AsTeRISCS Grid ha sido incluida en esta evaluación debido a su relevancia como herramienta de comunicación utilizada en el ámbito de los sistemas de comunicación aumentativa y alternativa. Esta aplicación es un comunicador electrónico desarrollado por ARASAAC, que incorpora la función de generar frases conjugadas a partir de las palabras clave introducidas por el usuario. Esta conjugación de las frases se realiza mediante una serie de reglas predefinidas.
 
 La Tabla \ref{tab:comparacionFinal} presenta los resultados de BLEU y COMET obtenidos con los tres modelos (Llama3-8B, GPT-4 y AsTeRISCS Grid).
 
