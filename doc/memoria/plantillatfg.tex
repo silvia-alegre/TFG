@@ -136,7 +136,7 @@ Los objetivos principales de este proyecto son los siguientes:
 \begin{enumerate}
 	\item Investigar sobre los distintos tipos de Sistemas de Comunicación Aumentativa y Alternativa (SAAC) disponibles, explorando cómo las herramientas de aprendizaje automático e inteligencia artificial podrían optimizar su uso.
 	\item Adaptar y evaluar modelos de lenguaje grandes actuales y de acceso público para su implementación  en la generación de frases dentro de herramientas SAAC.
-	\item Realizar una comparación de los resultados obtenidos utilizando LLMs respecto a otros comunicadores SAAC que permiten la generación de frases y que se encuentran actualmente en el mercado.
+	\item Realizar una comparación de los resultados obtenidos utilizando LLM respecto a otros comunicadores SAAC que permiten la generación de frases y que se encuentran actualmente en el mercado.
 \end{enumerate}
 
 \section{Estructura de la memoria}
@@ -586,7 +586,7 @@ z = g\hat{x} + b
 
 Los modelos de lenguaje grandes (LLM por su nombre en inglés, \textit{large language models}) representan una de las innovaciones más significativas en el campo del procesamiento de lenguaje natural. Estos modelos están basados en redes neuronales profundas, y generalmente utilizan la arquitectura de transformers. Estos modelos cuentan con miles de millones de parámetros, y pueden ser entrenados con enormes cantidades de texto, lo que hace que sean capaces de procesar y generar lenguaje humano con una gran fluidez, naturalidad y corrección.
 
-Las tareas sobre las que se aplican son casos de generación condicional, es decir, generación de texto condicionado a un fragmento de entrada, conocido como \textit{prompt}. Así, los LLMs son modelos que están diseñados fundamentalmente para predecir la siguiente palabra de una secuencia de palabras \cite{jurafsky2023speech}. Aunque el ámbito de tareas sobre el que se pueden aplicar los LLMs pueda parecer reducido, la realidad es que la gran mayoría de tareas en el ámbito de NLP pueden ser enfocadas desde un punto de vista de generación condicional.
+Las tareas sobre las que se aplican son casos de generación condicional, es decir, generación de texto condicionado a un fragmento de entrada, conocido como \textit{prompt}. Así, los LLM son modelos que están diseñados fundamentalmente para predecir la siguiente palabra de una secuencia de palabras \cite{jurafsky2023speech}. Aunque el ámbito de tareas sobre el que se pueden aplicar los LLM pueda parecer reducido, la realidad es que la gran mayoría de tareas en el ámbito de NLP pueden ser enfocadas desde un punto de vista de generación condicional.
 
 En la siguiente sección se explica cómo se deben introducir los datos de entrada al modelo mediante \textit{prompting}.
 
@@ -618,7 +618,7 @@ A partir de esta, el modelo deberá calcular la probabilidad para cada palabra $
 \centerline{$P(w|\text{Pregunta: ¿Cuál es la capital de Francia? Respuesta: })$}
 \end{displayquote}
 
-Los vocabularios en los LLMs se refieren al conjunto de palabras sobre las que trabajan. Así, habiendo calculado las probabilidades para todas las posibles palabras, encontraremos algunas con probabilidades más altas, entre las cuales debería encontrarse la palabra \textit{París}, que es la respuesta a la pregunta. El modelo debería seleccionar esta palabra y, si se quiere generar una respuesta más larga, se calcula la siguiente probabilidad:
+Los vocabularios en los LLM se refieren al conjunto de palabras sobre las que trabajan. Así, habiendo calculado las probabilidades para todas las posibles palabras, encontraremos algunas con probabilidades más altas, entre las cuales debería encontrarse la palabra \textit{París}, que es la respuesta a la pregunta. El modelo debería seleccionar esta palabra y, si se quiere generar una respuesta más larga, se calcula la siguiente probabilidad:
 
 \begin{displayquote}
 \centerline{$P(w|\text{Pregunta: ¿Cuál es la capital de Francia? Respuesta: París})$}
@@ -698,9 +698,9 @@ Además, existe una variación de este algoritmo que se conoce como \textit{temp
 
 donde $V^{(k)}$ es el conjunto de las $k$ palabras más probables y $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
 
-\subsection{Arquitecturas de los LLMs}
+\subsection{Arquitecturas de los LLM}
 
-Existen cuatro tipos principales de arquitecturas de los LLMs:
+Existen cuatro tipos principales de arquitecturas de los LLM:
 
 \begin{itemize}
 	\item \textbf{Arquitectura \textit{encoder-decoder}}: esta es la arquitectura explicada en la Sección \ref{encdec}, sobre la cual se basa también la arquitectura de transformers original, presentada en la Sección \ref{transformers}. Tal y como se explicó, consta de un codificador que se encarga de procesar la entrada de texto, transformándola a una representación interna que captura el significado y contexto del texto original. A continuación, el decodificador utiliza esta representación para generar el texto de salida.
@@ -715,7 +715,7 @@ En este capítulo se presentan los modelos de lenguaje grandes utilizados en est
 
 \section{Modelos de lenguaje utilizados} \label{modelosUtilizados}
 
-Para la realización de este trabajo se utilizarán modelos de lenguaje grandes preentrenados. Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLMs preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
+Para la realización de este trabajo se utilizarán modelos de lenguaje grandes preentrenados. Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLM preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
 
 Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo Gemma, desarrollado por Google, Llama3, desarrollado por Meta, y los modelos GPT, desarrollados por la compañía \textit{OpenAI}. Estos tres modelos se explicarán en detalle en las siguientes secciones.
 
@@ -752,9 +752,9 @@ En cuanto a su entrenamiento, este modelo ha sido entrenado con un conjunto de d
 
 Al contrario que los modelos anteriores, este modelo no será reentrenado para su utilización en los experimentos, sino que será utilizado mediante \textit{prompting} desde la interfaz de ChatGPT.
 
-\section{Ajuste de LLMs}
+\section{Ajuste de LLM}
 
-Tal y como se ha mencionado en la Sección \ref{modelosUtilizados}, los LLMs preentrenados son modelos entrenados con grandes cantidades de datos genéricos que no han sido todavía ajustados para la realización de ninguna tarea específica. Por lo tanto, para aplicarlos a tareas concretas, es necesario ajustar estos modelos para adaptarlos a los requisitos específicos de cada tarea. Generalmente, para adaptar los modelos se utilizan técnicas de \textit{transfer learning}.
+Tal y como se ha mencionado en la Sección \ref{modelosUtilizados}, los LLM preentrenados son modelos entrenados con grandes cantidades de datos genéricos que no han sido todavía ajustados para la realización de ninguna tarea específica. Por lo tanto, para aplicarlos a tareas concretas, es necesario ajustar estos modelos para adaptarlos a los requisitos específicos de cada tarea. Generalmente, para adaptar los modelos se utilizan técnicas de \textit{transfer learning}.
 
 \subsection{Aprendizaje por transferencia}
 
