@@ -1068,7 +1068,7 @@ Tal y como se explicó en la Sección \ref{modelosLenguajeGrandes}, para introdu
 Por esta razón, las frases y sus correspondientes palabras clave han sido transformadas a formato \textit{prompt} para crear los conjuntos de datos. Tanto el conjunto de frases en español como el de frases en inglés contienen una sola columna de tipo texto, que siguen el formato que se muestra en la Tabla \ref{tab: formatoPrompt}. En la Tabla \ref{tab: ejemploPrompt} se muestra un ejemplo de frase en el formato \textit{prompt} definido.
 
 \begin{table}[!h]
-\caption{Formato \textit{prompt} de los datos.}
+\caption{Formato \textit{prompt} de los datos}
 \begin{center}
 \begin{tabular}{ | l | }
 \hline
@@ -1084,7 +1084,7 @@ Por esta razón, las frases y sus correspondientes palabras clave han sido trans
 \end{table}
 
 \begin{table}[!h]
-\caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido.}
+\caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido}
 \begin{center}
 \begin{tabular}{ | l | }
 \hline
@@ -1103,7 +1103,7 @@ Por esta razón, las frases y sus correspondientes palabras clave han sido trans
 El formato que se presenta en la Tabla \ref{tab: formatoPrompt} es la manera en que los datos entran al modelo durante el entrenamiento. Durante la inferencia, se introducirán con el mismo formato pero sin incluir la frase que generan las palabras clave, pues esta debe ser generada por el modelo. En la Tabla \ref{tab: formatoInferencia} se presenta un ejemplo de este formato.
 
 \begin{table}[!h]
-\caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido para la inferencia.}
+\caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido para la inferencia}
 \begin{center}
 \begin{tabular}{ | l | }
 \hline
@@ -1247,7 +1247,7 @@ Las gráficas de la Figura \ref{fig:graficasLlama} presentan en el eje horizonta
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados de BLEU y COMET obtenidos con el modelo Llama3-8B tras ser entrenado mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en español.}
+\caption{Resultados de BLEU y COMET obtenidos con el modelo Llama3-8B tras ser entrenado mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en español}
 \label{fig:graficasLlama}
 \end{figure}
 
@@ -1298,7 +1298,7 @@ En este caso, el modelo demostró una mejor comprensión de la tarea, generando 
 La Tabla \ref{tab:promptingEspañol} resume los resultados obtenidos con las técnicas de \textit{zero-shot prompting} y \textit{few-shot prompting}  y también los resultados del modelo final de Llama3 entrenado mediante LoRA.
 
 \begin{table}[!h]
-\caption{BLEU y COMET del modelo Llama3 utilizado mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en español.}
+\caption{BLEU y COMET del modelo Llama3 utilizado mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en español}
 \begin{center}
 \begin{tabular}{ c | c c }
 	\ & BLEU & COMET \\
@@ -1403,7 +1403,7 @@ Las gráficas de la Figura \ref{fig:graficasLlama inglés} ilustran en el eje ho
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados de BLEU y COMET obtenidos con el modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ = 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en inglés.}
+\caption{Resultados de BLEU y COMET obtenidos con el modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ = 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en inglés}
 \label{fig:graficasLlama inglés}
 \end{figure}
 
@@ -1439,7 +1439,7 @@ Para la técnica de \textit{few-shot prompting}, se proporcionaron al modelo cin
 La Tabla \ref{tab:promptingInglés} muestra los resultados de BLEU y COMET obtenidos con ambas técnicas, así como los resultados del modelo final Llama3 entrenado mediante LoRA con el conjunto de datos de entrenamiento en inglés.
 
 \begin{table}[!h]
-\caption{BLEU y COMET del modelo Llama3 utilizado mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en inglés.}
+\caption{BLEU y COMET del modelo Llama3 utilizado mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en inglés}
 \begin{center}
 \begin{tabular}{ c | c c }
 	\ & BLEU & COMET \\
