@@ -44,6 +44,12 @@
 \usepackage{subcaption}
 \newcommand{\mycomment}[1]{}
 \usepackage{pdfpages}
+\usepackage[backend=biber, style=numeric, url=false, doi=false, eprint=true]{biblatex}
+
+\DeclareFieldFormat[article,misc,inproceedings]{title}{"#1"}
+\DeclareFieldFormat{eprint:arxiv}{arXiv preprint\addspace arXiv:\,#1}
+
+\addbibresource{plantillatfg.bib}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -83,9 +89,15 @@ aumentativos y alternativos de comunicación}
 \begin{abstract}
 Els Sistemes Augmentatius i Alternatius de Comunicació (SAAC) son eines essencials per a facilitar la comunicació de les persones amb dificultats en la utilització del llenguatge. Aquest sistemes permeten a l'usuari la selecció de pictogrames associats a paraules claus que conformaran l'oració que es desitja comunicar. Posteriorment, aquesta oració pot ser sintetitzada amb veu humana. Els recents avanços en l'àrea del processament del llenguatge natural i, en concret, la proliferació de models de llenguatge grans ofereixen noves perspectives per a millorar els SAAC. En particular, aquest treball explorarà com aquests models de llenguatge poden millorar l'expressivitat de la comunicació dels SAAC quan s'utilitzen per a la generació de llenguatge natural a partir de les paraules clau (pictogrames) seleccionades per l'usuari. D'aquesta manera, aquest treball evaluarà el rendiment d'aquests models quan són adaptats per a la seua integració en els SAAC. Aquesta evaluació es durà a terme utilitzant conjunts de test reals en espanyol i anglés extrets del portal del Centre Aragonés per a la Comunicació Augmentativa i Alternativa.
 \end{abstract}
+
+\clearpage
+
 \begin{abstract}[spanish]
  Los Sistemas Aumentativos y Alternativos de Comunicación (SAAC) son herramientas vitales para facilitar la comunicación de las personas con dificultades en la utilización del lenguaje. Estos sistemas permiten al usuario la selección de pictogramas asociados a palabras clave que conformarán la oración que se desea comunicar. Posteriormente, esta oración puede ser sintetizada con voz humana. Los recientes avances en el área del procesamiento de lenguaje natural y, en concreto, la proliferación de modelos de lenguaje grandes ofrece nuevas perspectivas para mejorar los SAAC. En particular, este trabajo explorará cómo estos modelos de lenguaje pueden mejorar la expresividad de la comunicación de los SAAC cuando se utilizan para la generación de lenguaje natural a partir de las palabras clave (pictogramas) seleccionadas por el usuario. De esta forma, este trabajo evaluará el rendimiento de estos modelos cuando son adaptados para su integración en los SAAC. Esta evaluación se llevará a cabo utilizando conjuntos de test reales en español e inglés extraídos del portal del Centro Aragonés para la Comunicación Aumentativa y Alternativa.
 \end{abstract}
+
+\clearpage
+
 \begin{abstract}[english]
 Augmentative and Alternative Communication (AAC) systems are vital tools for facilitating communication for individuals with difficulties using language. These systems allow users to select pictograms associated with key words that will form the sentence that is wished to communicate. Then, the sentence can be synthesized with a human voice. Recent advances in the field of natural language processing, and specifically the proliferation of large language models, offer new perspectives for improving AAC systems. In particular, this work will explore how these language models can enhance the expressiveness of AAC communication when used to generate natural language from the key words (pictograms) selected by the user. In this way, this work will evaluate the performance of these models when adapted for integration into AAC systems. This evaluation will be carried out using real test sets in spanish and english extracted from the portal of the Aragonese Center for Augmentative and Alternative Communication.
 \end{abstract}
@@ -118,11 +130,10 @@ Aunque hay muchos tipos de SAAC, todos se caracterizan por estar basados en sist
 
 En este trabajo nos centraremos en los comunicadores electrónicos. Los comunicadores electrónicos son herramientas tecnológicas que pueden ser utilizados en cualquier tipo de dispositivo electrónico. Por lo general, consisten en un tablero donde aparecen distintos símbolos gráficos (pictogramas) que representan palabras. Los pictogramas pueden ser organizados y adaptados dependiendo de las necesidades de cada persona, permitiendo que cada usuario añada aquellos que necesite. De esta manera, los usuarios seleccionan secuencias de pictogramas para formar mensajes, que luego son traducidos por el programa en forma de habla digitalizada o texto escrito. Un ejemplo de comunicador electrónico muy utilizado actualmente es el comunicador AsTeRISCS Grid \footnote{El comunicador AsTeRISCS Grid se puede utilizar \textit{online} en \url{grid.asterics.eu}}, desarrollado por ARASAAC, ilustrado en la Figura \ref{fig:comunicador}.
 
-\begin{figure}[h]
+\begin{figure}
 \includegraphics[scale = 0.8]{images/comunicador.jpg}
 \centering
-\caption{Comunicador AsTeRISCS Grid desarrollado por ARASAAC. Extraído de \cite{asterics_grid_comunicador}}
-\label{fig:comunicador}
+\caption{Comunicador AsTeRISCS Grid desarrollado por ARASAAC. Extraído de \cite{asterics_grid_comunicador}. \label{fig:comunicador}}
 \end{figure}
 
 Aunque los comunicadores electrónicos son herramientas verdaderamente útiles para mejorar la comunicación de las personas, presentan ciertas limitaciones. Una de las principales es la dificultad para formar frases complejas y gramaticalmente correctas, ya que, para facilitar y simplificar su uso, estos sistemas suelen incluir solamente palabras clave en su forma básica, sin distinguir número, género o tiempo verbal, cosa que restringe en gran medida la fluidez y expresividad de la comunicación.
@@ -141,7 +152,7 @@ Los objetivos principales de este proyecto son los siguientes:
 
 \section{Estructura de la memoria}
 
-Este documento está dividido en 6 capítulos. El Capítulo \ref{cap1} proporciona la motivación y los objetivos del trabajo, estableciendo también el contexto de la investigación. El Capítulo \ref{cap2} presenta los conceptos esenciales, comenzando con una visión general del aprendizaje automático y seguido de una explicación detallada de las redes neuronales, tranformers y modelos de lenguaje grandes. En el Capítulo \ref{cap3} se detallan los modelos de lenguaje utilizados, los métodos para su ajuste y adaptación al contexto y las técnicas de evaluación. El Capítulo \ref{cap4} describe los datos utilizados, los experimentos que han sido realizados y los resultados obtenidos. El Capítulo \ref{cap5} ofrece un análisis adicional de los resultados obtenidos con el modelo principal de este proyecto, presentando una comparación de resultados con otros modelos, con resultados de individuos humanos y un análisis de los errores más comunes. Finalmente, el Capítulo \ref{cap6} ofrece un resumen de los resultados, evalúa los objetivos alcanzados y sugiere posibles direcciones para futuras investigaciones.
+Este documento está dividido en 6 capítulos. El Capítulo \ref{cap1} proporciona la motivación y los objetivos del trabajo, estableciendo también el contexto de la investigación. El Capítulo \ref{cap2} presenta los conceptos esenciales, comenzando con una visión general del aprendizaje automático y seguido de una explicación detallada de las redes neuronales, transformers y modelos de lenguaje grandes. En el Capítulo \ref{cap3} se detallan los modelos de lenguaje utilizados, los métodos para su ajuste y adaptación al contexto y las técnicas de evaluación. El Capítulo \ref{cap4} describe los datos utilizados, los experimentos que han sido realizados y los resultados obtenidos. El Capítulo \ref{cap5} ofrece un análisis adicional de los resultados obtenidos con el modelo principal de este proyecto, presentando una comparación de resultados con otros modelos, con resultados de individuos humanos y un análisis de los errores más comunes. Finalmente, el Capítulo \ref{cap6} ofrece un resumen de los resultados, evalúa los objetivos alcanzados y sugiere posibles direcciones para futuras investigaciones.
 
 %\section{Notes bibliografiques} %%%%% Opcional
 
@@ -189,7 +200,7 @@ Las redes neuronales modernas están compuestas por pequeñas unidades de cómpu
 
 La arquitectura más simple de red neuronal es la de perceptrón \cite{RevModPhys.34.123}. Este tipo de modelo surgió como método para la resolución de tareas de clasificación binaria, en las que se debe decidir si una determinada entrada pertenece o no a una clase. Posteriormente, se amplió para abarcar también tareas de clasificación multiclase. Es un tipo de clasificador lineal, por lo que hace sus predicciones basándose en funciones de predicción lineales. Este tipo de arquitectura ha servido como base para arquitecturas de redes neuronales mucho más complejas.
 
-\begin{figure}[h]
+\begin{figure}
 	\centering
 	\begin{tikzpicture}
 		\tikzstyle{roundnode} = [draw, shape = circle, minimum size = 1cm]
@@ -212,8 +223,7 @@ La arquitectura más simple de red neuronal es la de perceptrón \cite{RevModPhy
 
 
 	\end{tikzpicture}
-	\caption{Esquema de perceptrón simple}
-	\label{fig:perceptronSimple}	
+	\caption{Esquema de perceptrón simple. \label{fig:perceptronSimple}	}
 \end{figure}
 
 
@@ -235,11 +245,11 @@ y = \phi(z) =
 \end{equation}
 
 El entrenamiento de las redes neuronales consiste en ajustar los vectores de pesos de la red de manera que produzca las salidas más acertadas posibles. En el caso de las redes de perceptrón, al contar con solamente una neurona, este proceso resulta relativamente sencillo. El primer paso es inicializar el vector de pesos con valores aleatorios y calcular la salida de cada vector de entrada del conjunto de entrenamiento. A continuación, se comprueba si la predicción ha sido correcta. Si no lo ha sido, el vector de pesos se modifica utilizando la siguiente fórmula:
-
+%
 \begin{equation}
 w = w - \lambda(\hat{y}-y)x
 \end{equation}
-
+%
 donde $\lambda$ es el parámetro de tasa de aprendizaje, $\hat{y}$ es el \textit{output} predicho por el modelo y $y$ es la clasificación real. Este proceso se puede realizar muestra a muestra (\textit{online}) o para un subconjunto de muestras de entrenamiento (\textit{batch}).
 
 Así, se repiten estos pasos durante un número determinado de iteraciones o hasta que el modelo converge.
@@ -250,7 +260,7 @@ La arquitectura de perceptrón simple tiene una limitación principal, y es que 
 
 El modelo de perceptrón multicapa es una evolución del modelo de perceptrón simple que tiene como objetivo poder resolver problemas no lineales. La idea principal detrás de este modelo es la combinación de varios perceptrones simples en una única arquitectura más compleja. En esta arquitectura podemos encontrar un número elevado de neuronas, conectadas entre sí y organizadas en capas. Encontramos tres tipos de capas: una capa de entrada (\textit{input layer}), una o más capas ocultas (\textit{hidden layers}) y una capa de salida (\textit{output layer}) (ver Figura \ref{fig:perceptronMulticapa}).
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \begin{tikzpicture}
         \tikzstyle{input} = [draw, circle, fill=blue!30, minimum size=1cm]
@@ -315,8 +325,7 @@ El modelo de perceptrón multicapa es una evolución del modelo de perceptrón s
         \node at (6, 5) {Capas ocultas};
         \node at (12, 5) {Capa de salida};
     \end{tikzpicture}
-    \caption{Esquema de perceptrón multicapa}
-    \label{fig:perceptronMulticapa}	
+    \caption{Esquema de perceptrón multicapa. \label{fig:perceptronMulticapa}	}
 \end{figure}
 
 Cada una de las neuronas de una capa está conectada a todas las neuronas de la capa siguiente, y cada uno de los enlaces tiene asociado un peso $w$. De manera similar al modelo de perceptrón simple, los datos se introducen en el modelo en forma de vector a través de la capa de entrada. El ajuste de pesos en el entrenamiento del modelo de perceptrón multicapa se realiza mediante el algoritmo de retropropagación (en inglés, \textit{backpropagation algorithm}) \cite{Rojas1996}. El algoritmo de retropropagación consta de cuatro fases:
@@ -352,17 +361,17 @@ Las redes neuronales recurrentes (RNN, por sus siglas en inglés \textit{recurre
 Las RNN son útiles para tareas como generación de texto, clasificación y traducción de secuencias, ya que pueden capturar dependencias a lo largo del tiempo dentro de los datos secuenciales.
 
 El proceso que siguen este tipo de redes es el siguiente. En primer lugar, se inicializa la red con un estado oculto $h_0$, que puede ser un vector de ceros o una inicialización aprendida. Para cada elemento en la secuencia de entrada, la red actualiza su estado oculto y produce una salida. Así, en el momento de tiempo t, la entrada $x_t$ y el estado oculto previo $h_{t-1}$ se combinan para generar el nuevo estado oculto $h_t$. Este se calcula utilizando la fórmula:
-
+%
 \begin{equation}
 h_t = f(W_hh_{t-1} + W_xx_t + b_h)
 \end{equation}
-
+%
 donde $W_h$ y $W_x$ son las matrices de pesos asociadas al estado oculto y a las entradas respectivamente, $f$ es una función no lineal y $b_h$ es un vector de sesgos. La salida $y_t$ se obtiene a partir del estado oculto $h_t$:
-
+%
 \begin{equation}
 y_t = \phi(W_yh_t + b_y)
 \end{equation}
-
+%
 donde $W_y$ es una matriz de pesos, $\phi$ es la función de activación y $b_y$ es un vector de sesgos \cite{sutskever2014sequencesequencelearningneural}.
 
 El proceso se repite para cada elemento de la secuencia de entrada, propagando así la información relevante anterior a través de los estados ocultos.
@@ -425,9 +434,9 @@ En esta sección se presenta la arquitectura de transformer. Los modelos basados
 
 Tal y como se ha mencionado anteriormente, la arquitectura de transformers utiliza el modelo \textit{encoder-decoder} introducido en la Sección \ref{encdec}. En la estructura del transformer original se utiliza un total de seis bloques de \textit{encoder} y seis de \textit{decoder}, cada uno de los cuales contiene varias capas y mecanismos que facilitan el procesamiento eficiente de las secuencias de datos.
 
-En general, los transformers utilizan tres tipos de capas: capas lineales simples, capas de \textit{multi-head attention} y capas donde encontramos redes neuronales de tipo \textit{feed-forward}. En la Figura \ref{fig:transformers} encontramos el esquema de la estructura de los \textit{encoders} y  \textit{decoders}. Tal y como se puede observar, el \textit{encoder} está formado por una primera capa de \textit{multi-head attention} y, a continuación, una red neuronal de tipo \textit{feed-forward} completamente conectada, además de las capas de normalización que encontramos después de estas. Por lo que respecta al \textit{decoder}, lo conforman dos capas de autoatención y una red neuronal, también con capas de normalización después de estas \cite{jurafsky2023speech, multiheaddotproduct}.
+En general, los transformers utilizan tres tipos de capas: capas lineales simples, capas de \textit{multi-head attention} y capas donde encontramos redes neuronales de tipo \textit{feed-forward}. En la Figura \ref{fig:transformers} se presenta el esquema de la estructura de los \textit{encoders} y  \textit{decoders}. Tal y como se puede observar, el \textit{encoder} está formado por una primera capa de \textit{multi-head attention} y, a continuación, una red neuronal de tipo \textit{feed-forward} completamente conectada, además de las capas de normalización que encontramos después de estas. Por lo que respecta al \textit{decoder}, lo conforman dos capas de autoatención y una red neuronal, también con capas de normalización después de estas \cite{jurafsky2023speech, multiheaddotproduct}.
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \begin{tikzpicture}[scale=1, transform shape]
 
@@ -513,8 +522,7 @@ En general, los transformers utilizan tres tipos de capas: capas lineales simple
 
         
     \end{tikzpicture}
-    \caption{Esquema de la arquitectura de los transformers}
-    \label{fig:transformers}
+    \caption{Esquema de la arquitectura de los transformers. \label{fig:transformers}}
 \end{figure}
 
 La idea principal del transformer es, a lo largo de esta serie de capas, poder construir representaciones contextualizadas cada vez más precisas de los significados de las palabras o tokens de las secuencias de entrada. Así, en las distintas capas del transformer, para obtener la representación de una palabra, se combina la información de la representación obtenida en la capa anterior con la información de las representaciones de las palabras vecinas. El objetivo es producir la versión contextualizada de cada palabra, representando lo que significa esta en el contexto particular en que se encuentra \cite{jurafsky2023speech}.
@@ -523,11 +531,11 @@ A continuación se explica con más detalle los procesos que ocurren dentro de c
 
 \subsection{Capas de \textit{multi-head attention}}
 Las capas de \textit{multi-head attention} suponen la verdadera innovación de la arquitectura de transformers \cite{jurafsky2023speech}, pues es en estas donde el modelo aplica el mecanismo de atención.  En este caso, se utiliza una variación del mecanismo de atención explicado en la Sección \ref{atencion}. Esta variación se conoce como \textit{scaled dot-product attention}. Igual que en el mecanismo general de atención, se utilizan tres matrices: la matriz de \textit{queries} $Q$, la de claves $K$ y la de valores $V$. En este caso, el valor de atención se calcula utilizando la siguiente fórmula:
-
+%
 \begin{equation}
 A(Q, K, V) = softmax(\frac{QK^t}{\sqrt{d_k}})
 \end{equation}
-
+%
 donde $d_k$ es la dimensión del estado oculto de la fuente.
 
 Como vemos, el cambio respecto al cálculo de atención descrito en la Sección \ref{atencion} reside en que en este caso se añade el factor $\frac{1}{\sqrt{d_k}}$, que se utiliza para escalar el resultado obtenido, y conseguir así que las gradientes sean más estables, ya que si la secuencia de entrada fuera muy larga, la función \textit{softmax} puede devolver gradientes extremadamente pequeños, cosa que podría dificultar al modelo realizar un aprendizaje eficiente \cite{multiheaddotproduct}.
@@ -535,11 +543,11 @@ Como vemos, el cambio respecto al cálculo de atención descrito en la Sección 
 De todas maneras, los transformers no se quedan solamente en este concepto, sino que van un paso más allá y utilizan un tipo de atención algo más complejo conocido como \textit{multi-head attention}. Este proceso consiste en calcular distintas atenciones sobre las mismas \textit{queries} y pares clave-valor. Se utiliza este tipo de atención ya que las distintas palabras dentro de la secuencia de texto pueden estar relacionadas entre sí de muchas maneras distintas de manera simultánea. Capturar todas estas relaciones entre palabras es muy complicado si se utiliza un solo valor de atención.
 
 Así, en las capas de \textit{multi-head attention} encontramos distintas capas de atención conocidas como \textit{heads} (cabezas), que calculan valores distintos de atención de manera paralela. Cada una de estas tiene un conjunto distinto de parámetros que se aprende durante el entrenamiento, con los cuales hará el cálculo de atención entre las palabras de entrada. Utilizando parámetros distintos en cada cabeza se consigue que cada una se centre en aspectos distintos de las relaciones entre las palabras. El cálculo de atención para una cabeza $i$ se realiza mediante la siguiente fórmula:
-
+%
 \begin{equation}
 H_i = A(QW_i^Q, KW_i^K, VW_i^V)
 \end{equation}
-
+%
 donde $W_i^Q$, $W_i^K$ y $W_i^V$ son las matrices de parámetros asociadas a las \textit{queries}, claves y valores, respectivamente, de la cabeza $i$. El valor de \textit{multi-head attention} se obtiene mediante la concatenación de los resultados de las cabezas. Para un total de $h$ cabezas de atención:
 
 \begin{equation}
@@ -561,7 +569,7 @@ En los transformers, estas capas complementan las salidas de la capa de atenció
 Las capas de normalización se encuentran detrás de tanto las capas de atención como las de redes \textit{feed-forward}. En ellas se aplica el proceso de normalización de capas (en inglés, \textit{layer normalization} o \textit{layer norm} \cite{ba2016layernormalization}). Este tipo de normalización se utiliza para mejorar el rendimiento del entrenamiento de redes neuronales profundas, manteniendo los valores de la capa oculta dentro de un rango que facilita el entrenamiento basado en gradientes.
 
 El proceso de normalización de capas toma como entrada un vector para cada palabra de la secuencia, y devuelve este mismo vector normalizado. El primer paso en el proceso es calcular la media $\mu$ y la desviación típica $\sigma$ del vector, de la siguiente manera:
-
+%
 \begin{equation}
 \mu^l = \frac{1}{H} \sum_{i = 1}^Hx_i^l
 \end{equation}
@@ -569,13 +577,13 @@ El proceso de normalización de capas toma como entrada un vector para cada pala
 \begin{equation}
 \sigma^l = \sqrt{\frac{1}{H} \sum_{i = 1}^H (x_i^l - \mu^l)^2}
 \end{equation}
-
-Donde $H$ es el número de unidades ocultas en la capa. A continuación, los componentes del vector se normalizan restando la media y desviación típica calculadas \cite{jurafsky2023speech}:
-
+%
+donde $H$ es el número de unidades ocultas en la capa. A continuación, los componentes del vector se normalizan restando la media y desviación típica calculadas \cite{jurafsky2023speech}:
+%
 \begin{equation}
 \hat{x} = \frac{(x - \mu)}{\sigma}
 \end{equation}
-
+%
 Finalmente, se introducen parámetros de \textit{bias} $b$ y \textit{gain} $g$:
 
 \begin{equation}
@@ -657,12 +665,12 @@ Debido a estas limitaciones, en los LLM se suelen emplear algoritmos más sofist
 \subsubsection{\textit{Top-k sampling}}
 
 El algoritmo de \textit{top-k sampling} es una generalización del \textit{greedy decoding} que consiste en seleccionar las $K$ palabras con mayor probabilidad de la distribución y aplicar \textit{random sampling} únicamente sobre este conjunto. Una vez se seleccionan las $K$ palabras del conjunto, sus probabilidades deben ser normalizadas según el nuevo conjunto. Las probabilidades normalizadas se calculan de la siguiente manera:
-
+%
 \begin{equation}
 \hat{p}_i = \frac{p_i * \mathbb{1}\{i \leq K\}}{\sum_{j = 1}^K p_j}
 \end{equation}
-
-Donde $\mathbb{1}$ es la función característica, que indica si una palabra está dentro o no del conjunto de las $K$ más probables \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
+%
+donde $\mathbb{1}$ es la función característica, que indica si una palabra está dentro o no del conjunto de las $K$ más probables \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
 
 \subsubsection{\textit{Nucleus sampling}}
 
@@ -675,12 +683,12 @@ El algoritmo de \textit{nucleus sampling} \cite{holtzman2020curiouscaseneuraltex
 Al medir la probabilidad acumulada en lugar de un número fijo de palabras, se espera que esta medida sea más robusta incluso en contextos diversos, que podrían tener resultados muy distintos si se usara un número fijo de palabras. De nuevo, tras seleccionar el subconjunto de palabras del vocabulario se deben normalizar sus probabilidades.
 
 Las probabilidades normalizadas de cada palabra en el vocabulario se pueden calcular como:
-
+%
 \begin{equation}
 \hat{p}_i = \frac{p'_i}{\sum_{j:d_j \in V^{(p)}} p'_j}
 \end{equation}
-
-Donde $p'_i = p_i * \mathbb{1}\{ d_i \in V^{(p)} \}$ \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
+%
+donde $p'_i = p_i * \mathbb{1}\{ d_i \in V^{(p)} \}$ \cite{nadeem2020systematiccharacterizationsamplingalgorithms}.
 
 \subsubsection{\textit{Tempered sampling}}
 
@@ -691,11 +699,11 @@ En el algoritmo de \textit{tempered sampling} \cite{nadeem2020systematiccharacte
 \end{equation}
 
 Además, existe una variación de este algoritmo que se conoce como \textit{tempered top-k sampling}, el cual combina las transformaciones definidas por el algoritmo \textit{tempered sampling} y el \textit{top-k}. Así, la probabilidad normalizada se calcula:
-
+%
 \begin{equation}
 \hat{p}_i = \frac{p'_i}{\sum_{j = 1}^{V^{(k)}}p'_j}
 \end{equation}
-
+%
 donde $V^{(k)}$ es el conjunto de las $k$ palabras más probables y $p'_i = exp(log(p_i)/\tau * \mathbb{1}\{i \leq K\}$ .
 
 \subsection{Arquitecturas de los LLM}
@@ -715,7 +723,7 @@ En este capítulo se presentan los modelos de lenguaje grandes utilizados en est
 
 \section{Modelos de lenguaje utilizados} \label{modelosUtilizados}
 
-Para la realización de este trabajo se utilizarán modelos de lenguaje grandes preentrenados. Los modelos de lenguaje grandes preentrenados son modelos que han sido entrenados con grandes cantidades de datos generales, pero que aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLM preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
+Para la realización de este trabajo se utilizarán modelos de lenguaje grandes preentrenados. Como se mencionó en el capítulo anterior, los modelos de lenguaje son modelos basados en redes neuronales profundas capaces de procesar y generar texto. En particular, los modelos de lenguaje grandes preentrenados han sido entrenados con grandes volúmenes de datos generales, pero aún no han sido ajustados para realizar tareas específicas. Este tipo de modelos han supuesto una revolución en el campo del procesamiento de lenguaje natural, ya que pueden ser adaptados para realizar una gran variedad de tareas específicas, incluso si estas difieren de los datos originales de entrenamiento. Utilizar LLM preentrenados supone un ahorro de tiempo y recursos significativo, evitando la necesidad de entrenar un modelo desde cero con un gran conjunto de datos.
 
 Algunos de los modelos más utilizados actualmente y que se utilizan en este trabajo son el modelo Gemma, desarrollado por Google, Llama3, desarrollado por Meta, y los modelos GPT, desarrollados por la compañía \textit{OpenAI}. Estos tres modelos se explicarán en detalle en las siguientes secciones.
 
@@ -799,7 +807,9 @@ En este trabajo, se empleará el enfoque basado en reparametrización. Este se c
 
 El método de \textit{Low-Rank Adaptation} (LoRA) fue presentado en el artículo \textit{LoRA: Low-Rank adaptation of Large Language models} \cite{hu2021loralowrankadaptationlarge}, desarrollado por un equipo de Microsoft. Como se mencionó en la sección anterior, este forma parte del enfoque PEFT basado en reparametrización de los modelos. LoRA se basa en congelar los pesos del modelo preentrenado durante el entrenamiento para luego ajustarlos mediante una matriz de parámetros adicionales que representan el cambio necesario en los pesos originales del modelo. La matriz de cambios es la que se ajusta en el entrenamiento. Generalmente, la matriz de pesos originales se denota como $W$ y la matriz de cambios, $\bigtriangleup W$.
 
-\begin{figure}[!h]
+En la Figura \ref{fig:matricesLoRA} se presenta un esquema de las matrices de parámetros de LoRA.
+
+\begin{figure}
 \centering
 \begin{tikzpicture}
 
@@ -835,8 +845,7 @@ w_{k1} & w_{k2} & \dots & w_{kd}
 \draw[->] (5.5, 1.5) -- (4, 1.5);
 \node at (4.8, 2) {+};
 \end{tikzpicture}
-\caption{Esquema de las matrices de parámetros de LoRA}
-\label{fig:matricesLoRA}
+\caption{Esquema de las matrices de parámetros de LoRA. \label{fig:matricesLoRA}}
 \end{figure}
 
 LoRA se basa en la idea de descomponer las matrices de parámetros en componentes de rango bajo. El rango de una matriz se define como el número de columnas linealmente independientes de esta. Una columna es considerada linealmente dependiente si puede ser obtenida como una combinación lineal de otras columnas de la matriz. Esto implica que, si existen columnas linealmente dependientes en la matriz, estas se pueden eliminar sin perder información esencial, permitiendo así reducir el tamaño de esta.
@@ -932,7 +941,7 @@ p_n = \frac{\sum_{C \in \{\text{Candidatos}\}} \sum_{\text{n-grama} \in C} Count
 donde el numerador representa la suma total de los \textit{clipped n-gram counts} para todos los candidatos y el denominador es el conteo total de n-gramas en todas las frases candidatas.
 
 BLEU incorpora también un factor de penalización por brevedad (\textit{brevity penalty}), para evitar premiar las frases generadas que sean mucho más cortas que la frase de referencia. Este factor de penalización por brevedad se define como:
-
+%
 \begin{equation}
 BP = 
 \begin{cases}
@@ -940,21 +949,21 @@ BP =
 	e^{(1-r/c)} & \text{si } c \le r
 \end{cases}
 \end{equation}
-
+%
 donde $c$ es la longitud de la frase candidatas generadas por el modelo y $r$ es la longitud de la frase de referencia.
 
 Finalmente, el valor de BLEU se obtiene combinando estas precisiones de n-gramas modificadas a través de diferentes valores de n:
-
+%
 \begin{equation}
 BLEU = BP + exp(\sum_{n = 1}^N w_n log p_n)
 \end{equation}
-
+%
 donde generalmente se utilizan los valores de $N = 4$ y $w_n = \frac{1}{N}$.
 
 En cuanto a la interpretación, generalmente se considera que un \textit{score} BLEU menor de 30 indica traducciones de mala calidad, entre 30 y 40 sugiere traducciones aceptables, y un \textit{score} de 40 o superior indica un rendimiento bueno. La Tabla \ref{tab: bleu} proporciona una  interpretación detallada de las puntuaciones de BLEU.
 
-\begin{table}[!h]
-\caption{Interpretación de las puntuaciones de BLEU, extraída de \cite{googleTranslate}}
+\begin{table}
+\caption{Interpretación de las puntuaciones de BLEU, extraída de \cite{googleTranslate}. \label{tab: bleu}}
 \begin{center}
 \begin{tabular}{  c | c  }
 	Puntuación BLEU & Interpretación \\
@@ -968,7 +977,6 @@ En cuanto a la interpretación, generalmente se considera que un \textit{score} 
 	>60 & Calidad generalmente mejor que la humana
 \end{tabular}
 \end{center}
-\label{tab: bleu}
 \end{table}
 
 El uso de esta métrica es muy común en tareas de procesamiento de lenguaje natural debido a su facilidad de cálculo y la simplicidad en la interpretación de la puntuación que proporciona, la cual suele alinearse con la evaluación humana. Sin embargo, BLEU presenta algunas limitaciones importantes, principalmente porque su cálculo se basa únicamente en las coincidencias exactas entre las frases generadas y las de referencia, lo que puede limitar su capacidad para capturar variaciones en la formulación del lenguaje. Por esta razón, es aconsejable utilizar también otras métricas que no dependan exclusivamente de coincidencias exactas para obtener una evaluación más completa y precisa de la calidad de las frases generadas.
@@ -1008,8 +1016,8 @@ Para la realización de los experimentos, se han utilizado dos conjuntos de dato
 
 El primer conjunto de datos incluye un total de 212 frases, todas ellas en español. En la Tabla \ref{tab: ejemplosEspañol} se presentan algunos ejemplos de frases de este conjunto para ilustrar su formato. El segundo conjunto consta de 260 frases, disponibles tanto en español como en inglés. Se presentan ejemplos de este conjunto en la Tabla \ref{tab: ejemplosInglés}.
 
-\begin{table}[!h]
-\caption{Ejemplos de frases del conjunto de datos en español}
+\begin{table}
+\caption{Ejemplos de frases del conjunto de datos en español. \label{tab: ejemplosEspañol}}
 \begin{center}
 \begin{tabular}{ | l | }
 \hline
@@ -1027,11 +1035,10 @@ El primer conjunto de datos incluye un total de 212 frases, todas ellas en espa�
 \hline
 \end{tabular}
 \end{center}
-\label{tab: ejemplosEspañol}
 \end{table}
 
-\begin{table}[!h]
-\caption{Ejemplos de frases del conjunto de datos en inglés}
+\begin{table}
+\caption{Ejemplos de frases del conjunto de datos en inglés. \label{tab: ejemplosInglés}}
 \begin{center}
 \begin{tabular}{ | l | }
 \hline
@@ -1049,7 +1056,6 @@ El primer conjunto de datos incluye un total de 212 frases, todas ellas en espa�
 \hline
 \end{tabular}
 \end{center}
-\label{tab: ejemplosInglés}
 \end{table}
 
 En el segundo conjunto de datos, se encontraron algunos valores nulos en las listas de palabras clave para ciertas frases en español. Estas frases fueron anotadas manualmente para completar la información faltante.
@@ -1067,8 +1073,8 @@ Tal y como se explicó en la Sección \ref{modelosLenguajeGrandes}, para introdu
 
 Por esta razón, las frases y sus correspondientes palabras clave han sido transformadas a formato \textit{prompt} para crear los conjuntos de datos. Tanto el conjunto de frases en español como el de frases en inglés contienen una sola columna de tipo texto, que siguen el formato que se muestra en la Tabla \ref{tab: formatoPrompt}. En la Tabla \ref{tab: ejemploPrompt} se muestra un ejemplo de frase en el formato \textit{prompt} definido.
 
-\begin{table}[!h]
-\caption{Formato \textit{prompt} de los datos}
+\begin{table}
+\caption{Formato \textit{prompt} de los datos. \label{tab: formatoPrompt}}
 \begin{center}
 \begin{tabular}{ | l | }
 \hline
@@ -1080,11 +1086,10 @@ Por esta razón, las frases y sus correspondientes palabras clave han sido trans
 \hline
 \end{tabular}
 \end{center}
-\label{tab: formatoPrompt}
 \end{table}
 
-\begin{table}[!h]
-\caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido}
+\begin{table}
+\caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido. \label{tab: ejemploPrompt}}
 \begin{center}
 \begin{tabular}{ | l | }
 \hline
@@ -1096,14 +1101,13 @@ Por esta razón, las frases y sus correspondientes palabras clave han sido trans
 \hline
 \end{tabular}
 \end{center}
-\label{tab: ejemploPrompt}
 \end{table}
 
 
 El formato que se presenta en la Tabla \ref{tab: formatoPrompt} es la manera en que los datos entran al modelo durante el entrenamiento. Durante la inferencia, se introducirán con el mismo formato pero sin incluir la frase que generan las palabras clave, pues esta debe ser generada por el modelo. En la Tabla \ref{tab: formatoInferencia} se presenta un ejemplo de este formato.
 
-\begin{table}[!h]
-\caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido para la inferencia}
+\begin{table}
+\caption{Ejemplo de frase utilizando el formato de \textit{prompt} definido para la inferencia. \label{tab: formatoInferencia}}
 \begin{center}
 \begin{tabular}{ | l | }
 \hline
@@ -1115,26 +1119,24 @@ El formato que se presenta en la Tabla \ref{tab: formatoPrompt} es la manera en 
 \hline
 \end{tabular}
 \end{center}
-\label{tab: formatoInferencia}
 \end{table}
 
 \subsection{Partición de los datos en entrenamiento, validación y test}
 
-Para evaluar los modelos, se utilizará la técnica de \textit{cross-validation}, que consiste en realizar diferentes particiones de los datos en conjuntos de entrenamiento y validación, entrenando y evaluando de manera independiente cada partición. Por esta razón, los datos se han dividido en un conjunto de entrenamiento y validación para \textit{cross-validation} y un conjunto adicional de test. Este último no se utilizará durante la fase de entrenamiento, sino exclusivamente para la comparación final de resultados entre los modelos. El conjunto de datos de test ha sido seleccionado de manera aleatoria, considerando solo las frases que no presentaban valores nulos.
+Para evaluar los modelos, se utilizará la técnica de validación cruzada, que consiste en realizar diferentes particiones de los datos en conjuntos de entrenamiento y validación, entrenando y evaluando de manera independiente cada partición. Por esta razón, los datos se han dividido en un conjunto de entrenamiento y validación para validación cruzada y un conjunto adicional de test. Este último no se utilizará durante la fase de entrenamiento, sino exclusivamente para la comparación final de resultados entre los modelos. El conjunto de datos de test ha sido seleccionado de manera aleatoria, considerando solo las frases que no presentaban valores nulos.
 
-La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los experimentos en español y en inglés, tanto para el entrenamiento de los modelos como para su posterior evaluación.
+La Tabla \ref{tab:frases} muestra la cantidad de datos utilizados para los experimentos en español y en inglés, tanto para el entrenamiento y validación de los modelos como para su posterior evaluación en el conjunto de test.
 
-\begin{table}[!h]
-\caption{Número de frases para entrenamiento y test de los conjuntos de datos en español y en inglés}
+\begin{table}
+\caption{Número de frases para entrenamiento y validación de los conjuntos de datos en español y en inglés. \label{tab:frases}}
 \begin{center}
 \begin{tabular}{  c || c  c  }
-	\ & Conjunto en español & Conjunto en inglés \\
+	\ & Español & Inglés \\
 	\hline
-	Datos de entrenamiento & 290 & 220 \\
-	Datos de test & 50 & 40
+	Entrenamiento y validación & 290 & 220 \\
+	Test & 50 & 40
 \end{tabular}
 \end{center}
-\label{tab:frases}
 \end{table}
 
 \section{Modelos de lenguaje utilizados y método de entrenamiento}
@@ -1151,7 +1153,7 @@ Para los experimentos con $r \ge 64$, fue necesario utilizar las GPU accesibles 
 
 Para el entrenamiento de los modelos, se ha  aplicado el método de adaptación LoRA, que se describe en detalle en la Sección \ref{lora}. Este método requiere la configuración de dos parámetros clave: el rango y el \textit{alpha}. Dado que estos parámetros pueden influir significativamente en el rendimiento del modelo, se han realizado experimentos variando sus valores para identificar la configuración óptima que proporciona mejores resultados.
 
-Para garantizar una evaluación robusta y fiable de los modelos, se ha utilizado la técnica de \textit{cross-validation} con 10 particiones. Esto implica dividir el conjunto de datos en 10 partes iguales. En cada iteración, 9 partes se utilizan para entrenar el modelo y la parte restante, para validarlo. Las particiones se han realizado de manera que, al final del proceso, todos los datos hayan sido utilizados tanto para entrenamiento como para validación, asegurando que cada dato aparece solo una vez en el conjunto de validación.
+Para garantizar una evaluación robusta y fiable de los modelos, se ha utilizado la técnica de validación cruzada con 10 particiones. Esto implica dividir el conjunto de datos en 10 partes iguales. En cada iteración, 9 partes se utilizan para entrenar el modelo y la parte restante, para validarlo. Las particiones se han realizado de manera que, al final del proceso, todos los datos hayan sido utilizados tanto para entrenamiento como para validación, asegurando que cada dato aparece solo una vez en el conjunto de validación.
 
 Se ha entrenado un modelo independiente para cada una de las 10 particiones. Una vez completado el entrenamiento y realizadas las predicciones de estos 10 modelos, se han combinado las predicciones de todos ellos en un solo conjunto de predicciones para calcular las métricas de rendimiento. Las métricas utilizadas para la evaluación son las métricas BLEU y COMET, ambas descritas en la Sección \ref{metricas}.
 
@@ -1161,11 +1163,11 @@ En los primeros experimentos realizados, se ha comparado el rendimiento de los m
 
 La Tabla \ref{tab: Gemma y Llama} presenta los resultados obtenidos de BLEU y COMET utilizando validación cruzada en 10 bloques sobre el conjunto de datos en español. Por restricciones computacionales, se ha restringido la exploración a un conjunto limitado de valores para el rango: 16, 32 y 64. Para el parámetro \textit{alpha}, se ha seguido la metodología empleada por el equipo de Microsoft en su trabajo ``LoRA: Low-Rank Adaptation of Large Language Models´´  \cite{hu2021loralowrankadaptationlarge}, donde este parámetro se fija con un valor igual a dos veces el rango.
 
-\begin{table}[!h]
-\caption{BLEU y COMET para los modelo Gemma-7B y Llama3-8B}
+\begin{table}
+\caption{BLEU y COMET para los modelos Gemma-7B y Llama3-8B en español. \label{tab: Gemma y Llama}}
 \begin{center}
 \begin{tabular}{ c c c c c c }
-	\ & \ & Gemma-7B & \ & Llama3-8B & \ \\
+	\ & \ & \multicolumn{2}{c}{Gemma-7B} & \multicolumn{2}{c}{Llama3-8B}\\
 	\hline
 	\textit{Rank} & \textit{Alpha} & BLEU & COMET & BLEU & COMET \\
 	\hline
@@ -1179,7 +1181,6 @@ La Tabla \ref{tab: Gemma y Llama} presenta los resultados obtenidos de BLEU y CO
 
 \end{tabular}
 \end{center}
-\label{tab: Gemma y Llama}
 \end{table}
 
 Los resultados de la Tabla \ref{tab: Gemma y Llama} muestran que, en todas las configuraciones de rango probadas, el modelo Gemma presenta un rendimiento consistentemente inferior respecto al modelo Llama3. Esta diferencia de rendimiento sugiere que Llama3 puede ser más efectivo para las tareas evaluadas.
@@ -1199,8 +1200,8 @@ En esta fase de los experimentos, se ha investigado el impacto del parámetro \t
 Las gráficas de la Figura \ref{fig:graficasLlama} presentan en el eje horizontal los valores de rango explorados. En el eje vertical, la gráfica de la izquierda muestra los valores de BLEU, mientras que la de la derecha indica los valores de COMET. Cada una de las curvas en la gráfica corresponde a una configuración diferente de \textit{alpha}. 
 
 \mycomment{
-\begin{table}[!h]
-\caption{Puntuación de BLEU y COMET para el modelo Llama3-8B}
+\begin{table}
+\caption{Puntuación de BLEU y COMET para el modelo Llama3-8B. \label{tab: Llama exploración de alpha}}
 \begin{center}
 \begin{tabular}{ c c | c c }
 	\hline
@@ -1230,25 +1231,23 @@ Las gráficas de la Figura \ref{fig:graficasLlama} presentan en el eje horizonta
 
 \end{tabular}
 \end{center}
-\label{tab: Llama exploración de alpha}
 \end{table}
 }
 
-\begin{figure}[!h]
+\begin{figure}
 
 \begin{subfigure}{0.5\textwidth}
 \includegraphics[width=0.9\linewidth, height=9cm]{images/llama_BLEU_} 
-\caption{Resultados de BLEU para Llama3-8B}
+\caption{Resultados de BLEU para Llama3-8B.}
 \label{fig:subim1}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \includegraphics[width=0.9\linewidth, height=9cm]{images/llama_COMET_}
-\caption{Resultados de COMET para Llama3-8B}
+\caption{Resultados de COMET para Llama3-8B.}
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados de BLEU y COMET obtenidos con el modelo Llama3-8B tras ser entrenado mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en español}
-\label{fig:graficasLlama}
+\caption{Resultados de BLEU y COMET obtenidos con el modelo Llama3-8B tras ser entrenado mediante adaptación con LoRA con los valores de $r$ 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en español. \label{fig:graficasLlama}}
 \end{figure}
 
 En cuanto a la métrica BLEU, los resultados muestran que todas las configuraciones de \textit{alpha} siguen una tendencia ascendente hasta alcanzar su punto máximo, y a continuación disminuyen la puntuación. En el caso de $\alpha = r/2$, su valor óptimo se alcanza en en $r = 64$. En cambio, con $\alpha = r$ y $\alpha = 2r$ el valor óptimo se encuentra en r = 128. Este comportamiento sugiere que, cuando $\alpha = r/2$, es decir, cuando se da mayor importancia a los parámetros del modelo preentrenado que a los pesos ajustados con LoRA, el aumento del rango tiene un impacto limitado en el rendimiento, ya que no se aprovechan completamente los parámetros libres disponibles con valores de rango superiores a 64. En general, las otras configuraciones de $\alpha$ muestran un desempeño superior, alcanzando su máximo en $r = 128$.
@@ -1257,7 +1256,7 @@ En lo que respecta a la métrica COMET, los resultados muestran que todas las co
 
 Así, tanto los resultados de BLEU como de COMET sugieren que la combinación óptima de parámetros es $r = 128$ con $\alpha = r$.
 
-\subsection{Validación del modelo final}
+\subsection{Evaluación del modelo final en el conjunto de test}
 
 Finalmente, se ha llevado a cabo el entrenamiento del modelo de Llama3 con la mejor combinación de parámetros obtenidos en los experimentos anteriores: $r$ = 128 y $\alpha = r$. En este caso, el modelo ha sido entrenado utilizando todo el conjunto de datos disponible para el experimento de validación cruzada.
 
@@ -1270,17 +1269,16 @@ Los resultados obtenidos con esta configuración final han sido los siguientes:
 	\item COMET = 89.15
 \end{itemize}
 
-Aunque los valores obtenidos para BLEU y COMET son inferiores a los resultados alcanzados durante la fase de experimentación anterior, estos resultados se encuentran dentro de un rango adecuado de las métricas. En la mayoría de casos, el modelo genera frases que se ajustan bien a las palabras clave proporcionadas, aunque a veces presenta errores relacionados con los tiempos verbales u otras pequeñas confusiones. La disminución en las métricas puede deberse a la diferencia entre el conjunto de entrenamiento y el conjunto de validación. A pesar de esto, los resultados siguen siendo prometedores y reflejan un buen desempeño del modelo en esta tarea.
+Aunque los valores obtenidos para BLEU y COMET son inferiores a los resultados alcanzados durante la fase de experimentación anterior, estos resultados se encuentran dentro de un rango adecuado de las métricas. En la mayoría de casos, el modelo genera frases que se ajustan bien a las palabras clave proporcionadas, aunque a veces presenta errores relacionados con los tiempos verbales u otras pequeñas confusiones. La disminución en las métricas puede deberse a la diferencia entre el conjunto de entrenamiento y el conjunto de test. A pesar de esto, los resultados siguen siendo prometedores y reflejan un buen desempeño del modelo en esta tarea.
 
 \subsection{Comparación con los resultados obtenidos mediante \textit{prompting}}
 
-Se ha realizado un experimento adicional para evaluar el modelo Llama3-8B sin entrenamiento previo, con el objetivo de medir la mejora de este tras ser entrenado con el conjunto de datos de entrenamiento. Para ello, se introdujeron al modelo algunos datos específicos mediante
- \textit{prompting}, empleando las técnicas descritas en la Sección \ref{prompting} de \textit{zero-shot prompting} y \textit{few-shot prompting}. La evaluación de estos experimentos se ha realizado utilizando el conjunto reservado para test.
+Se ha realizado un experimento adicional para evaluar el modelo Llama3-8B sin entrenamiento previo, con el objetivo de medir la mejora de este tras ser entrenado con el conjunto de datos de entrenamiento. Para ello, se introdujeron al modelo algunos datos específicos obtenidos de forma aleatoria del conjunto de entrenamiento mediante \textit{prompting}, empleando las técnicas descritas en la Sección \ref{prompting} de \textit{zero-shot prompting} y \textit{few-shot prompting}. La evaluación de estos experimentos se ha realizado utilizando el conjunto reservado para test.
 
-La Tabla \ref{tab:promptingEspañol} resume los resultados obtenidos con las técnicas de \textit{zero-shot prompting} y \textit{few-shot prompting}  y también los resultados del modelo final de Llama3 entrenado mediante LoRA.
+La Tabla \ref{tab:promptingEspañol} resume los resultados obtenidos con las técnicas de \textit{zero-shot prompting} y \textit{few-shot prompting}, así como los resultados del modelo final de Llama3 entrenado mediante LoRA. Además, en la Tabla \ref{tab:ejemplosPromptingEspañol} se presentan dos ejemplos de generaciones realizadas mediante estos tres métodos.
 
-\begin{table}[!h]
-\caption{BLEU y COMET del modelo Llama3 utilizado mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en español}
+\begin{table}
+\caption{BLEU y COMET del modelo Llama3 utilizado mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en español. \label{tab:promptingEspañol}}
 \begin{center}
 \begin{tabular}{ c | c c }
 	\ & BLEU & COMET \\
@@ -1292,53 +1290,86 @@ La Tabla \ref{tab:promptingEspañol} resume los resultados obtenidos con las té
 
 \end{tabular}
 \end{center}
-\label{tab:promptingEspañol}
 \end{table}
 
-En el caso de \textit{zero-shot prompting}, los resultados son realmente bajos y muestran que el modelo no comprende adecuadamente la tarea en la mayoría de los casos. Se identificaron tres tipos de respuesta:
+\begin{table}
+\caption{Ejemplos de frases generadas mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en español. \label{tab:ejemplosPromptingEspañol}}
+\begin{center}
+\begin{tabular}{ c | c | c }
+	\ & Lemas & Frase \\
+	\hline
+	\hline
+	\textit{Zero-shot prompting} &  & Juan bajar planta \\
+	\textit{Few-shot prompting} & Juan, bajar, planta & Juan baja a la planta baja.  \\
+	LoRA &  & Juan bajó la planta.  \\
+	\hline
+	\textit{Zero-shot prompting} &  & Voy a salir de aquí, a la cabaña. \\
+	\textit{Few-shot prompting} & seis, cabritillos, salir, contento & Los seis cabritillos salen contentos.  \\
+	LoRA &  & Los seis cabritillos salen contentos.  \\
+
+\end{tabular}
+\end{center}
+\end{table}
+
+En el caso de \textit{zero-shot prompting}, los resultados son considerablemente bajos, lo que evidencia que el modelo no comprende adecuadamente la tarea en la mayoría de los casos. Se identificaron tres tipos de respuesta:
 
 \begin{enumerate}
-	\item \textbf{Repetición de las palabras clave}: en la mayoría de casos el modelo se limita a repetir las palabras clave que fueron introducidas, ya sea de manera exactamente igual o con pequeñas modificaciones, como la eliminación de comas, la adición de comillas o el uso de mayúscula en ciertas palabras.
-	\item \textbf{Frases sin sentido o sin relación con las palabras clave}: en otros casos, el modelo genera frases utilizando las palabras clave pero que no tienen sentido, o incluso frases que no guardan relación con las palabras introducidas. Por ejemplo, para las palabras clave ``mamá, me, decir, hola, por, mañana´´ el modelo generó la frase ``Mamá, me dice que mañana me voy a comprar un nuevo carro.´´ y para las palabras clave ``no, lo, cambiar´´, generó ``¿Sabes por qué no me gusta el agua?´´.  También hay ocasiones en las que el modelo utiliza las palabras clave para generar las frases pero añade también palabras que no están en la lista de palabras introducidas, generando frases que divagan y no son correctas. Por ejemplo, para las palabras clave ``policía, poner, un, multa´´, la frase esperada era ``El policía puso una multa´´, pero el modelo generó ``La policía pone multas a los conductores que no respetan las normas.´´.
-	\item \textbf{Frases similares a las esperadas}: en algunas ocasiones el modelo sí que genera frases que coinciden con las reales o que son similares a estas. Por ejemplo, para los lemas ``qué, llevar, cesta, ?´´ generó correctamente la frase ``¿Qué llevas en la cesta?´´, y para  ``niño, jugar, piscina´´ generó ``El niño juega en la piscina´´, que, aunque no es idéntica a la frase real ``Los niños juegan en la piscina.´´, refleja que el modelo comprendió la tarea.
+	\item \textbf{Repetición de las palabras clave}: en la mayoría de los casos, el modelo se limita a repetir las palabras clave que fueron introducidas, ya sea de manera exactamente igual o con pequeñas modificaciones como la eliminación de comas, la adición de comillas o el uso de mayúscula en ciertas palabras. Este comportamiento se observa en el primer ejemplo de la Tabla \ref{tab:ejemplosPromptingEspañol}.
+	\item \textbf{Frases sin sentido o sin relación con las palabras clave}: en otros casos, el modelo genera frases utilizando las palabras clave pero que no tienen sentido o no guardan relación con las palabras introducidas. Es el caso del segundo ejemplo de la Tabla \ref{tab:ejemplosPromptingEspañol}.
+	\item \textbf{Frases similares a las esperadas}: en algunas ocasiones, el modelo logra generar frases que coinciden con las reales o que son similares a estas.
 \end{enumerate}
 
-Para la técnica de \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de palabras clave con sus correspondientes frases generadas. En este caso, el modelo demostró una mejor comprensión de la tarea, generando resultados que, en la mayoría de casos, se acercan más a los reales en comparación con el  \textit{zero-shot prompting}. Sin embargo, presenta mayor cantidad de errores que el modelo entrenado con datos específicos. Algunos de estos errores incluyen cambios en el orden de las palabras, como en el caso de ``mamá, oso, coger, plato, mediano´´, donde el modelo generó ``La mamá coge el plato del oso medio.´´, cuando debería haber generado ``Mamá oso coge el plato mediano.´´. También se observaron casos en los que el modelo añadió palabras que no estaban en la lista de palabras clave. Por ejemplo, para las palabras clave ``este, ser, Caperuza, Roja´´ el modelo generó ``Esta caperucita roja se llamaba María.´´, aunque las palabras ``llamar´´ y ``María´´ no se encontraba en la lista de palabras clave proporcionadas, por lo que no deberían aparecer en la frase.
+Para la técnica de \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de palabras clave con sus correspondientes frases generadas. En este caso, el modelo demostró una mejor comprensión de la tarea, generando resultados que, en la mayoría de casos, se acercan más a los reales en comparación con el  \textit{zero-shot prompting}. Sin embargo, presenta mayor cantidad de errores que el modelo entrenado con datos específicos. Algunos de estos errores incluyen cambios en el orden de las palabras o la adición de palabras que no aparecen en la lista de palabras clave, como se puede ver en el primer ejemplo de la Tabla \ref{tab:ejemplosPromptingEspañol}.
 
 Los resultados presentados en la Tabla \ref{tab:promptingEspañol} indican que, aunque el \textit{few-shot prompting} produce resultados razonablemente buenos, el entrenamiento realizado al modelo mediante LoRA sí que proporciona una mejora en el rendimiento en comparación con las técnicas de \textit{prompting}. El uso del modelo mediante \textit{zero-shot prompting} presenta grandes limitaciones de comprensión de la tarea. Aunque el \textit{few-shot prompting} mejora los resultados, aún persisten problemas de comprensión en ciertos casos. El modelo entrenado mediante LoRA alcanza resultados mejores en las métricas BLEU y COMET, lo que confirma que el entrenamiento con datos específicos ofrece una mejora frente a los otros.
 
 \section{Experimentos adicionales con el conjunto en inglés}
 
-Para evaluar la influencia del idioma en los resultados de los modelos, se han replicado los mismos experimentos realizados con el conjunto de datos en español utilizando el conjunto en inglés. De nuevo, se han utilizado los modelos Gemma-7B y Llama3-8B disponibles en el portal de \textit{Hugging Face}.
+Para evaluar la influencia del idioma en los resultados de los modelos, se han replicado los mismos experimentos realizados con el conjunto de datos en español utilizando el conjunto en inglés. De nuevo, se han utilizado los modelos Gemma-7B y Llama3-8B disponibles en el portal de \textit{Hugging Face}. Al igual que en los experimentos anteriores, se ha aplicado la adaptación LoRA y se ha llevado a cabo el entrenamiento utilizando validación cruzada con un total de 10 particiones.
 
-Al igual que en los experimentos anteriores, se ha aplicado la adaptación LoRA y se ha llevado a cabo el entrenamiento utilizando validación cruzada con un total de 10 particiones.
+En primer lugar, se han realizado los experimentos para ambos modelos explorando diferentes valores de $r$ (16, 32 y 64) y utilizando una configuración fija de $\alpha = 2r$. La Tabla \ref{tab: Gemma y Llama inglés} muestra los resultados obtenidos de BLEU y COMET de los modelos Gemma-7B y Llama3-8B entrenados con el conjunto de datos en inglés para estos valores de rango y \textit{alpha}.
 
-En primer lugar, se han realizado los experimentos para ambos modelos explorando diferentes valores de $r$ (16, 32 y 64) y utilizando una configuración  fija de $\alpha = 2r$. Al igual que con el conjunto en español, los resultados obtenidos con el modelo Gemma son notablemente inferiores a los resultados obtenidos con el modelo Llama3. El mejor valor de rango resultó ser $r = 32$ en ambos casos. En el caso de Gemma, los valores de BLEU y COMET con esta configuración son de 54.32 y 88.88 respectivamente, mientras que los de Llama3 son 62.22 y 91.12.
+\begin{table}
+\caption{BLEU y COMET para los modelos Gemma-7B y Llama3-8B en inglés. \label{tab: Gemma y Llama inglés}}
+\begin{center}
+\begin{tabular}{ c c c c c c }
+	\ & \ & \multicolumn{2}{c}{Gemma-7B} & \multicolumn{2}{c}{Llama3-8B}\\
+	\hline
+	\textit{Rank} & \textit{Alpha} & BLEU & COMET & BLEU & COMET \\
+	\hline
+	\hline
+	16 & 32 & 44.36 & 85.94 & 61.84 & 90.86 \\
+	\hline
+	32 & 64 & 54.23 & 88.88 & 62.22 & 91.11 \\
+	\hline
+	64 & 128 & 47.51 & 84.10 & 63.42 & 90.85 \\
+	
 
-En la Tabla \ref{tab:comparacionIdiomas} se muestran los mejores resultados obtenidos de BLEU y COMET para cada modelo e idioma. Se han tenido en cuenta los experimentos realizados con los valores de rango 16, 32 y 64 y la configuración de $\alpha = 2r$. En el caso de los experimentos en español, el mejor valor de rango entre estos es $r = 32$ para ambos modelos. Para el conjunto en inglés es $r = 32$ para Llama3 y $r = 16$ para Gemma.
-
-\begin{table}[h]
-\centering
-\begin{tabular}{c  c | c c}
-
-             &  & BLEU & COMET \\ 
-\hline
-\hline
-& & & \\
- & Llama3 &   66.13   &   93.37    \\
-Español &  &      &       \\
- & Gemma  &   52.44   &    88.92   \\
-& & & \\
-\hline
-& & &  \\
- & Llama3 & 62.22    &   91.12    \\
-Inglés &  &      &       \\
- & Gemma  &  54.23    &    88.88   \\
-& & &  \\
 \end{tabular}
-\caption{Mejores resultados de BLEU y COMET en los experimentos de ambos idiomas y modelos}
-\label{tab:comparacionIdiomas}
+\end{center}
 \end{table}
+
+Al igual que ocurría con el conjunto en español, los resultados obtenidos con el modelo Gemma son notablemente inferiores a los resultados obtenidos con el modelo Llama3.
+
+\begin{table}
+\caption{Mejores resultados de BLEU y COMET en los experimentos de ambos idiomas y modelos. \label{tab:comparacionIdiomas}}
+\begin{center}
+\begin{tabular}{ c c c c c c }
+	 \ & \multicolumn{2}{c}{Gemma-7B} & \multicolumn{2}{c}{Llama3-8B}\\
+	\hline
+	 \textit{Idioma} & BLEU & COMET & BLEU & COMET \\
+	\hline
+	\hline
+	 Español & 52.44   &    88.92 &  66.13   &   93.37 \\
+	\hline
+	 Inglés & 54.23    &    88.88 & 62.22    &   91.12 \\
+	
+
+\end{tabular}
+\end{center}
+\end{table}
+
+En la Tabla \ref{tab:comparacionIdiomas} se muestran los mejores resultados obtenidos de BLEU y COMET para cada modelo e idioma. Se han tenido en cuenta los experimentos realizados con los valores de rango 16, 32 y 64 y la configuración de $\alpha = 2r$. En el caso de los experimentos en español, el mejor valor de rango entre estos es $r = 32$ para ambos modelos. Para el conjunto en inglés, también es $r = 32$ para Llama3 y para Gemma.
 
 \subsection{Exploración de valores de \textit{alpha}}
 
@@ -1347,8 +1378,8 @@ En los siguientes experimentos, se ha llevado a cabo una exploración de diferen
 De manera similar a los experimentos realizados con el conjunto de datos en español, se han probado diferentes valores de rango: 16, 32, 64, 128 y 256. Para cada valor de rango, se han evaluado las siguientes configuraciones de \textit{alpha}: $\alpha = r/2$, $\alpha = r$ y $\alpha = 2r$.
 
 \mycomment{
-\begin{table}[!h]
-\caption{Puntuación de BLEU y COMET para el modelo Llama3-8B con el conjunto de datos en inglés}
+\begin{table}
+\caption{Puntuación de BLEU y COMET para el modelo Llama3-8B con el conjunto de datos en inglés. \label{tab: Llama exploración de alpha inglés}}
 \begin{center}
 \begin{tabular}{ c c | c c }
 	\hline
@@ -1377,7 +1408,6 @@ De manera similar a los experimentos realizados con el conjunto de datos en espa
 
 \end{tabular}
 \end{center}
-\label{tab: Llama exploración de alpha inglés}
 \end{table}
 }
 
@@ -1386,17 +1416,16 @@ Las gráficas de la Figura \ref{fig:graficasLlama inglés} ilustran en el eje ho
 \begin{figure}
 \begin{subfigure}{0.5\textwidth}
 \includegraphics[width=0.9\linewidth, height=9cm]{images/llama_BLEU_en_} 
-\caption{Resultados de BLEU para Llama3-8B}
+\caption{Resultados de BLEU para Llama3-8B.}
 \label{fig:subim1}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \includegraphics[width=0.9\linewidth, height=9cm]{images/llama_COMET_en_}
-\caption{Resultados de COMET para Llama3-8B}
+\caption{Resultados de COMET para Llama3-8B.}
 \label{fig:subim2}
 \end{subfigure}
 
-\caption{Resultados de BLEU y COMET obtenidos con el modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ = 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en inglés}
-\label{fig:graficasLlama inglés}
+\caption{Resultados de BLEU y COMET obtenidos con el modelo Llama3-8B tras ser entrenados mediante adaptación con LoRA con los valores de $r$ = 16, 32, 64, 128 y 256;  y explorando distintas configuraciones de \textit{alpha} con el conjunto de datos en inglés. \label{fig:graficasLlama inglés}}
 \end{figure}
 
 Al observar las puntuaciones de BLEU, se puede ver que las tres configuraciones de \textit{alpha} presentan una tendencia ascendente hasta alcanzar su máximo en $r = 128$. Para $r = 256$, los valores de BLEU disminuyen significativamente en los tres casos, de manera similar a lo observado con el conjunto de datos en español. En este caso, la configuración con $r = 128$ y $\alpha = r$ obtiene la mejor puntuación de BLEU, aunque la diferencia con respecto a las otras configuraciones de \textit{alpha} para el mismo valor de $r$ es mínima.
@@ -1405,9 +1434,9 @@ En cuanto a la métrica COMET, las tres configuraciones siguen una tendencia sim
 
 Considerando ambas métricas, la mejor configuración es $r = 128$, $\alpha = 2r$, ya que ofrece el mejor valor de COMET junto con un buen rendimiento de BLEU.
 
-\subsection{Validación del modelo final}
+\subsection{Evaluación del modelo final en el conjunto de test}
 
-Igual que con el conjunto en español, el experimento final con los datos en inglés ha consistido en el entrenamiento de un modelo Llama3 utilizando la mejor configuración de parámetros identificada durante la experimentación previa, que fue $r = 128$ y $\alpha = 2r$.
+Al igual que con el conjunto en español, el experimento final con los datos en inglés ha consistido en el entrenamiento de un modelo Llama3 utilizando la mejor configuración de parámetros identificada durante la experimentación previa, que fue $r = 128$ y $\alpha = 2r$.
 
 El modelo ha sido entrenado utilizando la totalidad de datos de entrenamiento disponibles. Posteriormente, se ha realizado la validación del modelo utilizando el conjunto de datos de validación que se había reservado desde el inicio de los experimentos. Los resultados obtenidos en las métricas BLEU y COMET han sido los siguientes:
 
@@ -1422,10 +1451,10 @@ De nuevo, se observa que los resultados obtenidos son inferiores a los obtenidos
 
 Al igual que con el modelo en español, se ha llevado a cabo un experimento adicional para evaluar el rendimiento del modelo Llama3-8B en inglés sin entrenamiento previo, con el fin de medir la mejora obtenida tras el entrenamiento. Para ello, se han empleado las técnicas de \textit{zero-shot prompting} y \textit{few-shot prompting}, siguiendo el mismo procedimiento que con los datos en español. Estos experimentos se han evaluado sobre el conjunto en inglés reservado para test.
 
-La Tabla \ref{tab:promptingInglés} muestra los resultados de BLEU y COMET obtenidos con ambas técnicas, así como los resultados del modelo final Llama3 entrenado mediante LoRA con el conjunto de datos de entrenamiento en inglés.
+La Tabla \ref{tab:promptingInglés} muestra los resultados de BLEU y COMET obtenidos con ambas técnicas, así como los resultados del modelo final Llama3 entrenado mediante LoRA con el conjunto de datos de entrenamiento en inglés. Además, en la Tabla \ref{tab:ejemplosPromptingInglés} se proporcionan dos ejemplos de frases generadas utilizando cada una de estas técnicas.
 
-\begin{table}[!h]
-\caption{BLEU y COMET del modelo Llama3 utilizado mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en inglés}
+\begin{table}
+\caption{BLEU y COMET del modelo Llama3 utilizado mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en inglés. \label{tab:promptingInglés}}
 \begin{center}
 \begin{tabular}{ c | c c }
 	\ & BLEU & COMET \\
@@ -1437,14 +1466,33 @@ La Tabla \ref{tab:promptingInglés} muestra los resultados de BLEU y COMET obten
 
 \end{tabular}
 \end{center}
-\label{tab:promptingInglés}
 \end{table}
 
-Al igual que en el caso del modelo en español, los resultados obtenidos con \textit{zero-shot prompting} son significativamente inferiores a los de las otras técnicas, indicando que el modelo tiene grandes problemas para comprender la tarea adecuadamente. En la mayoría de los casos, el modelo se limita a repetir los lemas introducidos, a veces con ligeras variaciones. En muy pocas ocasiones la frase generada por el modelo se asemeja a la frase real.
+\begin{table}
+\caption{Ejemplos de frases generadas mediante \textit{zero-shot prompting}, \textit{few-shot prompting} y entrenamiento mediante LoRA con el conjunto de datos en español. \label{tab:ejemplosPromptingInglés}}
+\begin{center}
+\begin{tabular}{ c | c | c }
+	\ & Lemas & Frase \\
+	\hline
+	\hline
+	\textit{Zero-shot prompting} &  & child play boat \\
+	\textit{Few-shot prompting} & child, play, boat & The child plays with the boat.  \\
+	LoRA &  & The child plays with the boat. \\
+	\hline
+	\textit{Zero-shot prompting} &  & In the dining room, there are a fork \\
+	\textit{Few-shot prompting} & fork, be, dining, room & I am in the dining room. \\
+	LoRA &  & The fork is in the dining room. \\
 
-En el caso del \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de listas de palabras clave con sus correspondientes frases. El modelo muestra un rendimiento mucho mejor, demostrando que es capaz de comprender el objetivo de la tarea. Sin embargo, en algunas ocasiones el modelo añade palabras que no aparecían en la lista de palabras clave. Por ejemplo, para las palabras clave ``snail, become, sad´´, el modelo generó ``The snail becomes sad because of the rain.´´, aunque la palabra ``rain´´ no estaba en el listado. De todas maneras, el modelo generó frases cercanas a las frases reales en la mayoría de ocasiones. Los errores cometidos son similares a los del modelo entrenado con LoRA, y la puntuación de COMET obtenida con \textit{few-shot prompting} es ligeramente superior a la del modelo entrenado con datos específicos.
 
-Así, los resultados de la Tabla \ref{tab:promptingInglés} indican que, aunque el desempeño de \textit{zero-shot prompting} es muy bajo, la \textit{few-shot prompting} resulta muy eficaz. Los resultados obtenidos con esta técnica son muy similares a los obtenidos con el modelo entrenado mediante LoRA en términos de BLEU, y superiores en cuanto a COMET. Esto podría sugerir una posible limitación en la calidad del conjunto de datos en inglés utilizado para el entrenamiento.
+\end{tabular}
+\end{center}
+\end{table}
+
+Al igual que en el caso del modelo en español, los resultados obtenidos con \textit{zero-shot prompting} son significativamente inferiores a los de las otras técnicas, indicando que el modelo tiene grandes problemas para comprender la tarea adecuadamente. En la mayoría de los casos, el modelo se limita a repetir los lemas introducidos, a veces con ligeras variaciones. Un ejemplo de esto se puede observar en el primer caso de la Tabla \ref{tab:ejemplosPromptingInglés}. En otros casos, el modelo genera frases que no guardan relación con las palabras proporcionadas, cambian el orden de estas o presentan errores. Por ejemplo, en el segundo caso de la Tabla \ref{tab:ejemplosPromptingInglés}, el modelo generó una frase con las palabras en un orden diferente al que aparecían en la lista de lemas y con un error de conjugación del verbo. En muy pocas ocasiones, la frase generada por el modelo se asemeja a la frase real.
+
+En el caso del \textit{few-shot prompting}, se proporcionaron al modelo cinco ejemplos de listas de palabras clave con sus correspondientes frases. El modelo muestra un rendimiento mucho mejor, demostrando que es capaz de comprender el objetivo de la tarea. Sin embargo, en algunas ocasiones el modelo añade palabras que no aparecían en la lista de palabras clave o se deja palabras de la lista para crear la frase. Por ejemplo, en el segundo caso de la Tabla \ref{tab:ejemplosPromptingInglés} se observa que para \textit{few-shot prompting}, el modelo no incluye la palabra \textit{fork} en la frase, a pesar de que esta aparece en la lista de lemas proporcionada. Aún así, el modelo generó frases cercanas a las frases reales en la mayoría de ocasiones. Los errores cometidos son similares a los del modelo entrenado con LoRA, y la puntuación de COMET obtenida con \textit{few-shot prompting} es ligeramente superior a la del modelo entrenado con datos específicos.
+
+Así, los resultados de la Tabla \ref{tab:promptingInglés} indican que, aunque el desempeño de \textit{zero-shot prompting} es muy bajo, \textit{few-shot prompting} resulta muy eficaz. Los resultados obtenidos con esta técnica son muy similares a los obtenidos con el modelo entrenado mediante LoRA en términos de BLEU, y superiores en cuanto a COMET. Esto podría sugerir una posible limitación en la calidad del conjunto de datos en inglés utilizado para el entrenamiento. Además, se observa que Llama3 está mejor entrenado para generar frases en inglés incluso con \textit{few-shot prompting}, ya que la mayoría de los datos utilizados para su entrenamiento son en inglés.
 
 \chapter{Análisis posteriores del modelo en español} \label{cap5}
 
@@ -1462,8 +1510,9 @@ Por otro lado, la aplicación AsTeRISCS Grid ha sido incluida en esta evaluació
 
 La Tabla \ref{tab:comparacionFinal} presenta los resultados de BLEU y COMET obtenidos con los tres modelos (Llama3-8B, GPT-4 y AsTeRISCS Grid).
 
-\begin{table}[!h]
-\caption{Puntuaciones de BLEU y COMET de los distintos modelos utilizados para la comparación}
+\begin{table}
+\caption{Puntuaciones de BLEU y COMET de los distintos modelos utilizados para la comparación. 
+\label{tab:comparacionFinal}}
 \begin{center}
 \begin{tabular}{ c | c c }
 	\ & BLEU & COMET \\
@@ -1475,12 +1524,11 @@ La Tabla \ref{tab:comparacionFinal} presenta los resultados de BLEU y COMET obte
 
 \end{tabular}
 \end{center}
-\label{tab:comparacionFinal}
 \end{table}
 
 Observamos que, aunque el modelo entrenado Llama3-8B no alcanza el nivel de rendimiento de GPT-4, sus resultados son notablemente superiores a los de AsTeRICS Grid, una herramienta ampliamente utilizada en el ámbito de los SAAC. Estos resultados sugieren que la integración de modelos de lenguaje grandes podría mejorar significativamente la calidad de las aplicaciones en este campo, proporcionando una alternativa más robusta y efectiva para la generación de frases a partir de las palabras introducidas por los usuarios y mejorando así la calidad de la comunicación de estos.
 
-\section{Experimentos con personas}
+\section{Comparación con personas}
 
 Además de las pruebas realizadas con otros modelos, se han realizado también experimentos con un grupo de personas para poder comparar los resultados obtenidos por el modelo Llama3-8B con producciones humanas. Para ello, se explicó la tarea a un grupo de 5 personas, estudiantes de Ciencia de Datos o Informática con edades comprendidas entre 22 y 26 años. A continuación, se les proporcionó el conjunto de datos de entrenamiento para que pudiesen revisar ejemplos de la realización de la tarea, así como el conjunto de datos de validación sin incluir las frases generadas, solamente con las listas de palabras clave.
 
@@ -1489,8 +1537,8 @@ A partir de esta información, se les pidió a los participantes que escribieran
 La Figura \ref{fig:comparacionIndividuos} presenta en el eje horizontal los valores de BLEU y en el vertical, los valores de COMET. Los puntos marcados por triángulos representan los resultados obtenidos por los distintos individuos, y el punto marcado con un círculo representa los resultados del modelo.
 
 \mycomment{
-\begin{table}[!h]
-\caption{Puntuaciones de BLEU y COMET de las personas a las que se le envió la tarea}
+\begin{table}
+\caption{Puntuaciones de BLEU y COMET de las personas a las que se le envió la tarea.}
 \begin{center}
 \begin{tabular}{ c | c c }
 	\ & BLEU & COMET \\
@@ -1508,11 +1556,10 @@ La Figura \ref{fig:comparacionIndividuos} presenta en el eje horizontal los valo
 \end{table}
 }
 
-\begin{figure}[h]
+\begin{figure}
 \includegraphics[scale = 0.8]{images/comparacion_individuos.png}
 \centering
-\caption{Resultados de BLEU y COMET obtenidos por los individuos y por el modelo en la tarea de generación de frases}
-\label{fig:comparacionIndividuos}
+\caption{Resultados de BLEU y COMET obtenidos por los individuos y por el modelo en la tarea de generación de frases. \label{fig:comparacionIndividuos}}
 \end{figure}
 
 Los resultados obtenidos por el modelo final de Llama3 entrenado con el conjunto de datos en español son BLEU = 62.90 y COMET = 89.15. Comparando estos resultados con los obtenidos por personas, observamos que, aunque el modelo Llama3 presenta un rendimiento inferior al promedio de los resultados obtenidos por individuos, supera a dos de ellos en términos de BLEU y a uno en términos de COMET.
@@ -1528,8 +1575,8 @@ El análisis se ha realizado comparando las frases generadas del conjunto de val
 \begin{itemize}
 	\item \textbf{Errores en los tiempos verbales}: se han identificado 9 frases en las que el único error se relaciona con la conjugación del tiempo verbal. En la Tabla \ref{tab:erroresTiempoVerbal} se presentan tres ejemplos de frases con este tipo de error. Se observa que son casos en los que, a partir de las palabras clave introducidas, resulta muy difícil determinar el tiempo verbal correcto de la frase. El modelo tiende a conjugar las frases en presente, ya que es el tiempo verbal más común, aunque en algunas ocasiones las frases deberían estar en pasado o en futuro. Este error también es frecuente en las generaciones de frases realizadas por personas. La ausencia de pistas claras sobre el tiempo verbal en las palabras clave puede llevar a asumir que el tiempo verbal de la frase debe ser presente.
 
-\begin{table}[!h]
-\caption{Frases generadas por Llama3 con errores en el tiempo verbal}
+\begin{table}
+\caption{Frases generadas por Llama3 con errores en el tiempo verbal. \label{tab:erroresTiempoVerbal}}
 \begin{center}
 \begin{tabular}{ c | c | c }
 	\ Lemmas & Frase generada & Frase real \\
@@ -1545,13 +1592,12 @@ El análisis se ha realizado comparando las frases generadas del conjunto de val
 
 \end{tabular}
 \end{center}
-\label{tab:erroresTiempoVerbal}
 \end{table}
 
 	\item \textbf{Falta de preposición}: en 8 frases, los errores se deben a la falta o confusión de alguna preposición. Se detallan ejemplos de este caso en la Tabla \ref{tab:erroresPreposicion}.
 
-\begin{table}[!h]
-\caption{Frases generadas por Llama3 con errores en preposiciones}
+\begin{table}
+\caption{Frases generadas por Llama3 con errores en preposiciones. \label{tab:erroresPreposicion}}
 \begin{center}
 \begin{tabular}{ c | c | c }
 	\ Lemmas & Frase generada & Frase real \\
@@ -1569,13 +1615,12 @@ El análisis se ha realizado comparando las frases generadas del conjunto de val
 
 \end{tabular}
 \end{center}
-\label{tab:erroresPreposicion}
 \end{table}
 
 	\item \textbf{Confusión en el sujeto}: un total de 4 frases presentan errores solamente en el sujeto. Los ejemplos de este caso se presentan en la Tabla \ref{tab:erroresSujeto}. Estos errores incluyen la falta del artículo del sujeto debido a que se interpreta el sustantivo como nombre propio.
 
-\begin{table}[!h]
-\caption{Frases generadas por Llama3 con errores en el sujeto}
+\begin{table}
+\caption{Frases generadas por Llama3 con errores en el sujeto. \label{tab:erroresSujeto}}
 \begin{center}
 \begin{tabular}{ c | c | c }
 	\ Lemmas & Frase generada & Frase real \\
@@ -1592,7 +1637,6 @@ El análisis se ha realizado comparando las frases generadas del conjunto de val
 
 \end{tabular}
 \end{center}
-\label{tab:erroresSujeto}
 \end{table}
 
 	\item \textbf{Error en el número}: solo se ha identificado un caso en el que el error radica en el número gramatical. En este caso las palabras clave son `` niño, jugar, piscina ´´. A partir de estas, el modelo generó `` El niño juega en la piscina ´´ en lugar de  `` Los niños juegan en la piscina ´´, que era la frase real. Dado que las palabras clave no especificaban el número, es comprensible que el modelo asumiera el singular. Este error también fue cometido por todos los participantes humanos en el experimento.
@@ -1600,8 +1644,8 @@ El análisis se ha realizado comparando las frases generadas del conjunto de val
 
 Las 10 frases restantes presentan varios de los errores mencionados u otros problemas sintácticos. En la Tabla \ref{tab:erroresVariados} se presentan tres ejemplos de frases con distintos errores.
 
-\begin{table}[!h]
-\caption{Frases generadas por Llama3 con varios errores}
+\begin{table}
+\caption{Frases generadas por Llama3 con varios errores. \label{tab:erroresVariados}}
 \begin{center}
 \begin{tabular}{ c | c | c }
 	\ Lemmas & Frase generada & Frase real \\
@@ -1619,7 +1663,6 @@ Las 10 frases restantes presentan varios de los errores mencionados u otros prob
 
 \end{tabular}
 \end{center}
-\label{tab:erroresVariados}
 \end{table}
 
 %\section{Análisis de errores en inglés}
@@ -1646,7 +1689,7 @@ A lo largo del desarrollo de este trabajo, se han cumplido satisfactoriamente lo
 
 \begin{enumerate}
 	\item Se ha realizado una investigación sobre diferentes tipos de SAAC y cómo aplicar herramientas de Aprendizaje Automático e Inteligencia Artificial para mejorar su uso.
-	\item Se han adaptado dos modelos de lenguaje grandes de actualidad, Gemma y Llama3, para la tarea de generación de frases sintácticamente correctas a partir de palabras clave para su uso en comunicadores electrónicos. Tras la realización de los experimentos, se determinó que el modelo Llama3 ofrece mejores resultados que Gemma. Los resultados obtenidos resultan prometedores.
+	\item Se han adaptado dos modelos de lenguaje grandes de actualidad, Gemma y Llama3, para la tarea de generación de frases sintácticamente correctas a partir de palabras clave para su uso en comunicadores electrónicos. Ambos modelos han sido evaluados en dos idiomas: español e inglés. Tras la realización de los experimentos, se determinó que el modelo Llama3 ofrece mejores resultados que Gemma. Los resultados obtenidos resultan prometedores.
 	\item Se ha realizado una comparación de los resultados obtenidos con el modelo Llama3 frente al modelo GPT-4 y el comunicador AsTeRISCS Grid. Aunque el modelo desarrollado en este trabajo no supera el rendimiento de GPT-4, demuestra un rendimiento significativamente superior al de AsTeRISCS Grid, lo que muestra que puede suponer un avance importante en este sector.
 \end{enumerate}
 
@@ -1671,7 +1714,7 @@ El trabajo desarrollado en este proyecto está estrechamente relacionado con los
 
 En primer lugar, la obtención y transformación de diferentes conjuntos de datos, que es una tarea fundamental de la Ciencia de Datos, han sido necesarios para conseguir los datos para el entrenamiento de los modelos.
 
-El entrenamiento de  modelos de lenguaje grandes, que forma parte del campo del Procesamiento de Lenguaje Natural, se ha basado en conceptos estudiados en la carrera, por ejemplo el \textit{fine-tuning} y la técnica de \textit{cross-validation}.
+El entrenamiento de  modelos de lenguaje grandes, que forma parte del campo del Procesamiento de Lenguaje Natural, se ha basado en conceptos estudiados en la carrera, por ejemplo el \textit{fine-tuning} y la técnica de validación cruzada.
 
 Se ha profundizado también en técnicas avanzadas como la adaptación de modelos mediante LoRA, una técnica no vista en profundidad durante la carrera pero que ha sido fundamental para el entrenamiento de los modelos en este proyecto.
 
@@ -1688,9 +1731,10 @@ En resumen, este proyecto ha permitido aplicar de manera práctica los conocimie
 %                                BIBLIOGRAFIA                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\bibliographystyle{plain}
+%\bibliographystyle{abbrv}
+%\bibliography{plantillatfg}
 
-\bibliography{plantillatfg}
+\printbibliography
 
 \cleardoublepage
 
