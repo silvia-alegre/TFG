@@ -1,14 +1,14 @@
 [0] Config.pm:307> INFO - This is Biber 2.19
 [0] Config.pm:310> INFO - Logfile is 'plantillatfg.blg'
-[174] biber-MSWIN64:340> INFO - === 
-[317] Biber.pm:419> INFO - Reading 'plantillatfg.bcf'
-[431] Biber.pm:979> INFO - Found 46 citekeys in bib section 0
-[451] Biber.pm:4419> INFO - Processing section 0
-[474] Biber.pm:4610> INFO - Looking for bibtex file 'plantillatfg.bib' for section 0
-[532] bibtex.pm:1713> INFO - LaTeX decoding ...
-[578] bibtex.pm:1519> INFO - Found BibTeX data source 'plantillatfg.bib'
-[856] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[857] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
-[857] Biber.pm:4239> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'es-ES'
-[921] bbl.pm:660> INFO - Writing 'plantillatfg.bbl' with encoding 'UTF-8'
-[951] bbl.pm:763> INFO - Output to plantillatfg.bbl
+[199] biber-MSWIN64:340> INFO - === 
+[334] Biber.pm:419> INFO - Reading 'plantillatfg.bcf'
+[433] Biber.pm:979> INFO - Found 46 citekeys in bib section 0
+[457] Biber.pm:4419> INFO - Processing section 0
+[479] Biber.pm:4610> INFO - Looking for bibtex file 'plantillatfg.bib' for section 0
+[516] bibtex.pm:1713> INFO - LaTeX decoding ...
+[562] bibtex.pm:1519> INFO - Found BibTeX data source 'plantillatfg.bib'
+[872] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[872] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[872] Biber.pm:4239> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'es-ES'
+[946] bbl.pm:660> INFO - Writing 'plantillatfg.bbl' with encoding 'UTF-8'
+[974] bbl.pm:763> INFO - Output to plantillatfg.bbl
