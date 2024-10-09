@@ -1,0 +1,1 @@
+En este proyecto se ha realizado el entrenamiento de dos modelos de lenguaje grandes, Gemma y Llama-3, para la generación de frases de lenguaje natural a partir de listas de palabras clave para su uso en Sistemas de Communicación Aumentativa y Alternativa (SAAC), específicamente en comunicadores electrónicos.
