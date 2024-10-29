@@ -7,4 +7,4 @@ Este proyecto se centra en el entrenamiento de dos modelos de lenguaje grandes, 
 - data: contiene los conjuntos de datos utilizados, incluyendo tanto los originales como las transformaciones realizadas sobre estos.
 - doc: contiene la memoria realizada y las diapositivas utilizadas en la defensa.
 - exp: contiene los resultados obtenidos en cada uno de los experimentos realizados durante el proyecto.
-- src: contiene todo el código fuente desarrollado.
+- src: contiene todo el código desarrollado.
