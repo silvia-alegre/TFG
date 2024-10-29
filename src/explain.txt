@@ -1,9 +1,0 @@
-* create_datasets: 
-	- merge both raw data --> result is merged_data_EMPTY_es.csv
-	- create validation set --> result is validation_data_columns_es
-	- create training/test set --> result is training_data_EMPTY_es
-* format_prompts: takes as input a dataset with columns [lemma, phrases] and creates other
-dataset with 1 column (text) with prompt format (Lemmas: ****** \n Phrase: *********)
-* exp_gemma: code for conducting gemma experiment
-* exp_llama: code for conducting Llama-3 experiment
-* bleu_comet_evaluation: calculate bleu and comet metrics
